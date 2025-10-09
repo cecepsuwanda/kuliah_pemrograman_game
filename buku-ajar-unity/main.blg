@@ -1,15 +1,15 @@
 [0] Config.pm:308> INFO - This is Biber 2.20
 [0] Config.pm:311> INFO - Logfile is 'main.blg'
-[44] biber:340> INFO - === Thu Oct  9, 2025, 18:55:40
-[52] Biber.pm:420> INFO - Reading 'main.bcf'
-[89] Biber.pm:994> INFO - Found 24 citekeys in bib section 0
-[98] Biber.pm:4463> INFO - Processing section 0
+[44] biber:340> INFO - === Thu Oct  9, 2025, 19:42:59
+[53] Biber.pm:420> INFO - Reading 'main.bcf'
+[90] Biber.pm:994> INFO - Found 29 citekeys in bib section 0
+[99] Biber.pm:4463> INFO - Processing section 0
 [104] Biber.pm:4654> INFO - Looking for bibtex file 'references.bib' for section 0
 [105] bibtex.pm:1713> INFO - LaTeX decoding ...
-[112] bibtex.pm:1519> INFO - Found BibTeX data source 'references.bib'
-[152] UCollate.pm:68> INFO - Overriding locale 'indonesian' defaults 'variable = shifted' with 'variable = non-ignorable'
-[152] UCollate.pm:68> INFO - Overriding locale 'indonesian' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[152] Biber.pm:4283> INFO - Sorting list 'nyt/global//global/global/global' of type 'entry' with template 'nyt' and locale 'indonesian'
-[152] Biber.pm:4289> INFO - No sort tailoring available for locale 'indonesian'
-[161] bbl.pm:676> INFO - Writing 'main.bbl' with encoding 'UTF-8'
-[164] bbl.pm:779> INFO - Output to main.bbl
+[113] bibtex.pm:1519> INFO - Found BibTeX data source 'references.bib'
+[151] UCollate.pm:68> INFO - Overriding locale 'indonesian' defaults 'variable = shifted' with 'variable = non-ignorable'
+[151] UCollate.pm:68> INFO - Overriding locale 'indonesian' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[151] Biber.pm:4283> INFO - Sorting list 'nyt/global//global/global/global' of type 'entry' with template 'nyt' and locale 'indonesian'
+[151] Biber.pm:4289> INFO - No sort tailoring available for locale 'indonesian'
+[162] bbl.pm:676> INFO - Writing 'main.bbl' with encoding 'UTF-8'
+[165] bbl.pm:779> INFO - Output to main.bbl

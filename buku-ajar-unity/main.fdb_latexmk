@@ -1,12 +1,12 @@
 # Fdb version 4
-["biber main"] 1760036136.62444 "main.bcf" "main.bbl" "main" 1760036140.23442 0
-  "main.bcf" 1760036140.13409 113282 5d424757d6f1fe2e49470d4662850eb1 "pdflatex"
-  "references.bib" 1760036127.20921 5228 ea9b844ed0a7549c1add1e70c73fbd4d ""
+["biber main"] 1760038976.92515 "main.bcf" "main.bbl" "main" 1760038979.56924 0
+  "main.bcf" 1760038979.46632 113814 3503c1aaf00672ff96cc24b2d13c9797 "pdflatex"
+  "references.bib" 1760038967.21348 6278 ba93eb1e009a161c79dfccb19029f5ac ""
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1760036139.19987 "main.tex" "main.pdf" "main" 1760036140.23468 0
+["pdflatex"] 1760038978.48063 "main.tex" "main.pdf" "main" 1760038979.56953 0
   "/etc/texmf/web2c/texmf.cnf" 1760031453.23693 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/ubuntu/.texlive2025/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk" 1760031621.8458 31928 748adec8423341eeb3996de59ec5a2cd ""
   "/home/ubuntu/.texlive2025/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1728.600pk" 1760031622.12179 49076 43fb58f13b156841d56ecabfc4eea63d ""
@@ -189,7 +189,7 @@
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1760031543 2654513 b0596483f443711057f850ed7a85e3e9 ""
   "chapters/00-frontmatter.tex" 1760031317.85415 673 bd7943339c5bd76ef5295aefc6722a49 ""
   "chapters/01-pengenalan.tex" 1760036109.05353 4241 e50bca45fc68cdd98e3cf628e694d01f ""
-  "chapters/02-dasar-csharp.tex" 1760031236.87721 2847 7e9b48009ff47a0f966e9d17a75c50e9 ""
+  "chapters/02-dasar-csharp.tex" 1760038953.22045 4198 ef0e6dd3730d6445becae8281f194578 ""
   "chapters/03-gameobject-komponen.tex" 1760031246.81126 2641 ee48f6177ca95c245e00b3e106fc9421 ""
   "chapters/04-aset-scene.tex" 1760031256.34382 2428 93868f69816f46371de454a5806d2e0b ""
   "chapters/05-kontrol-input.tex" 1760031725.03898 1854 72e14623d7fae673334c838cad05ddce ""
@@ -199,11 +199,11 @@
   "chapters/09-audio.tex" 1760031728.47909 1669 10dc14e2c33ee3900293ab81d72ec94f ""
   "chapters/10-ai-dasar.tex" 1760031730.07514 1780 b26e098ae7861e2a47792a58060795c1 ""
   "chapters/11-mekanik-permainan.tex" 1760031732.0272 1795 2f33b15261ac04faaa9c56d195319a21 ""
-  "main.aux" 1760036140.13009 26861 7ecbe855f51d8ca9ee6b8ea8db9dbadf "pdflatex"
-  "main.bbl" 1760036137.08683 16823 85d7f990113c2228fccece23b80242d2 "biber main"
-  "main.run.xml" 1760036140.13409 2280 f8fa13185d13c4154246bfe15b8a1480 "pdflatex"
+  "main.aux" 1760038979.45832 28302 68eaf9b03f7c9518d7ecf5ff8bef3ba9 "pdflatex"
+  "main.bbl" 1760038977.38618 19761 6892c9357f266bde79f15337ea65e3f6 "biber main"
+  "main.run.xml" 1760038979.46632 2280 f8fa13185d13c4154246bfe15b8a1480 "pdflatex"
   "main.tex" 1760036083.50341 1663 e57763e88e019233bc0ab72b873b3aac ""
-  "main.toc" 1760036140.13409 3110 f1180c33943bd19a1f0d885b0fb5dc19 "pdflatex"
+  "main.toc" 1760038979.46632 3110 f1180c33943bd19a1f0d885b0fb5dc19 "pdflatex"
   (generated)
   "main.aux"
   "main.bcf"

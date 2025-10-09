@@ -35,6 +35,22 @@
       \verb https://learn.microsoft.com/dotnet/csharp/programming-guide/
       \endverb
     \endentry
+    \entry{mslearn-csharp-types}{online}{}{}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{C\# types and variables}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/built-in-types
+      \endverb
+      \verb{url}
+      \verb https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/built-in-types
+      \endverb
+    \endentry
     \entry{fullerton2008game}{book}{}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=c51420d20fba5efcd249760a7b5f9a80}{%
@@ -189,6 +205,38 @@
       \verb https://docs.unity3d.com/Manual/Audio.html
       \endverb
     \endentry
+    \entry{unity-coroutines}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: Coroutines}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Manual/Coroutines.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Manual/Coroutines.html
+      \endverb
+    \endentry
+    \entry{unity-execution-order}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: Execution Order of Event Functions}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Manual/ExecutionOrder.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Manual/ExecutionOrder.html
+      \endverb
+    \endentry
     \entry{unity-gameobjects}{online}{}{}
       \field{sortinit}{U}
       \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
@@ -331,6 +379,38 @@
       \endverb
       \verb{url}
       \verb https://docs.unity3d.com/Manual/CreatingScenes.html
+      \endverb
+    \endentry
+    \entry{unity-serialization}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: Script serialization}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Manual/script-Serialization.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Manual/script-Serialization.html
+      \endverb
+    \endentry
+    \entry{unity-scriptableobject}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: ScriptableObject}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Manual/class-ScriptableObject.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Manual/class-ScriptableObject.html
       \endverb
     \endentry
     \entry{unity-state-machines}{online}{}{}
