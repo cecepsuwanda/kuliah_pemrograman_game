@@ -35,6 +35,42 @@
       \verb https://learn.microsoft.com/dotnet/csharp/programming-guide/
       \endverb
     \endentry
+    \entry{fullerton2008game}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=c51420d20fba5efcd249760a7b5f9a80}{%
+           family={Fullerton},
+           familyi={F\bibinitperiod},
+           given={Tracy},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {CRC Press}%
+      }
+      \strng{namehash}{c51420d20fba5efcd249760a7b5f9a80}
+      \strng{fullhash}{c51420d20fba5efcd249760a7b5f9a80}
+      \strng{fullhashraw}{c51420d20fba5efcd249760a7b5f9a80}
+      \strng{bibnamehash}{c51420d20fba5efcd249760a7b5f9a80}
+      \strng{authorbibnamehash}{c51420d20fba5efcd249760a7b5f9a80}
+      \strng{authornamehash}{c51420d20fba5efcd249760a7b5f9a80}
+      \strng{authorfullhash}{c51420d20fba5efcd249760a7b5f9a80}
+      \strng{authorfullhashraw}{c51420d20fba5efcd249760a7b5f9a80}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Open access excerpt, Diakses 2025-10-09}
+      \field{title}{Game Design Workshop: A Playcentric Approach to Creating Innovative Games}
+      \field{year}{2008}
+      \verb{urlraw}
+      \verb https://www.designersnotebook.com/Books/Fullerton_Second_Edition.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.designersnotebook.com/Books/Fullerton_Second_Edition.pdf
+      \endverb
+    \endentry
     \entry{gpp-nystrom}{online}{}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=26313e6493577f16e529ef2698d1a15c}{%
@@ -66,6 +102,43 @@
       \endverb
       \verb{url}
       \verb https://gameprogrammingpatterns.com/
+      \endverb
+    \endentry
+    \entry{schell2019book}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=9e6bdf45cf25935038be8df5d9876ba2}{%
+           family={Schell},
+           familyi={S\bibinitperiod},
+           given={Jesse},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {CRC Press}%
+      }
+      \strng{namehash}{9e6bdf45cf25935038be8df5d9876ba2}
+      \strng{fullhash}{9e6bdf45cf25935038be8df5d9876ba2}
+      \strng{fullhashraw}{9e6bdf45cf25935038be8df5d9876ba2}
+      \strng{bibnamehash}{9e6bdf45cf25935038be8df5d9876ba2}
+      \strng{authorbibnamehash}{9e6bdf45cf25935038be8df5d9876ba2}
+      \strng{authornamehash}{9e6bdf45cf25935038be8df5d9876ba2}
+      \strng{authorfullhash}{9e6bdf45cf25935038be8df5d9876ba2}
+      \strng{authorfullhashraw}{9e6bdf45cf25935038be8df5d9876ba2}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{3}
+      \field{note}{Supplementary materials available online, Diakses 2025-10-09}
+      \field{title}{The Art of Game Design: A Book of Lenses}
+      \field{year}{2019}
+      \verb{urlraw}
+      \verb https://www.crcpress.com/The-Art-of-Game-Design-A-Book-of-Lenses/Schell/p/book/9781138632059
+      \endverb
+      \verb{url}
+      \verb https://www.crcpress.com/The-Art-of-Game-Design-A-Book-of-Lenses/Schell/p/book/9781138632059
       \endverb
     \endentry
     \entry{unity-animation-clips}{online}{}{}
