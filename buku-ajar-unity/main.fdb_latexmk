@@ -1,12 +1,12 @@
 # Fdb version 4
-["biber main"] 1760050394.91136 "main.bcf" "main.bbl" "main" 1760050398.97682 0
-  "main.bcf" 1760050398.87072 114403 7abbb13cc2c99ab71bf5604ab860a8ad "pdflatex"
+["biber main"] 1760052566.9373 "main.bcf" "main.bbl" "main" 1760052569.9565 0
+  "main.bcf" 1760052569.84844 114479 f0dc5bf785bea3e0d1f1feaf13d160ce "pdflatex"
   "references.bib" 1760050382.15347 7171 a0852baf3c859971084ed2fac5539de6 ""
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1760050397.78509 "main.tex" "main.pdf" "main" 1760050398.9771 0
+["pdflatex"] 1760052568.75115 "main.tex" "main.pdf" "main" 1760052569.95677 0
   "/etc/texmf/web2c/texmf.cnf" 1760031453.23693 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/ubuntu/.texlive2025/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk" 1760031621.8458 31928 748adec8423341eeb3996de59ec5a2cd ""
   "/home/ubuntu/.texlive2025/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1728.600pk" 1760031622.12179 49076 43fb58f13b156841d56ecabfc4eea63d ""
@@ -196,16 +196,16 @@
   "chapters/04-aset-scene.tex" 1760040755.62003 3600 e59464c2b2d4dbe67a8a3294fbd2aab5 ""
   "chapters/05-kontrol-input.tex" 1760042962.46292 3033 ad52550791acacce6fa67e85a9bd144c ""
   "chapters/06-fisika.tex" 1760050367.99592 3171 f14ffe3a74f738cf4063769bc2633f67 ""
-  "chapters/07-animasi.tex" 1760031726.63903 1856 7551ac6c126214e9790e8f1cf89e243b ""
+  "chapters/07-animasi.tex" 1760052556.60193 2945 d448519d277e5fb4e3141c5330b09a35 ""
   "chapters/08-ui.tex" 1760031727.45105 1620 2cc367987d028d4deaea25285f509983 ""
   "chapters/09-audio.tex" 1760031728.47909 1669 10dc14e2c33ee3900293ab81d72ec94f ""
   "chapters/10-ai-dasar.tex" 1760031730.07514 1780 b26e098ae7861e2a47792a58060795c1 ""
   "chapters/11-mekanik-permainan.tex" 1760031732.0272 1795 2f33b15261ac04faaa9c56d195319a21 ""
-  "main.aux" 1760050398.86272 30964 b1969a5cf8fba60f519adf18522b6203 "pdflatex"
-  "main.bbl" 1760050395.38328 22172 90ce645a505a42b89a1d8736f698d91d "biber main"
-  "main.run.xml" 1760050398.87072 2280 f8fa13185d13c4154246bfe15b8a1480 "pdflatex"
+  "main.aux" 1760052569.84044 31397 b97f1a32862e4f7b09a08c5c609491d5 "pdflatex"
+  "main.bbl" 1760052567.50401 22172 90ce645a505a42b89a1d8736f698d91d "biber main"
+  "main.run.xml" 1760052569.84844 2280 f8fa13185d13c4154246bfe15b8a1480 "pdflatex"
   "main.tex" 1760040804.57054 1704 54423fa9cc0ef2b08c0f54fb4d89ad5c ""
-  "main.toc" 1760050398.87072 3110 f1180c33943bd19a1f0d885b0fb5dc19 "pdflatex"
+  "main.toc" 1760052569.84844 3110 f1180c33943bd19a1f0d885b0fb5dc19 "pdflatex"
   (generated)
   "main.aux"
   "main.bcf"
