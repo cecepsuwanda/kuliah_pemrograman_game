@@ -333,22 +333,6 @@
       \verb https://docs.unity3d.com/Manual/Navigation.html
       \endverb
     \endentry
-    \entry{unity-platform-texture}{online}{}{}
-      \field{sortinit}{U}
-      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labeltitlesource}{title}
-      \field{note}{Diakses 2025-10-09}
-      \field{title}{Unity Manual: Platform-specific texture overrides}
-      \field{year}{2024}
-      \verb{urlraw}
-      \verb https://docs.unity3d.com/Manual/class-TextureImporterOverride.html
-      \endverb
-      \verb{url}
-      \verb https://docs.unity3d.com/Manual/class-TextureImporterOverride.html
-      \endverb
-    \endentry
     \entry{unity-prefab}{online}{}{}
       \field{sortinit}{U}
       \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
