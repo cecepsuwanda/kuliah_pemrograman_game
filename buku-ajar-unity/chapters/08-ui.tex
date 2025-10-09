@@ -3,14 +3,42 @@
 \chapter{Minggu 8: Antarmuka Pengguna (UI)}
 
 \section{Kanvas dan Elemen UI}
-Unity menyediakan dua teknologi utama untuk UI, yakni UGUI dan UI Toolkit, yang masing-masing cocok untuk kebutuhan produksi yang berbeda. UGUI lazim digunakan untuk HUD dan menu interaktif, sementara UI Toolkit menawarkan arsitektur modern berbasis gaya dan markup. Pemilihan teknologi harus mempertimbangkan target platform, kebutuhan kinerja, dan alur kerja tim \parencite{unity-ui}.
+Unity menyediakan dua teknologi utama untuk UI, yakni UGUI dan UI Toolkit, yang masing-masing cocok untuk kebutuhan produksi yang berbeda. UGUI lazim digunakan untuk HUD dan menu interaktif, sementara UI Toolkit menawarkan arsitektur modern berbasis gaya dan markup yang kaya. Pemilihan teknologi harus mempertimbangkan target platform, kebutuhan kinerja, dan alur kerja tim \parencite{unity-ui}.
 
-Struktur kanvas memengaruhi performa karena perubahan tata letak dapat memicu perhitungan ulang yang mahal. Menjaga hierarki UI tetap dangkal dan meminimalkan penghitungan ulang tata letak adalah praktik yang direkomendasikan. Penggunaan \textit{Sprite Atlas} dan batching juga membantu menjaga laju bingkai konsisten pada perangkat terbatas \parencite{unity-ui}.
+Struktur kanvas sangat memengaruhi performa karena perubahan tata letak dapat memicu perhitungan ulang yang mahal. Menjaga hierarki UI tetap dangkal dan meminimalkan \textit{layout rebuild} adalah praktik yang direkomendasikan untuk menjaga laju bingkai. Penggunaan \textit{Sprite Atlas}, batching, dan strategi \textit{virtualization} untuk daftar panjang membantu menjaga kinerja pada perangkat terbatas \parencite{unity-ui}.
+
+\begin{table}[h]
+  \centering
+  \caption{UGUI vs UI Toolkit (ringkas)}
+  \begin{tabularx}{\textwidth}{@{}lXX@{}}
+    \toprule
+    Aspek & UGUI & UI Toolkit \\
+    \midrule
+    Model UI & GameObject/Canvas & DOM-like, USS/ UXML \\
+    Performa & Baik untuk HUD, perlu optimasi canvas & Skalabilitas tinggi, layout efisien \\
+    Styling & Manual, material/sprite & CSS-like (USS), tema \\
+    Alur kerja & Visual editor, Prefab & UI Builder, markup UXML \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
 
 \section{Membangun HUD}
-HUD menyediakan informasi status yang kritikal seperti kesehatan, skor, dan navigasi. Desain yang baik mengutamakan keterbacaan, hierarki visual, dan responsivitas terhadap berbagai resolusi layar. Pengujian aksesibilitas—misalnya kontras warna dan ukuran tipografi—meningkatkan inklusivitas pengalaman bermain \parencite{unity-ui}.
+HUD menyediakan informasi status kritikal seperti kesehatan, skor, dan navigasi. Desain yang baik mengutamakan keterbacaan, hierarki visual yang jelas, dan responsivitas terhadap berbagai resolusi layar. Pengujian aksesibilitas—misalnya kontras warna, ukuran tipografi, dan fokus keyboard—meningkatkan inklusivitas pengalaman bermain \parencite{unity-ui}.
 
-Integrasi HUD dengan sistem permainan harus menghindari ketergantungan siklik dengan logika inti. Penerapan \textit{event-driven} atau \textit{data binding} mengurangi keterhubungan kuat dan memudahkan penggantian komponen. Pendekatan ini juga membuat UI lebih mudah diuji dan diperluas di masa depan \parencite{unity-ui}.
+Integrasi HUD dengan sistem permainan perlu menghindari ketergantungan siklik dengan logika inti. Pendekatan \textit{event-driven} atau \textit{data binding} mengurangi keterhubungan kuat dan memudahkan penggantian komponen serta pengujian. Dengan pemisahan yang baik, UI menjadi lebih mudah dipelihara dan diperluas di masa depan \parencite{unity-ui}.
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[node distance=2.6cm,>=Stealth,thick]
+    \tikzstyle{blk}=[rectangle, draw, rounded corners, minimum width=3.1cm, minimum height=1cm, align=center]
+    \node[blk] (game) {Logika Game};
+    \node[blk, right of=game] (events) {Event/Data Model};
+    \node[blk, right of=events] (hud) {HUD (UGUI/UI Toolkit)};
+    \draw[->] (game) -- (events);
+    \draw[->] (events) -- (hud);
+  \end{tikzpicture}
+  \caption{Alur integrasi HUD berbasis event/data untuk mengurangi keterhubungan kuat.}
+\end{figure}
 
 \onlyinsubfile{\printbibliography}
 \end{document}

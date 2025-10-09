@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2025.10.9)  9 OCT 2025 23:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2025.10.9)  9 OCT 2025 23:56
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1589,6 +1589,11 @@ Package biblatex Warning: Using fallback definition for \mkbibdateshort.
 (biblatex)                for \mkbibdateshort.
 
 
+
+[17
+
+]
+
 Package biblatex Warning: Using fallback definition for \mkbibdateshort.
 (biblatex)                The command should be defined in the .lbx file.
 (biblatex)                If you see this message, the .lbx file could not be
@@ -1597,13 +1602,7 @@ Package biblatex Warning: Using fallback definition for \mkbibdateshort.
 
 ) (./chapters/09-audio.tex
 
-[17
-
-]
-
-[18
-
-]
+[18]
 Bab 9.
 
 Package biblatex Warning: Using fallback definition for \mkbibdateshort.
@@ -1642,7 +1641,9 @@ Package biblatex Warning: Using fallback definition for \mkbibdateshort.
 
 ) (./chapters/10-ai-dasar.tex
 
-[19]
+[19
+
+]
 
 [20
 
@@ -2041,10 +2042,10 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 29978 strings out of 474054
- 572313 string characters out of 5737817
+ 30001 strings out of 474054
+ 572648 string characters out of 5737817
  1379767 words of memory out of 5000000
- 52592 multiletter control sequences out of 15000+600000
+ 52613 multiletter control sequences out of 15000+600000
  571463 words of font info for 61 fonts, out of 8000000 for 9000
  600 hyphenation exceptions out of 8191
  84i,10n,91p,1181b,1781s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -2060,10 +2061,10 @@ ec/ecbx1200.600pk> </home/ubuntu/.texlive2025/texmf-var/fonts/pk/ljfour/jknappe
 n/ec/ecbx2488.600pk> </home/ubuntu/.texlive2025/texmf-var/fonts/pk/ljfour/jknap
 pen/ec/ecrm1440.600pk> </home/ubuntu/.texlive2025/texmf-var/fonts/pk/ljfour/jkn
 appen/ec/ecrm2074.600pk>
-Output written on main.pdf (30 pages, 209335 bytes).
+Output written on main.pdf (30 pages, 211310 bytes).
 PDF statistics:
- 1125 PDF objects out of 1200 (max. 8388607)
- 645 compressed objects within 7 object streams
- 116 named destinations out of 1000 (max. 500000)
+ 1130 PDF objects out of 1200 (max. 8388607)
+ 649 compressed objects within 7 object streams
+ 118 named destinations out of 1000 (max. 500000)
  309 words of extra memory for PDF output out of 10000 (max. 10000000)
 
