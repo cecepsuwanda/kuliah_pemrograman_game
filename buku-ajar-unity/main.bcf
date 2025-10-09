@@ -2426,7 +2426,10 @@
     <bcf:citekey order="36" intorder="1">unity-rigidbody</bcf:citekey>
     <bcf:citekey order="37" intorder="1">unity-rigidbody</bcf:citekey>
     <bcf:citekey order="38" intorder="1">unity-collider</bcf:citekey>
+    <bcf:citekey order="38" intorder="2">unity-physic-material</bcf:citekey>
     <bcf:citekey order="39" intorder="1">unity-collider</bcf:citekey>
+    <bcf:citekey order="39" intorder="2">unity-layer-collision</bcf:citekey>
+    <bcf:citekey order="39" intorder="3">unity-collision-detection</bcf:citekey>
     <bcf:citekey order="40" intorder="1">unity-animator</bcf:citekey>
     <bcf:citekey order="40" intorder="2">unity-state-machines</bcf:citekey>
     <bcf:citekey order="41" intorder="1">unity-animator</bcf:citekey>

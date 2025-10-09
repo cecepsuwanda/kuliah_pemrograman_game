@@ -205,6 +205,22 @@
       \verb https://docs.unity3d.com/Manual/Audio.html
       \endverb
     \endentry
+    \entry{unity-collision-detection}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: Collision detection modes}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Manual/class-Rigidbody.html#collisionDetection
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Manual/class-Rigidbody.html#collisionDetection
+      \endverb
+    \endentry
     \entry{unity-coroutines}{online}{}{}
       \field{sortinit}{U}
       \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
@@ -301,6 +317,22 @@
       \verb https://docs.unity3d.com/Manual/index.html
       \endverb
     \endentry
+    \entry{unity-layer-collision}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: Layer-based collision detection}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Manual/LayerBasedCollision.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Manual/LayerBasedCollision.html
+      \endverb
+    \endentry
     \entry{unity-lighting}{online}{}{}
       \field{sortinit}{U}
       \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
@@ -331,6 +363,22 @@
       \endverb
       \verb{url}
       \verb https://docs.unity3d.com/Manual/Navigation.html
+      \endverb
+    \endentry
+    \entry{unity-physic-material}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: Physic Material}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Manual/class-PhysicMaterial.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Manual/class-PhysicMaterial.html
       \endverb
     \endentry
     \entry{unity-platform-texture}{online}{}{}
