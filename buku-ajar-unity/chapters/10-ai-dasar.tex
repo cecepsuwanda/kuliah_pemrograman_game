@@ -1,0 +1,16 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\chapter{Minggu 10: Kecerdasan Buatan (AI) dasar}
+
+\section{Agen Sederhana dan Navigasi}
+Penerapan AI dasar dalam permainan sering dimulai dari agen yang menavigasi lingkungan menuju target. Unity menyediakan sistem navigasi dan \textit{pathfinding} berbasis NavMesh yang memudahkan perencanaan rute pada medan yang dapat dilalui. Dengan memanfaatkan \texttt{NavMeshAgent}, pengembang dapat mengatur kecepatan, akselerasi, dan penghindaran hambatan secara deklaratif \parencite{unity-navmesh}.
+
+Desain perilaku harus mempertimbangkan kondisi lingkungan dinamis seperti pintu yang terbuka tutup atau objek bergerak. Pembaruan NavMesh sebagian (\textit{carving}) dan pengendalian tujuan sementara dapat meningkatkan naturalitas gerak. Pengujian pada peta representatif mengurangi kejutan saat berpindah ke level yang lebih kompleks \parencite{unity-navmesh}.
+
+\section{Skrip Perilaku Dasar}
+Selain navigasi, agen membutuhkan logika pengambilan keputusan untuk memilih aksi berdasarkan keadaan. Pola \textit{finite state machine} (FSM) lazim digunakan untuk mengelola peralihan antar keadaan seperti \enquote{patroli}, \enquote{mengejar}, dan \enquote{kembali}. Pendekatan modular dengan antarmuka yang jelas memudahkan perluasan perilaku tanpa menambah hutang teknis \parencite{unity-state-machines,gpp-nystrom}.
+
+Pemisahan antara deteksi (misalnya jarak dan garis pandang) dan tindakan (misalnya bergerak atau menyerang) membantu menjaga keterbacaan dan pengujian. Dokumentasi diagram FSM serta parameter transisi mempercepat sinkronisasi dengan tim desain. Praktik ini mengurangi risiko regresi ketika menambahkan keadaan baru di iterasi berikutnya \parencite{gpp-nystrom}.
+
+\onlyinsubfile{\printbibliography}
+\end{document}

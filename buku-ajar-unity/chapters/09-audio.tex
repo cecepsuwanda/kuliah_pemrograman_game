@@ -1,0 +1,16 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\chapter{Minggu 9: Audio dalam Unity}
+
+\section{Sistem Audio}
+Sistem audio Unity meliputi pemutaran klip, pengendalian volume, dan pemrosesan spasial. \texttt{AudioSource} bertanggung jawab atas pemutaran, sementara pengaturan proyek dan \texttt{AudioListener} menentukan bagaimana pemain menerima suara. Penempatan sumber audio dan pengaturan jarak turut memengaruhi persepsi kedalaman dan imersi \parencite{unity-audio,unity-audiosource}.
+
+Strategi manajemen audio yang efektif mencakup penggunaan mixer, grup, dan efek untuk menjaga konsistensi loudness di seluruh permainan. Penggunaan kompresi yang tepat pada aset audio membantu mengurangi ukuran gim tanpa mengorbankan kualitas yang berarti. Dokumentasi pengaturan audio mempermudah proses pascaproduksi dan porting \parencite{unity-audio}.
+
+\section{Musik dan Efek Suara}
+Musik latar mengatur suasana, sementara efek suara memberikan umpan balik instan atas aksi pemain dan peristiwa permainan. Sinkronisasi musik dengan transisi adegan atau keadaan permainan memperkuat koherensi naratif dan ritme pengalaman. Pipeline \textit{import} dan normalisasi level harus konsisten agar perbedaan dinamika tidak mengganggu pemain \parencite{unity-audio}.
+
+Penggunaan parameter dalam mixer atau skrip memungkinkan penyesuaian dinamis, seperti memudarkan musik saat dialog atau memperkuat efek saat momen penting. Pengujian pada berbagai perangkat memastikan hasil yang konsisten dan menghindari kliping atau distorsi. Praktik ini membantu menjaga kualitas produksi secara menyeluruh \parencite{unity-audiosource}.
+
+\onlyinsubfile{\printbibliography}
+\end{document}

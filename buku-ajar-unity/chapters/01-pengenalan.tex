@@ -1,0 +1,21 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\chapter{Pengenalan Pengembangan Game dan Unity}
+
+\section{Konsep Dasar Game}
+Game adalah sistem interaktif yang mengombinasikan aturan, tujuan, umpan balik, dan aksi pemain untuk membentuk pengalaman yang bermakna. Dalam konteks komputasi, game merepresentasikan dunia simulatif dengan keadaan yang berubah-ubah sebagai respons terhadap input dan logika yang sudah dirancang. Perancangan loop inti (core loop) yang jelas—misalnya siklus mengeksplorasi, beraksi, dan menerima umpan balik—menjadi kunci untuk menjaga keterlibatan pemain dari waktu ke waktu \parencite{gpp-nystrom}.
+
+Unit pembangun dari sebuah game digital ialah mesin permainan (game engine) yang menyediakan abstraksi grafis, audio, input, fisika, dan sistem aset. Penggunaan game engine mempercepat pengembangan karena pengembang berfokus pada konten dan mekanika alih-alih membangun subsistem rendah-level dari awal. Unity merupakan salah satu game engine yang banyak digunakan di industri dan pendidikan karena ekosistemnya luas, dokumentasi komprehensif, serta dukungan lintas platform \parencite{unity-manual-overview}.
+
+\section{Genre Game}
+Genre game memberikan taksonomi konseptual untuk mengelompokkan mekanika, ritme permainan, dan ekspektasi pengguna. Klasifikasi ini membantu tim menentukan sistem inti yang perlu diimplementasikan, seperti pergerakan karakter, sistem misi, atau manajemen sumber daya. Dengan memilih genre sejak awal, tim dapat membuat keputusan teknis yang konsisten terkait kamera, antarmuka pengguna, dan model interaksi.
+
+Walau genre bersifat deskriptif, pengembang tetap memiliki ruang untuk inovasi mekanika di dalam dan lintas genre. Strategi desain yang efektif adalah memetakan fitur-fitur genre ke pola implementasi yang dapat digunakan kembali, sehingga risiko teknis lebih terkendali dan proses iterasi menjadi cepat. Pendekatan berbasis pola (pattern-driven) memudahkan dokumentasi dan transfer pengetahuan dalam tim \parencite{gpp-nystrom}.
+
+\section{Antarmuka dan Proyek Unity}
+Editor Unity terdiri atas panel-panel utama seperti \textit{Hierarchy}, \textit{Scene}, \textit{Inspector}, \textit{Project}, dan \textit{Console}. Setiap panel melayani tugas yang berbeda: struktur objek diatur melalui \textit{Hierarchy}, komposisi visual di \textit{Scene}, properti di \textit{Inspector}, manajemen aset di \textit{Project}, dan pesan sistem di \textit{Console}. Pemahaman fungsi tiap panel mempercepat alur kerja dan mengurangi kesalahan pengaturan saat membangun fitur permainan \parencite{unity-manual-overview}.
+
+Struktur proyek Unity lazimnya meliputi folder untuk \textit{Assets}, \textit{Packages}, dan konfigurasi \textit{ProjectSettings}. Penataan aset yang konsisten—misalnya memisahkan \textit{Art}, \textit{Audio}, \textit{Prefabs}, dan \textit{Scenes}—memudahkan kolaborasi serta mengurangi konflik integrasi. Mengikuti struktur yang direkomendasikan dokumentasi resmi membantu menjaga kinerja editor sekaligus memastikan kompatibilitas lintas versi \parencite{unity-project-structure}.
+
+\onlyinsubfile{\printbibliography}
+\end{document}

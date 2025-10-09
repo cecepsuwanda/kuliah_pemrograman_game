@@ -1,0 +1,16 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\chapter{Minggu 8: Antarmuka Pengguna (UI)}
+
+\section{Kanvas dan Elemen UI}
+Unity menyediakan dua teknologi utama untuk UI, yakni UGUI dan UI Toolkit, yang masing-masing cocok untuk kebutuhan produksi yang berbeda. UGUI lazim digunakan untuk HUD dan menu interaktif, sementara UI Toolkit menawarkan arsitektur modern berbasis gaya dan markup. Pemilihan teknologi harus mempertimbangkan target platform, kebutuhan kinerja, dan alur kerja tim \parencite{unity-ui}.
+
+Struktur kanvas memengaruhi performa karena perubahan tata letak dapat memicu perhitungan ulang yang mahal. Menjaga hierarki UI tetap dangkal dan meminimalkan penghitungan ulang tata letak adalah praktik yang direkomendasikan. Penggunaan \textit{Sprite Atlas} dan batching juga membantu menjaga laju bingkai konsisten pada perangkat terbatas \parencite{unity-ui}.
+
+\section{Membangun HUD}
+HUD menyediakan informasi status yang kritikal seperti kesehatan, skor, dan navigasi. Desain yang baik mengutamakan keterbacaan, hierarki visual, dan responsivitas terhadap berbagai resolusi layar. Pengujian aksesibilitas—misalnya kontras warna dan ukuran tipografi—meningkatkan inklusivitas pengalaman bermain \parencite{unity-ui}.
+
+Integrasi HUD dengan sistem permainan harus menghindari ketergantungan siklik dengan logika inti. Penerapan \textit{event-driven} atau \textit{data binding} mengurangi keterhubungan kuat dan memudahkan penggantian komponen. Pendekatan ini juga membuat UI lebih mudah diuji dan diperluas di masa depan \parencite{unity-ui}.
+
+\onlyinsubfile{\printbibliography}
+\end{document}

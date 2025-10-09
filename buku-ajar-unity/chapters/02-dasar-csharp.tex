@@ -1,0 +1,21 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\chapter{Dasar Pemrograman C\# di Unity}
+
+\section{Struktur Skrip C\#}
+Skrip di Unity umumnya berupa kelas C\# yang mewarisi \texttt{MonoBehaviour} dan terpasang pada \textit{GameObject}. Struktur ini memungkinkan skrip berpartisipasi dalam siklus hidup Unity dan berinteraksi dengan komponen lain di dalam adegan. Konvensi penamaan yang konsisten dan pembagian tanggung jawab yang jelas antar kelas meningkatkan keterbacaan serta kemudahan pemeliharaan \parencite{mslearn-csharp-guide}.
+
+Setiap berkas skrip biasanya memuat \textit{namespace}, deklarasi kelas, bidang (field), dan metode. Praktik yang disarankan adalah menghindari logika bercabang berlebihan di satu kelas, serta memecah perilaku ke dalam komponen yang kohesif. Dengan demikian, proses pengujian dan penggantian komponen menjadi lebih terstruktur dan dapat diprediksi \parencite{mslearn-csharp-guide}.
+
+\section{Fungsi \texttt{Start()} dan \texttt{Update()}}
+Unity memanggil \texttt{Start()} sekali ketika komponen diinisialisasi secara aktif, dan \texttt{Update()} pada setiap frame saat komponen diaktifkan. Kedua titik kait (hook) ini memfasilitasi inisialisasi sumber daya serta pemutakhiran logika berbasis waktu atau input. Penggunaan \texttt{FixedUpdate()} disarankan untuk interaksi fisika karena intervalnya tetap, sehingga simulasi lebih stabil \parencite{unity-scripting-start-update}.
+
+Desain yang baik menempatkan inisialisasi yang berat di \texttt{Awake()} atau \texttt{Start()} dan meminimalkan pekerjaan tiap frame di \texttt{Update()}. Untuk mengurangi beban CPU, gunakan \textit{early return}, penjadwalan ulang proses, atau \textit{coroutines} ketika memungkinkan. Pemisahan logika peristiwa dan logika status juga membantu mencegah kompleksitas tak terkelola \parencite{unity-scripting-start-update}.
+
+\section{Variabel dan Tipe Data}
+C\# menyediakan tipe nilai dan tipe referensi yang digunakan untuk menyatakan keadaan objek permainan. Penggunaan tipe yang tepat—misalnya \texttt{float} untuk koordinat dan \texttt{Vector3} dari API Unity untuk posisi—meningkatkan kejelasan maksud dan mengurangi kebutuhan konversi. Selain itu, modifikator akses seperti \texttt{public} dan \texttt{private} mengatur enkapsulasi sehingga antar komponen berinteraksi melalui antarmuka yang jelas \parencite{mslearn-csharp-guide}.
+
+Di Unity, bidang bertanda \texttt{[SerializeField]} atau bertipe \texttt{public} dapat diedit melalui \textit{Inspector}, memudahkan penyetelan tanpa mengubah kode. Praktik ini mendorong pembuatan komponen yang dapat digunakan kembali dengan konfigurasi yang fleksibel. Pendekatan berorientasi data ini menyederhanakan iterasi desain karena perubahan ringan tidak memerlukan siklus kompilasi penuh \parencite{mslearn-csharp-guide}.
+
+\onlyinsubfile{\printbibliography}
+\end{document}

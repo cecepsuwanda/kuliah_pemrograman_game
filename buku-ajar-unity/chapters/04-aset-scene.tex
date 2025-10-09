@@ -1,0 +1,21 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\chapter{Manajemen Aset dan Scene}
+
+\section{Impor Aset}
+Unity mendukung impor beragam format aset seperti gambar, audio, dan model 3D. Setiap tipe aset memiliki pengaturan impor tersendiri—misalnya kompresi tekstur, format audio, dan skala model—yang memengaruhi kualitas serta kinerja saat runtime. Pengaturan yang tepat membantu menyeimbangkan kualitas visual dengan ukuran berkas dan waktu muat \parencite{unity-import-assets}.
+
+Pengembang dianjurkan untuk menetapkan preset impor agar konsisten di seluruh proyek, terutama dalam tim besar. Penggunaan \textit{naming convention} dan pemisahan folder berdasarkan tipe aset mempercepat proses integrasi. Dokumentasi konfigurasi impor juga mengurangi kesalahan ketika memperbarui aset dari sumber eksternal \parencite{unity-project-structure,unity-import-assets}.
+
+\section{Pengaturan Scene}
+Scene merepresentasikan susunan objek permainan pada konteks tertentu, seperti level atau menu utama. Tim dapat membagi fitur ke beberapa scene untuk mempermudah pemuatan bertahap dan pengujian terisolasi. Manajemen ketergantungan antar scene menjadi penting untuk memastikan alur transisi yang mulus dan bebas kebocoran sumber daya \parencite{unity-scenes}.
+
+Fitur \textit{additive scene loading} memungkinkan beberapa scene aktif bersamaan, misalnya memisahkan geometri statis dari sistem UI. Pendekatan ini memudahkan organisasi kerja lintas disiplin dan mengurangi konflik saat kontrol versi. Pemanfaatan pengaturan build dan indeks scene membantu memastikan urutan pemuatan yang konsisten \parencite{unity-scenes}.
+
+\section{Pencahayaan Dasar}
+Sistem pencahayaan menentukan persepsi kedalaman, suasana, dan keterbacaan komposisi visual. Unity menyediakan \textit{realtime lighting} untuk sumber dinamis dan \textit{baked lighting} untuk optimasi pada geometri statis. Pengaturan intensitas, warna, dan \textit{lightmap} harus diseimbangkan agar hasil visual memadai tanpa membebani perangkat target \parencite{unity-lighting}.
+
+Penggunaan \textit{reflection probes} dan \textit{light probes} meningkatkan realisme pada objek bergerak tanpa biaya komputasi yang berlebihan. Proses kalibrasi perlu mempertimbangkan material, jarak kamera, dan kondisi perangkat keras. Praktik ini mendukung pengalaman visual yang konsisten di berbagai platform \parencite{unity-lighting}.
+
+\onlyinsubfile{\printbibliography}
+\end{document}

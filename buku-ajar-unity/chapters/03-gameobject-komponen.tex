@@ -1,0 +1,21 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\chapter{GameObject dan Komponen Unity}
+
+\section{Transform}
+Setiap \textit{GameObject} memiliki komponen \texttt{Transform} yang menyimpan posisi, rotasi, dan skala dalam ruang dunia atau lokal. Manipulasi \texttt{Transform} menjadi cara utama menggerakkan objek dan menyusun hierarki untuk membentuk struktur kompleks. Pemahaman sistem koordinat dan hierarki orang tua–anak sangat penting untuk menghindari perilaku tak terduga saat menerapkan animasi dan fisika \parencite{unity-transform,unity-gameobjects}.
+
+Operasi \texttt{Transform} harus mempertimbangkan \textit{frame rate} dan sistem fisika untuk menghindari ketidakselarasan. Untuk pergerakan fisik, gunakan gaya pada \texttt{Rigidbody} alih-alih mengubah \texttt{Transform} secara langsung, kecuali untuk teleporasi atau penempatan awal. Praktik ini memastikan integrasi yang konsisten dengan simulasi tumbukan dan gravitasi \parencite{unity-transform}.
+
+\section{Rigidbody dan Collider}
+\texttt{Rigidbody} menambahkan dinamika fisika pada objek, memungkinkan penerapan gaya, torsi, dan pengaruh gravitasi. Bersama \texttt{Collider}, sistem ini memungkinkan pendeteksian tumbukan dan respon fisik yang realistis sesuai properti material. Pengaturan massa, drag, dan kendala perlu diseimbangkan untuk mencapai stabilitas simulasi \parencite{unity-rigidbody,unity-collider}.
+
+Terdapat perbedaan antara \textit{dynamic} dan \textit{kinematic} \texttt{Rigidbody} yang berdampak pada bagaimana objek berinteraksi. Collider \textit{trigger} cocok untuk mendeteksi masuk-keluar wilayah tanpa respons fisika langsung, sedangkan collider non-\textit{trigger} digunakan untuk tumbukan nyata. Pemilihan kombinasi ini harus disesuaikan dengan tujuan desain interaksi dalam permainan \parencite{unity-collider}.
+
+\section{Prefab}
+\textit{Prefab} menyediakan cetak biru objek yang dapat diinstansiasi kembali dengan konsisten di berbagai adegan. Dengan menyimpan konfigurasi komponen dalam sebuah aset, tim dapat memperbarui perilaku dan tampilan banyak instans melalui satu sumber kebenaran. Fitur varian dan override memungkinkan kustomisasi tanpa kehilangan hubungan ke definisi utama \parencite{unity-prefab}.
+
+Penggunaan prefab memfasilitasi arsitektur komponen yang modular dan dapat diuji. Praktik umum adalah memisahkan logika, data, dan presentasi agar perubahan pada satu aspek tidak menimbulkan efek samping yang luas. Konvensi penamaan dan struktur folder yang rapi membantu menemukan aset dengan cepat selama pengembangan \parencite{unity-prefab,unity-project-structure}.
+
+\onlyinsubfile{\printbibliography}
+\end{document}

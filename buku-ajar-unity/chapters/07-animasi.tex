@@ -1,0 +1,16 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\chapter{Minggu 7: Animasi Game}
+
+\section{Animator dan Animator Controller}
+Sistem Animator mengelola keadaan animasi melalui grafik keadaan (state machine) dan transisi. \textit{Animator Controller} memetakan parameter ke peralihan antar keadaan sehingga animasi dapat merespons input dan logika permainan. Dengan desain parameter yang ringkas, kompleksitas transisi dapat ditekan tanpa mengorbankan ekspresivitas \parencite{unity-animator,unity-state-machines}.
+
+Penggunaan lapisan (layers) dan penggabungan (blending) memungkinkan kombinasi animasi sebagian tubuh, seperti menjalankan animasi lari sambil mengayunkan senjata. Penyetelan kurva transisi dan waktu \textit{exit} memengaruhi keluwesan dan ketepatan respons animasi. Dokumentasi graf keadaan membantu kolaborasi antara desainer dan programmer \parencite{unity-animator}.
+
+\section{Animasi Sprite dan 3D}
+Untuk sprite 2D, klip animasi sering dibentuk dari rangkaian gambar atau \textit{sprite sheet}, sedangkan pada 3D, klip animasi berasal dari data \textit{rigging} dan \textit{skinning}. Keduanya memanfaatkan \textit{clips} dan \textit{timelines} yang dapat disusun ulang untuk berbagai konteks. Konsistensi \textit{frame rate} dan skala sangat penting untuk menghindari ketidakselarasan gerakan \parencite{unity-animation-clips}.
+
+Teknik \textit{root motion} dapat digunakan untuk menyelaraskan perpindahan karakter di dunia dengan pergerakan pada klip, mengurangi selisih antara niat desain dan hasil simulasi. Validasi terhadap kolider dan navmesh diperlukan agar animasi tidak menyebabkan penetrasi geometri atau lompatan yang tidak realistis. Dengan siklus iterasi yang baik, kualitas presentasi dapat ditingkatkan tanpa biaya komputasi berlebihan \parencite{unity-animator}.
+
+\onlyinsubfile{\printbibliography}
+\end{document}

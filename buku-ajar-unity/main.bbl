@@ -1,0 +1,394 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global/global}
+    \entry{mslearn-csharp-guide}{online}{}{}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{C\# Programming Guide}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://learn.microsoft.com/dotnet/csharp/programming-guide/
+      \endverb
+      \verb{url}
+      \verb https://learn.microsoft.com/dotnet/csharp/programming-guide/
+      \endverb
+    \endentry
+    \entry{gpp-nystrom}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=26313e6493577f16e529ef2698d1a15c}{%
+           family={Nystrom},
+           familyi={N\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{26313e6493577f16e529ef2698d1a15c}
+      \strng{fullhash}{26313e6493577f16e529ef2698d1a15c}
+      \strng{fullhashraw}{26313e6493577f16e529ef2698d1a15c}
+      \strng{bibnamehash}{26313e6493577f16e529ef2698d1a15c}
+      \strng{authorbibnamehash}{26313e6493577f16e529ef2698d1a15c}
+      \strng{authornamehash}{26313e6493577f16e529ef2698d1a15c}
+      \strng{authorfullhash}{26313e6493577f16e529ef2698d1a15c}
+      \strng{authorfullhashraw}{26313e6493577f16e529ef2698d1a15c}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Open access, Diakses 2025-10-09}
+      \field{title}{Game Programming Patterns}
+      \field{year}{2014}
+      \verb{urlraw}
+      \verb https://gameprogrammingpatterns.com/
+      \endverb
+      \verb{url}
+      \verb https://gameprogrammingpatterns.com/
+      \endverb
+    \endentry
+    \entry{unity-animation-clips}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: Animation Clips}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Manual/AnimationClips.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Manual/AnimationClips.html
+      \endverb
+    \endentry
+    \entry{unity-animator}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: Animator Controllers}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Manual/Animator.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Manual/Animator.html
+      \endverb
+    \endentry
+    \entry{unity-audio}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: Audio}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Manual/Audio.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Manual/Audio.html
+      \endverb
+    \endentry
+    \entry{unity-gameobjects}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: GameObjects}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Manual/GameObjects.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Manual/GameObjects.html
+      \endverb
+    \endentry
+    \entry{unity-import-assets}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: Importing assets}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Manual/ImportingAssets.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Manual/ImportingAssets.html
+      \endverb
+    \endentry
+    \entry{unity-input-system}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: Input System}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Packages/com.unity.inputsystem@1.7/manual/
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Packages/com.unity.inputsystem@1.7/manual/
+      \endverb
+    \endentry
+    \entry{unity-manual-overview}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: Introduction to Unity}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Manual/index.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Manual/index.html
+      \endverb
+    \endentry
+    \entry{unity-lighting}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: Lighting}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Manual/Lighting.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Manual/Lighting.html
+      \endverb
+    \endentry
+    \entry{unity-navmesh}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: Navigation and pathfinding}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Manual/Navigation.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Manual/Navigation.html
+      \endverb
+    \endentry
+    \entry{unity-prefab}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: Prefabs}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Manual/Prefabs.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Manual/Prefabs.html
+      \endverb
+    \endentry
+    \entry{unity-project-structure}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: Project structure and files}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Manual/StructureOfAProject.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Manual/StructureOfAProject.html
+      \endverb
+    \endentry
+    \entry{unity-scenes}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: Scenes}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Manual/CreatingScenes.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Manual/CreatingScenes.html
+      \endverb
+    \endentry
+    \entry{unity-state-machines}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: State machines (Animator)}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Manual/StateMachineBasics.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Manual/StateMachineBasics.html
+      \endverb
+    \endentry
+    \entry{unity-ui}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Manual: UI Toolkit and UGUI}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/Manual/UnityUI.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/Manual/UnityUI.html
+      \endverb
+    \endentry
+    \entry{unity-audiosource}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Scripting API: AudioSource}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/ScriptReference/AudioSource.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/ScriptReference/AudioSource.html
+      \endverb
+    \endentry
+    \entry{unity-collider}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Scripting API: Collider}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/ScriptReference/Collider.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/ScriptReference/Collider.html
+      \endverb
+    \endentry
+    \entry{unity-input-legacy}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Scripting API: Input}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/ScriptReference/Input.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/ScriptReference/Input.html
+      \endverb
+    \endentry
+    \entry{unity-scripting-start-update}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Scripting API: MonoBehaviour.Start, Update}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/ScriptReference/MonoBehaviour.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/ScriptReference/MonoBehaviour.html
+      \endverb
+    \endentry
+    \entry{unity-rigidbody}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Scripting API: Rigidbody}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/ScriptReference/Rigidbody.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/ScriptReference/Rigidbody.html
+      \endverb
+    \endentry
+    \entry{unity-transform}{online}{}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{note}{Diakses 2025-10-09}
+      \field{title}{Unity Scripting API: Transform}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.unity3d.com/ScriptReference/Transform.html
+      \endverb
+      \verb{url}
+      \verb https://docs.unity3d.com/ScriptReference/Transform.html
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

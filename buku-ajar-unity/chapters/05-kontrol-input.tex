@@ -1,0 +1,16 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\chapter{Minggu 5: Kontrol Pemain dan Input}
+
+\section{Pemrosesan Input}
+Unity menyediakan dua pendekatan utama untuk input: sistem lama (\textit{Legacy Input}) dan paket \textit{Input System} yang lebih modern. Keduanya memungkinkan pembacaan perangkat seperti keyboard, mouse, dan pengendali permainan, namun \textit{Input System} menawarkan pemetaan aksi yang lebih terstruktur. Pemilihan sistem hendaknya mempertimbangkan kebutuhan proyek, kompatibilitas platform, dan kemudahan pemeliharaan \parencite{unity-input-legacy,unity-input-system}.
+
+Pemetaan input berbasis aksi memisahkan niat pemain (misalnya \enquote{melompat}) dari perangkat fisik yang digunakan. Hal ini memudahkan dukungan multi-perangkat dan aksesibilitas, sekaligus menyederhanakan pengujian. Dokumentasi skema input yang konsisten mempercepat adaptasi anggota tim baru dan mengurangi regresi saat menambah kontrol baru \parencite{unity-input-system}.
+
+\section{Menggerakkan Objek}
+Pergerakan karakter atau objek dapat diimplementasikan melalui perubahan \texttt{Transform}, penerapan gaya pada \texttt{Rigidbody}, atau penggunaan karakter kontroler. Setiap pendekatan memiliki implikasi pada responsivitas dan konsistensi fisika yang dirasakan. Pemilihan metode harus diselaraskan dengan genre dan tujuan desain \parencite{unity-rigidbody,unity-transform}.
+
+Untuk menjaga stabilitas simulasi, gunakan \texttt{FixedUpdate()} ketika menggerakkan objek dengan fisika dan terapkan normalisasi vektor serta pembatasan kecepatan jika perlu. Teknik \textit{lerp} dan \textit{smooth damping} dapat meningkatkan rasa halus pada peralihan gerakan. Pengujian pada berbagai laju bingkai diperlukan untuk memastikan perilaku yang konsisten lintas perangkat \parencite{unity-transform}.
+
+\onlyinsubfile{\printbibliography}
+\end{document}
