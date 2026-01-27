@@ -1,0 +1,41 @@
+% ============================================================================
+% CH13.TEX - Bab 13: Build dan Deployment
+% ============================================================================
+
+\documentclass[../../main.tex]{subfiles}
+
+\begin{document}
+
+% Set counter hanya ketika kompilasi per-bab (standalone)
+\ifcsname subfiles@mainfile\endcsname\else
+    \setcounter{chapter}{12}
+\fi
+\chapter{Build dan Deployment}
+
+\section{Deskripsi Bab}
+
+Bab ini membahas tahap akhir pengembangan game: Build dan Deployment. 
+Kita akan mengekspor proyek \textbf{Space Survivor} menjadi file yang bisa dimainkan orang lain tanpa perlu menginstal Unity, khususnya menargetkan platform PC atau Web (HTML5).
+
+\section{Sub-CPMK Bab}
+
+Setelah mempelajari bab ini, mahasiswa diharapkan mampu:
+\begin{itemize}
+\item \textbf{Sub-CPMK13.1}: Mengkonfigurasi build settings
+\item \textbf{Sub-CPMK13.2}: Mengatur platform-specific settings
+\item \textbf{Sub-CPMK13.3}: Mengoptimalkan assets untuk target platform
+\item \textbf{Sub-CPMK13.4}: Membangun game untuk berbagai platform
+\item \textbf{Sub-CPMK13.5}: Mendeploy game ke platform distribusi
+\end{itemize}
+
+% Include sections
+\input{sec01}
+\input{sec02}
+\input{sec03}
+\input{sec04}
+\input{sec05}
+
+\input{latihan}
+\input{ringkasan}
+
+\end{document}

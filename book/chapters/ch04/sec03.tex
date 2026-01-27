@@ -1,0 +1,29 @@
+% ============================================================================
+% SEC03.TEX - Section 4.3: Menambahkan Komponen Fisika
+% ============================================================================
+
+\section{Menambahkan Komponen Fisika}
+
+Agar pesawat kita bisa berinteraksi dengan dunia fisika (bergerak dan bertabrakan), kita perlu menambahkan komponen.
+
+\subsection{Rigidbody 2D}
+
+Komponen \texttt{Rigidbody 2D} memberikan sifat fisika pada objek.
+
+\begin{enumerate}
+    \item Pilih GameObject \texttt{Player}.
+    \item Di Inspector, klik \textbf{Add Component}.
+    \item Cari \texttt{Rigidbody 2D}.
+    \item \textbf{PENTING}: Ubah \textbf{Gravity Scale} menjadi \texttt{0}. Kita ada di luar angkasa, jadi tidak boleh jatuh ke bawah!
+\end{enumerate}
+
+\subsection{Box Collider 2D}
+
+Kita juga perlu pembungkus agar pesawat bisa mendeteksi tabrakan.
+
+\begin{enumerate}
+    \item Di Inspector \texttt{Player}, tambahkan component \textbf{Polygon Collider 2D} atau \textbf{Box Collider 2D}.
+    \item Edit Collider (klik tombol \textit{Edit Collider}) agar pas dengan bentuk pesawat.
+\end{enumerate}
+
+Sekarang \texttt{Player} kita sudah memiliki tubuh fisik di dunia game.

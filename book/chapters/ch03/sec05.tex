@@ -1,0 +1,62 @@
+% ============================================================================
+% SEC05.TEX - Section 3.5: Object-Oriented Programming
+% ============================================================================
+
+\section{Object-Oriented Programming dalam Unity}
+
+\begin{learningoutcomes}
+\item Memahami konsep class dan object
+\item Menggunakan inheritance
+\item Memahami polymorphism
+\item Menerapkan encapsulation
+\end{learningoutcomes}
+
+\subsection{Class dan Object}
+
+\begin{lstlisting}[language={[Sharp]C}]
+public class Enemy : MonoBehaviour
+{
+    public int health = 100;
+    public float speed = 2f;
+    
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+    
+    private void Die()
+    {
+        Destroy(gameObject);
+    }
+}
+\end{lstlisting}
+
+\subsection{Inheritance}
+
+\begin{lstlisting}[language={[Sharp]C}]
+public class BaseEnemy : MonoBehaviour
+{
+    protected int health;
+    
+    public virtual void Attack()
+    {
+        Debug.Log("Enemy attacks");
+    }
+}
+
+public class MeleeEnemy : BaseEnemy
+{
+    public override void Attack()
+    {
+        Debug.Log("Melee attack");
+    }
+}
+\end{lstlisting}
+
+\begin{catatan}
+Gunakan inheritance untuk membuat hierarki class yang reusable. Gunakan virtual/override untuk polymorphism.
+\end{catatan}

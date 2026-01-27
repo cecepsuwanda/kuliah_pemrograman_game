@@ -1,0 +1,126 @@
+# Batch File Kompilasi Buku Ajar Pemrograman Game
+
+## File yang Dibuat
+
+- `compile_book.bat` - Batch file untuk kompilasi LaTeX
+- `README_COMPILE.md` - Dokumentasi penggunaan
+
+## Cara Menggunakan
+
+### 1. Kompilasi Seluruh Buku (Default)
+
+**Double-click** `compile_book.bat` atau jalankan dari Command Prompt:
+```
+compile_book.bat
+```
+atau
+```
+compile_book.bat all
+```
+
+**Output:** `output/Buku_Ajar_Pemrograman_Game.pdf`
+
+### 2. Kompilasi Bab Tertentu
+
+Kompilasi satu bab saja (misalnya Bab 1):
+```
+compile_book.bat 1
+```
+atau
+```
+compile_book.bat ch01
+```
+
+**Output:** `output/Bab_1_ch01.pdf`
+
+### 3. Kompilasi Range Bab
+
+Kompilasi beberapa bab berturut-turut (misalnya Bab 1 sampai 5):
+```
+compile_book.bat 1-5
+```
+
+**Output:** 
+- `output/Bab_1_ch01.pdf`
+- `output/Bab_2_ch02.pdf`
+- `output/Bab_3_ch03.pdf`
+- `output/Bab_4_ch04.pdf`
+- `output/Bab_5_ch05.pdf`
+
+### 4. Kompilasi Beberapa Bab Spesifik
+
+Kompilasi bab-bab tertentu saja (misalnya Bab 1, 3, dan 5):
+```
+compile_book.bat 1 3 5
+```
+
+**Output:**
+- `output/Bab_1_ch01.pdf`
+- `output/Bab_3_ch03.pdf`
+- `output/Bab_5_ch05.pdf`
+
+## Proses yang Dilakukan
+
+### Untuk Kompilasi Seluruh Buku:
+1. Membersihkan file sampah sebelumnya
+2. Kompilasi pertama dengan `pdflatex` (main.tex)
+3. Kompilasi `biber` untuk bibliography
+4. Kompilasi `makeglossaries` untuk glosarium
+5. Kompilasi kedua dengan `pdflatex`
+6. Kompilasi ketiga dengan `pdflatex` (untuk referensi yang benar)
+7. Memindahkan PDF ke folder `output/`
+8. Membersihkan semua file sampah
+
+### Untuk Kompilasi Per-Bab:
+1. Membersihkan file sampah sebelumnya
+2. Kompilasi pertama dengan `pdflatex` (chXX.tex)
+3. Kompilasi kedua dengan `pdflatex`
+4. Kompilasi ketiga dengan `pdflatex` (untuk referensi yang benar)
+5. Memindahkan PDF ke folder `output/`
+6. Membersihkan file sampah di folder bab
+
+## Output
+
+- **Seluruh buku:** `output/Buku_Ajar_Pemrograman_Game.pdf`
+- **Per-bab:** `output/Bab_X_chXX.pdf` (X = nomor bab, XX = ch01-ch13)
+
+## File Sampah yang Dibersihkan
+
+Batch file akan menghapus semua file berikut dari seluruh folder dan subfolder:
+- `.aux`, `.log`, `.out`, `.toc`, `.lof`, `.lot`
+- `.bbl`, `.bcf`, `.blg`, `.run.xml`
+- `.synctex.gz`, `.fdb_latexmk`, `.fls`
+- `.idx`, `.ilg`, `.ind`
+- `.glo`, `.gls`, `.glg`
+- Dan file sampah LaTeX lainnya
+
+## Catatan Penting
+
+1. **Kompilasi per-bab** menggunakan `subfiles` package, sehingga setiap bab dapat dikompilasi secara independen tanpa perlu mengkompilasi seluruh buku.
+
+2. **Kompilasi per-bab** tidak akan menghasilkan bibliography dan glosarium lengkap (hanya referensi yang digunakan di bab tersebut).
+
+3. Untuk mendapatkan bibliography dan glosarium lengkap, gunakan **kompilasi seluruh buku**.
+
+4. Pastikan semua file `.tex` dan `.bib` sudah ada sebelum menjalankan kompilasi.
+
+5. Jika terjadi error, periksa file `.log` yang sesuai untuk detail error.
+
+## Contoh Penggunaan
+
+```batch
+REM Kompilasi seluruh buku
+compile_book.bat
+
+REM Kompilasi Bab 1 saja
+compile_book.bat 1
+
+REM Kompilasi Bab 1 sampai 5
+compile_book.bat 1-5
+
+REM Kompilasi Bab 1, 3, dan 5
+compile_book.bat 1 3 5
+
+REM Kompilasi Bab 10 sampai 13
+compile_book.bat 10-13
+```

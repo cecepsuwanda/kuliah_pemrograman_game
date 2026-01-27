@@ -1,0 +1,104 @@
+% ============================================================================
+% APPC.TEX - Lampiran C: Unity API Reference
+% ============================================================================
+
+\chapter{Unity API Reference}
+
+\section{GameObject API}
+
+\begin{lstlisting}[language={[Sharp]C}]
+GameObject.Find("Name");
+GameObject.FindWithTag("Tag");
+GameObject.Instantiate(prefab);
+GameObject.Destroy(obj);
+GameObject.DontDestroyOnLoad(obj);
+gameObject.SetActive(true/false);
+gameObject.CompareTag("Tag");
+\end{lstlisting}
+
+\section{Component API}
+
+\begin{lstlisting}[language={[Sharp]C}]
+GetComponent<T>();
+GetComponentInChildren<T>();
+GetComponents<T>();
+GetComponentsInChildren<T>();
+AddComponent<T>();
+\end{lstlisting}
+
+\section{Transform API}
+
+\begin{lstlisting}[language={[Sharp]C}]
+transform.position;
+transform.localPosition;
+transform.rotation;
+transform.localRotation;
+transform.localScale;
+transform.Translate(direction);
+transform.Rotate(angles);
+transform.LookAt(target);
+transform.SetParent(parent);
+\end{lstlisting}
+
+\section{Physics API}
+
+\begin{lstlisting}[language={[Sharp]C}]
+Physics.Raycast(origin, direction, out hit, distance);
+Physics.RaycastAll(origin, direction, distance);
+Physics.OverlapSphere(center, radius);
+Physics.OverlapBox(center, halfExtents, orientation);
+Rigidbody.AddForce(force, ForceMode);
+Rigidbody.AddTorque(torque);
+\end{lstlisting}
+
+\section{Input API}
+
+\begin{lstlisting}[language={[Sharp]C}]
+Input.GetKey(KeyCode);
+Input.GetKeyDown(KeyCode);
+Input.GetKeyUp(KeyCode);
+Input.GetMouseButton(button);
+Input.GetAxis("Horizontal");
+Input.GetAxisRaw("Horizontal");
+Input.mousePosition;
+\end{lstlisting}
+
+\section{Time API}
+
+\begin{lstlisting}[language={[Sharp]C}]
+Time.time;              // Time since start
+Time.deltaTime;         // Time since last frame
+Time.fixedDeltaTime;    // Fixed timestep
+Time.timeScale;         // Time scale
+Time.unscaledDeltaTime; // Unscaled delta time
+\end{lstlisting}
+
+\section{Scene Management API}
+
+\begin{lstlisting}[language={[Sharp]C}]
+using UnityEngine.SceneManagement;
+
+SceneManager.LoadScene("SceneName");
+SceneManager.LoadScene(sceneIndex);
+SceneManager.LoadSceneAsync("SceneName");
+SceneManager.GetActiveScene();
+SceneManager.GetSceneByName("SceneName");
+\end{lstlisting}
+
+\section{Audio API}
+
+\begin{lstlisting}[language={[Sharp]C}]
+AudioSource.Play();
+AudioSource.PlayOneShot(clip);
+AudioSource.Stop();
+AudioSource.Pause();
+AudioSource.UnPause();
+AudioSource.PlayClipAtPoint(clip, position);
+\end{lstlisting}
+
+\section{Resources}
+
+\begin{itemize}
+\item Unity Scripting API: \url{https://docs.unity3d.com/ScriptReference/}
+\item Unity Manual: \url{https://docs.unity3d.com/Manual/}
+\end{itemize}

@@ -1,0 +1,35 @@
+% ============================================================================
+% SEC04.TEX - Section 12.4: Performance Bottlenecks
+% ============================================================================
+
+\section{Performance Bottlenecks}
+
+\begin{learningoutcomes}
+\item Mengidentifikasi common bottlenecks
+\item Memahami penyebab lag
+\item Menerapkan solusi untuk bottlenecks
+\end{learningoutcomes}
+
+\subsection{Common Bottlenecks}
+
+\begin{itemize}
+\item \textbf{Too many Draw Calls}: Terlalu banyak objek ter-render
+\item \textbf{Heavy Scripts}: Script yang terlalu kompleks
+\item \textbf{Physics Overload}: Terlalu banyak objek dengan Rigidbody
+\item \textbf{Memory Leaks}: Objek tidak di-destroy
+\item \textbf{Large Textures}: Texture terlalu besar
+\end{itemize}
+
+\subsection{Solutions}
+
+\begin{itemize}
+\item \textbf{Draw Calls}: Use batching, combine meshes
+\item \textbf{Scripts}: Optimize algorithms, cache references
+\item \textbf{Physics}: Reduce Rigidbody count, use layers
+\item \textbf{Memory}: Proper cleanup, object pooling
+\item \textbf{Textures}: Compress, resize appropriately
+\end{itemize}
+
+\begin{catatan}
+Bottlenecks berbeda untuk setiap game. Profiler membantu mengidentifikasi masalah spesifik project Anda.
+\end{catatan}

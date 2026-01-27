@@ -1,0 +1,150 @@
+% ============================================================================
+% SEC01.TEX
+% Section 1.1: Pengertian Game dan Elemen-elemen Game
+% ============================================================================
+
+\section{Pengertian Game dan Elemen-elemen Game}
+
+\begin{learningoutcomes}
+\item Mendefinisikan game secara formal dan akademis
+\item Mengidentifikasi elemen-elemen pembentuk game (Mechanics, Dynamics, Aesthetics)
+\item Menganalisis hubungan antara mechanics, dynamics, dan aesthetics
+\item Menerapkan konsep MDA framework dalam analisis game
+\end{learningoutcomes}
+
+\subsection{Definisi Game}
+
+\begin{definisi}[Game]
+Game adalah aktivitas terstruktur yang melibatkan satu atau lebih pemain, dengan tujuan yang jelas, aturan yang mengatur interaksi, dan umpan balik yang memberikan informasi tentang kemajuan menuju tujuan \cite{Hunicke2004}.
+\end{definisi}
+
+Menurut \cite{Salen2004}, game memiliki karakteristik utama:
+\begin{enumerate}
+\item \textbf{Tujuan}: Setiap game memiliki tujuan yang harus dicapai pemain
+\item \textbf{Aturan}: Aturan yang membatasi bagaimana pemain dapat mencapai tujuan
+\item \textbf{Umpan Balik}: Informasi yang diberikan kepada pemain tentang status mereka
+\item \textbf{Partisipasi Sukarela}: Pemain memilih untuk bermain dan menerima aturan
+\end{enumerate}
+
+\subsection{MDA Framework}
+
+MDA (Mechanics, Dynamics, Aesthetics) merupakan framework analisis yang dikembangkan oleh \cite{Hunicke2004} untuk memahami game.
+
+\subsubsection{Mechanics}
+
+\begin{definisi}[Mechanics]
+Mechanics adalah aturan dan sistem yang mengatur bagaimana game berfungsi. Mechanics mendefinisikan apa yang dapat dilakukan pemain dan bagaimana sistem game merespons aksi tersebut \cite{Hunicke2004}.
+\end{definisi}
+
+Contoh mechanics:
+\begin{itemize}
+\item Sistem pergerakan karakter
+\item Mekanik pertempuran
+\item Sistem inventori
+\item Mekanik crafting
+\item Sistem leveling dan progression
+\end{itemize}
+
+\subsubsection{Dynamics}
+
+\begin{definisi}[Dynamics]
+Dynamics adalah perilaku yang muncul dari interaksi mechanics saat game dimainkan. Dynamics adalah hasil dari mechanics yang bekerja bersama \cite{Hunicke2004}.
+\end{definisi}
+
+Contoh dynamics:
+\begin{itemize}
+\item Tension yang muncul dari time limit
+\item Kompetisi antar pemain
+\item Eksplorasi dan discovery
+\item Risk vs reward decisions
+\item Emergent gameplay
+\end{itemize}
+
+\subsubsection{Aesthetics}
+
+\begin{definisi}[Aesthetics]
+Aesthetics adalah pengalaman emosional yang dirasakan pemain saat bermain game. Aesthetics adalah respons emosional terhadap dynamics \cite{Hunicke2004}.
+\end{definisi}
+
+Jenis-jenis aesthetics menurut MDA framework:
+\begin{enumerate}
+\item \textbf{Sensation}: Game sebagai sense-pleasure
+\item \textbf{Fantasy}: Game sebagai make-believe
+\item \textbf{Narrative}: Game sebagai drama
+\item \textbf{Challenge}: Game sebagai obstacle course
+\item \textbf{Fellowship}: Game sebagai social framework
+\item \textbf{Discovery}: Game sebagai uncharted territory
+\item \textbf{Expression}: Game sebagai self-discovery
+\item \textbf{Submission}: Game sebagai pastime
+\end{enumerate}
+
+\subsection{Hubungan Mechanics-Dynamics-Aesthetics}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    \node [block] (mechanics) {Mechanics\\Aturan Sistem};
+    \node [block, below=of mechanics] (dynamics) {Dynamics\\Perilaku yang Muncul};
+    \node [block, below=of dynamics] (aesthetics) {Aesthetics\\Pengalaman Emosional};
+    
+    \draw [line, ->] (mechanics) -- node[right] {Menghasilkan} (dynamics);
+    \draw [line, ->] (dynamics) -- node[right] {Menciptakan} (aesthetics);
+    \draw [line, ->, bend right=30] (aesthetics) to node[below] {Memengaruhi Desain} (mechanics);
+\end{tikzpicture}
+\caption{Hubungan Mechanics-Dynamics-Aesthetics}
+\label{fig:mda_relationship}
+\end{figure}
+
+\subsection{Contoh Analisis Game Menggunakan MDA}
+
+\begin{contoh}[Analisis Game Platformer]
+\textbf{Game}: Super Mario Bros
+
+\textbf{Mechanics}:
+\begin{itemize}
+\item Jump mechanics dengan gravity
+\item Collision detection dengan platform
+\item Power-up system (mushroom, flower)
+\item Enemy AI behavior
+\item Score system
+\end{itemize}
+
+\textbf{Dynamics}:
+\begin{itemize}
+\item Timing jump untuk menghindari musuh
+\item Eksplorasi untuk menemukan power-up
+\item Risk-reward dalam mengambil coin
+\item Tension dari time limit
+\end{itemize}
+
+\textbf{Aesthetics}:
+\begin{itemize}
+\item Challenge: Mengatasi obstacle
+\item Discovery: Menemukan secret area
+\item Sensation: Visual dan audio feedback
+\item Fantasy: Menjadi karakter hero
+\end{itemize}
+\end{contoh}
+
+\subsection{Implementasi dalam Desain Game}
+
+Saat merancang game, desainer harus mempertimbangkan:
+\begin{enumerate}
+\item \textbf{Dari Mechanics ke Dynamics}: Bagaimana mechanics akan menciptakan dynamics yang diinginkan?
+\item \textbf{Dari Dynamics ke Aesthetics}: Bagaimana dynamics akan menghasilkan pengalaman emosional yang diinginkan?
+\item \textbf{Iterasi}: Uji dan sesuaikan mechanics untuk mencapai aesthetics yang diinginkan
+\end{enumerate}
+
+\begin{catatan}
+MDA framework membantu desainer memahami bahwa perubahan pada mechanics akan mempengaruhi dynamics dan akhirnya aesthetics. Oleh karena itu, desain game adalah proses iteratif yang memerlukan testing dan refinement.
+\end{catatan}
+
+\subsection{Ringkasan Section}
+
+\begin{itemize}
+\item Game adalah aktivitas terstruktur dengan tujuan, aturan, dan umpan balik
+\item MDA framework membagi game menjadi Mechanics, Dynamics, dan Aesthetics
+\item Mechanics adalah aturan sistem, Dynamics adalah perilaku yang muncul, Aesthetics adalah pengalaman emosional
+\item Hubungan ketiganya adalah iteratif: Mechanics menghasilkan Dynamics, Dynamics menciptakan Aesthetics, dan Aesthetics mempengaruhi desain Mechanics
+\item MDA framework berguna untuk analisis dan desain game
+\end{itemize}

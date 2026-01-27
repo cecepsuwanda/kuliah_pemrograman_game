@@ -1,0 +1,57 @@
+% ============================================================================
+% SEC03.TEX - Section 12.3: Menggunakan Pool
+% ============================================================================
+
+\section{Menggunakan Pool}
+
+Sekarang ubah cara Player menembak.
+
+\subsection{Update PlayerController}
+Ganti \texttt{Instantiate} dengan mengambil dari Pool.
+
+\begin{lstlisting}[language={[Sharp]C}]
+void Shoot()
+{
+    // Minta peluru dari Pool
+    GameObject bullet = BulletPool.Instance.GetBullet();
+    
+    if (bullet != null)
+    {
+        bullet.transform.position = firePoint.position;
+        bullet.transform.rotation = firePoint.rotation;
+        
+        // Reset kecepatan peluru (penting!)
+        // ... (Logika reset ada di BulletController)
+    }
+}
+\end{lstlisting}
+
+\subsection{Update BulletController}
+Jangan \texttt{Destroy}! Tapi non-aktifkan.
+
+\begin{lstlisting}[language={[Sharp]C}]
+void OnEnable()
+{
+    // Timer manual untuk mematikan peluru setelah 2 detik
+    Invoke("DisableBullet", 2f);
+}
+
+void DisableBullet()
+{
+    gameObject.SetActive(false); // Kembalikan ke pool
+}
+
+private void OnTriggerEnter2D(Collider2D other)
+{
+    if (other.CompareTag("Enemy"))
+    {
+        DisableBullet(); // Disable, bukan Destroy
+        // Destroy(other.gameObject); // Asteroid tetap destroy (atau dipool juga)
+    }
+}
+
+void OnDisable()
+{
+    CancelInvoke(); // Bersihkan timer
+}
+\end{lstlisting}

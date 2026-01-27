@@ -1,0 +1,42 @@
+% ============================================================================
+% CH04.TEX - Bab 4: GameObject, Component, Prefab, dan Scene
+% ============================================================================
+
+\documentclass[../../main.tex]{subfiles}
+
+\begin{document}
+
+% Set counter hanya ketika kompilasi per-bab (standalone)
+\ifcsname subfiles@mainfile\endcsname\else
+    \setcounter{chapter}{3}
+\fi
+\chapter{GameObject, Component, Prefab, dan Scene}
+
+\section{Deskripsi Bab}
+
+Bab ini membahas konsep fundamental Unity: GameObject, Component, Prefab, dan Scene. 
+Mulai bab ini, kita akan memulai proyek game \textbf{"Space Survivor"}, sebuah game survival shooter sederhana.
+Dalam bab ini, kita akan menyiapkan project, membuat Player berupa pesawat ruang angkasa, dan mengatur struktur folder project.
+
+\section{Sub-CPMK Bab}
+
+Setelah mempelajari bab ini, mahasiswa diharapkan mampu:
+\begin{itemize}
+\item \textbf{Sub-CPMK4.1}: Memahami konsep GameObject dan Hierarchy
+\item \textbf{Sub-CPMK4.2}: Menggunakan Transform component untuk posisi, rotasi, dan skala
+\item \textbf{Sub-CPMK4.3}: Menambahkan dan mengkonfigurasi komponen Unity
+\item \textbf{Sub-CPMK4.4}: Membuat dan menggunakan Prefab
+\item \textbf{Sub-CPMK4.5}: Mengelola Scene dan Scene loading
+\end{itemize}
+
+% Include sections
+\input{sec01}
+\input{sec02}
+\input{sec03}
+\input{sec04}
+\input{sec05}
+
+\input{latihan}
+\input{ringkasan}
+
+\end{document}

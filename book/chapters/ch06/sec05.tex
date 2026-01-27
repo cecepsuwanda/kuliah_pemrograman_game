@@ -1,0 +1,56 @@
+% ============================================================================
+% SEC05.TEX - Section 6.5: Raycast
+% ============================================================================
+
+\section{Raycast}
+
+\begin{learningoutcomes}
+\item Memahami konsep Raycast
+\item Menggunakan Physics.Raycast
+\item Mengimplementasikan line of sight detection
+\item Menggunakan Raycast untuk shooting mechanics
+\end{learningoutcomes}
+
+\subsection{Pengertian Raycast}
+
+\begin{definisi}[Raycast]
+Raycast adalah teknik untuk mendeteksi objek dengan menembakkan sinar imajiner dari satu titik ke arah tertentu \cite{UnityPhysics2024}.
+\end{definisi}
+
+\subsection{Contoh Implementasi}
+
+\begin{lstlisting}[language={[Sharp]C}]
+public class RaycastExample : MonoBehaviour
+{
+    void Update()
+    {
+        // Simple raycast
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            
+            if (Physics.Raycast(ray, out hit))
+            {
+                Debug.Log("Hit: " + hit.collider.name);
+                Debug.Log("Distance: " + hit.distance);
+                Debug.Log("Point: " + hit.point);
+            }
+        }
+        
+        // Raycast from object
+        RaycastHit hitInfo;
+        if (Physics.Raycast(transform.position, transform.forward, out hitInfo, 10f))
+        {
+            if (hitInfo.collider.CompareTag("Enemy"))
+            {
+                AttackEnemy(hitInfo.collider.gameObject);
+            }
+        }
+    }
+}
+\end{lstlisting}
+
+\begin{catatan}
+Raycast sangat berguna untuk shooting, line of sight, dan interaction detection. Gunakan LayerMask untuk filter objek yang diraycast.
+\end{catatan}

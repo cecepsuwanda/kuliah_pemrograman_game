@@ -1,0 +1,60 @@
+% ============================================================================
+% SEC02.TEX - Section 8.2: Membuat HUD Skor
+% ============================================================================
+
+\section{Membuat HUD Skor}
+
+Kita ingin pemain melihat skor mereka bertambah saat menghancurkan asteroid.
+
+\subsection{Setup Text UI}
+\begin{enumerate}
+    \item Di dalam Canvas, klik kanan > \textbf{UI} > \textbf{Text - TextMeshPro}. (Jika diminta import TMP Essentials, klik Import).
+    \item Beri nama \texttt{ScoreText}.
+    \item Posisikan di pojok kiri atas (gunakan Anchor Presets: Top-Left).
+    \item Ubah tulisan menjadi "Score: 0".
+\end{enumerate}
+
+\subsection{Script GameManager}
+Kita butuh pengelola skor terpusat. Buat GameObject kosong bernama \texttt{GameManager}, lalu buat script \texttt{GameManager.cs}:
+
+\begin{lstlisting}[language={[Sharp]C}]
+using UnityEngine;
+using TMPro; // Wajib ada untuk Text Mesh Pro
+
+public class GameManager : MonoBehaviour
+{
+    public TextMeshProUGUI scoreText;
+    private int score = 0;
+
+    // Pola Singleton Sederhana agar mudah diakses
+    public static GameManager Instance;
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
+    public void AddScore(int amount)
+    {
+        score += amount;
+        scoreText.text = "Score: " + score;
+    }
+}
+\end{lstlisting}
+
+\begin{tips}
+Jangan lupa drag object \texttt{ScoreText} ke slot script GameManager di Inspector.
+\end{tips}
+
+\subsection{Update AsteroidController}
+Ubah agar saat asteroid hancur, skor bertambah:
+\begin{lstlisting}[language={[Sharp]C}]
+// Di dalam OnTriggerEnter2D AsteroidController
+if (other.CompareTag("Bullet"))
+{
+    // Tambah Skor 10 poin
+    GameManager.Instance.AddScore(10); 
+    
+    // ... ledakan dan destroy ...
+}
+\end{lstlisting}

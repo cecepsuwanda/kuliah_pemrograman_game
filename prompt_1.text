@@ -1,0 +1,185 @@
+PROMPT SUPER-ADVANCED PEMBUATAN BUKU AJAR LaTeX (SIAP COPY-PASTE)
+
+Gunakan file `silabus_pemrograman_game.tex` sebagai satu-satunya acuan struktur, topik, dan capaian pembelajaran.
+
+WAJIB:  
+Semua materi harus dikembangkan dengan mengambil referensi dari sumber terbuka (open sources) di internet, seperti:
+- buku ajar open-access,
+- jurnal ilmiah open-access,
+- dokumentasi resmi,
+- standar internasional,
+- repositori akademik,
+- website edukasi tepercaya.
+
+Setiap konsep, definisi, teori, dan contoh harus didukung referensi yang jelas.  
+Referensi harus ditulis dalam format sitasi ilmiah (BibTeX) di file `references.bib`.
+
+TUJUAN:
+Bangun buku ajar akademik profesional dalam format LaTeX dengan arsitektur modular tingkat lanjut, dengan ketentuan:
+1) Dapat dikompilasi sebagai satu buku (main.tex).
+2) Dapat dikompilasi per bab menggunakan package subfiles.
+3) Setiap bab berada pada file subfile terpisah.
+4) Setiap section berada pada file terpisah yang di-include dari file bab.
+5) Mendukung OBE (Outcome-Based Education), RPS, dan sistem evaluasi pembelajaran.
+
+================================================================
+A. STRUKTUR PROYEK LaTeX (WAJIB)
+================================================================
+
+Gunakan struktur folder berikut:
+book/
+│── main.tex
+│── preamble.tex
+│── silabus_pemrograman_game.tex
+│── rps.tex
+│── glossary.tex
+│── notation.tex
+│── references.bib
+│── chapters/
+│   ├── ch01/
+│   │   ├── ch01.tex
+│   │   ├── sec01.tex
+│   │   ├── sec02.tex
+│   │   ├── sec03.tex
+│   ├── ch02/
+│   │   ├── ch02.tex
+│   │   ├── sec01.tex
+│   │   ├── sec02.tex
+│── appendices/
+│   ├── appA.tex
+│   ├── appB.tex
+│── figures/
+│── tables/
+│── code/
+
+================================================================
+B. ATURAN TEKNIS LaTeX (WAJIB)
+================================================================
+
+1) main.tex
+- Gunakan \documentclass{book}.
+- Load preamble.tex.
+- Load package subfiles.
+- Panggil bab dengan: \subfile{chapters/chXX/chXX}.
+- Tidak boleh ada materi langsung di main.tex.
+
+2) preamble.tex
+- Semua package dan konfigurasi LaTeX ditempatkan di sini.
+- Definisikan environment: definition, theorem, proposition, example, exercise, case study, learning outcomes.
+- Atur konsistensi penomoran.
+
+3) File bab (chXX.tex)
+- Gunakan: \documentclass[../../main.tex]{subfiles}.
+- Definisikan: \chapter{Judul Bab}.
+- Panggil section dengan: \include{chapters/chXX/secYY}.
+- Harus bisa dikompilasi mandiri.
+- Tidak boleh menambahkan package.
+
+4) File section (secYY.tex)
+- Tidak boleh memiliki \documentclass.
+- Hanya berisi konten \section{} atau \subsection{}.
+- Dipanggil menggunakan \include dari file bab.
+- Tidak boleh berdiri sendiri.
+
+================================================================
+C. MODEL OBE TERINTEGRASI
+================================================================
+
+Bangun pemetaan:
+1) CPL (Capaian Pembelajaran Lulusan).
+2) CPMK (Capaian Pembelajaran Mata Kuliah).
+3) Sub-CPMK per bab.
+4) Learning Outcomes per section.
+5) Indikator kinerja.
+6) Metode pembelajaran.
+7) Metode evaluasi.
+8) Bobot penilaian.
+
+Representasikan dalam tabel LaTeX dan matriks CPL–CPMK–Bab–Section.
+
+================================================================
+D. STRUKTUR ISI SETIAP BAB (WAJIB)
+================================================================
+
+Setiap bab harus memuat:
+1) Deskripsi bab.
+2) Sub-CPMK bab.
+3) Peta konsep (diagram).
+4) Ringkasan teori inti.
+5) Penjelasan konseptual mendalam.
+6) Contoh formal dan implementatif.
+7) Studi kasus.
+8) Praktikum / proyek mini.
+9) Latihan soal bertingkat: LOTS, MOTS, HOTS.
+10) Rubrik penilaian.
+11) Ringkasan bab.
+12) Referensi ilmiah (dari sumber terbuka internet).
+
+================================================================
+E. STRUKTUR ISI SETIAP SECTION
+================================================================
+
+Setiap section harus memuat:
+1) Learning outcomes section.
+2) Definisi formal (dengan referensi).
+3) Penjelasan konseptual (dengan referensi).
+4) Representasi matematis / algoritmik (dengan referensi).
+5) Contoh.
+6) Implementasi kode (jika relevan).
+7) Mini exercise.
+8) Catatan penting.
+
+================================================================
+F. RPS TERINTEGRASI (rps.tex)
+================================================================
+
+Bangun RPS dalam format LaTeX yang mencakup:
+- Identitas mata kuliah.
+- Deskripsi.
+- CPL, CPMK, Sub-CPMK.
+- Bahan kajian per pertemuan (16 pertemuan).
+- Metode pembelajaran.
+- Sistem penilaian.
+- Referensi (open-access).
+
+================================================================
+G. ATURAN REFERENSI INTERNET (WAJIB)
+================================================================
+
+1) Gunakan hanya sumber terbuka (open-access) dari internet.
+2) Prioritas sumber:
+   - dokumentasi resmi (official docs),
+   - buku open-access,
+   - jurnal open-access,
+   - repositori universitas,
+   - standar internasional,
+   - website edukasi tepercaya.
+3) Setiap bab minimal memiliki:
+   - ≥ 5 referensi open-source.
+4) Semua referensi ditulis dalam BibTeX di `references.bib`.
+5) Gunakan sitasi LaTeX: \cite{}, \parencite{}, atau \autocite{}.
+
+================================================================
+H. ATURAN OUTPUT AI
+================================================================
+
+Saat menghasilkan jawaban:
+1) Tampilkan struktur folder lengkap.
+2) Tampilkan kode LaTeX untuk semua file utama.
+3) Tampilkan template untuk setiap jenis file.
+4) Isi materi sesuai silabus_pemrograman_game.tex.
+5) Sertakan referensi internet open-access.
+6) Pastikan seluruh file saling terhubung tanpa error kompilasi.
+
+================================================================
+I. LARANGAN
+================================================================
+
+- Jangan menyederhanakan struktur.
+- Jangan menggabungkan file.
+- Jangan mengubah arsitektur folder.
+- Jangan menghilangkan pemetaan OBE.
+- Jangan menggunakan sumber non-terbuka.
+- Jangan mengurangi kedalaman materi.
+
+END PROMPT

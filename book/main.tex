@@ -1,0 +1,185 @@
+% ============================================================================
+% MAIN.TEX
+% File utama buku ajar Pemrograman Game
+% Dapat dikompilasi sebagai satu buku lengkap
+% ============================================================================
+
+\documentclass[12pt,a4paper]{book}
+
+% Load semua package dan konfigurasi dari preamble
+\input{preamble}
+
+% ============================================================================
+% INFORMASI DOKUMEN
+% ============================================================================
+
+\title{\textbf{BUKU AJAR}\\[1cm]
+       \textbf{PEMROGRAMAN GAME}\\[0.5cm]
+       \large{Menggunakan Unity Engine dan C\#}\\[0.5cm]
+       \large{Pendekatan Outcome-Based Education (OBE)}}
+
+\author{Program Studi S1 Informatika\\
+        Fakultas Teknologi Informasi}
+
+\date{\today}
+
+% ============================================================================
+% DOKUMEN MULAI
+% ============================================================================
+
+\begin{document}
+
+% ============================================================================
+% HALAMAN AWAL (FRONT MATTER)
+% Sesuai standar buku ajar Indonesia
+% ============================================================================
+
+% Halaman Judul Luar (Cover) - Halaman pertama
+\maketitle
+
+% Halaman Kosong
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
+% Halaman Judul Dalam
+\newpage
+\thispagestyle{empty}
+\begin{center}
+\vspace*{3cm}
+
+\textbf{\fontsize{18}{22}\selectfont BUKU AJAR}\\[1cm]
+
+\textbf{\fontsize{20}{24}\selectfont PEMROGRAMAN GAME}\\[0.5cm]
+
+\textbf{\fontsize{16}{20}\selectfont Menggunakan Unity Engine dan C\#}\\[0.5cm]
+
+\textbf{\fontsize{14}{18}\selectfont Pendekatan Outcome-Based Education (OBE)}\\[2cm]
+
+\vfill
+
+\begin{tabular}{ll}
+\textbf{Program Studi} & : S1 Informatika \\
+\textbf{Fakultas} & : Fakultas Teknologi Informasi \\
+\textbf{Mata Kuliah} & : Pemrograman Game \\
+\textbf{Kode Mata Kuliah} & : IF-XXX \\
+\textbf{Bobot SKS} & : 3 SKS \\
+\end{tabular}\\[2cm]
+
+\vfill
+
+\textbf{[Nama Penerbit/Institusi]}\\[0.5cm]
+\textbf{[Tahun]}
+
+\end{center}
+
+% Halaman Pengesahan
+\include{pengesahan}
+
+% Kata Pengantar
+\include{katapengantar}
+
+% Daftar Isi
+\tableofcontents
+\newpage
+
+% Daftar Gambar
+\listoffigures
+\newpage
+
+% Daftar Tabel
+\listoftables
+\newpage
+
+% Daftar Algoritma (jika ada)
+% \listofalgorithms
+% \newpage
+
+% ============================================================================
+% BAGIAN UTAMA: BAB-BAB
+% ============================================================================
+
+% RPS (Rencana Pembelajaran Semester) - Dapat di-include sebagai bab atau dokumen terpisah
+% \include{rps}
+
+% Bab 1: Konsep Dasar Game Development
+\subfile{chapters/ch01/ch01}
+
+% Bab 2: Pengenalan Unity Engine
+\subfile{chapters/ch02/ch02}
+
+% Bab 3: Dasar Pemrograman C# untuk Unity
+\subfile{chapters/ch03/ch03}
+
+% Bab 4: GameObject, Component, Prefab, dan Scene
+\subfile{chapters/ch04/ch04}
+
+% Bab 5: Input System dan Player Controller
+\subfile{chapters/ch05/ch05}
+
+% Bab 6: Physics, Collision, dan Rigidbody
+\subfile{chapters/ch06/ch06}
+
+% Bab 7: Animation dan Animator
+\subfile{chapters/ch07/ch07}
+
+% Bab 8: UI/UX Game
+\subfile{chapters/ch08/ch08}
+
+% Bab 9: Audio dalam Game
+\subfile{chapters/ch09/ch09}
+
+% Bab 10: Level Design dan Game Mechanics
+\subfile{chapters/ch10/ch10}
+
+% Bab 11: AI Sederhana untuk Game
+\subfile{chapters/ch11/ch11}
+
+% Bab 12: Optimization dan Debugging
+\subfile{chapters/ch12/ch12}
+
+% Bab 13: Build dan Deployment
+\subfile{chapters/ch13/ch13}
+
+% ============================================================================
+% BAGIAN LAMPIRAN
+% ============================================================================
+
+\appendix
+
+% Lampiran A: Instalasi Unity & Setup
+\include{appendices/appA}
+
+% Lampiran B: Quick Reference C# untuk Unity
+\include{appendices/appB}
+
+% Lampiran C: Unity API Reference
+\include{appendices/appC}
+
+% Lampiran D: Best Practices & Tips
+\include{appendices/appD}
+
+% Lampiran E: Topik Lanjutan & Sumber Belajar
+\include{appendices/app_advanced_learning}
+
+% ============================================================================
+% BAGIAN AKHIR
+% ============================================================================
+
+% Glosarium
+\printglossary[title=Glosarium,toctitle=Glosarium]
+
+% Daftar Notasi
+\include{notation}
+
+% Daftar Pustaka
+\printbibliography[title=Daftar Pustaka,heading=bibintoc]
+
+% Index (jika diperlukan)
+% \printindex
+
+\end{document}
+
+% ============================================================================
+% END OF MAIN.TEX
+% ============================================================================

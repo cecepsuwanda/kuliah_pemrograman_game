@@ -1,0 +1,68 @@
+% ============================================================================
+% SEC04.TEX - Section 3.4: Kontrol Alur Program
+% ============================================================================
+
+\section{Kontrol Alur Program}
+
+\begin{learningoutcomes}
+\item Menggunakan if-else untuk kondisi
+\item Menggunakan switch-case
+\item Menggunakan loop (for, while, foreach)
+\item Menerapkan kontrol alur dalam konteks game
+\end{learningoutcomes}
+
+\subsection{If-Else Statement}
+
+\begin{lstlisting}[language={[Sharp]C}]
+if (health > 0)
+{
+    // Player masih hidup
+}
+else
+{
+    // Player mati
+    GameOver();
+}
+\end{lstlisting}
+
+\subsection{Switch-Case}
+
+\begin{lstlisting}[language={[Sharp]C}]
+switch (gameState)
+{
+    case GameState.Menu:
+        ShowMenu();
+        break;
+    case GameState.Playing:
+        StartGame();
+        break;
+    case GameState.Paused:
+        PauseGame();
+        break;
+    default:
+        Debug.Log("Unknown state");
+        break;
+}
+\end{lstlisting}
+
+\subsection{Loop}
+
+\begin{lstlisting}[language={[Sharp]C}]
+// For loop
+for (int i = 0; i < 10; i++)
+{
+    Debug.Log(i);
+}
+
+// While loop
+while (health > 0)
+{
+    // Game continues
+}
+
+// Foreach loop
+foreach (GameObject enemy in enemies)
+{
+    enemy.SetActive(false);
+}
+\end{lstlisting}

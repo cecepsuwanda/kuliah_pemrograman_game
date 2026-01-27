@@ -1,0 +1,68 @@
+% ============================================================================
+% SEC04.TEX - Section 10.4: Collectible System
+% ============================================================================
+
+\section{Collectible System}
+
+\begin{learningoutcomes}
+\item Mengimplementasikan collectible system
+\item Membuat scoring system
+\item Menggunakan trigger untuk collection
+\end{learningoutcomes}
+
+\subsection{Collectible Script}
+
+\begin{lstlisting}[language={[Sharp]C}]
+public class Collectible : MonoBehaviour
+{
+    public int value = 10;
+    public AudioClip collectSound;
+    
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Collect(other.GetComponent<Player>());
+        }
+    }
+    
+    void Collect(Player player)
+    {
+        player.AddScore(value);
+        AudioSource.PlayClipAtPoint(collectSound, transform.position);
+        Destroy(gameObject);
+    }
+}
+\end{lstlisting}
+
+\subsection{Scoring System}
+
+\begin{lstlisting}[language={[Sharp]C}]
+public class ScoreManager : MonoBehaviour
+{
+    public static ScoreManager Instance;
+    private int score = 0;
+    
+    public event System.Action<int> OnScoreChanged;
+    
+    void Awake()
+    {
+        Instance = this;
+    }
+    
+    public void AddScore(int points)
+    {
+        score += points;
+        OnScoreChanged?.Invoke(score);
+    }
+    
+    public int GetScore()
+    {
+        return score;
+    }
+}
+\end{lstlisting}
+
+\begin{catatan}
+Collectible system meningkatkan engagement player. Gunakan event untuk update UI score secara real-time.
+\end{catatan}

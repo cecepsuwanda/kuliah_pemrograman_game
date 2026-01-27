@@ -1,0 +1,90 @@
+% ============================================================================
+% APP_ADVANCED_LEARNING.TEX - Lampiran E: Topik Lanjutan & Sumber Belajar
+% ============================================================================
+
+\chapter{Topik Lanjutan \& Sumber Belajar}
+
+Untuk mahasiswa yang ingin mendalami pengembangan game lebih jauh, lampiran ini menyediakan panduan mengenai topik-topik tingkat lanjut yang sering digunakan di industri, serta rekomendasi sumber belajar eksternal yang berkualitas.
+
+\section{Advanced Design Patterns}
+
+Design patterns adalah solusi umum untuk masalah yang sering terjadi dalam desain software. Dalam pengembangan game, pola-pola berikut sangat krusial:
+
+\subsection{State Pattern}
+Digunakan untuk mengelola state karakter atau game yang kompleks (contoh: Idle, Run, Jump, Attack). Menggantikan `switch` statement yang raksasa dengan class terpisah untuk setiap state.
+\begin{itemize}
+    \item \textbf{Kegunaan}: AI Controller, Character State Machine.
+\end{itemize}
+
+\subsection{Observer Pattern (Events)}
+Memungkinkan satu objek untuk memberitahu banyak objek lain bahwa sesuatu telah terjadi tanpa harus "tahu" siapa pendengarnya. Di Unity, ini sering diimplementasikan menggunakan C\# Events atau `ScriptableObject` Events.
+\begin{itemize}
+    \item \textbf{Kegunaan}: Update UI saat darah berkurang, Achievement system.
+\end{itemize}
+
+\subsection{Object Pooling}
+Alih-alih membuat (`Instantiate`) dan menghancurkan (`Destroy`) objek terus-menerus (yang membebani CPU dan Memory), kita "meminjam" objek dari kolam (pool) dan mengembalikannya saat tidak terpakai.
+\begin{itemize}
+    \item \textbf{Kegunaan}: Peluru, musuh yang spawn berulang kali, partikel effect.
+\end{itemize}
+
+\subsection{Command Pattern}
+Mengubah "permintaan" menjadi objek yang berdiri sendiri. Ini memungkinkan fitur seperti Undo/Redo atau antrian input (input buffering) dalam game fighting.
+
+\section{Arsitektur Game yang Scalable}
+
+\subsection{ScriptableObject Architecture}
+Menggunakan `ScriptableObject` bukan hanya untuk menyimpan data, tetapi juga untuk komunikasi antar sistem.
+\begin{itemize}
+    \item \textbf{Data Containers}: Menyimpan stats musuh atau item agar mudah diedit di Inspector tanpa mengubah script.
+    \item \textbf{Event Channels}: Membuat aset ScriptableObject sebagai "jalur komunikasi" di mana satu script bisa memicu event, dan script lain (yang tidak saling kenal) bisa mendengarkannya.
+\end{itemize}
+
+\subsection{Dependency Injection}
+Teknik untuk mengurangi ketergantungan antar kelas (tight coupling). Framework seperti \textbf{VContainer} atau \textbf{Zenject} populer di Unity untuk proyek skala besar.
+
+\section{Optimasi Performa}
+
+\subsection{Unity Profiler}
+Jangan menebak penyebab game lambat. Gunakan Profiler untuk melihat apakah bottleneck ada di CPU, GPU, atau Memory (Garbage Collection).
+
+\subsection{Garbage Collection (GC)}
+Hindari alokasi memori berlebih di dalam `Update()`. Contoh: jangan buat `new List<>()` atau string concatenation di setiap frame.
+
+\subsection{DOTS (Data-Oriented Technology Stack)}
+Teknologi baru Unity (ECS, Job System, Burst Compiler) untuk performa maksimum dengan memproses data secara paralel dan cache-friendly. Cocok untuk simulasi dengan ribuan unit.
+
+\section{Grafis \& Visual}
+
+\subsection{Render Pipelines (URP \& HDRP)}
+\begin{itemize}
+    \item \textbf{URP (Universal Render Pipeline)}: Ringan, cocok untuk Mobile dan VR.
+    \item \textbf{HDRP (High Definition Render Pipeline)}: Grafis realistis high-end untuk PC/Console.
+\end{itemize}
+
+\subsection{Shader Graph}
+Membuat shader secara visual (tanpa koding) untuk efek seperti air, hologram, atau distorsi panas.
+
+\section{Rekomendasi Jalur Belajar (Learning Path)}
+
+Berikut adalah kurasi sumber belajar eksternal untuk melengkapi buku ini:
+
+\subsection{YouTube Channels Terbaik}
+\begin{itemize}
+    \item \textbf{Brackeys}: Tutorial dasar hingga menengah yang sangat jelas (Arsip).
+    \item \textbf{Code Monkey}: Fokus pada clean code, design patterns, dan tips praktis profesional.
+    \item \textbf{Sebastian Lague}: Eksplorasi mendalam tentang procedural generation dan matematika coding.
+    \item \textbf{Jason Weimann}: Arsitektur game dan career advice untuk Unity developer.
+    \item \textbf{Tarodev}: Tutorial singkat dan padat tentang fitur-fitur spesifik Unity modern.
+\end{itemize}
+
+\subsection{Website \& Artikel}
+\begin{itemize}
+    \item \textbf{Catlike Coding} (\url{catlikecoding.com}): Tutorial teks mendalam tentang rendering dan hex map.
+    \item \textbf{Game Programming Patterns} (\url{gameprogrammingpatterns.com}): Buku online gratis wajib baca tentang design patterns.
+    \item \textbf{Unity Learn Premium}: Learning pathway resmi dari Unity.
+\end{itemize}
+
+\begin{catatan}
+Dunia game development berubah cepat. Selalu cek dokumentasi resmi Unity untuk fitur terbaru.
+\end{catatan}

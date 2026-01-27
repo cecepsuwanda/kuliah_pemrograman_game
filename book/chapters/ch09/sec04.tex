@@ -1,0 +1,35 @@
+% ============================================================================
+% SEC04.TEX - Section 9.4: Suara Ledakan
+% ============================================================================
+
+\section{Suara Ledakan}
+
+Saat asteroid hancur, kita juga ingin mendengar suara ledakan. Karena asteroidnya hancur (Destroy), AudioSource-nya juga akan ikut hancur dan suaranya terpotong.
+
+Cara mengatasinya adalah menggunakan \texttt{AudioSource.PlayClipAtPoint}, yang membuat objek suara sementara di lokasi tersebut.
+
+\subsection{Update AsteroidController}
+Tambahkan variabel AudioClip.
+
+\begin{lstlisting}[language={[Sharp]C}]
+public AudioClip explosionSound; // Assign di Inspector
+
+private void OnTriggerEnter2D(Collider2D other)
+{
+    if (other.CompareTag("Bullet"))
+    {
+        // Mainkan suara di posisi asteroid
+        AudioSource.PlayClipAtPoint(explosionSound, transform.position);
+        
+        GameManager.Instance.AddScore(10);
+        Instantiate(explosionPrefab, transform.position, transform.rotation);
+        
+        Destroy(gameObject);
+        Destroy(other.gameObject);
+    }
+}
+\end{lstlisting}
+
+\begin{tips}
+\texttt{AudioSource.PlayClipAtPoint} otomatis membuat objek AudioSource sementara dan menghancurkannya setelah klip selesai. Sangat praktis!
+\end{tips}

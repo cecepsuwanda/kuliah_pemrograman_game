@@ -1,0 +1,94 @@
+% ============================================================================
+% SEC05.TEX - Section 5.5: Player Movement
+% ============================================================================
+
+\section{Player Movement}
+
+\begin{learningoutcomes}
+\item Mengimplementasikan player movement 2D dan 3D
+\item Menggunakan Character Controller vs Rigidbody
+\item Membuat movement yang smooth dan responsif
+\end{learningoutcomes}
+
+\subsection{Character Controller Movement}
+
+\begin{lstlisting}[language={[Sharp]C}]
+using UnityEngine;
+
+public class PlayerMovement : MonoBehaviour
+{
+    public float speed = 5f;
+    public float jumpHeight = 2f;
+    private CharacterController controller;
+    private Vector3 velocity;
+    private bool isGrounded;
+    
+    void Start()
+    {
+        controller = GetComponent<CharacterController>();
+    }
+    
+    void Update()
+    {
+        isGrounded = controller.isGrounded;
+        
+        if (isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f;
+        }
+        
+        // Input
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        
+        Vector3 move = transform.right * horizontal + transform.forward * vertical;
+        controller.Move(move * speed * Time.deltaTime);
+        
+        // Jump
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y);
+        }
+        
+        // Apply gravity
+        velocity.y += Physics.gravity.y * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
+    }
+}
+\end{lstlisting}
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[
+        node distance=2cm,
+        auto,
+        block/.style={rectangle, draw, fill=blue!10, text width=2.5cm, text centered, rounded corners, minimum height=1.2em},
+        line/.style={draw, -latex'}
+    ]
+        % Character Controller Flow
+        \node [block] (input1) {Input};
+        \node [block, right=of input1] (code1) {Code (Move)};
+        \node [block, right=of code1] (transform1) {Transform Position};
+        \node [block, above=0.2cm of code1, draw=none, fill=none] {Character Controller};
+        
+        \path [line] (input1) -- (code1);
+        \path [line] (code1) -- (transform1);
+        
+        % Rigidbody Flow
+        \node [block, below=1.5cm of input1] (input2) {Input};
+        \node [block, right=of input2] (force) {AddForce / Velocity};
+        \node [block, right=of force] (physics) {Physics Engine};
+        \node [block, right=of physics] (transform2) {Transform};
+        \node [block, above=0.2cm of force, draw=none, fill=none] {Rigidbody};
+        
+        \path [line] (input2) -- (force);
+        \path [line] (force) -- (physics);
+        \path [line] (physics) -- (transform2);
+    \end{tikzpicture}
+    \caption{Perbandingan Alur Character Controller vs Rigidbody}
+    \label{fig:movement_comparison}
+\end{figure}
+
+\begin{catatan}
+Character Controller memberikan kontrol penuh atas movement tanpa fisika. Rigidbody menggunakan fisika Unity untuk movement yang lebih realistis.
+\end{catatan}

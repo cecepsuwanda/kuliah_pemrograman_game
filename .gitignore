@@ -1,0 +1,116 @@
+# =============================================================================
+# .gitignore - Buku Ajar Pemrograman Game
+# LaTeX book project + Python helper scripts
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# LaTeX auxiliary & build artifacts
+# -----------------------------------------------------------------------------
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.glo
+*.gls
+*.glg
+*.ist
+*.acn
+*.acr
+*.alg
+
+# -----------------------------------------------------------------------------
+# LaTeX output (PDF dari kompilasi - bisa di-uncomment jika ingin track PDF)
+# -----------------------------------------------------------------------------
+# output/
+# *.pdf
+
+# Output folder: hasil kompilasi per-bab dan buku utuh
+output/
+
+# PDF hasil kompilasi (root & book)
+*.pdf
+# Kecuali PDF yang sengaja di-track (uncomment & sesuaikan jika perlu):
+# !book/figures/example.pdf
+
+# -----------------------------------------------------------------------------
+# OS generated
+# -----------------------------------------------------------------------------
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+*.lnk
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+.directory
+
+# -----------------------------------------------------------------------------
+# IDE / Editor
+# -----------------------------------------------------------------------------
+# VS Code
+.vscode/
+*.code-workspace
+
+# Cursor
+.cursor/
+
+# JetBrains
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# -----------------------------------------------------------------------------
+# Python (code/ scripts, venv)
+# -----------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+*.egg-info/
+.eggs/
+*.egg
+
+# -----------------------------------------------------------------------------
+# Misc / backup / temp
+# -----------------------------------------------------------------------------
+*.bak
+*.tmp
+*.temp
+*.backup
+*.orig
+.cache/

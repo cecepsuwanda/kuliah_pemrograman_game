@@ -1,0 +1,69 @@
+TUGAS:
+Buat silabus mata kuliah "Pemrograman Game" untuk program S1 Informatika dengan pendekatan Outcome-Based Education (OBE).
+
+SPESIFIKASI MATA KULIAH:
+- Nama mata kuliah: Pemrograman Game
+- SKS: 3
+- Jumlah pertemuan: 16
+- Kurikulum: OBE (Outcome-Based Education)
+- Game engine: Unity
+- Bahasa pemrograman: C#
+- Fokus pembelajaran: dominan praktik (project-based learning) dibanding teori
+- Level: S1 Teknik Informatika / Informatika
+- Output utama: mahasiswa mampu merancang, mengembangkan, menguji, dan mempublikasikan game menggunakan Unity.
+
+KETENTUAN ISI SILABUS:
+Silabus harus mencakup:
+1. Deskripsi mata kuliah
+2. Capaian Pembelajaran Mata Kuliah (CPMK) berbasis OBE
+3. Keterkaitan CPMK dengan CPL (Learning Outcomes)
+4. Bahan kajian / materi pembelajaran
+5. Rencana pembelajaran semester (RPS) 16 pertemuan
+6. Metode pembelajaran (praktikum, project-based learning, problem-based learning, studi kasus)
+7. Strategi dan instrumen penilaian berbasis OBE
+8. Bobot penilaian (tugas, kuis, UTS, UAS, proyek)
+9. Media dan perangkat pembelajaran
+10. Referensi utama dan pendukung
+
+CAKUPAN MATERI UNITY (WAJIB):
+- Konsep dasar game development dan game design
+- Pengenalan Unity dan workflow pengembangan game
+- Dasar C# untuk Unity
+- Game object, component, prefab, scene
+- Input system dan player controller
+- Physics, collision, dan rigidbody
+- Animation dan animator
+- UI/UX game (HUD, menu, scoring system)
+- Audio (sound effect dan background music)
+- Level design dan game mechanics
+- AI sederhana (NPC, pathfinding, state machine)
+- Optimization dan debugging
+- Build dan deployment game
+- Proyek akhir game utuh
+
+KETENTUAN PEDAGOGIS:
+- Materi disusun realistis sesuai praktik industri game dan kurikulum perguruan tinggi.
+- Setiap pertemuan harus mencantumkan: tujuan pembelajaran, materi, aktivitas praktik, dan bentuk evaluasi.
+- Pembelajaran berbasis proyek dengan progres bertahap hingga proyek akhir.
+
+FORMAT OUTPUT (WAJIB):
+- Seluruh silabus ditulis dalam format LaTeX.
+- Gunakan struktur formal dokumen akademik.
+- Sertakan tabel untuk RPS 16 pertemuan.
+- Sertakan tabel pemetaan CPMK ke CPL.
+- Sertakan rubrik penilaian berbasis OBE.
+- Gunakan bahasa Indonesia akademik.
+
+STRUKTUR DOKUMEN LaTeX (WAJIB):
+\section{Deskripsi Mata Kuliah}
+\section{Capaian Pembelajaran Mata Kuliah (CPMK)}
+\section{Pemetaan CPMK terhadap CPL}
+\section{Bahan Kajian}
+\section{Rencana Pembelajaran Semester (RPS)}
+\section{Metode Pembelajaran}
+\section{Evaluasi dan Penilaian}
+\section{Media dan Perangkat Pembelajaran}
+\section{Referensi}
+
+OUTPUT AKHIR:
+Silabus lengkap, detail, sistematis, dan siap digunakan sebagai dokumen resmi perkuliahan.

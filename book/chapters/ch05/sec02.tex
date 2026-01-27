@@ -1,0 +1,51 @@
+% ============================================================================
+% SEC02.TEX - Section 5.2: Membuat Script Pergerakan Pesawat
+% ============================================================================
+
+\section{Membuat Script Pergerakan Pesawat}
+
+Mari buat script agar pesawat bisa dikendalikan.
+
+\begin{enumerate}
+    \item Di folder \texttt{Scripts}, buat C\# Script baru bernama \texttt{PlayerController}.
+    \item Attach script tersebut ke GameObject \texttt{Player}.
+    \item Buka script dan tulis kode berikut:
+\end{enumerate}
+
+\begin{lstlisting}[language={[Sharp]C}, caption=PlayerController.cs (Movement)]
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    public float moveSpeed = 5f;
+    private Rigidbody2D rb;
+    private Vector2 movement;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    void Update()
+    {
+        // 1. Baca Input
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveY = Input.GetAxisRaw("Vertical");
+        
+        movement = new Vector2(moveX, moveY).normalized;
+    }
+
+    void FixedUpdate()
+    {
+        // 2. Gerakkan Rigidbody
+        rb.velocity = movement * moveSpeed;
+    }
+}
+\end{lstlisting}
+
+\subsection{Penjelasan Kode}
+\begin{itemize}
+    \item \texttt{GetComponent<Rigidbody2D>()}: Mengambil referensi komponen fisik pesawat.
+    \item \texttt{Input.GetAxisRaw}: Membaca input keyboard secara instan (tanpa smoothing) agar respon lebih cepat.
+    \item \texttt{FixedUpdate}: Tempat terbaik untuk memanipulasi fisika (Rigidbody).
+\end{itemize}

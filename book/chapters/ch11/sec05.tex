@@ -1,0 +1,58 @@
+% ============================================================================
+% SEC05.TEX - Section 11.5: Line of Sight Detection
+% ============================================================================
+
+\section{Line of Sight Detection}
+
+\begin{learningoutcomes}
+\item Mengimplementasikan line of sight detection
+\item Menggunakan Raycast untuk deteksi
+\item Membuat field of view untuk AI
+\end{learningoutcomes}
+
+\subsection{Line of Sight dengan Raycast}
+
+\begin{lstlisting}[language={[Sharp]C}]
+public class LineOfSight : MonoBehaviour
+{
+    public Transform target;
+    public float viewDistance = 10f;
+    public float viewAngle = 45f;
+    public LayerMask obstacleLayer;
+    
+    public bool CanSeeTarget()
+    {
+        Vector3 direction = (target.position - transform.position).normalized;
+        float angle = Vector3.Angle(transform.forward, direction);
+        
+        if (angle > viewAngle / 2f)
+            return false;
+        
+        float distance = Vector3.Distance(transform.position, target.position);
+        if (distance > viewDistance)
+            return false;
+        
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, direction, out hit, viewDistance, obstacleLayer))
+        {
+            if (hit.collider.transform == target)
+                return true;
+        }
+        
+        return false;
+    }
+}
+\end{lstlisting}
+
+\begin{catatan}
+Line of sight membuat AI lebih realistis - hanya mendeteksi player jika dalam field of view dan tidak terhalang obstacle.
+\end{catatan}
+
+\subsection{Ringkasan Section}
+
+\begin{itemize}
+\item Line of sight menggunakan Raycast dan angle check
+\item Field of view menentukan sudut deteksi
+\item Obstacle layer untuk menghindari deteksi melalui dinding
+\item Membuat AI lebih realistis dan fair
+\end{itemize}

@@ -1,0 +1,15 @@
+% ============================================================================
+% LATIHAN.TEX - Latihan Bab 8
+% ============================================================================
+
+\section{Latihan: UI Flow Lengkap}
+
+\begin{enumerate}
+    \item \textbf{Scoring}: Skor harus bertambah 10 setiap kali menembak asteroid. Cek apakah teks di layar berubah?
+    \item \textbf{Main Menu}: Saat tombol Play ditekan, game harus berpindah ke scene Gameplay.
+    \item \textbf{Game Over}: (Tantangan) Tamabahkan UI Panel "Game Over" di scene Gameplay. Awalnya non-aktifkan (uncheck). Saat Player mati (\texttt{PlayerController -> Die()}), panggil \texttt{GameManager} untuk mengaktifkan panel tersebut.
+    \item \textbf{Restart}: Di panel Game Over, beri tombol "Try Again" yang memuat ulang scene Gameplay (\texttt{SceneManager.LoadScene("Gameplay")}).
+\end{enumerate}
+
+Game kita sudah playable \textit{loop}-nya. Mulai -> Main -> Mati -> Ulang.
+Di \textbf{Bab 9}, kita akan membuatnya 'hidup' dengan suara!

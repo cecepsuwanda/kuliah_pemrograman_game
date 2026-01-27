@@ -1,0 +1,94 @@
+% ============================================================================
+% SEC07.TEX - Section 3.7: Event dan Delegate
+% ============================================================================
+
+\section{Event dan Delegate}
+
+\begin{learningoutcomes}
+\item Memahami konsep delegate dan event
+\item Menggunakan Action dan Func
+\item Mengimplementasikan event system
+\item Menerapkan observer pattern
+\end{learningoutcomes}
+
+\subsection{Delegate}
+
+\begin{lstlisting}[language={[Sharp]C}]
+public delegate void HealthChanged(int newHealth);
+
+public class Player : MonoBehaviour
+{
+    public HealthChanged OnHealthChanged;
+    private int health = 100;
+    
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        OnHealthChanged?.Invoke(health);
+    }
+}
+\end{lstlisting}
+
+\subsection{Event}
+
+\begin{lstlisting}[language={[Sharp]C}]
+using System;
+
+public class GameManager : MonoBehaviour
+{
+    public static event Action OnGameOver;
+    public static event Action<int> OnScoreChanged;
+    
+    private int score = 0;
+    
+    public void AddScore(int points)
+    {
+        score += points;
+        OnScoreChanged?.Invoke(score);
+    }
+    
+    public void EndGame()
+    {
+        OnGameOver?.Invoke();
+    }
+}
+
+// Di script lain
+public class UIManager : MonoBehaviour
+{
+    void OnEnable()
+    {
+        GameManager.OnGameOver += HandleGameOver;
+        GameManager.OnScoreChanged += UpdateScore;
+    }
+    
+    void OnDisable()
+    {
+        GameManager.OnGameOver -= HandleGameOver;
+        GameManager.OnScoreChanged -= UpdateScore;
+    }
+    
+    void HandleGameOver()
+    {
+        // Show game over UI
+    }
+    
+    void UpdateScore(int newScore)
+    {
+        // Update score display
+    }
+}
+\end{lstlisting}
+
+\begin{catatan}
+Event memungkinkan komunikasi antar script tanpa coupling langsung. Selalu unsubscribe di OnDisable untuk menghindari memory leaks.
+\end{catatan}
+
+\subsection{Ringkasan Section}
+
+\begin{itemize}
+\item Delegate adalah tipe yang merepresentasikan reference ke method
+\item Event adalah wrapper untuk delegate dengan encapsulation
+\item Action dan Func adalah generic delegate types
+\item Event system memungkinkan loose coupling antar komponen
+\end{itemize}

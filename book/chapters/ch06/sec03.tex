@@ -1,0 +1,35 @@
+% ============================================================================
+% SEC03.TEX - Section 6.3: Game Over (Player Collision)
+% ============================================================================
+
+\section{Game Over (Player Collision)}
+
+Jika asteroid menabrak pemain, game harus berakhir (atau minimal pesawat hancur).
+
+\subsection{Update PlayerController}
+
+Mari tambahkan logika agar Player bisa mati.
+
+\begin{lstlisting}[language={[Sharp]C}]
+// Tambahkan di dalam class PlayerController
+
+private void OnCollisionEnter2D(Collision2D collision)
+{
+    // Cek jika menabrak Asteroid/Enemy
+    if (collision.gameObject.CompareTag("Enemy")) 
+    {
+        Die();
+    }
+}
+
+void Die()
+{
+    Debug.Log("Game Over!");
+    Destroy(gameObject); // Hancurkan pesawat
+    // Nanti kita akan tambahkan logika Game Over Screen di Bab UI
+}
+\end{lstlisting}
+
+\begin{tips}
+Jangan lupa memberi Tag \texttt{Enemy} pada Prefab \textbf{Asteroid} agar kode ini bekerja.
+\end{tips}

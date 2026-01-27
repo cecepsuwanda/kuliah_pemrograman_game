@@ -1,0 +1,41 @@
+% ============================================================================
+% CH08.TEX - Bab 8: UI/UX Game
+% ============================================================================
+
+\documentclass[../../main.tex]{subfiles}
+
+\begin{document}
+
+% Set counter hanya ketika kompilasi per-bab (standalone)
+\ifcsname subfiles@mainfile\endcsname\else
+    \setcounter{chapter}{7}
+\fi
+\chapter{UI/UX Game}
+
+\section{Deskripsi Bab}
+
+Bab ini membahas sistem UI Unity. 
+Dalam \textbf{Space Survivor}, UI sangat vital untuk memberi tahu pemain berapa skor mereka dan memfasilitasi alur permainan dari Menu Utama ke Gameplay. Kita akan menggunakan Canvas, TextMeshPro, dan Button.
+
+\section{Sub-CPMK Bab}
+
+Setelah mempelajari bab ini, mahasiswa diharapkan mampu:
+\begin{itemize}
+\item \textbf{Sub-CPMK8.1}: Menggunakan Canvas dan Canvas Scaler
+\item \textbf{Sub-CPMK8.2}: Mengimplementasikan UI components (Button, Text, Image, Slider)
+\item \textbf{Sub-CPMK8.3}: Menggunakan Event System untuk UI interactions
+\item \textbf{Sub-CPMK8.4}: Merancang dan mengimplementasikan HUD
+\item \textbf{Sub-CPMK8.5}: Membuat sistem menu (Main menu, Pause menu)
+\end{itemize}
+
+% Include sections
+\input{sec01}
+\input{sec02}
+\input{sec03}
+\input{sec04}
+\input{sec05}
+
+\input{latihan}
+\input{ringkasan}
+
+\end{document}

@@ -1,0 +1,156 @@
+% ============================================================================
+% NOTATION.TEX
+% Notasi matematis dan algoritmik untuk buku ajar Pemrograman Game
+% ============================================================================
+
+\section*{Daftar Notasi}
+
+\subsection*{Notasi Matematis}
+
+\begin{description}
+    \item[$\mathbf{v} = (x, y, z)$] Vektor 3D dengan komponen $x$, $y$, dan $z$
+    \item[$|\mathbf{v}|$] Magnitude (panjang) vektor $\mathbf{v}$
+    \item[$\mathbf{v} \cdot \mathbf{w}$] Dot product (perkalian skalar) antara vektor $\mathbf{v}$ dan $\mathbf{w}$
+    \item[$\mathbf{v} \times \mathbf{w}$] Cross product (perkalian silang) antara vektor $\mathbf{v}$ dan $\mathbf{w}$
+    \item[$\mathbf{v} + \mathbf{w}$] Penjumlahan vektor
+    \item[$k \cdot \mathbf{v}$] Perkalian skalar dengan vektor
+    \item[$\mathbf{p}_1, \mathbf{p}_2$] Dua titik dalam ruang 3D
+    \item[$d(\mathbf{p}_1, \mathbf{p}_2)$] Jarak Euclidean antara dua titik
+    \item[$\theta$] Sudut rotasi (dalam radian atau derajat)
+    \item[$\mathbf{q}$] Quaternion untuk representasi rotasi
+    \item[$\mathbf{R}(\theta)$] Matriks rotasi dengan sudut $\theta$
+    \item[$t$] Waktu (time)
+    \item[$\Delta t$] Delta time (selisih waktu antar frame)
+    \item[$f$] Frame rate (frame per second)
+    \item[$FPS$] Frames Per Second
+    \item[$v$] Kecepatan (velocity)
+    \item[$a$] Percepatan (acceleration)
+    \item[$g$] Gravitasi (gravity constant)
+    \item[$m$] Massa (mass)
+    \item[$f$] Gaya (force)
+    \item[$\mathbf{p}(t)$] Posisi sebagai fungsi waktu
+    \item[$\mathbf{v}(t)$] Kecepatan sebagai fungsi waktu
+    \item[$s(t)$] Skor sebagai fungsi waktu
+    \item[$h(t)$] Health sebagai fungsi waktu
+    \item[$\alpha$] Alpha (transparansi) untuk blending
+    \item[$\lambda$] Lambda (parameter interpolasi)
+    \item[$P(A)$] Probabilitas kejadian $A$
+    \item[$E{[X]}$] Ekspektasi nilai acak $X$
+    \item[$\mathcal{O}(n)$] Kompleksitas Big-O notation
+\end{description}
+
+\subsection*{Notasi Algoritmik}
+
+\begin{description}[font=\normalfont\ttfamily,labelsep=1em]
+    \item[GameObject] Tipe data GameObject dalam Unity
+    \item[Transform] Komponen Transform
+    \item[Vector3] Struktur vektor 3D
+    \item[Quaternion] Struktur quaternion untuk rotasi
+    \item[Rigidbody] Komponen Rigidbody
+    \item[Collider] Komponen Collider
+    \item[void Start()] Fungsi Unity yang dipanggil sekali saat awal
+    \item[void Update()] Fungsi Unity yang dipanggil setiap frame
+    \item[void FixedUpdate()] Fungsi Unity untuk fisika (fixed timestep)
+    \item[void OnCollisionEnter()] Callback saat terjadi collision
+    \item[void OnTriggerEnter()] Callback saat trigger diaktifkan
+    \item[Instantiate()] Fungsi untuk membuat instance GameObject
+    \item[Destroy()] Fungsi untuk menghancurkan GameObject
+    \item[GetComponent<T>()] Fungsi untuk mendapatkan komponen
+    \item[Time.deltaTime] Waktu sejak frame terakhir
+    \item[Time.fixedDeltaTime] Fixed timestep untuk fisika
+    \item[Input.GetKey()] Fungsi untuk membaca input keyboard
+    \item[Input.GetMouseButton()] Fungsi untuk membaca input mouse
+    \item[Physics.Raycast()] Fungsi untuk raycast fisika
+    \item[Physics.OverlapSphere()] Fungsi untuk deteksi overlap sphere
+    \item[Animator.SetTrigger()] Fungsi untuk mengaktifkan trigger animasi
+    \item[Animator.SetFloat()] Fungsi untuk mengatur parameter float animator
+    \item[AudioSource.Play()] Fungsi untuk memainkan audio
+    \item[SceneManager.LoadScene()] Fungsi untuk memuat scene
+    \item[IEnumerator] Interface untuk coroutine
+    \item[yield return] Statement untuk pause coroutine
+    \item[async/await] Pola asinkron C\#
+    \item[delegate] Tipe delegate C\#
+    \item[Action<T>] Delegate untuk action tanpa return value
+    \item[Func<T, R>] Delegate untuk function dengan return value
+    \item[Event] Keyword untuk event C\#
+\end{description}
+
+\subsection*{Notasi untuk Algoritma}
+
+\begin{description}
+    \item[\textbf{function} \textit{NamaFungsi}(\textit{parameter})] Deklarasi fungsi
+    \item[\textbf{if} \textit{kondisi} \textbf{then}] Struktur kondisional
+    \item[\textbf{else}] Alternatif untuk kondisi
+    \item[\textbf{for} \textit{variabel} \textbf{from} $a$ \textbf{to} $b$] Loop dengan range
+    \item[\textbf{while} \textit{kondisi}] Loop dengan kondisi
+    \item[\textbf{return} \textit{nilai}] Mengembalikan nilai
+    \item[\textbf{procedure} \textit{NamaProsedur}] Deklarasi prosedur
+    \item[\textit{variabel} $\leftarrow$ \textit{nilai}] Assignment
+    \item[\textit{array}[i]] Akses elemen array pada indeks $i$
+    \item[\textit{object}.\textit{method}()] Pemanggilan method
+    \item[\textit{object}.\textit{property}] Akses property
+\end{description}
+
+\subsection*{Notasi untuk State Machine}
+
+\begin{description}
+    \item[$S = \{s_1, s_2, \ldots, s_n\}$] Himpunan state
+    \item[$T = \{t_1, t_2, \ldots, t_m\}$] Himpunan transisi
+    \item[$s_0$] State awal (initial state)
+    \item[$s_f$] State akhir (final state)
+    \item[$s_i \xrightarrow{condition} s_j$] Transisi dari state $s_i$ ke $s_j$ dengan kondisi
+    \item[$f: S \times E \rightarrow S$] Fungsi transisi state
+    \item[$g: S \rightarrow A$] Fungsi output/action dari state
+\end{description}
+
+\subsection*{Notasi untuk Pathfinding}
+
+\begin{description}
+    \item[$G = (V, E)$] Graph dengan vertex $V$ dan edge $E$
+    \item[$v_{start}$] Vertex awal
+    \item[$v_{goal}$] Vertex tujuan
+    \item[$g(v)$] Cost dari start ke vertex $v$
+    \item[$h(v)$] Heuristic cost dari vertex $v$ ke goal
+    \item[$f(v) = g(v) + h(v)$] Total cost untuk vertex $v$ (A* algorithm)
+    \item[$d(u, v)$] Jarak antara vertex $u$ dan $v$
+    \item[$w(e)$] Weight dari edge $e$
+    \item[$path = \{v_1, v_2, \ldots, v_n\}$] Jalur dari $v_1$ ke $v_n$
+\end{description}
+
+\subsection*{Notasi untuk Game Mechanics}
+
+\begin{description}
+    \item[$HP$] Health Points (poin kesehatan)
+    \item[$MP$] Mana Points (poin mana)
+    \item[$XP$] Experience Points (poin pengalaman)
+    \item[$LVL$] Level karakter
+    \item[$DMG$] Damage (kerusakan)
+    \item[$DEF$] Defense (pertahanan)
+    \item[$ATK$] Attack (serangan)
+    \item[$SPD$] Speed (kecepatan)
+    \item[$Score$] Skor pemain
+    \item[$Time$] Waktu permainan
+    \item[$Lives$] Jumlah nyawa
+\end{description}
+
+\subsection*{Notasi untuk Optimasi}
+
+\begin{description}
+    \item[$T_{frame}$] Waktu per frame
+    \item[$T_{render}$] Waktu rendering
+    \item[$T_{physics}$] Waktu simulasi fisika
+    \item[$T_{script}$] Waktu eksekusi script
+    \item[$FPS_{target}$] Target frame rate
+    \item[$FPS_{actual}$] Frame rate aktual
+    \item[$CPU\%$] Penggunaan CPU (persentase)
+    \item[$GPU\%$] Penggunaan GPU (persentase)
+    \item[$RAM$] Penggunaan memori RAM
+    \item[$VRAM$] Penggunaan video RAM
+    \item[$DrawCalls$] Jumlah draw call per frame
+    \item[$Tris$] Jumlah segitiga (triangles)
+    \item[$Verts$] Jumlah vertex
+    \item[$Batches$] Jumlah batch rendering
+\end{description}
+
+\vspace{1cm}
+\textit{Catatan: Notasi ini digunakan secara konsisten di seluruh buku ajar untuk memastikan pemahaman yang jelas dan tepat.}

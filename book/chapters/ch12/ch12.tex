@@ -1,0 +1,40 @@
+% ============================================================================
+% CH12.TEX - Bab 12: Optimization dan Debugging
+% ============================================================================
+
+\documentclass[../../main.tex]{subfiles}
+
+\begin{document}
+
+% Set counter hanya ketika kompilasi per-bab (standalone)
+\ifcsname subfiles@mainfile\endcsname\else
+    \setcounter{chapter}{11}
+\fi
+\chapter{Optimization dan Debugging}
+
+\section{Deskripsi Bab}
+
+Bab ini membahas teknik optimasi dan debugging untuk meningkatkan performa game. Mahasiswa akan mempelajari Unity Profiler, teknik optimasi (object pooling, LOD, occlusion culling), debugging tools, dan identifikasi performance bottlenecks.
+
+\section{Sub-CPMK Bab}
+
+Setelah mempelajari bab ini, mahasiswa diharapkan mampu:
+\begin{itemize}
+\item \textbf{Sub-CPMK12.1}: Menggunakan Unity Profiler untuk analisis
+\item \textbf{Sub-CPMK12.2}: Menerapkan teknik optimasi (object pooling, LOD)
+\item \textbf{Sub-CPMK12.3}: Menggunakan debugging tools
+\item \textbf{Sub-CPMK12.4}: Mengidentifikasi performance bottlenecks
+\item \textbf{Sub-CPMK12.5}: Mengoptimalkan code dan assets
+\end{itemize}
+
+% Include sections
+\input{sec01}
+\input{sec02}
+\input{sec03}
+\input{sec04}
+\input{sec05}
+
+\input{latihan}
+\input{ringkasan}
+
+\end{document}

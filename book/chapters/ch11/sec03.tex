@@ -1,0 +1,48 @@
+% ============================================================================
+% SEC03.TEX - Section 11.3: Script Pengejar (Chasing)
+% ============================================================================
+
+\section{Script Pengejar (Chasing)}
+
+Buat script \texttt{EnemyAI.cs}:
+
+\begin{lstlisting}[language={[Sharp]C}]
+using UnityEngine;
+
+public class EnemyAI : MonoBehaviour
+{
+    public float speed = 3f;
+    private Transform player;
+
+    void Start()
+    {
+        // Cari objek Player secara otomatis saat spawn
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            player = playerObj.transform;
+        }
+    }
+
+    void Update()
+    {
+        if (player != null)
+        {
+            // Tentukan arah ke pemain
+            // Arah = (Posisi Tujuan - Posisi Sekarang).normalized
+            Vector3 direction = (player.position - transform.position).normalized;
+            
+            // Gerakkan musuh
+            transform.position += direction * speed * Time.deltaTime;
+            
+            // Putar musuh menghadap pemain (Opsional, gunakan Atan2)
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+        }
+    }
+}
+\end{lstlisting}
+
+\begin{tips}
+Jangan lupa memberi Tag \textbf{"Player"} pada object Player utama Anda! Fungsi \texttt{GameObject.\allowbreak FindGameObjectWithTag} akan gagal jika tidak ada tag tersebut.
+\end{tips}

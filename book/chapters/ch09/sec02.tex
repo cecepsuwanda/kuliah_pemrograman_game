@@ -1,0 +1,35 @@
+% ============================================================================
+% SEC02.TEX - Section 9.2: Suara Tembakan (SFX)
+% ============================================================================
+
+\section{Suara Tembakan (SFX)}
+
+Setiap kali Player menembak, kita ingin ada suara "Pew!".
+
+\subsection{Menambahkan AudioSource}
+\begin{enumerate}
+    \item Pilih GameObject \texttt{Player}.
+    \item Tambahkan Component \textbf{Audio Source}.
+    \item \textbf{Uncheck} (matikan) opsi \texttt{Play On Awake} (karena kita tidak ingin suara tembakan bunyi saat game baru mulai).
+    \item Drag file audio tembakan Anda ke slot \texttt{AudioClip}.
+\end{enumerate}
+
+\subsection{Update Script PlayerController}
+\begin{lstlisting}[language={[Sharp]C}]
+private AudioSource audioSource;
+
+void Start()
+{
+    rb = GetComponent<Rigidbody2D>();
+    // Ambil referensi AudioSource
+    audioSource = GetComponent<AudioSource>();
+}
+
+void Shoot()
+{
+    // PlayOneShot cocok untuk SFX yang pendek dan bisa tumpang tindih
+    audioSource.PlayOneShot(audioSource.clip);
+    
+    Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+}
+\end{lstlisting}

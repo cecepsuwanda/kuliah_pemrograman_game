@@ -1,0 +1,43 @@
+% ============================================================================
+% SEC01.TEX - Section 6.1: Konsep Fisika di Space Survivor
+% ============================================================================
+
+\section{Konsep Fisika di Space Survivor}
+
+Dalam game Space Survivor, fisika digunakan untuk tiga hal utama:
+\begin{enumerate}
+    \item \textbf{Movement}: Menggerakkan pesawat dan asteroid (sudah kita singgung di Bab 4).
+    \item \textbf{Collision}: Mendeteksi saat peluru menabrak asteroid.
+    \item \textbf{Trigger}: Mendeteksi saat player menabrak asteroid (Game Over).
+\end{enumerate}
+
+\subsection{Rigidbody vs Collider}
+Ingat kembali aturan dasar:
+\begin{itemize}
+    \item Agar collision terjadi, setidaknya **satu** objek harus memiliki \texttt{Rigidbody 2D}.
+    \item Kedua objek harus memiliki \texttt{Collider 2D}.
+\end{itemize}
+
+\begin{itemize}
+    \item \textbf{Box Collider 2D}: Objek kotak (Platform, Peti). Performa: Sangat Cepat.
+    \item \textbf{Circle Collider 2D}: Objek bulat (Bola, Planet). Performa: Sangat Cepat.
+    \item \textbf{Capsule Collider 2D}: Karakter humanoid. Performa: Cepat.
+    \item \textbf{Polygon Collider 2D}: Bentuk kompleks. Performa: Lambat.
+\end{itemize}
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[node distance=2cm, auto]
+        \node (objA) [draw, circle] {Object A};
+        \node (objB) [draw, circle, right=3cm of objA] {Object B};
+        
+        \path[->, thick, red] (objA) edge node {Collision!} (objB);
+        
+        \node [below=0.5cm of objA] {Rigidbody + Collider};
+        \node [below=0.5cm of objB] {Collider Only};
+    \end{tikzpicture}
+    \caption{Syarat Terjadinya Collision}
+    \label{fig:collision_req}
+\end{figure}
+
+Di game kita, Peluru, Player, dan Asteroid semuanya memiliki Rigidbody 2D (Gravity 0) dan Collider. Ini memastikan semua tabrakan terdeteksi.

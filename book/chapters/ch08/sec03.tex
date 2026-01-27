@@ -1,0 +1,45 @@
+% ============================================================================
+% SEC03.TEX - Section 8.3: Membuat Main Menu
+% ============================================================================
+
+\section{Membuat Main Menu}
+
+Buka scene \texttt{MainMenu} yang sudah kita buat di Bab 4.
+
+\subsection{Desain Menu}
+\begin{enumerate}
+    \item Tambahkan \textbf{Canvas}.
+    \item Tambahkan \textbf{Text - TextMeshPro} untuk Judul Game (\textit{Space Survivor}) yang besar di tengah atas.
+    \item Tambahkan \textbf{UI > Button - TextMeshPro}. Ganti teksnya menjadi \textbf{PLAY}.
+\end{enumerate}
+
+\subsection{Script UI Manager}
+Buat script \texttt{MainMenuManager.cs} pada Canvas:
+
+\begin{lstlisting}[language={[Sharp]C}]
+using UnityEngine;
+using UnityEngine.SceneManagement; // Wajib untuk pindah scene
+
+public class MainMenuManager : MonoBehaviour
+{
+    public void PlayGame()
+    {
+        // Pastikan nama scene sesuai
+        SceneManager.LoadScene("Gameplay");
+    }
+    
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+}
+\end{lstlisting}
+
+\subsection{Menghubungkan Tombol}
+\begin{enumerate}
+    \item Klik Button \textbf{Play}.
+    \item Di komponen Button, cari bagian \textbf{On Click ()}.
+    \item Klik (+).
+    \item Drag objek Canvas (yang berisi script tadi) ke slot object.
+    \item Pilih function: \texttt{MainMenuManager > PlayGame}.
+\end{enumerate}

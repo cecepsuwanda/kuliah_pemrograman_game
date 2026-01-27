@@ -1,0 +1,52 @@
+% ============================================================================
+% SEC05.TEX - Section 7.5: Blend Trees
+% ============================================================================
+
+\section{Blend Trees}
+
+\begin{learningoutcomes}
+\item Memahami konsep Blend Tree
+\item Membuat Blend Tree untuk smooth transitions
+\item Menggunakan 1D dan 2D Blend Trees
+\end{learningoutcomes}
+
+\subsection{Pengertian Blend Tree}
+
+\begin{definisi}[Blend Tree]
+Blend Tree adalah struktur dalam Animator Controller yang memungkinkan blending halus antar animasi berdasarkan parameter \cite{UnityAnimation2024}.
+\end{definisi}
+
+\subsection{1D Blend Tree}
+
+Untuk blending berdasarkan satu parameter (misalnya: speed):
+\begin{itemize}
+\item Idle (speed = 0)
+\item Walk (speed = 1)
+\item Run (speed = 2)
+\end{itemize}
+
+\subsection{2D Blend Tree}
+
+Untuk blending berdasarkan dua parameter (misalnya: horizontal dan vertical movement):
+\begin{itemize}
+\item Idle (0, 0)
+\item Forward (0, 1)
+\item Backward (0, -1)
+\item Left (-1, 0)
+\item Right (1, 0)
+\item Forward-Left (-0.7, 0.7)
+\item dll
+\end{itemize}
+
+\begin{catatan}
+Blend Tree memberikan transisi yang lebih smooth antara animasi. Gunakan untuk movement animations yang perlu blending natural.
+\end{catatan}
+
+\subsection{Ringkasan Section}
+
+\begin{itemize}
+\item Blend Tree memungkinkan blending halus antar animasi
+\item 1D Blend Tree untuk satu parameter
+\item 2D Blend Tree untuk dua parameter
+\item Berguna untuk movement animations yang perlu transisi natural
+\end{itemize}

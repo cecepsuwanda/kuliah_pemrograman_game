@@ -1,0 +1,40 @@
+% ============================================================================
+% SEC02.TEX - Section 6.2: Menghancurkan Asteroid
+% ============================================================================
+
+\section{Menghancurkan Asteroid}
+
+Saat peluru mengenai asteroid, asteroid harus hancur, dan peluru juga harus hilang.
+
+\subsection{Script AsteroidController}
+
+Kita butuh script untuk asteroid. Buat \texttt{AsteroidController.cs}:
+
+\begin{lstlisting}[language={[Sharp]C}, caption=AsteroidController.cs]
+using UnityEngine;
+
+public class AsteroidController : MonoBehaviour
+{
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // Cek jika yang menabrak adalah Peluru
+        if (other.CompareTag("Bullet"))
+        {
+            // Hancurkan Asteroid
+            Destroy(gameObject);
+            
+            // Hancurkan Peluru juga
+            Destroy(other.gameObject);
+        }
+    }
+}
+\end{lstlisting}
+
+\subsection{Menggunakan Tag}
+Kode di atas menggunakan \texttt{CompareTag("Bullet")}. Agar ini bekerja:
+\begin{enumerate}
+    \item Pilih Prefab \textbf{Bullet}.
+    \item Di Inspector bagian atas, klik Dropdown \textbf{Tag} > \textbf{Add Tag...}.
+    \item Buat tag baru bernama \texttt{Bullet}.
+    \item Kembali ke Prefab \textbf{Bullet}, dan ubah Tag-nya menjadi \textbf{Bullet}.
+\end{enumerate}

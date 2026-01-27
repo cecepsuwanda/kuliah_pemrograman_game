@@ -1,0 +1,36 @@
+% ============================================================================
+% SEC03.TEX - Section 10.3: Game Loop dan Restart
+% ============================================================================
+
+\section{Game Loop dan Restart}
+
+Saat ini jika pemain mati, game berhenti begitu saja. Kita perlu memberikan kesempatan kedua.
+
+\subsection{Menampilkan Game Over}
+Ingat panel \texttt{GameOverPanel} yang kita buat di Bab 8? Saatnya kita gunakan.
+
+Update \texttt{GameManager.cs}:
+\begin{lstlisting}[language={[Sharp]C}]
+public GameObject gameOverPanel; // Drag Panel Game Over ke sini
+
+public void GameOver()
+{
+    // Tampilkan panel
+    gameOverPanel.SetActive(true);
+    
+    // Hentikan waktu (Pause)
+    Time.timeScale = 0f; 
+}
+
+public void RestartGame()
+{
+    Time.timeScale = 1f; // Jangan lupa kembalikan waktu
+    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+}
+\end{lstlisting}
+
+\subsection{Menghubungkan ke Player}
+Di \texttt{PlayerController.Die()}, panggil:
+\begin{lstlisting}[language={[Sharp]C}]
+GameManager.Instance.GameOver();
+\end{lstlisting}

@@ -1,0 +1,76 @@
+% ============================================================================
+% CH01.TEX
+% Bab 1: Konsep Dasar Game Development
+% ============================================================================
+
+\documentclass[../../main.tex]{subfiles}
+
+\begin{document}
+
+% Set counter hanya ketika kompilasi per-bab (standalone)
+\ifcsname subfiles@mainfile\endcsname\else
+    \setcounter{chapter}{0}
+\fi
+\chapter{Konsep Dasar Game Development}
+
+\section{Deskripsi Bab}
+
+Bab ini membahas konsep fundamental dalam pengembangan game, termasuk definisi game, elemen-elemen pembentuk game, berbagai genre game, dokumen desain game (GDD), lifecycle pengembangan game, dan struktur tim pengembangan. Pemahaman terhadap konsep-konsep ini merupakan fondasi penting sebelum mempelajari aspek teknis pengembangan game menggunakan Unity Engine.
+
+\section{Sub-CPMK Bab}
+
+Setelah mempelajari bab ini, mahasiswa diharapkan mampu:
+\begin{itemize}
+\item \textbf{Sub-CPMK1.1}: Menganalisis definisi game dan elemen-elemen pembentuknya (mechanics, dynamics, aesthetics)
+\item \textbf{Sub-CPMK1.2}: Mengidentifikasi berbagai genre game dan karakteristiknya
+\item \textbf{Sub-CPMK1.3}: Menyusun Game Design Document (GDD) untuk konsep game
+\item \textbf{Sub-CPMK1.4}: Menjelaskan lifecycle pengembangan game dari pre-production hingga post-production
+\item \textbf{Sub-CPMK1.5}: Memahami peran dan tanggung jawab dalam tim pengembangan game
+\end{itemize}
+
+\section{Peta Konsep}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[node distance=2cm, auto]
+    \node [block] (game) {Game};
+    \node [block, below left=of game] (mechanics) {Mechanics};
+    \node [block, below=of game] (dynamics) {Dynamics};
+    \node [block, below right=of game] (aesthetics) {Aesthetics};
+    \node [block, right=3cm of game] (gdd) {GDD};
+    \node [block, below=of gdd] (lifecycle) {Lifecycle};
+    \node [block, below=of lifecycle] (team) {Team};
+    
+    \draw [line] (game) -- (mechanics);
+    \draw [line] (game) -- (dynamics);
+    \draw [line] (game) -- (aesthetics);
+    \draw [line] (game) -- (gdd);
+    \draw [line] (gdd) -- (lifecycle);
+    \draw [line] (lifecycle) -- (team);
+\end{tikzpicture}
+\caption{Peta Konsep Bab 1: Konsep Dasar Game Development}
+\label{fig:ch01_concept_map}
+\end{figure}
+
+\section{Ringkasan Teori Inti}
+
+\begin{itemize}
+\item Game adalah aktivitas terstruktur dengan tujuan, aturan, dan umpan balik
+\item Elemen game terdiri dari Mechanics (aturan), Dynamics (perilaku), dan Aesthetics (pengalaman)
+\item Genre game menentukan kategori dan karakteristik gameplay
+\item GDD adalah dokumen penting yang menjelaskan konsep game secara detail
+\item Lifecycle pengembangan game meliputi tiga tahap utama: pre-production, production, dan post-production
+\item Tim pengembangan game terdiri dari berbagai peran spesialis
+\end{itemize}
+
+% Include semua section
+\input{sec01}
+\input{sec02}
+\input{sec03}
+\input{sec04}
+\input{sec05}
+
+\input{latihan}
+\input{ringkasan}
+
+\end{document}

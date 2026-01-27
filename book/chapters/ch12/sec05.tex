@@ -1,0 +1,71 @@
+% ============================================================================
+% SEC05.TEX - Section 12.5: Code Optimization
+% ============================================================================
+
+\section{Code Optimization}
+
+\begin{learningoutcomes}
+\item Mengoptimalkan code untuk performa
+\item Menghindari operations mahal di Update()
+\item Menggunakan caching untuk GetComponent
+\item Mengoptimalkan loops dan algorithms
+\end{learningoutcomes}
+
+\subsection{Best Practices}
+
+\begin{lstlisting}[language={[Sharp]C}]
+// BAD: GetComponent setiap frame
+void Update()
+{
+    Rigidbody rb = GetComponent<Rigidbody>();
+    rb.AddForce(Vector3.up);
+}
+
+// GOOD: Cache component
+private Rigidbody rb;
+void Start()
+{
+    rb = GetComponent<Rigidbody>();
+}
+void Update()
+{
+    rb.AddForce(Vector3.up);
+}
+
+// BAD: String concatenation di Update
+void Update()
+{
+    text.text = "Score: " + score;
+}
+
+// GOOD: Update hanya saat berubah
+void UpdateScore(int newScore)
+{
+    score = newScore;
+    text.text = "Score: " + score;
+}
+\end{lstlisting}
+
+\subsection{Optimization Tips}
+
+\begin{itemize}
+\item Cache GetComponent() di Start/Awake
+\item Hindari operations mahal di Update()
+\item Gunakan object pooling untuk Instantiate/Destroy
+\item Minimize string operations
+\item Use appropriate data structures
+\end{itemize}
+
+\begin{catatan}
+Code optimization penting untuk performa. Profiler membantu mengidentifikasi code yang perlu dioptimalkan.
+\end{catatan}
+
+\subsection{Ringkasan Section}
+
+\begin{itemize}
+\item Cache GetComponent() untuk menghindari overhead
+\item Hindari operations mahal di Update()
+\item Gunakan object pooling
+\item Minimize string operations
+\item Profiler membantu mengidentifikasi masalah
+\end{itemize}

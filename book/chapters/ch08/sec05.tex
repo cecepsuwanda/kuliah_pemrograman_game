@@ -1,0 +1,86 @@
+% ============================================================================
+% SEC05.TEX - Section 8.5: Menu System
+% ============================================================================
+
+\section{Menu System}
+
+\begin{learningoutcomes}
+\item Membuat Main Menu
+\item Mengimplementasikan Pause Menu
+\item Menggunakan SceneManager untuk navigation
+\end{learningoutcomes}
+
+\subsection{Main Menu}
+
+\begin{lstlisting}[language={[Sharp]C}]
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+public class MainMenu : MonoBehaviour
+{
+    public Button startButton;
+    public Button settingsButton;
+    public Button quitButton;
+    
+    void Start()
+    {
+        startButton.onClick.AddListener(StartGame);
+        settingsButton.onClick.AddListener(OpenSettings);
+        quitButton.onClick.AddListener(QuitGame);
+    }
+    
+    void StartGame()
+    {
+        SceneManager.LoadScene("GameScene");
+    }
+    
+    void OpenSettings()
+    {
+        // Open settings menu
+    }
+    
+    void QuitGame()
+    {
+        Application.Quit();
+    }
+}
+\end{lstlisting}
+
+\subsection{Pause Menu}
+
+\begin{lstlisting}[language={[Sharp]C}]
+public class PauseMenu : MonoBehaviour
+{
+    public GameObject pausePanel;
+    private bool isPaused = false;
+    
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause();
+        }
+    }
+    
+    void TogglePause()
+    {
+        isPaused = !isPaused;
+        pausePanel.SetActive(isPaused);
+        Time.timeScale = isPaused ? 0f : 1f;
+    }
+}
+\end{lstlisting}
+
+\begin{catatan}
+Gunakan Time.timeScale = 0 untuk pause game. Pastikan untuk reset ke 1 saat resume. Gunakan separate scene atau Canvas untuk menu.
+\end{catatan}
+
+\subsection{Ringkasan Section}
+
+\begin{itemize}
+\item Main Menu untuk memulai game
+\item Pause Menu untuk pause/resume gameplay
+\item Time.timeScale untuk pause functionality
+\item SceneManager untuk navigation antar scene
+\end{itemize}

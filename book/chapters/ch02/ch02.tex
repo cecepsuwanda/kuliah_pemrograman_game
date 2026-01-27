@@ -1,0 +1,41 @@
+% ============================================================================
+% CH02.TEX
+% Bab 2: Pengenalan Unity Engine
+% ============================================================================
+
+\documentclass[../../main.tex]{subfiles}
+
+\begin{document}
+
+% Set counter hanya ketika kompilasi per-bab (standalone)
+\ifcsname subfiles@mainfile\endcsname\else
+    \setcounter{chapter}{1}
+\fi
+\chapter{Pengenalan Unity Engine}
+
+\section{Deskripsi Bab}
+
+Bab ini memperkenalkan Unity Engine sebagai platform pengembangan game yang powerful dan populer. Mahasiswa akan mempelajari sejarah Unity, proses instalasi dan setup, interface Unity Editor, workflow pengembangan game, serta penggunaan Unity Asset Store dan package management. Pemahaman terhadap Unity Editor merupakan fondasi penting sebelum mempelajari aspek teknis pengembangan game.
+
+\section{Sub-CPMK Bab}
+
+Setelah mempelajari bab ini, mahasiswa diharapkan mampu:
+\begin{itemize}
+\item \textbf{Sub-CPMK2.1}: Menjelaskan sejarah dan keunggulan Unity Engine
+\item \textbf{Sub-CPMK2.2}: Menginstal dan mengkonfigurasi Unity Hub dan Unity Editor
+\item \textbf{Sub-CPMK2.3}: Mengoperasikan Unity Editor interface dengan mahir
+\item \textbf{Sub-CPMK2.4}: Memahami workflow pengembangan game di Unity
+\item \textbf{Sub-CPMK2.5}: Menggunakan Unity Asset Store dan package management
+\end{itemize}
+
+% Include semua section
+\input{sec01}
+\input{sec02}
+\input{sec03}
+\input{sec04}
+\input{sec05}
+
+\input{latihan}
+\input{ringkasan}
+
+\end{document}

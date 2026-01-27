@@ -1,0 +1,54 @@
+% ============================================================================
+% SEC02.TEX - Section 12.2: Implementasi Object Pool
+% ============================================================================
+
+\section{Implementasi Object Pool}
+
+Mari buat sistem kolam peluru.
+
+\subsection{Script BulletPool}
+Buat GameObject kosong bernama \texttt{BulletPool} dan script \texttt{BulletPool.cs}.
+
+\begin{lstlisting}[language={[Sharp]C}]
+using UnityEngine;
+using System.Collections.Generic;
+
+public class BulletPool : MonoBehaviour
+{
+    public static BulletPool Instance; // Singleton
+    public GameObject bulletPrefab;
+    public int poolSize = 20;
+
+    private List<GameObject> pool;
+
+    void Awake()
+    {
+        Instance = this;
+        pool = new List<GameObject>();
+
+        // Isi kolam di awal game
+        for (int i = 0; i < poolSize; i++)
+        {
+            GameObject obj = Instantiate(bulletPrefab);
+            obj.SetActive(false); // Matikan dulu
+            pool.Add(obj);
+        }
+    }
+
+    public GameObject GetBullet()
+    {
+        // Cari peluru yang sedang mati (inactive)
+        foreach (GameObject b in pool)
+        {
+            if (!b.activeInHierarchy)
+            {
+                b.SetActive(true); // Hidupkan
+                return b;
+            }
+        }
+        
+        // Opsional: Jika habis, bisa Instantiate baru atau return null
+        return null; 
+    }
+}
+\end{lstlisting}

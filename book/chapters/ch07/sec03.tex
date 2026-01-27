@@ -1,0 +1,46 @@
+% ============================================================================
+% SEC03.TEX - Section 7.3: Memicu Ledakan via Script
+% ============================================================================
+
+\section{Memicu Ledakan via Script}
+
+Animasi tidak berguna kalau tidak muncul saat kejadian. Kita harus memunculkan (Instantiate) efek ledakan ini saat asteroid hancur.
+
+\subsection{Jadikan Prefab}
+\begin{enumerate}
+    \item Tarik \texttt{ExplosionVFX} dari Hierarchy ke folder \textbf{Prefabs}.
+    \item Hapus \texttt{ExplosionVFX} dari Hierarchy.
+\end{enumerate}
+
+\subsection{Update AsteroidController.cs}
+Tambahkan referensi prefab ledakan dan instansiasi sebelum destroy.
+
+\begin{lstlisting}[language={[Sharp]C}]
+public GameObject explosionPrefab; // Drag Prefab Explosion ke sini di Inspector
+
+private void OnTriggerEnter2D(Collider2D other)
+{
+    if (other.CompareTag("Bullet"))
+    {
+        // Munculkan Ledakan
+        Instantiate(explosionPrefab, transform.position, transform.rotation);
+        
+        Destroy(gameObject);
+        Destroy(other.gameObject);
+    }
+}
+\end{lstlisting}
+
+\subsection{Auto Destroy Explosion}
+Efek ledakan akan menumpuk di Hierarchy jika tidak dihapus. Tambahkan script sederhana \texttt{AutoDestroy.cs} pada prefab \texttt{ExplosionVFX}:
+
+\begin{lstlisting}[language={[Sharp]C}]
+public class AutoDestroy : MonoBehaviour
+{
+    void Start()
+    {
+        // Hancurkan diri sendiri setelah animasi selesai (misal 1 detik)
+        Destroy(gameObject, 1f);
+    }
+}
+\end{lstlisting}
