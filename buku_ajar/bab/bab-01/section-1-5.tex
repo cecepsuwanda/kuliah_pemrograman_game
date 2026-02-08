@@ -1,0 +1,49 @@
+\section{Peta Konsep Pengembangan Game 3D}
+
+Mata kuliah ini mencakup 14 topik utama teori pengembangan game 3D. ``Roll a Ball'' dipakai sebagai contoh konseptual:
+
+\begin{enumerate}
+  \item \textbf{Bab II}: Landasan Teori - Game engine, arsitektur Unity
+  \item \textbf{Bab III}: Unity Editor - Hierarchy, Inspector, Scene, Game
+  \item \textbf{Bab IV}: Game Objects, Components, Transform
+  \item \textbf{Bab V}: C\# Scripting Dasar - MonoBehaviour, variabel, input
+  \item \textbf{Bab VI}: Rigidbody, Input, Moving Player
+  \item \textbf{Bab VII}: Camera Control dan Follow System
+  \item \textbf{Bab VIII}: Collision, Physics, dan Trigger
+  \item \textbf{Bab IX}: Collectibles dan Game Logic
+  \item \textbf{Bab X}: UI Canvas dan Text
+  \item \textbf{Bab XI}: Game State dan Win Condition
+  \item \textbf{Bab XII}: Prefabs dan Object Management
+  \item \textbf{Bab XIII}: Audio dan Visual Effects
+  \item \textbf{Bab XIV}: Build dan Deployment
+  \item \textbf{Bab XV}: Evaluasi Komprehensif
+\end{enumerate}
+
+\textbf{Alur Pembelajaran:}
+\begin{itemize}
+  \item Bab II-IV: Fondasi teori dan Unity Editor
+  \item Bab V-VII: Scripting dan kontrol (player, kamera)
+  \item Bab VIII-IX: Mekanik game (collision, collectibles)
+  \item Bab X-XI: UI dan game state
+  \item Bab XII-XIV: Polish dan build
+  \item Bab XV: Evaluasi dan integrasi
+\end{itemize}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[node distance=1.2cm, arrow/.style={->,>=stealth,thick}]
+  \node[draw, rounded corners, fill=blue!10] (start) {Setup Project};
+  \node[draw, rounded corners, fill=blue!10, below=of start] (player) {Moving Player};
+  \node[draw, rounded corners, fill=blue!10, below=of player] (camera) {Camera Follow};
+  \node[draw, rounded corners, fill=blue!10, below=of camera] (collect) {Collectibles};
+  \node[draw, rounded corners, fill=blue!10, below=of collect] (ui) {UI \& Score};
+  \node[draw, rounded corners, fill=green!10, below=of ui] (build) {Build Game};
+  \draw[arrow] (start) -- (player);
+  \draw[arrow] (player) -- (camera);
+  \draw[arrow] (camera) -- (collect);
+  \draw[arrow] (collect) -- (ui);
+  \draw[arrow] (ui) -- (build);
+\end{tikzpicture}
+\caption{Alur Konsep Pengembangan Game 3D (contoh: Roll a Ball)}
+\label{fig:rollaball-flow}
+\end{figure}

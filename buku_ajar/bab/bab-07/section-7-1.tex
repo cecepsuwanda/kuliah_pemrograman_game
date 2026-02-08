@@ -1,0 +1,26 @@
+\section{Camera Follow}
+
+Setelah player bergerak (Bab VI), kamera perlu mengikuti. Bab ini membahas pola camera follow. Kamera perlu mengikuti posisi bola agar pemain selalu melihat dari belakang-atas. Buat script \class{CameraController}:
+
+\begin{unitycode}
+using UnityEngine;
+
+public class CameraController : MonoBehaviour
+{
+    public GameObject player;
+    private Vector3 offset;
+
+    void Start()
+    {
+        offset = transform.position - player.transform.position;
+    }
+
+    void LateUpdate()
+    {
+        transform.position = player.transform.position + offset;
+    }
+}
+\end{unitycode}
+
+\class{LateUpdate} dipanggil setelah semua Update. Dengan demikian, kamera bergerak setelah player bergerak di frame yang sama---menghindari jitter (getaran visual). Variabel \texttt{offset} menyimpan jarak awal antara kamera dan player; offset tersebut dijaga konstan agar sudut pandang tetap sama.
+

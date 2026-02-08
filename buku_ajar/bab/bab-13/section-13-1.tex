@@ -1,0 +1,5 @@
+\section{Audio}
+
+Audio dan visual polish memperkaya pengalaman. Bab ini membahas AudioSource dan efek. \class{AudioSource} memutar suara pada GameObject \cite{unityManual}. \class{AudioClip} adalah file suara (WAV, MP3, OGG) yang di-assign ke Audio Source. \textbf{Play On Awake} menentukan apakah clip diputar otomatis saat scene dimuat; untuk efek seperti suara collect, nonaktifkan dan panggil \texttt{GetComponent<AudioSource>().Play()} dari script saat event terjadi. Satu AudioSource bisa memutar satu clip; untuk banyak efek, gunakan beberapa AudioSource atau AudioSource Pool.
+
+Format yang didukung: WAV, MP3, OGG. Suara pendek (collect, klik) sering memakai WAV untuk respons cepat.

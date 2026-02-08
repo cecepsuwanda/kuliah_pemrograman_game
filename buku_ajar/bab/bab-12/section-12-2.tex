@@ -1,0 +1,5 @@
+\section{Object Management}
+
+Untuk banyak collectibles: gunakan prefab, drag ke scene 12 kali, atau \texttt{Instantiate(prefab, position, rotation)} via script. Untuk Roll a Ball, manual placement cukup.
+
+\textbf{Object Pooling}: Untuk game dengan banyak objek spawn/despawn (peluru, musuh), membuat dan menghapus objek terus-menerus boros. Object pooling: buat sekumpulan objek di awal, reuse saat perlu, nonaktifkan saat selesai.

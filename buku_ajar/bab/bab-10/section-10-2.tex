@@ -1,0 +1,29 @@
+\section{Menghubungkan Skor ke UI}
+
+\begin{unitycode}
+using UnityEngine.UI;
+
+public Text countText;
+
+void SetCountText()
+{
+    countText.text = "Count: " + count;
+}
+
+void OnTriggerEnter(Collider other)
+{
+    if (other.gameObject.CompareTag("PickUp"))
+    {
+        other.gameObject.SetActive(false);
+        count++;
+        SetCountText();
+    }
+}
+
+void Start()
+{
+    SetCountText();  // Init tampilan
+}
+\end{unitycode}
+
+Drag Text UI ke variabel \texttt{countText} di Inspector.

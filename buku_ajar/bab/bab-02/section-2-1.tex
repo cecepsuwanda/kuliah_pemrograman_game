@@ -1,0 +1,68 @@
+\section{Pengenalan Pemrograman Game}
+
+\unity{Pemrograman Game} adalah disiplin yang menggabungkan pemrograman komputer dengan desain interaktif untuk menciptakan pengalaman bermain \cite{hockingUnity}. Berbeda dengan pengembangan perangkat lunak konvensional, game development menuntut pemahaman tentang:
+
+\begin{itemize}
+  \item \textbf{Game Loop}: Siklus berulang Input $\rightarrow$ Update $\rightarrow$ Render yang berjalan 30--60 kali per detik (FPS)
+  \item \textbf{Real-time}: Respon instan terhadap input pemain
+  \item \textbf{Interaktivitas}: Pemain memengaruhi dunia game secara langsung
+  \item \textbf{Feedback}: Visual, audio, dan haptic sebagai respons terhadap aksi
+\end{itemize}
+
+\subsection{Game Loop dalam Detail}
+
+Game loop adalah jantung dari setiap game dan berjalan sebagai loop tak hingga di inti game engine \cite{gamedevPatterns}. Tujuan utama game loop adalah \textbf{memisahkan laju waktu game dari input pemain dan kecepatan prosesor}---berbeda dengan event loop pada software konvensional yang menunggu input, game harus terus berjalan: animasi berlanjut, simulasi berjalan, efek visual tetap berjalan.
+
+Struktur dasar game loop terdiri dari tiga fase yang dieksekusi berulang:
+
+\begin{enumerate}
+  \item \textbf{Process Input}: Menangani input pemain tanpa blocking. Input dikumpulkan tanpa menunggu.
+  \item \textbf{Update}: Memajukan simulasi game satu langkah---logika game, fisika, AI, skor, kondisi menang/kalah. Durasi tahap ini memengaruhi FPS.
+  \item \textbf{Render}: Menggambar frame ke layar. GPU menampilkan output ke monitor.
+\end{enumerate}
+
+Untuk menciptakan sensasi real-time, setiap siklus loop harus selesai dalam waktu reaksi manusia. Kebanyakan game menjalankan loop pada \textbf{40--60 siklus per detik}; 60 FPS dianggap ideal untuk game action. FPS rendah menyebabkan game terasa patah-patah; game yang terlalu berat akan mengalami lag karena Update atau Render memakan waktu terlalu lama.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[node distance=1.5cm, arrow/.style={->,>=stealth,thick}]
+  \node[draw, fill=blue!15] (input) {Input};
+  \node[draw, fill=green!15, right=2cm of input] (update) {Update};
+  \node[draw, fill=orange!15, right=2cm of update] (render) {Render};
+  \draw[arrow] (input) -- (update);
+  \draw[arrow] (update) -- (render);
+  \draw[arrow] (render) to[bend left=50] (input);
+\end{tikzpicture}
+\caption{Game Loop}
+\label{fig:gameloop}
+\end{figure}
+
+\subsection{Peran Game Engine}
+
+\unity{Game Engine} adalah kerangka perangkat lunak yang menyediakan komponen siap pakai untuk membuat game \cite{unityManual}. Tanpa engine, programmer harus menulis dari nol: rendering 3D, fisika, audio, input handling---yang sangat memakan waktu. Game engine mempercepat pengembangan dengan menyediakan:
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|l|p{8cm}|}
+\hline
+\textbf{Komponen} & \textbf{Fungsi} \\
+\hline
+Rendering & Menampilkan grafik 2D/3D ke layar \\
+\hline
+Physics & Simulasi gravitasi, collision, rigid body \\
+\hline
+Audio & Pemutaran suara dan musik \\
+\hline
+Scripting & Menambahkan logika dan perilaku \\
+\hline
+Input & Mendeteksi keyboard, mouse, gamepad \\
+\hline
+Asset Management & Mengelola model, tekstur, animasi \\
+\hline
+\end{tabular}
+\caption{Komponen Utama Game Engine}
+\end{table}
+
+\subsection{Siklus Pengembangan Game}
+
+Proses pengembangan game umumnya meliputi: (1) desain konsep dan mekanik game, (2) pembuatan aset (model, tekstur, suara), (3) implementasi dengan scripting, (4) pengujian dan perbaikan bug, (5) optimasi performa, dan (6) build untuk platform target. Buku ini fokus pada langkah 3 dan 6 menggunakan Unity.

@@ -1,0 +1,39 @@
+\documentclass[../main]{subfiles}
+\ifSubfilesClassLoaded{\setcounter{chapter}{6}}{}
+\begin{document}
+
+\chapter{Camera Control dan Follow System}
+
+\begin{subcpmk}
+  \item Sub-CPMK 3.2: Mengimplementasikan kontrol kamera
+\end{subcpmk}
+
+\input{bab-07/section-7-1}
+\input{bab-07/section-7-2}
+
+\begin{aktivitas}
+  \item Pelajari konsep camera follow dan LateUpdate melalui materi di atas
+  \item Diskusikan mengapa LateUpdate digunakan untuk kamera
+  \item Diskusi konsep LateUpdate untuk camera follow
+\end{aktivitas}
+
+\begin{latihan}
+  \item Mengapa kamera di-update di LateUpdate, bukan Update?
+  \item Apa fungsi offset dalam camera follow?
+\end{latihan}
+
+\begin{checklist}
+  \item Saya dapat menjelaskan konsep camera follow system
+  \item Saya memahami peran LateUpdate untuk kamera
+\end{checklist}
+
+\begin{rangkuman}
+Bab ini membahas teori camera follow dengan offset dan LateUpdate.
+\end{rangkuman}
+
+\ifSubfilesClassLoaded{
+  \renewcommand{\bibname}{Daftar Pustaka}
+  \bibliographystyle{plain}
+  \bibliography{../references}
+}{}
+\end{document}

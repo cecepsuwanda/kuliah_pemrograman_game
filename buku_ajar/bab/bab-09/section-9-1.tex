@@ -1,0 +1,16 @@
+\section{Sistem Skor}
+
+Bab ini membahas game logic dan sistem skor yang memanfaatkan deteksi trigger (Bab VIII). Sistem skor memungkinkan pemain melihat berapa banyak collectible yang dikumpulkan. Tambahkan variabel skor di PlayerController dan update di OnTriggerEnter:
+
+\begin{unitycode}
+private int count = 0;
+
+void OnTriggerEnter(Collider other)
+{
+    if (other.gameObject.CompareTag("PickUp"))
+    {
+        other.gameObject.SetActive(false);
+        count++;
+    }
+}
+\end{unitycode}

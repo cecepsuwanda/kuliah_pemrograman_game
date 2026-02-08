@@ -1,0 +1,21 @@
+\section{Peta Konsep dan Alur Pembelajaran}
+
+Buku ini menyajikan teori pengembangan game 3D dengan ``Roll a Ball'' \cite{unityRollABall} sebagai contoh konseptual. Konsep-konsep yang dipelajari terhubung dalam alur pengembangan game:
+
+\begin{enumerate}
+  \item \textbf{Setup}: Project, scene, play area (Ground, primitives)
+  \item \textbf{Player}: Rigidbody, input keyboard, gerakan dengan \method{AddForce}
+  \item \textbf{Camera}: Pola camera follow agar kamera mengikuti objek
+  \item \textbf{Collectibles}: Collision detection dengan OnTriggerEnter
+  \item \textbf{UI}: Menampilkan skor, kondisi menang
+  \item \textbf{Polish}: Audio, prefabs untuk pengelolaan objek
+  \item \textbf{Build}: Export game untuk platform target (Windows, dll.)
+\end{enumerate}
+
+\begin{konsep}
+Setiap bab membahas satu topik teori. Mahasiswa mempelajari konsep dan melihat integrasinya dalam game lengkap. Untuk praktek implementasi, Unity Learn tersedia: \url{https://learn.unity.com/course/roll-a-ball}.
+\end{konsep}
+
+\subsection{Keterkaitan dengan Sub-CPMK}
+
+Bab II: Sub-CPMK 1.1 (landasan teori). Bab III: Sub-CPMK 2.1 (Inspector, Hierarchy, Scene View). Bab IV: Sub-CPMK 2.2 (Game Objects, Components, Transform). Bab V: Sub-CPMK 3.1 (MonoBehaviour, Update/FixedUpdate). Bab VI--VII: Sub-CPMK 3.2 (input player, kontrol kamera). Bab VIII: Sub-CPMK 3.3 (Rigidbody, collision/trigger). Bab IX: Sub-CPMK 4.1 (collectibles, skor). Bab X--XI: Sub-CPMK 4.2, 5.1 (win condition, UI). Bab XII--XIV: Sub-CPMK 5.2 (prefabs, audio, build).

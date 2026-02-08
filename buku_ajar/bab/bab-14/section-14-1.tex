@@ -1,0 +1,23 @@
+\section{Build Settings}
+
+Setelah game lengkap, bab ini membahas build dan deployment untuk platform target. \textbf{Build} adalah proses mengkompilasi project Unity menjadi executable yang bisa dijalankan tanpa Unity \cite{unityManual}.
+
+\begin{figure}[htbp]
+\centering
+\figuresourcebox{0.85\textwidth}{Build Settings window}
+\caption{Build Settings window}
+\label{fig:build-settings}
+\end{figure}
+
+Langkah:
+
+\begin{enumerate}
+  \item \texttt{File $\rightarrow$ Build Settings} (Ctrl+Shift+B)
+  \item Pastikan scene Main/MiniGame ada di ``Scenes In Build''. Drag scene dari Project ke daftar. Urutan menentukan scene pertama yang dimuat
+  \item Pilih platform: PC, Mac \& Linux Standalone. Klik Switch Platform bila perlu
+  \item Klik \textbf{Build}, pilih folder output, beri nama \texttt{RollABall}
+  \item Tunggu proses build. Output: .exe (Windows) atau .app (Mac) plus folder \_Data
+\end{enumerate}
+
+\paragraph{Troubleshooting:} Jika scene tidak ada, pastikan scene sudah disimpan. Jika build gagal, cek Console untuk error.
+

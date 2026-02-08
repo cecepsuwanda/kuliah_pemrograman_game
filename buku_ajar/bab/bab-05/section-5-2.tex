@@ -1,0 +1,19 @@
+\section{Variabel dan SerializeField}
+
+Variabel dapat diakses dari Inspector dengan \keyword{[SerializeField]}:
+
+\begin{unitycode}
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    public float speed = 10f;  // Tampil di Inspector
+    
+    [SerializeField]
+    private Rigidbody rb;  // Private tapi bisa di-set di Inspector
+}
+\end{unitycode}
+
+\subsection{Input Sederhana}
+
+Gunakan \class{Input.GetAxis("Horizontal")} dan \class{Input.GetAxis("Vertical")} untuk WASD/Arrow keys \cite{unityInput}. Nilai -1 sampai 1 (tergantung arah). ``Horizontal'' memetakan A/Left ke -1, D/Right ke +1. ``Vertical'' memetakan S/Down ke -1, W/Up ke +1. Sudah ada di Input Manager (Edit $\rightarrow$ Project Settings $\rightarrow$ Input Manager).

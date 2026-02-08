@@ -1,0 +1,29 @@
+\section{Components}
+
+\unity{Component} menambahkan perilaku pada GameObject \cite{unityScriptingAPI}. Beberapa komponen penting untuk Roll a Ball:
+
+\begin{itemize}
+  \item \textbf{Transform}: Posisi, rotasi, skala (selalu ada, tidak bisa dihapus)
+  \item \textbf{Rigidbody}: Aktifkan fisika (gravitasi, collision, AddForce). Wajib untuk bola yang bergerak dengan fisika
+  \item \textbf{Collider}: Batas fisik untuk deteksi tabrakan. Sphere Collider cocok untuk bola
+  \item \textbf{Mesh Renderer}: Menampilkan model 3D. Primitive sudah punya
+  \item \textbf{Material}: Warna dan tampilan permukaan. Ditugaskan ke Mesh Renderer
+\end{itemize}
+
+Untuk menambahkan component: pilih GameObject $\rightarrow$ Inspector $\rightarrow$ \textbf{Add Component} $\rightarrow$ cari nama component. Untuk menghapus: klik menu (tiga titik) pada component $\rightarrow$ Remove Component.
+
+\begin{contoh}
+Untuk bola Roll a Ball: tambahkan \textbf{Rigidbody} (agar terpengaruh gravitasi dan bisa didorong dengan AddForce) dan pastikan \textbf{Sphere Collider} ada (untuk deteksi tabrakan dengan lantai dan collectibles).
+\end{contoh}
+
+\subsection{Setup Play Area (Tembok)}
+
+\begin{figure}[htbp]
+\centering
+\figuresourcebox{0.7\textwidth}{Play area dengan Ground, Player, dan tembok}
+\caption{Play area dengan Ground, Player, dan tembok}
+\label{fig:play-area}
+\end{figure}
+
+Arena tertutup dalam Roll a Ball dibentuk dengan 4 Cube sebagai tembok yang mengelilingi Ground. Masing-masing tembok diatur posisi dan skala melalui Transform agar membentuk arena persegi. Material dapat diterapkan untuk membedakan visual tembok dan lantai.
+

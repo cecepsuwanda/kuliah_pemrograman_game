@@ -1,0 +1,23 @@
+\section{OOP dalam Unity dan C\#}
+
+Unity dan C\# memanfaatkan pemrograman berorientasi objek. Setiap script yang Anda tulis adalah \textbf{class} yang mewarisi \class{MonoBehaviour}. GameObject di Hierarchy adalah \textbf{instance} (objek) dari prefab atau template. Berikut konsep OOP yang relevan:
+
+\subsection{Class dan Inheritance}
+
+Semua script Unity mewarisi \class{MonoBehaviour}. Artinya, class Anda mendapatkan method bawaan seperti \method{Start}, \method{Update}, \method{FixedUpdate} tanpa menulis ulang. Pola ini disebut \textbf{inheritance} (pewarisan).
+
+\subsection{Encapsulation}
+
+Variabel \keyword{private} tidak tampil di Inspector. Variabel \keyword{public} tampil dan bisa diubah dari Editor. Dengan \keyword{[SerializeField]}, variabel private bisa diatur di Inspector tapi tetap encapsulated dari script lain. Ini merupakan \textbf{enkapsulasi}.
+
+\subsection{Komponen sebagai Polimorfisme}
+
+Setiap GameObject bisa memiliki banyak komponen. Rigidbody, Collider, dan script custom adalah tipe berbeda, tetapi semuanya adalah Component. Unity memanggil method seperti \method{OnTriggerEnter} secara otomatis jika ada---ini mencerminkan \textbf{polimorfisme}.
+
+\begin{center}
+\textbf{Peta Singkat: OOP $\rightarrow$ Unity}\\
+$\downarrow$\\
+Class $\rightarrow$ Script C\# (turunan MonoBehaviour)\\
+Object $\rightarrow$ GameObject di Scene\\
+Component $\rightarrow$ Rigidbody, Collider, Script yang dilekatkan
+\end{center}

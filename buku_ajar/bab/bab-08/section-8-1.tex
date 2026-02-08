@@ -1,0 +1,30 @@
+\section{Collision vs Trigger}
+
+Collision dan trigger menjadi landasan mekanik game. Bab ini membahas OnTriggerEnter dan OnCollisionEnter. \class{Collider} mendeteksi benturan \cite{unityPhysics}. Dua mode:
+
+\begin{itemize}
+  \item \textbf{Collision}: Objek saling bertabrakan secara fisik (memantul, terdorong). Untuk dinding, lantai, objek padat
+  \item \textbf{Trigger}: Hanya mendeteksi overlap, tidak ada respon fisik. Centang ``Is Trigger'' di Inspector. Untuk collectibles, checkpoint, zona
+\end{itemize}
+
+Untuk collectibles: gunakan \textbf{Trigger} agar bola bisa ``melewati'' dan mengumpulkan tanpa mendorong objek. Jika pakai Collision biasa, bola akan mendorong collectible.
+
+
+\subsection{OnTriggerEnter vs OnCollisionEnter}
+
+\begin{itemize}
+  \item \texttt{OnTriggerEnter(Collider other)}: Dipanggil saat collider lain masuk trigger. Gunakan untuk collectibles
+  \item \texttt{OnCollisionEnter(Collision collision)}: Dipanggil saat collision fisik terjadi. Gunakan untuk tabrakan dengan dinding
+\end{itemize}
+
+\subsection{OnTriggerEnter}
+
+\begin{unitycode}
+void OnTriggerEnter(Collider other)
+{
+    if (other.gameObject.CompareTag("PickUp"))
+    {
+        other.gameObject.SetActive(false);
+    }
+}
+\end{unitycode}

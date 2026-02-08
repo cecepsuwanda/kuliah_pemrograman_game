@@ -1,0 +1,40 @@
+\documentclass[../main]{subfiles}
+\ifSubfilesClassLoaded{\setcounter{chapter}{3}}{}
+\begin{document}
+
+\chapter{Game Objects, Components, dan Transform}
+
+\begin{subcpmk}
+  \item Sub-CPMK 2.2: Mengatur Game Objects, Components, dan Transform
+\end{subcpmk}
+
+\input{bab-04/section-4-1}
+\input{bab-04/section-4-2}
+
+\begin{aktivitas}
+  \item Pelajari konsep GameObject, Transform, dan Components melalui materi di atas
+  \item Diskusikan perbedaan Entity-Component pattern dengan OOP murni
+  \item Analisis studi kasus GameObject dan component dalam play area
+\end{aktivitas}
+
+\begin{latihan}
+  \item Apa fungsi Rigidbody dan kapan diperlukan?
+  \item Jelaskan perbedaan Collider dan Rigidbody!
+  \item Apa arti parent-child dalam Transform?
+\end{latihan}
+
+\begin{checklist}
+  \item Saya dapat menjelaskan konsep GameObject dan Transform
+  \item Saya memahami fungsi Components (Rigidbody, Collider, Mesh Renderer)
+\end{checklist}
+
+\begin{rangkuman}
+Bab ini membahas teori GameObject, Transform, dan Components (Rigidbody, Collider) yang menjadi fondasi objek dalam Unity.
+\end{rangkuman}
+
+\ifSubfilesClassLoaded{
+  \renewcommand{\bibname}{Daftar Pustaka}
+  \bibliographystyle{plain}
+  \bibliography{../references}
+}{}
+\end{document}

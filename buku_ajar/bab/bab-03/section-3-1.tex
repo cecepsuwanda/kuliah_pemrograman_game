@@ -1,0 +1,45 @@
+\section{Unity Editor dan Jendela Utama}
+
+Unity Editor merupakan lingkungan pengembangan terpadu (IDE) untuk membuat game \cite{unityManual}. Setelah membuka project, Anda akan melihat antarmuka dengan beberapa jendela. Layout default (Default Layout) menampilkan jendela utama di posisi yang logis. Anda dapat mengubah layout dari menu \texttt{Window $\rightarrow$ Layouts}.
+
+\begin{figure}[htbp]
+\centering
+\figuresourcebox{0.9\textwidth}{Antarmuka Unity Editor: Hierarchy, Inspector, Scene, Game}
+\caption{Antarmuka Unity Editor: Hierarchy, Inspector, Scene, Game}
+\label{fig:unity-editor}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|l|p{7cm}|}
+\hline
+\textbf{Jendela} & \textbf{Fungsi} \\
+\hline
+Hierarchy & Daftar semua GameObject dalam scene aktif. Objek dapat di-parent untuk struktur hierarki \\
+\hline
+Inspector & Menampilkan dan mengedit properti component GameObject terpilih \\
+\hline
+Scene & Editor visual 3D untuk menata objek. Di sinilah Anda memposisikan arena dan player \\
+\hline
+Game & Tampilan seperti saat game dijalankan (Play mode) \\
+\hline
+Project & Browser aset project (script, model, texture, material) \\
+\hline
+Console & Menampilkan pesan log, warning, error dari kode \\
+\hline
+\end{tabular}
+\caption{Jendela Utama Unity Editor}
+\end{table}
+
+\subsection{Hierarchy}
+
+Hierarchy menampilkan semua GameObject dalam scene aktif. GameObject baru dapat dibuat melalui menu konteks (klik kanan): \texttt{3D Object} (Cube, Sphere, Plane, dll.), \texttt{Empty}, atau \texttt{UI}. GameObject dapat diatur dalam struktur parent-child: objek child mengikuti transformasi parent. Fitur rename memungkinkan identifikasi objek dengan jelas.
+
+\subsection{Inspector}
+
+Setiap GameObject memiliki komponen. \class{Transform} ada secara default (Position, Rotation, Scale). Komponen lain ditambahkan via \texttt{Add Component}. Nilai dapat diubah langsung di Inspector; perubahan langsung terlihat di Scene. Tombol \texttt{Reset} mengembalikan nilai default komponen.
+
+\subsection{Project dan Console}
+
+Project window menyimpan semua aset proyek. Struktur folder (Materials, Scripts, Scenes) membantu organisasi aset. Console menampilkan output \texttt{Debug.Log} serta warning dan error dari script---penting untuk debugging.
+

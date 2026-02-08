@@ -1,0 +1,39 @@
+\documentclass[../main]{subfiles}
+\ifSubfilesClassLoaded{\setcounter{chapter}{5}}{}
+\begin{document}
+
+\chapter{Rigidbody, Input, dan Moving Player}
+
+\begin{subcpmk}
+  \item Sub-CPMK 3.2: Mengimplementasikan input player dan kontrol kamera
+\end{subcpmk}
+
+\input{bab-06/section-6-1}
+\input{bab-06/section-6-2}
+
+\begin{aktivitas}
+  \item Pelajari konsep Rigidbody, AddForce, dan Input.GetAxis melalui materi di atas
+  \item Diskusikan mengapa AddForce harus dipanggil di FixedUpdate
+  \item Diskusi konsep AddForce dan FixedUpdate
+\end{aktivitas}
+
+\begin{latihan}
+  \item Mengapa AddForce dipanggil di FixedUpdate, bukan Update?
+  \item Apa peran Input.GetAxis dalam kontrol player?
+\end{latihan}
+
+\begin{checklist}
+  \item Saya dapat menjelaskan konsep Rigidbody dan AddForce
+  \item Saya memahami penggunaan FixedUpdate untuk fisika
+\end{checklist}
+
+\begin{rangkuman}
+Bab ini membahas teori gerakan player dengan Rigidbody, \method{AddForce}, dan \method{Input.GetAxis}. Contoh kode sebagai ilustrasi konsep.
+\end{rangkuman}
+
+\ifSubfilesClassLoaded{
+  \renewcommand{\bibname}{Daftar Pustaka}
+  \bibliographystyle{plain}
+  \bibliography{../references}
+}{}
+\end{document}

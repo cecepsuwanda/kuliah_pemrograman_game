@@ -1,0 +1,7 @@
+\section{Konsep Posisi Kamera dan Pola Camera Follow}
+
+Kamera di Unity diletakkan di posisi tertentu di dunia 3D. Untuk game berbasis karakter yang bergerak, kamera perlu mengikuti posisi pemain. Pola umum: script \texttt{CameraController} menyimpan referensi ke \texttt{player} (Transform), lalu di \texttt{Update} atau \texttt{LateUpdate} menggeser posisi kamera mengikuti player dengan offset tertentu. \texttt{LateUpdate} dipakai agar kamera bergerak setelah pergerakan player selesai, menghindari jitter.
+
+\subsection{Pola CameraHolder}
+
+Untuk kamera yang bisa diputar terpisah (misal: orbit kamera), buat Empty GameObject ``CameraHolder'' sebagai parent Main Camera. Offset dan rotasi dihitung relatif terhadap CameraHolder. Holder bisa mengikuti posisi player sementara kamera child mengatur sudut pandang.

@@ -1,0 +1,5 @@
+\section{Prefabs}
+
+Prefab mempermudah manajemen objek yang berulang. Bab ini membahas konsep prefab dan instance. \unity{Prefab} adalah template GameObject yang bisa diinstansiasi berkali-kali \cite{unityManual}. Prefab disimpan sebagai aset di Project; instance ditempatkan di Scene atau di-spawn saat runtime. Keuntungan: satu perubahan pada prefab berlaku ke semua instance; pemeliharaan lebih mudah saat objek berulang (collectible, musuh, proyektil).
+
+\textbf{Instance} adalah salinan prefab di Scene. Perubahan lokal pada instance (posisi, skala, properti override) bisa disimpan sebagai override; prefab tetap sebagai sumber kebenaran. Instance bisa di-apply kembali ke prefab jika perubahan ingin disebarkan ke semua instance.

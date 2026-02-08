@@ -1,0 +1,10 @@
+\section{Menampilkan Skor Sementara}
+
+Untuk sementara gunakan \texttt{Debug.Log} untuk menampilkan skor di Console:
+
+\begin{unitycode}
+count++;
+Debug.Log("Count: " + count);
+\end{unitycode}
+
+Di bab berikutnya (Bab X) skor akan ditampilkan di UI Canvas. \texttt{SetActive(false)} membuat collectible menghilang dari scene tapi tidak dihapus---bisa di-reset saat game restart.

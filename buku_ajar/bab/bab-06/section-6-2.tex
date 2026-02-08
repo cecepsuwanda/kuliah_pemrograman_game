@@ -1,0 +1,17 @@
+\section{Konfigurasi Rigidbody}
+
+Di Inspector, set Rigidbody:
+\begin{itemize}
+  \item \textbf{Mass}: 1 (default). Massa memengaruhi seberapa besar gaya yang dibutuhkan untuk menggerakkan
+  \item \textbf{Drag}: 0 (resistansi gerak). Nilai tinggi membuat gerakan melambat
+  \item \textbf{Use Gravity}: Centang (bola jatuh ke lantai)
+  \item \textbf{Constraints}: Freeze Rotation X, Y, Z jika bola tidak boleh miring/berguling
+\end{itemize}
+
+\subsection{Properti Rigidbody Lanjutan}
+
+\textbf{Mass} menentukan massa objek; memengaruhi seberapa besar gaya yang dibutuhkan untuk menggerakkan. \textbf{Drag} adalah resistansi gerak linier; nilai tinggi membuat gerakan melambat. \textbf{Angular Drag} memengaruhi resistansi rotasi. \textbf{Constraints} (Freeze Position/Rotation) membatasi gerakan pada sumbu tertentu; Freeze Rotation berguna agar bola tidak miring tidak terkendali saat bergerak.
+
+\subsection{Input.GetAxis}
+
+``Horizontal'' = A/D atau Left/Right Arrow. ``Vertical'' = W/S atau Up/Down. Nilai -1 sampai 1, smooth untuk analog stick. Tidak perlu konfigurasi tambahan---sudah built-in.

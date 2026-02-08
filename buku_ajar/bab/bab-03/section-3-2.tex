@@ -1,0 +1,27 @@
+\section{Scene View dan Navigasi}
+
+\subsection{Scene View}
+
+Scene view memungkinkan Anda melihat dan mengedit dunia game secara visual. Tool navigasi (toolbar di atas Scene):
+
+\begin{itemize}
+  \item \textbf{Hand Tool (Q)}: Geser pandangan tanpa mengubah objek
+  \item \textbf{Move (W)}: Pindahkan objek sepanjang sumbu X, Y, Z
+  \item \textbf{Rotate (E)}: Putar objek
+  \item \textbf{Scale (R)}: Ubah ukuran objek
+  \item \textbf{Frame (F)}: Fokus kamera Scene pada objek terpilih
+\end{itemize}
+
+Navigasi orbit dan zoom dilakukan melalui kombinasi tombol Alt dengan klik mouse serta scroll.
+
+\subsection{Konsep Project, Scene, dan Asset}
+
+\textbf{Project} adalah kontainer untuk seluruh aset game (script, model, texture, material, scene). \textbf{Scene} adalah ruang kerja yang berisi GameObject dalam satu level atau layar. Project memiliki struktur folder (Scenes, Materials, Scripts, dll.) untuk mengorganisir aset. Scene disimpan sebagai file .unity di dalam project.
+
+\subsection{Primitive 3D dan Material}
+
+Unity menyediakan primitive 3D (Cube, Sphere, Plane, Cylinder, Capsule) sebagai geometri dasar. Setiap primitive memiliki Mesh Filter (data geometri) dan Mesh Renderer (menampilkan geometri ke layar). \textbf{Material} mendefinisikan tampilan permukaan (warna, tekstur); diterapkan ke Mesh Renderer. Material memisahkan tampilan dari geometri---satu material bisa dipakai banyak objek.
+
+\subsection{Lighting}
+
+\textbf{Directional Light} mensimulasikan sumber cahaya jauh (matahari). Properti Emission mengatur intensitas dan warna. Rotasi memengaruhi arah cahaya. Scene memerlukan minimal satu sumber cahaya agar objek 3D terlihat.

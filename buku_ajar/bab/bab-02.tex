@@ -1,0 +1,92 @@
+\documentclass[../main]{subfiles}
+\ifSubfilesClassLoaded{\setcounter{chapter}{1}}{}
+\begin{document}
+
+\chapter{Landasan Teori dan Konsep Dasar}
+
+\begin{subcpmk}
+  \item Sub-CPMK 1.1: Menjelaskan peran game engine dalam pengembangan game
+\end{subcpmk}
+
+% ============================================================
+% MATERI POKOK
+% ============================================================
+\input{bab-02/section-2-1}
+\input{bab-02/section-2-2}
+\input{bab-02/section-2-3}
+\input{bab-02/section-2-4}
+
+% ============================================================
+% AKTIVITAS PEMBELAJARAN
+% ============================================================
+\begin{aktivitas}
+  \item \textbf{Studi Literatur}: Pelajari game loop dan arsitektur game engine dari materi di atas dan Unity Documentation
+  \item \textbf{Perbandingan}: Bandingkan Unity dengan satu game engine lain (Unreal/Godot). Buat tabel perbandingan singkat
+  \item \textbf{Diskusi}: Diskusikan peran game engine dalam industri game development dengan teman
+  \item \textbf{Praktek (opsional)}: Unity Learn tersedia untuk praktek mandiri---lihat Lampiran D
+\end{aktivitas}
+
+% ============================================================
+% LATIHAN DAN REFLEKSI
+% ============================================================
+\begin{latihan}
+  \item Jelaskan apa itu game loop dan mengapa penting!
+  \item Sebutkan minimal 4 komponen yang disediakan game engine!
+  \item Apa perbedaan GameObject dan Component dalam Unity?
+  \item Mengapa Unity menggunakan C\# untuk scripting?
+  \item \textbf{Refleksi}: Apa tantangan yang Anda rasakan dalam mempelajari game development?
+\end{latihan}
+
+% ============================================================
+% ASESMEN
+% ============================================================
+\begin{asesmen}
+\textbf{Instrumen Penilaian untuk Sub-CPMK 1.1}
+
+\textbf{A. Pilihan Ganda}
+\begin{enumerate}
+  \item Peran game engine dalam pengembangan game adalah:
+  \begin{enumerate}
+    \item Hanya untuk rendering grafis
+    \item Menyediakan komponen siap pakai (physics, audio, scripting)
+    \item Menggantikan programmer sepenuhnya
+    \item Hanya untuk game 2D
+  \end{enumerate}
+  
+  \item Dalam Unity, GameObject minimal memiliki komponen:
+  \begin{enumerate}
+    \item Rigidbody
+    \item Transform
+    \item Collider
+    \item Script
+  \end{enumerate}
+\end{enumerate}
+
+\textbf{B. Essay}: Jelaskan alur game loop dan kaitannya dengan FPS (frame per second).
+\end{asesmen}
+
+% ============================================================
+% CHECKLIST KOMPETENSI
+% ============================================================
+\begin{checklist}
+  \item Saya dapat menjelaskan peran game engine dalam pengembangan game
+  \item Saya memahami game loop (processInput, update, render) dan kaitannya dengan FPS
+  \item Saya memahami arsitektur Entity-Component Unity
+  \item Saya dapat menjelaskan layer arsitektur Unity (Native C++, C\# Layer, Editor)
+\end{checklist}
+
+% ============================================================
+% RANGKUMAN
+% ============================================================
+\begin{rangkuman}
+Bab ini membahas landasan teori pengembangan game, peran game engine, arsitektur Unity, dan perbandingan engine. Pemahaman ini menjadi fondasi untuk bab-bab praktik berikutnya.
+
+\textbf{Kata Kunci}: \unity{Game Engine}, \unity{Game Loop}, \unity{GameObject}, \unity{Component}, \unity{MonoBehaviour}
+\end{rangkuman}
+
+\ifSubfilesClassLoaded{
+  \renewcommand{\bibname}{Daftar Pustaka}
+  \bibliographystyle{plain}
+  \bibliography{../references}
+}{}
+\end{document}

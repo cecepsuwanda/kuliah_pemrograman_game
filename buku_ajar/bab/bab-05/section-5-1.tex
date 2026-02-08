@@ -1,0 +1,28 @@
+\section{MonoBehaviour dan Lifecycle}
+
+GameObject dan Component diatur lewat script. Bab ini membahas dasar scripting C\# dan lifecycle \class{MonoBehaviour}. Semua script Unity mewarisi \class{MonoBehaviour} \cite{unityScriptingAPI}. Class ini menyediakan method yang dipanggil engine secara otomatis pada waktu tertentu. Urutan pemanggilan penting untuk memahami kapan kode Anda dijalankan.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|l|p{6.5cm}|}
+\hline
+\textbf{Method} & \textbf{Fungsi} \\
+\hline
+Awake() & Dipanggil sekali saat object dibuat (sebelum Start). Gunakan untuk inisialisasi yang tidak bergantung object lain \\
+\hline
+Start() & Dipanggil sekali sebelum frame pertama Update. Gunakan untuk setup yang butuh object lain sudah ada \\
+\hline
+Update() & Dipanggil setiap frame (frekuensi bergantung FPS). Untuk input, logika non-fisika \\
+\hline
+FixedUpdate() & Dipanggil pada interval tetap (default 50 Hz, timestep 0.02 s). Untuk fisika, Rigidbody, AddForce \\
+\hline
+LateUpdate() & Dipanggil setelah semua Update. Untuk kamera follow (setelah player bergerak) \\
+\hline
+\end{tabular}
+\caption{Lifecycle Method MonoBehaviour}
+\end{table}
+
+\begin{catatan}
+\textbf{Fixed Timestep}: Physics engine Unity berjalan pada interval tetap (default 0.02 detik = 50 Hz). \method{FixedUpdate} dipanggil bersamaan dengan physics step sehingga fisika konsisten terlepas dari FPS. \textbf{Golden rule}: baca input di \method{Update}, terapkan gaya di \method{FixedUpdate}. Jangan panggil AddForce di Update---FPS tidak stabil akan membuat gerakan aneh.
+\end{catatan}
+

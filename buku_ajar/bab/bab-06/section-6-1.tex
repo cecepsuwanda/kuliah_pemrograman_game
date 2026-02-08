@@ -1,0 +1,27 @@
+\section{Rigidbody dan Gaya}
+
+Dari lifecycle dan input (Bab V), bab ini membahas penerapan Rigidbody dan gaya fisika untuk gerakan. \class{Rigidbody} mengaktifkan simulasi fisika \cite{unityPhysics}. Tanpa Rigidbody, objek tidak terpengaruh gravitasi dan tidak bisa didorong. Tambahkan ke Sphere (Player), lalu gunakan \method{AddForce} atau ubah \method{velocity} untuk menggerakkan bola. AddForce menambahkan gaya ke rigidbody; gaya diakumulasi hingga menggerakkan objek.
+
+\begin{unitycode}
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    public float speed = 10f;
+    private Rigidbody rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    void FixedUpdate()
+    {
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
+        Vector3 movement = new Vector3(moveHorizontal, 0f, moveVertical);
+        rb.AddForce(movement * speed);
+    }
+}
+\end{unitycode}
+

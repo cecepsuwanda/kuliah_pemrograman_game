@@ -1,0 +1,21 @@
+\section{Canvas dan Text}
+
+Skor (Bab IX) ditampilkan ke pemain melalui UI. Bab ini membahas Canvas dan RectTransform. \unity{Canvas} adalah area untuk menampilkan UI (User Interface) di layar \cite{unityManual}. Unity menggunakan RectTransform untuk posisi UI (bukan Transform 3D).
+
+\begin{figure}[htbp]
+\centering
+\figuresourcebox{0.7\textwidth}{Tampilan skor dan UI di game}
+\caption{Tampilan skor dan UI di game}
+\label{fig:display-score}
+\end{figure}
+
+Untuk menampilkan skor, UI Text (TextMeshPro atau Legacy) dilekatkan pada Canvas. Unity membuat Canvas dan EventSystem otomatis bila belum ada. Variabel \texttt{public Text countText} di PlayerController dihubungkan ke elemen UI melalui Inspector; skor di-update dari script saat collectible dikumpulkan. RectTransform mengatur posisi, Anchor, Width, dan Height.
+
+\subsection{Canvas Render Mode}
+
+Canvas memiliki tiga \textbf{Render Mode}: \textbf{Screen Space - Overlay} (UI di atas segala layer, skala otomatis), \textbf{Screen Space - Camera} (UI di depan kamera tertentu, untuk efek depth), \textbf{World Space} (UI sebagai objek 3D di dunia game, untuk HUD in-world). Untuk skor dan HUD standar, Overlay paling umum dipakai.
+
+\subsection{RectTransform}
+
+Setiap elemen UI punya RectTransform (bukan Transform 3D). Anchor menentukan titik acuan saat layar berubah ukuran; Pivot mengatur pusat transformasi. Width dan Height mengatur dimensi elemen.
+

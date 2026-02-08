@@ -1,0 +1,39 @@
+\documentclass[../main]{subfiles}
+\ifSubfilesClassLoaded{\setcounter{chapter}{7}}{}
+\begin{document}
+
+\chapter{Collision, Physics, dan Trigger}
+
+\begin{subcpmk}
+  \item Sub-CPMK 3.3: Menggunakan Rigidbody dan deteksi collision/trigger
+\end{subcpmk}
+
+\input{bab-08/section-8-1}
+\input{bab-08/section-8-2}
+
+\begin{aktivitas}
+  \item Pelajari konsep Collision vs Trigger dan OnTriggerEnter melalui materi di atas
+  \item Diskusikan kapan menggunakan OnTriggerEnter vs OnCollisionEnter
+  \item Analisis studi kasus OnTriggerEnter dan Tag untuk collectibles
+\end{aktivitas}
+
+\begin{latihan}
+  \item Apa perbedaan Collision dan Trigger?
+  \item Kapan menggunakan OnTriggerEnter vs OnCollisionEnter?
+\end{latihan}
+
+\begin{checklist}
+  \item Saya dapat menjelaskan Collision vs Trigger
+  \item Saya memahami OnTriggerEnter dan OnCollisionEnter
+\end{checklist}
+
+\begin{rangkuman}
+Bab ini membahas teori OnTriggerEnter, Tag, dan konsep collectibles.
+\end{rangkuman}
+
+\ifSubfilesClassLoaded{
+  \renewcommand{\bibname}{Daftar Pustaka}
+  \bibliographystyle{plain}
+  \bibliography{../references}
+}{}
+\end{document}

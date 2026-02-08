@@ -1,0 +1,9 @@
+\section{Tag, Layer, dan Setup Collectible}
+
+\subsection{Tag dan Layer}
+
+\textbf{Tag} memberi label string pada GameObject untuk identifikasi (misal: ``PickUp'', ``Player''). \textbf{Layer} mengelompokkan objek untuk physics dan rendering; collision matrix menentukan layer mana yang bertabrakan. Tag dibuat di Project Settings $\rightarrow$ Tags and Layers.
+
+\subsection{Aturan Rigidbody dan Collider untuk Trigger}
+
+Minimal satu objek yang terlibat tabrakan harus memiliki \textbf{Rigidbody}; objek lain cukup memiliki Collider. Untuk \textbf{trigger} (Is Trigger dicentang), collider tidak menahan objek secara fisik---objek melewatinya. Callback \texttt{OnTriggerEnter} dipanggil saat Rigidbody masuk zona collider trigger. Collectible biasa: Cube dengan Box Collider Is Trigger dan Tag ``PickUp''; Player dengan Rigidbody masuk ke zona tersebut memicu deteksi di \texttt{OnTriggerEnter}.

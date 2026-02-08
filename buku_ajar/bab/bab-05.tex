@@ -1,0 +1,40 @@
+\documentclass[../main]{subfiles}
+\ifSubfilesClassLoaded{\setcounter{chapter}{4}}{}
+\begin{document}
+
+\chapter{C\# Scripting Dasar untuk Unity}
+
+\begin{subcpmk}
+  \item Sub-CPMK 3.1: Menulis script MonoBehaviour dengan Update/FixedUpdate
+\end{subcpmk}
+
+\input{bab-05/section-5-1}
+\input{bab-05/section-5-2}
+\input{bab-05/section-5-3}
+
+\begin{aktivitas}
+  \item Pelajari konsep MonoBehaviour lifecycle (Awake, Start, Update, FixedUpdate) melalui materi di atas
+  \item Diskusikan kapan menggunakan Update vs FixedUpdate untuk fisika
+\end{aktivitas}
+
+\begin{latihan}
+  \item Kapan menggunakan Update vs FixedUpdate?
+  \item Apa fungsi SerializeField?
+  \item Jelaskan urutan pemanggilan Awake, Start, dan Update!
+\end{latihan}
+
+\begin{checklist}
+  \item Saya dapat menjelaskan lifecycle MonoBehaviour
+  \item Saya memahami kapan menggunakan Update vs FixedUpdate
+\end{checklist}
+
+\begin{rangkuman}
+Bab ini memperkenalkan teori MonoBehaviour, Update/FixedUpdate, variabel, dan input dasar. Contoh kode disajikan sebagai ilustrasi konsep.
+\end{rangkuman}
+
+\ifSubfilesClassLoaded{
+  \renewcommand{\bibname}{Daftar Pustaka}
+  \bibliographystyle{plain}
+  \bibliography{../references}
+}{}
+\end{document}

@@ -1,0 +1,5 @@
+\section{Script sebagai Component}
+
+Script C\# yang mewarisi \texttt{MonoBehaviour} bertindak sebagai \textbf{Component}. Nama file script harus sama dengan nama class agar Unity mengenalinya. Workflow dasar: buat script di Project window, tulis kode di editor eksternal (VS Code/Visual Studio), lalu attach ke GameObject dengan drag-and-drop atau Add Component. Setelah di-attach, script muncul di Inspector sebagai komponen yang bisa dikonfigurasi.
+
+Variabel \keyword{public} atau \keyword{[SerializeField]} terpapar di Inspector sehingga nilai bisa diubah tanpa mengubah kode---berguna untuk tuning (misal: speed) saat pengujian. \texttt{GetComponent<Rigidbody>()} mengambil referensi Rigidbody dari GameObject yang sama. Untuk GameObject lain (misal: kamera mengikuti player), referensi bisa di-assign via Inspector atau dicari lewat \texttt{FindObjectOfType}.

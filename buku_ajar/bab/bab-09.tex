@@ -1,0 +1,39 @@
+\documentclass[../main]{subfiles}
+\ifSubfilesClassLoaded{\setcounter{chapter}{8}}{}
+\begin{document}
+
+\chapter{Collectibles dan Game Logic}
+
+\begin{subcpmk}
+  \item Sub-CPMK 4.1: Membuat collectibles dan sistem skor
+\end{subcpmk}
+
+\input{bab-09/section-9-1}
+\input{bab-09/section-9-2}
+
+\begin{aktivitas}
+  \item Pelajari konsep game logic dan sistem skor melalui materi di atas
+  \item Diskusikan bagaimana variabel count diintegrasikan dengan OnTriggerEnter
+  \item Diskusi konsep integrasi skor dengan OnTriggerEnter
+\end{aktivitas}
+
+\begin{latihan}
+  \item Bagaimana sistem skor diimplementasikan dengan OnTriggerEnter?
+  \item Apa peran variabel count dalam game logic?
+\end{latihan}
+
+\begin{checklist}
+  \item Saya dapat menjelaskan konsep sistem skor
+  \item Saya memahami integrasi count dengan collision/trigger
+\end{checklist}
+
+\begin{rangkuman}
+Bab ini membahas teori sistem skor pada collectibles.
+\end{rangkuman}
+
+\ifSubfilesClassLoaded{
+  \renewcommand{\bibname}{Daftar Pustaka}
+  \bibliographystyle{plain}
+  \bibliography{../references}
+}{}
+\end{document}

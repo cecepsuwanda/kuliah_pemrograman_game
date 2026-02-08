@@ -1,0 +1,31 @@
+\section{Game Objects}
+
+Setelah memahami jendela Unity Editor (Bab III), bab ini membahas entitas dasar: GameObject dan Component. \unity{GameObject} adalah entitas dasar dalam Unity \cite{unityManual}. Setiap objek di Hierarchy adalah GameObject. GameObject kosong hanya memiliki \class{Transform}; objek 3D (Cube, Sphere, Plane) memiliki Transform plus Mesh Filter dan Mesh Renderer. Mesh Filter menyimpan data geometri; Mesh Renderer menggambar geometri ke layar.
+
+\subsection{Transform}
+
+Transform mengatur posisi, rotasi, dan skala dalam ruang 3D. Koordinat menggunakan sistem tangan kanan: X kanan, Y atas, Z masuk ke layar.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|l|p{6cm}|}
+\hline
+\textbf{Properti} & \textbf{Deskripsi} \\
+\hline
+Position & Koordinat X, Y, Z dalam ruang world. Origin (0,0,0) di pusat scene \\
+\hline
+Rotation & Rotasi dalam derajat (Euler). Urutan: X, Y, Z \\
+\hline
+Scale & Ukuran relatif. (1,1,1) = normal. (2,2,2) = dua kali lipat \\
+\hline
+\end{tabular}
+\caption{Properti Transform}
+\end{table}
+
+\subsection{Parent-Child}
+
+GameObject dapat menjadi child dari GameObject lain. Transform child relatif terhadap parent. Memindahkan parent akan memindahkan semua child. Berguna untuk mengelompokkan objek (misal: semua collectible dalam satu parent).
+
+\subsection{Primitive 3D}
+
+Unity menyediakan primitive: Cube, Sphere, Cylinder, Plane, Capsule, Quad. Untuk Roll a Ball, kita gunakan Plane (lantai), Sphere (player), dan Cube (tembok arena).

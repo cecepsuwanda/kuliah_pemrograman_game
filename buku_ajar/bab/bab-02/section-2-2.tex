@@ -1,0 +1,43 @@
+\section{Arsitektur Unity}
+
+Unity adalah game engine multiplatform yang menggunakan arsitektur Entity-Component \cite{unityArchitecture}. Setiap objek dalam game adalah \unity{GameObject} yang dapat memiliki banyak \unity{Component}.
+
+\subsection{Entity-Component Pattern}
+
+\begin{konsep}
+\textbf{Entity-Component Pattern}: GameObject (entity) adalah container kosong. Perilaku ditambahkan melalui komponen (Component). Setiap GameObject minimal memiliki Transform; komponen lain ditambahkan sesuai kebutuhan. Pola ini memungkinkan fleksibilitas---satu GameObject bisa punya Rigidbody, Collider, dan script custom sekaligus.
+\end{konsep}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  comp/.style={rectangle, draw, fill=blue!10, minimum width=2cm},
+  arrow/.style={->,>=stealth}
+]
+  \node[comp] (go) {GameObject};
+  \node[comp, below=0.5cm of go] (t) {Transform};
+  \node[comp, below=0.3cm of t] (r) {Rigidbody};
+  \node[comp, below=0.3cm of r] (s) {Script};
+  \draw[arrow] (go) -- (t);
+  \draw[arrow] (t) -- (r);
+  \draw[arrow] (r) -- (s);
+\end{tikzpicture}
+\caption{GameObject dengan Components}
+\label{fig:unity-arch}
+\end{figure}
+
+\subsection{Bahasa Scripting C\#}
+
+Unity menggunakan C\# sebagai bahasa scripting utama \cite{msdnCsharp}. Script ditulis sebagai class yang mewarisi \class{MonoBehaviour}, kemudian dilekatkan sebagai component pada GameObject. C\# dipilih karena tipe aman, berorientasi objek, dan didukung penuh oleh Microsoft (.NET).
+
+\subsection{Layer Arsitektur Unity}
+
+Unity dibangun dalam beberapa lapisan:
+
+\begin{itemize}
+  \item \textbf{Native C++}: Engine inti (rendering, physics, audio) berjalan di C++ untuk performa maksimal. Tidak diakses langsung oleh skrip.
+  \item \textbf{C\# Layer}: Scripting API (namespace \texttt{UnityEngine}) yang memanggil engine melalui binding. Kode C\# Anda berjalan di lapisan ini.
+  \item \textbf{Editor}: Tool visual untuk desain scene, Inspector, dan konfigurasi tanpa menulis kode. Berjalan di atas engine.
+\end{itemize}
+
+Pemahaman lapisan ini membantu Anda mengetahui bahwa operasi berat (rendering, physics) dilakukan engine, sementara logika game Anda mengontrol perilaku melalui API.

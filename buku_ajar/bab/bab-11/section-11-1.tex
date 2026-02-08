@@ -1,0 +1,17 @@
+\section{Condisi Menang}
+
+Selain skor, game memerlukan kondisi menang. Bab ini membahas game state dan win condition. \textbf{Game state} merepresentasikan kondisi game: \textit{playing} (bermain), \textit{win} (menang), \textit{game over} (kalah). State menentukan apa yang boleh dilakukan pemain dan UI apa yang ditampilkan. \textbf{Win condition} adalah syarat pemain menang. Untuk Roll a Ball: mengumpulkan semua collectible. Tambahkan variabel untuk total collectibles dan cek kondisi menang:
+
+\begin{unitycode}
+public int totalPickups = 12;
+public Text winText;
+
+void SetCountText()
+{
+    countText.text = "Count: " + count;
+    if (count >= totalPickups)
+        winText.text = "You Win!";
+}
+\end{unitycode}
+
+Buah UI Text kedua untuk pesan ``You Win!'', sembunyikan awal (kosongkan atau disable).
