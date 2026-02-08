@@ -1,6 +1,6 @@
 % ============================================================================
 % PREAMBLE.tex (REVISED & OPTIMIZED)
-% Buku Ajar Pemrograman Game
+% Buku Ajar Pemrograman Game - Berbasis OBE
 % ============================================================================
 
 % ============================================================================
@@ -212,3 +212,105 @@
 \raggedbottom
 \sloppy
 \emergencystretch=3em
+
+% ============================================================================
+% CUSTOM ENVIRONMENTS untuk OBE
+% ============================================================================
+
+% --- Environment untuk Sub-CPMK ---
+\newenvironment{subcpmk}{
+  \vspace{0.5cm}
+  \noindent\colorbox{blue!10}{\parbox{\dimexpr\textwidth-2\fboxsep}{
+    \textbf{\large Sub-CPMK yang Dicakup dalam Bab Ini:}
+  }}
+  \vspace{0.3cm}
+  \begin{itemize}[leftmargin=*, itemsep=5pt]
+}{
+  \end{itemize}
+  \vspace{0.5cm}
+}
+
+% --- Environment untuk Aktivitas Pembelajaran ---
+\newenvironment{aktivitas}{
+  \vspace{0.5cm}
+  \noindent\colorbox{green!10}{\parbox{\dimexpr\textwidth-2\fboxsep}{
+    \textbf{\large Aktivitas Pembelajaran}
+  }}
+  \vspace{0.3cm}
+  \begin{enumerate}[leftmargin=*, itemsep=8pt]
+}{
+  \end{enumerate}
+  \vspace{0.5cm}
+}
+
+% --- Environment untuk Latihan ---
+\newenvironment{latihanobe}{
+  \vspace{0.5cm}
+  \noindent\colorbox{orange!10}{\parbox{\dimexpr\textwidth-2\fboxsep}{
+    \textbf{\large Latihan dan Refleksi}
+  }}
+  \vspace{0.3cm}
+  \begin{enumerate}[leftmargin=*, itemsep=8pt]
+}{
+  \end{enumerate}
+  \vspace{0.5cm}
+}
+
+% --- Environment untuk Asesmen ---
+\newenvironment{asesmen}{
+  \vspace{0.5cm}
+  \noindent\colorbox{red!10}{\parbox{\dimexpr\textwidth-2\fboxsep}{
+    \textbf{\large Asesmen (Evaluasi Kinerja)}
+  }}
+  \vspace{0.3cm}
+}{
+  \vspace{0.5cm}
+}
+
+% --- Environment untuk Checklist Kompetensi ---
+\newenvironment{checklist}{
+  \vspace{0.5cm}
+  \noindent\colorbox{purple!10}{\parbox{\dimexpr\textwidth-2\fboxsep}{
+    \textbf{\large Checklist Pencapaian Kompetensi}
+  }}
+  \vspace{0.3cm}
+  \noindent\textit{Centang item berikut setelah Anda yakin telah menguasainya:}
+  \vspace{0.2cm}
+  \begin{itemize}[leftmargin=*, itemsep=5pt, label=$\square$]
+}{
+  \end{itemize}
+  \vspace{0.5cm}
+}
+
+% --- Environment untuk Rangkuman ---
+\newenvironment{rangkuman}{
+  \vspace{0.5cm}
+  \noindent\colorbox{gray!10}{\parbox{\dimexpr\textwidth-2\fboxsep}{
+    \textbf{\large Rangkuman}
+  }}
+  \vspace{0.3cm}
+}{
+  \vspace{0.5cm}
+}
+
+% ============================================================================
+% CUSTOM COMMANDS
+% ============================================================================
+
+% Command untuk highlight istilah Game Development
+\newcommand{\gamedev}[1]{\textbf{\textit{#1}}}
+
+% Command untuk code inline
+\newcommand{\code}[1]{\texttt{#1}}
+
+% Command untuk Unity component name
+\newcommand{\unity}[1]{\texttt{\textbf{#1}}}
+
+% Command untuk C# keyword
+\newcommand{\csharp}[1]{\textcolor{blue}{\texttt{\textbf{#1}}}}
+
+% Command untuk GameObject
+\newcommand{\gameobject}[1]{\texttt{\textbf{#1}}}
+
+% Command untuk method name
+\newcommand{\method}[1]{\texttt{#1()}}

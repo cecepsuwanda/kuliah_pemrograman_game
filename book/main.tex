@@ -10,173 +10,73 @@
 \input{preamble}
 
 % ============================================================================
-% INFORMASI DOKUMEN
-% ============================================================================
-
-\title{\textbf{BUKU AJAR}\\[1cm]
-       \textbf{PEMROGRAMAN GAME}\\[0.5cm]
-       \large{Menggunakan Unity Engine dan C\#}\\[0.5cm]
-       \large{Pendekatan Outcome-Based Education (OBE)}}
-
-\author{Program Studi S1 Informatika\\
-        Fakultas Teknologi Informasi}
-
-\date{\today}
-
-% ============================================================================
 % DOKUMEN MULAI
 % ============================================================================
 
 \begin{document}
 
-% ============================================================================
-% HALAMAN AWAL (FRONT MATTER)
-% Sesuai standar buku ajar Indonesia
-% ============================================================================
+% Front matter (halaman awal)
+\input{frontmatter}
 
-% Halaman Judul Luar (Cover) - Halaman pertama
-\maketitle
+% Main matter (bab-bab utama)
+\mainmatter
 
-% Halaman Kosong
-\newpage
-\thispagestyle{empty}
-\mbox{}
+% Bab 1: Pendahuluan dan Orientasi Buku
+\subfile{chapters/bab-01/bab-01}
 
-% Halaman Judul Dalam
-\newpage
-\thispagestyle{empty}
-\begin{center}
-\vspace*{3cm}
+% Bab 2: Landasan Teori dan Konsep Dasar
+\subfile{chapters/bab-02/bab-02}
 
-\textbf{\fontsize{18}{22}\selectfont BUKU AJAR}\\[1cm]
+% Bab 3: Sub-CPMK 1 - Konsep Dasar Game Development
+\subfile{chapters/bab-03/bab-03}
 
-\textbf{\fontsize{20}{24}\selectfont PEMROGRAMAN GAME}\\[0.5cm]
+% Bab 4: Sub-CPMK 2 - Pengenalan Unity Engine
+\subfile{chapters/bab-04/bab-04}
 
-\textbf{\fontsize{16}{20}\selectfont Menggunakan Unity Engine dan C\#}\\[0.5cm]
+% Bab 5: Sub-CPMK 3 - Dasar Pemrograman C# untuk Unity
+\subfile{chapters/bab-05/bab-05}
 
-\textbf{\fontsize{14}{18}\selectfont Pendekatan Outcome-Based Education (OBE)}\\[2cm]
+% Bab 6: Sub-CPMK 4 - GameObject, Component, Prefab, dan Scene
+\subfile{chapters/bab-06/bab-06}
 
-\vfill
+% Bab 7: Sub-CPMK 5 - Input System dan Player Controller
+\subfile{chapters/bab-07/bab-07}
 
-\begin{tabular}{ll}
-\textbf{Program Studi} & : S1 Informatika \\
-\textbf{Fakultas} & : Fakultas Teknologi Informasi \\
-\textbf{Mata Kuliah} & : Pemrograman Game \\
-\textbf{Kode Mata Kuliah} & : IF-XXX \\
-\textbf{Bobot SKS} & : 3 SKS \\
-\end{tabular}\\[2cm]
+% Bab 8: Sub-CPMK 6 - Physics, Collision, dan Rigidbody
+\subfile{chapters/bab-08/bab-08}
 
-\vfill
+% Bab 9: Sub-CPMK 7 - Animation dan Animator
+\subfile{chapters/bab-09/bab-09}
 
-\textbf{[Nama Penerbit/Institusi]}\\[0.5cm]
-\textbf{[Tahun]}
+% Bab 10: Sub-CPMK 8 - UI/UX Game
+\subfile{chapters/bab-10/bab-10}
 
-\end{center}
+% Bab 11: Sub-CPMK 9 - Audio dalam Game
+\subfile{chapters/bab-11/bab-11}
 
-% Halaman Pengesahan
-\include{pengesahan}
+% Bab 12: Sub-CPMK 10 - Level Design dan Game Mechanics
+\subfile{chapters/bab-12/bab-12}
 
-% Kata Pengantar
-\include{katapengantar}
+% Bab 13: Sub-CPMK 11 - AI Sederhana untuk Game
+\subfile{chapters/bab-13/bab-13}
 
-% Daftar Isi
-\tableofcontents
-\newpage
+% Bab 14: Sub-CPMK 12 - Optimization dan Debugging
+\subfile{chapters/bab-14/bab-14}
 
-% Daftar Gambar
-\listoffigures
-\newpage
+% Bab 15: Sub-CPMK 13 - Build dan Deployment
+\subfile{chapters/bab-15/bab-15}
 
-% Daftar Tabel
-\listoftables
-\newpage
+% Bab 16: Evaluasi dan Refleksi Akhir
+\subfile{chapters/bab-16/bab-16}
 
-% Daftar Algoritma (jika ada)
-% \listofalgorithms
-% \newpage
+% Back matter (bagian akhir)
+\backmatter
 
-% ============================================================================
-% BAGIAN UTAMA: BAB-BAB
-% ============================================================================
-
-% RPS (Rencana Pembelajaran Semester) - Dapat di-include sebagai bab atau dokumen terpisah
-% \include{rps}
-
-% Bab 1: Konsep Dasar Game Development
-\subfile{chapters/ch01/ch01}
-
-% Bab 2: Pengenalan Unity Engine
-\subfile{chapters/ch02/ch02}
-
-% Bab 3: Dasar Pemrograman C# untuk Unity
-\subfile{chapters/ch03/ch03}
-
-% Bab 4: GameObject, Component, Prefab, dan Scene
-\subfile{chapters/ch04/ch04}
-
-% Bab 5: Input System dan Player Controller
-\subfile{chapters/ch05/ch05}
-
-% Bab 6: Physics, Collision, dan Rigidbody
-\subfile{chapters/ch06/ch06}
-
-% Bab 7: Animation dan Animator
-\subfile{chapters/ch07/ch07}
-
-% Bab 8: UI/UX Game
-\subfile{chapters/ch08/ch08}
-
-% Bab 9: Audio dalam Game
-\subfile{chapters/ch09/ch09}
-
-% Bab 10: Level Design dan Game Mechanics
-\subfile{chapters/ch10/ch10}
-
-% Bab 11: AI Sederhana untuk Game
-\subfile{chapters/ch11/ch11}
-
-% Bab 12: Optimization dan Debugging
-\subfile{chapters/ch12/ch12}
-
-% Bab 13: Build dan Deployment
-\subfile{chapters/ch13/ch13}
-
-% ============================================================================
-% BAGIAN LAMPIRAN
-% ============================================================================
-
-\appendix
-
-% Lampiran A: Instalasi Unity & Setup
-\include{appendices/appA}
-
-% Lampiran B: Quick Reference C# untuk Unity
-\include{appendices/appB}
-
-% Lampiran C: Unity API Reference
-\include{appendices/appC}
-
-% Lampiran D: Best Practices & Tips
-\include{appendices/appD}
-
-% Lampiran E: Topik Lanjutan & Sumber Belajar
-\include{appendices/app_advanced_learning}
-
-% ============================================================================
-% BAGIAN AKHIR
-% ============================================================================
-
-% Glosarium
-\printglossary[title=Glosarium,toctitle=Glosarium]
-
-% Daftar Notasi
-\include{notation}
+% Lampiran
+\input{lampiran}
 
 % Daftar Pustaka
-\printbibliography[title=Daftar Pustaka,heading=bibintoc]
-
-% Index (jika diperlukan)
-% \printindex
+\input{backmatter}
 
 \end{document}
 
