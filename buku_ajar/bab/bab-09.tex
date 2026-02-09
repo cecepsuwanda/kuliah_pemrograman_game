@@ -1,12 +1,47 @@
-\documentclass[c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/main.tex]{subfiles}
+\documentclass[../main]{subfiles}
 \ifSubfilesClassLoaded{\setcounter{chapter}{8}}{}
 \begin{document}
-\chapter{Exception Handling dan Keandalan Program}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-09/section-9-1}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-09/section-9-2}
+
+\chapter{UI/UX Game}
+
+\begin{subcpmk}
+  \item Sub-CPMK 7.1: Membuat Canvas dan UI elements, mengatur Canvas Scaler
+  \item Sub-CPMK 7.2: Mengimplementasikan HUD, menu, dan load scene dari UI dengan SceneManager
+\end{subcpmk}
+
+\input{bab-09/section-9-1}
+\input{bab-09/section-9-2}
+
+\begin{aktivitas}
+  \item Buat HUD Score untuk Space Survivor
+  \item Buat Main Menu dengan tombol Play
+  \item Buat Game Over panel dengan Restart
+\end{aktivitas}
+
+\begin{latihan}
+  \item Jelaskan Canvas Scaler modes!
+  \item Bagaimana mengupdate Text dari script?
+  \item Bagaimana load scene dari button?
+\end{latihan}
+
+\begin{asesmen}
+\textbf{Praktik}: Implementasi UI lengkap (HUD, Menu, Game Over).
+\textbf{Rubrik}: Lihat Lampiran A
+\end{asesmen}
+
+\begin{checklist}
+  \item Saya dapat membuat Canvas dan UI elements
+  \item Saya dapat mengatur Canvas Scaler
+  \item Saya dapat load scene dari script
+\end{checklist}
+
+\begin{rangkuman}
+Canvas untuk UI. Scale With Screen Size untuk responsif. Text/Image/Button. SceneManager.LoadScene untuk pindah scene. SetActive untuk show/hide panel.
+\end{rangkuman}
+
 \ifSubfilesClassLoaded{
   \renewcommand{\bibname}{Daftar Pustaka}
   \bibliographystyle{plain}
-  \bibliography{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/references}
+  \bibliography{../references}
 }{}
 \end{document}

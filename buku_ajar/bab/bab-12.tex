@@ -1,12 +1,47 @@
-\documentclass[c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/main.tex]{subfiles}
+\documentclass[../main]{subfiles}
 \ifSubfilesClassLoaded{\setcounter{chapter}{11}}{}
 \begin{document}
-\chapter{Collections, Generics, dan File I/O}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-12/section-12-1}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-12/section-12-2}
+
+\chapter{AI Sederhana untuk Game}
+
+\begin{subcpmk}
+  \item Sub-CPMK 10.1: Mengimplementasikan chase dan patrol AI serta state machine AI
+  \item Sub-CPMK 10.2: Menggunakan NavMesh pathfinding untuk 3D
+\end{subcpmk}
+
+\input{bab-12/section-12-1}
+\input{bab-12/section-12-2}
+
+\begin{aktivitas}
+  \item Implementasikan enemy chase player (Space Survivor 2D)
+  \item Buat patrol AI dengan waypoints
+  \item Eksplorasi NavMesh untuk 3D (opsional)
+\end{aktivitas}
+
+\begin{latihan}
+  \item Jelaskan chase AI sederhana!
+  \item Apa perbedaan patrol dan chase?
+  \item Kapan menggunakan NavMesh?
+\end{latihan}
+
+\begin{asesmen}
+\textbf{Praktik}: Implementasi AI chase atau patrol.
+\textbf{Rubrik}: Lihat Lampiran A
+\end{asesmen}
+
+\begin{checklist}
+  \item Saya dapat mengimplementasikan chase AI
+  \item Saya dapat membuat patrol behavior
+  \item Saya memahami State Machine AI
+\end{checklist}
+
+\begin{rangkuman}
+Chase: move towards player. Patrol: waypoints. State Machine: Idle, Patrol, Chase, Attack. NavMesh untuk 3D pathfinding. SimpleAI cukup untuk banyak game.
+\end{rangkuman}
+
 \ifSubfilesClassLoaded{
   \renewcommand{\bibname}{Daftar Pustaka}
   \bibliographystyle{plain}
-  \bibliography{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/references}
+  \bibliography{../references}
 }{}
 \end{document}

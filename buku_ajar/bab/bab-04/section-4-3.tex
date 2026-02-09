@@ -1,0 +1,33 @@
+\section{Object-Oriented Programming dalam Unity}
+
+\begin{learningoutcomes}
+\item Memahami penggunaan class dan inheritance di Unity
+\item Menggunakan virtual/override untuk polymorphism
+\item Menerapkan encapsulation
+\end{learningoutcomes}
+
+\subsection{Class dan Inheritance}
+
+\begin{lstlisting}[language={[Sharp]C}]
+public class BaseEnemy : MonoBehaviour
+{
+    protected int health;
+    
+    public virtual void Attack()
+    {
+        Debug.Log("Enemy attacks");
+    }
+}
+
+public class MeleeEnemy : BaseEnemy
+{
+    public override void Attack()
+    {
+        Debug.Log("Melee attack");
+    }
+}
+\end{lstlisting}
+
+\subsection{Encapsulation}
+
+Gunakan private untuk data internal, public methods untuk aksi. Gunakan protected untuk anggota yang bisa diakses subclass.

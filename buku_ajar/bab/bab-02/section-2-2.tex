@@ -1,119 +1,67 @@
-\section{Paradigma Prosedural vs Berorientasi Objek}
+\section{Genre Game dan Karakteristiknya}
 
-\subsection{Pemrograman Prosedural}
+\begin{learningoutcomes}
+\item Mengidentifikasi berbagai genre game utama
+\item Menjelaskan karakteristik setiap genre
+\item Menganalisis mekanik khas dari setiap genre
+\item Menerapkan pengetahuan genre dalam desain game
+\end{learningoutcomes}
 
-\oop{Pemrograman prosedural} adalah paradigma yang berfokus pada \textbf{prosedur} atau \textbf{fungsi} yang beroperasi pada data.
+\subsection{Pengertian Genre Game}
 
-\textbf{Karakteristik:}
-\begin{itemize}
-  \item Program terdiri dari serangkaian instruksi/prosedur
-  \item Data dan fungsi terpisah
-  \item Alur program linear (top-down)
-  \item Fokus pada "bagaimana" melakukan sesuatu
-\end{itemize}
+\begin{definisi}[Genre Game]
+Genre game adalah kategori yang mengklasifikasikan game berdasarkan mekanik gameplay, setting, atau gaya permainan yang dominan \cite{Schell2019}.
+\end{definisi}
 
-\begin{contoh}
-\textbf{Contoh Kode Prosedural (Pseudo-code):}
+Genre membantu pemain memahami apa yang diharapkan dari sebuah game dan membantu developer mengkomunikasikan konsep game mereka.
 
-\begin{verbatim}
-// Data terpisah
-struct Mahasiswa {
-    string nim;
-    string nama;
-    double ipk;
-}
+\subsection{Genre Game Utama}
 
-// Fungsi terpisah
-function hitungPredikat(double ipk) {
-    if (ipk >= 3.5) return "Cum Laude";
-    else if (ipk >= 3.0) return "Sangat Memuaskan";
-    else return "Memuaskan";
-}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/game_genres.png}
+    \caption{Visualisasi Ikon Genre Game Utama}
+    \label{fig:game_genres}
+\end{figure}
 
-// Penggunaan
-Mahasiswa mhs;
-mhs.nim = "1234";
-mhs.nama = "Budi";
-mhs.ipk = 3.7;
-string predikat = hitungPredikat(mhs.ipk);
-\end{verbatim}
+\subsubsection{Action Games}
 
-Perhatikan bahwa data (\code{Mahasiswa}) dan fungsi (\code{hitungPredikat}) terpisah.
-\end{contoh}
+\textbf{Karakteristik}: Fokus pada refleks dan koordinasi tangan-mata, gameplay cepat dan intens, sering melibatkan combat atau konflik langsung. Contoh: Call of Duty, Devil May Cry, Dark Souls.
 
-\subsection{Pemrograman Berorientasi Objek}
+\textbf{Sub-genre}: First-Person Shooter (FPS), Third-Person Shooter (TPS), Hack and Slash, Beat 'em up
 
-\oop{Pemrograman Berorientasi Objek (OOP)} adalah paradigma yang berfokus pada \textbf{objek} yang mengenkapsulasi data dan perilaku.
+\subsubsection{Adventure Games}
 
-\textbf{Karakteristik:}
-\begin{itemize}
-  \item Program terdiri dari objek-objek yang berinteraksi
-  \item Data dan fungsi digabung dalam satu unit (class)
-  \item Fokus pada "apa" yang dimodelkan
-  \item Lebih dekat dengan dunia nyata
-\end{itemize}
+\textbf{Karakteristik}: Fokus pada narasi dan eksplorasi, puzzle-solving sebagai mekanik utama, interaksi dengan karakter dan lingkungan. Contoh: The Legend of Zelda, Uncharted, Life is Strange.
 
-\begin{contoh}
-\textbf{Contoh Kode OOP (Java):}
+\subsubsection{Role-Playing Games (RPG)}
 
-\begin{javacode}[caption={Class Mahasiswa dengan OOP}]
-public class Mahasiswa {
-    // Data (attributes)
-    private String nim;
-    private String nama;
-    private double ipk;
-    
-    // Constructor
-    public Mahasiswa(String nim, String nama) {
-        this.nim = nim;
-        this.nama = nama;
-        this.ipk = 0.0;
-    }
-    
-    // Behavior (methods)
-    public void setIPK(double ipk) {
-        this.ipk = ipk;
-    }
-    
-    public String getPredikat() {
-        if (ipk >= 3.5) return "Cum Laude";
-        else if (ipk >= 3.0) return "Sangat Memuaskan";
-        else return "Memuaskan";
-    }
-}
+\textbf{Karakteristik}: Karakter development dan progression, sistem statistik (HP, MP, Level), quest dan mission-based gameplay. Contoh: Final Fantasy, The Elder Scrolls, The Witcher.
 
-// Penggunaan
-Mahasiswa mhs = new Mahasiswa("1234", "Budi");
-mhs.setIPK(3.7);
-String predikat = mhs.getPredikat();
-\end{javacode}
+\subsubsection{Strategy Games}
 
-Data dan fungsi menyatu dalam class \class{Mahasiswa}.
-\end{contoh}
+\textbf{Karakteristik}: Fokus pada perencanaan dan taktik, resource management, decision-making jangka panjang. Contoh: Civilization, StarCraft, XCOM.
 
-\subsection{Perbandingan Prosedural vs OOP}
+\subsubsection{Simulation Games}
 
-\begin{table}[h]
-\centering
-\begin{tabular}{|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{5cm}|>{\raggedright\arraybackslash}p{5cm}|}
-\hline
-\textbf{Aspek} & \textbf{Prosedural} & \textbf{OOP} \\
-\hline
-Fokus & Fungsi/Prosedur & Objek \\
-\hline
-Struktur Data & Data terpisah dari fungsi & Data dan fungsi dalam class \\
-\hline
-Akses Data & Global atau parameter & Encapsulation (private/public) \\
-\hline
-Code Reuse & Function library & Inheritance \\
-\hline
-Maintainability & Sulit untuk program besar & Lebih mudah dengan modularitas \\
-\hline
-Real-world Modeling & Abstrak & Lebih natural \\
-\hline
-\hline
-Contoh Bahasa & C, Pascal, FORTRAN & Java, C++, Python \cite{ref4, ref7} \\
-\hline
-\end{tabular}
-\caption{Perbandingan Prosedural vs OOP}
-\end{table}
+\textbf{Karakteristik}: Simulasi sistem kehidupan nyata, realisme dan akurasi, open-ended gameplay. Contoh: The Sims, SimCity, Flight Simulator.
+
+\subsubsection{Sports Games}
+
+\textbf{Karakteristik}: Simulasi olahraga nyata, realisme dalam gameplay, multiplayer competitive. Contoh: FIFA, NBA 2K.
+
+\subsubsection{Puzzle Games}
+
+\textbf{Karakteristik}: Fokus pada problem-solving, logic-based challenges, sering tidak memiliki time pressure. Contoh: Tetris, Portal, The Witness.
+
+\subsubsection{Platformer Games}
+
+\textbf{Karakteristik}: Fokus pada jumping dan navigation, level design dengan platform, precision movement. Contoh: Super Mario Bros, Celeste, Hollow Knight.
+
+\subsection{Hybrid Genre}
+
+Banyak game modern menggabungkan elemen dari beberapa genre: Action-RPG, Survival Horror, Metroidvania.
+
+\begin{catatan}
+Genre bukanlah kategori yang kaku. Game modern sering menggabungkan elemen dari berbagai genre untuk menciptakan pengalaman yang unik.
+\end{catatan}

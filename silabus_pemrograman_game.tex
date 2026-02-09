@@ -1,809 +1,305 @@
-\documentclass[a4paper,12pt]{article}
-\usepackage[a4paper, margin=2.5cm]{geometry}
+\documentclass[12pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[indonesian]{babel}
-\usepackage{booktabs}
+\usepackage{geometry}
 \usepackage{longtable}
 \usepackage{array}
-\usepackage{multirow}
-\usepackage{xcolor}
+\usepackage{booktabs}
 \usepackage{enumitem}
-
-\title{\textbf{SILABUS MATA KULIAH}\\
-\textbf{PEMROGRAMAN GAME}}
-\author{Program Studi S1 Informatika}
-\date{}
+\usepackage[hidelinks,breaklinks]{hyperref}
+\geometry{margin=2.5cm}
 
 \begin{document}
 
-\maketitle
+\begin{center}
+\textbf{\Large RENCANA PEMBELAJARAN SEMESTER (RPS)}\\
+\textbf{Berbasis Outcome-Based Education (OBE)}\\[0.5cm]
+\textbf{PROGRAM STUDI TEKNIK INFORMATIKA}\\
+\textbf{FAKULTAS TEKNIK}\\
+\textbf{UNIVERSITAS LOREM IPSUM}\\
+\end{center}
 
 \vspace{1cm}
 
-\begin{table}[h]
-\centering
+% ============================================================
+% 1. IDENTITAS MATA KULIAH
+% ============================================================
+\section*{1. Identitas Mata Kuliah}
 \begin{tabular}{ll}
-\textbf{Nama Mata Kuliah} & : Pemrograman Game \\
-\textbf{Kode Mata Kuliah} & : IF-XXX \\
-\textbf{Bobot SKS} & : 3 SKS \\
-\textbf{Semester} & : [Tentukan Semester] \\
-\textbf{Program Studi} & : S1 Informatika \\
-\textbf{Dosen Pengampu} & : [Nama Dosen] \\
+Nama Program Studi & : Teknik Informatika \\
+Nama Mata Kuliah & : Pemrograman Game \\
+Kode Mata Kuliah & : IF-XXX \\
+Semester & : 3 (Tiga) \\
+SKS / Bobot Kredit & : 3 SKS (2 Teori, 1 Praktikum) \\
+Dosen Pengampu & : [Nama Dosen] \\
+Tanggal Penyusunan & : 9 Februari 2026 \\
 \end{tabular}
-\end{table}
 
-\newpage
+\textbf{Deskripsi Mata Kuliah:}\\
+Mata kuliah Pemrograman Game membekali mahasiswa dengan pengetahuan dan keterampilan praktis dalam pengembangan game menggunakan Unity Engine dan bahasa pemrograman C\#. Mata kuliah ini mengadopsi pendekatan Outcome-Based Education (OBE) dengan fokus pada pembelajaran berbasis proyek (project-based learning). Materi mencakup konsep dasar game development (MDA framework, genre, GDD, lifecycle), pengenalan Unity Engine, pemrograman C\# untuk Unity, pengelolaan GameObject dan komponen, sistem input dan kontrol pemain, fisika dan collision detection, animasi, UI/UX game, audio, level design, AI sederhana, optimasi, serta proses build dan deployment game.
 
-\section{Deskripsi Mata Kuliah}
+\vspace{0.5cm}
 
-Mata kuliah Pemrograman Game merupakan mata kuliah yang membekali mahasiswa dengan pengetahuan dan keterampilan praktis dalam pengembangan game menggunakan Unity Engine dan bahasa pemrograman C\#. Mata kuliah ini mengadopsi pendekatan Outcome-Based Education (OBE) dengan fokus pada pembelajaran berbasis proyek (project-based learning) yang dominan praktik dibanding teori.
+% ============================================================
+% 2. CAPAIAN PEMBELAJARAN LULUSAN (CPL)
+% ============================================================
+\section*{2. Capaian Pembelajaran Lulusan (CPL)}
 
-Mata kuliah ini mencakup konsep dasar game development dan game design, pengenalan Unity Engine dan workflow pengembangan game, pemrograman C\# untuk Unity, pengelolaan game object dan komponen, sistem input dan kontrol pemain, fisika dan collision detection, animasi, UI/UX game, audio, level design, AI sederhana, optimasi, serta proses build dan deployment game. Melalui pembelajaran bertahap dan proyek akhir yang komprehensif, mahasiswa diharapkan mampu merancang, mengembangkan, menguji, dan mempublikasikan game yang fungsional dan menarik.
+CPL yang dibebankan pada mata kuliah ini mencakup kompetensi lulusan dalam aspek pengetahuan, keterampilan, dan sikap:
 
-\section{Capaian Pembelajaran Mata Kuliah (CPMK)}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{CPL-1 (Pengetahuan):} Menguasai konsep teoretis bidang pengetahuan tertentu secara umum dan konsep teoretis bagian khusus dalam bidang pengetahuan tersebut secara mendalam, serta mampu memformulasikan penyelesaian masalah prosedural.
+  
+  \item \textbf{CPL-2 (Keterampilan Umum):} Mampu menerapkan pemikiran logis, kritis, sistematis, dan inovatif dalam konteks pengembangan atau implementasi ilmu pengetahuan dan teknologi yang memperhatikan dan menerapkan nilai humaniora.
+  
+  \item \textbf{CPL-3 (Keterampilan Khusus):} Mampu merancang, mengimplementasikan, dan mengevaluasi sistem perangkat lunak termasuk aplikasi game dengan mempertimbangkan standar kualitas perangkat lunak.
+  
+  \item \textbf{CPL-4 (Sikap):} Menunjukkan sikap bertanggung jawab atas pekerjaan di bidang keahliannya secara mandiri dan mampu bekerja sama dalam tim.
+\end{itemize}
 
-Setelah menyelesaikan mata kuliah ini, mahasiswa diharapkan mampu:
+\vspace{0.5cm}
 
-\begin{enumerate}[label=CPMK\arabic*:]
-\item Menganalisis konsep dasar game development, game design, dan genre game serta menjelaskan workflow pengembangan game menggunakan Unity Engine.
+% ============================================================
+% 3. CAPAIAN PEMBELAJARAN MATA KULIAH (CPMK)
+% ============================================================
+\section*{3. Capaian Pembelajaran Mata Kuliah (CPMK)}
 
-\item Menerapkan pemrograman C\# untuk Unity dengan menguasai struktur skrip, fungsi dasar (\texttt{Start()}, \texttt{Update()}), variabel, kontrol alur program, dan konsep object-oriented programming dalam konteks game development.
+Kemampuan atau kompetensi spesifik yang diharapkan mahasiswa kuasai setelah menyelesaikan mata kuliah:
 
-\item Mengoperasikan Unity Editor dengan mahir dalam mengelola game object, komponen (Transform, Rigidbody, Collider), prefab, scene, dan manajemen aset (grafik, model 3D, audio).
+\begin{itemize}[leftmargin=*]
+  \item \textbf{CPMK-1:} Mahasiswa mampu menganalisis konsep dasar game development (mechanics, dynamics, aesthetics, GDD, lifecycle) dan menjelaskan workflow pengembangan game menggunakan Unity Engine.
+  
+  \item \textbf{CPMK-2:} Mahasiswa mampu menerapkan pemrograman C\# untuk Unity dengan menguasai struktur skrip (MonoBehaviour), lifecycle functions, variabel, kontrol alur program, dan konsep object-oriented programming dalam konteks game development.
+  
+  \item \textbf{CPMK-3:} Mahasiswa mampu mengoperasikan Unity Editor dengan mahir dalam mengelola GameObject, komponen (Transform, Rigidbody, Collider), Prefab, Scene, dan manajemen aset.
+  
+  \item \textbf{CPMK-4:} Mahasiswa mampu mengimplementasikan sistem kontrol pemain menggunakan Input System Unity, menggerakkan karakter, dan menangani interaksi pemain dengan game world.
+  
+  \item \textbf{CPMK-5:} Mahasiswa mampu mengaplikasikan sistem fisika Unity (Rigidbody, Collider) untuk simulasi gerak, tumbukan, dan interaksi fisik dalam game.
+  
+  \item \textbf{CPMK-6:} Mahasiswa mampu membuat animasi karakter dan objek menggunakan Animator Controller, mengelola transisi animasi, dan mengintegrasikan animasi dengan gameplay.
+  
+  \item \textbf{CPMK-7:} Mahasiswa mampu merancang dan mengimplementasikan UI/UX game yang efektif meliputi HUD, menu navigasi, sistem scoring, dan feedback visual.
+  
+  \item \textbf{CPMK-8:} Mahasiswa mampu mengintegrasikan audio dalam game meliputi sound effect dan background music menggunakan AudioSource, AudioListener, dan Audio Mixer.
+  
+  \item \textbf{CPMK-9:} Mahasiswa mampu merancang level design dan game mechanics yang menarik, termasuk sistem progresi, tantangan, dan reward yang seimbang.
+  
+  \item \textbf{CPMK-10:} Mahasiswa mampu mengimplementasikan AI sederhana untuk NPC menggunakan teknik dasar seperti pathfinding dengan NavMesh, state machine, dan behavior scripting.
+  
+  \item \textbf{CPMK-11:} Mahasiswa mampu menganalisis dan mengoptimalkan performa game melalui profiling, debugging, dan teknik optimasi aset serta kode untuk berbagai platform target.
+  
+  \item \textbf{CPMK-12:} Mahasiswa mampu membangun dan mendeploy game ke berbagai platform (PC, Mobile, Web) dengan memahami proses build, pengaturan platform-specific, dan distribusi game.
+  
+  \item \textbf{CPMK-13:} Mahasiswa mampu merancang dan mengembangkan proyek game utuh yang mencakup semua aspek pembelajaran mulai dari konsep, desain, implementasi, pengujian, hingga publikasi dengan menerapkan best practices industri game development.
+\end{itemize}
 
-\item Mengimplementasikan sistem kontrol pemain menggunakan Input System Unity, menggerakkan karakter, dan menangani interaksi pemain dengan game world.
+\vspace{0.5cm}
 
-\item Mengaplikasikan sistem fisika Unity (Rigidbody, Collider, Physics Material) untuk simulasi gerak, gravitasi, tumbukan, dan interaksi fisik dalam game.
+% ============================================================
+% 4. SUB-CPMK / INDIKATOR PENCAPAIAN
+% ============================================================
+\section*{4. Sub-CPMK / Indikator Pencapaian}
 
-\item Membuat animasi karakter dan objek menggunakan Animator Controller, mengelola transisi animasi, dan mengintegrasikan animasi dengan gameplay.
+Penjabaran CPMK menjadi indikator yang lebih terukur dan dapat diuji:
 
-\item Merancang dan mengimplementasikan UI/UX game yang efektif meliputi HUD (Heads-Up Display), menu navigasi, sistem scoring, dan feedback visual untuk pengalaman pengguna yang optimal.
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Sub-CPMK 1.1:} Menjelaskan MDA framework dan mengidentifikasi genre game
+  \item \textbf{Sub-CPMK 1.2:} Menyusun GDD dan menjelaskan lifecycle pengembangan game
+  \item \textbf{Sub-CPMK 2.1:} Membuat skrip MonoBehaviour dan menggunakan lifecycle functions (Start, Update, Awake, FixedUpdate)
+  \item \textbf{Sub-CPMK 2.2:} Menggunakan tipe data Unity (Vector3, Quaternion) dan menerapkan OOP, coroutine, event
+  \item \textbf{Sub-CPMK 3.1:} Mengoperasikan panel Unity Editor dan mengelola Hierarchy serta Transform
+  \item \textbf{Sub-CPMK 3.2:} Membuat Prefab dan mengelola Scene serta Build Settings
+  \item \textbf{Sub-CPMK 4.1:} Mengimplementasikan keyboard/mouse input dan membuat player movement
+  \item \textbf{Sub-CPMK 4.2:} Mengatur camera follow dan menangani touch/gamepad untuk platform mobile
+  \item \textbf{Sub-CPMK 5.1:} Mengkonfigurasi Rigidbody dan Collider, mengimplementasikan OnCollisionEnter/OnTriggerEnter
+  \item \textbf{Sub-CPMK 5.2:} Membedakan trigger dan collision dalam implementasi game
+  \item \textbf{Sub-CPMK 6.1:} Membuat Animator Controller dan mengatur state serta transition
+  \item \textbf{Sub-CPMK 6.2:} Menggunakan parameter (Trigger, Bool) dan kontrol animasi dari script
+  \item \textbf{Sub-CPMK 7.1:} Membuat Canvas dan UI elements, mengatur Canvas Scaler
+  \item \textbf{Sub-CPMK 7.2:} Mengimplementasikan HUD, menu, dan load scene dari UI dengan SceneManager
+  \item \textbf{Sub-CPMK 8.1:} Menggunakan AudioSource dan AudioListener untuk memainkan SFX dan BGM
+  \item \textbf{Sub-CPMK 8.2:} Menggunakan Audio Mixer untuk kontrol volume
+  \item \textbf{Sub-CPMK 9.1:} Merancang level dengan prinsip level design dan mengimplementasikan spawn system
+  \item \textbf{Sub-CPMK 9.2:} Mengimplementasikan game state management, progression system, dan object pooling
+  \item \textbf{Sub-CPMK 10.1:} Mengimplementasikan chase dan patrol AI serta state machine AI
+  \item \textbf{Sub-CPMK 10.2:} Menggunakan NavMesh pathfinding untuk 3D
+  \item \textbf{Sub-CPMK 11.1:} Menggunakan Unity Profiler dan implementasi Object Pooling
+  \item \textbf{Sub-CPMK 11.2:} Menerapkan teknik optimasi (LOD, occlusion culling) dan debugging efektif
+  \item \textbf{Sub-CPMK 12.1:} Mengkonfigurasi Build Settings dan build untuk PC/Android/WebGL
+  \item \textbf{Sub-CPMK 12.2:} Persiapan release dan deployment ke platform distribusi
+  \item \textbf{Sub-CPMK 13.1:} Mengembangkan game lengkap dengan dokumentasi dan presentasi
+  \item \textbf{Sub-CPMK 13.2:} Menerapkan best practices dan version control (Git)
+\end{itemize}
 
-\item Mengintegrasikan audio dalam game meliputi sound effect dan background music menggunakan AudioSource, AudioListener, dan Audio Mixer untuk meningkatkan immersi gameplay.
+\vspace{0.5cm}
 
-\item Merancang level design dan game mechanics yang menarik, termasuk sistem progresi, tantangan, dan reward yang seimbang.
+% ============================================================
+% 5. MATERI PEMBELAJARAN (BAHAN KAJIAN)
+% ============================================================
+\section*{5. Materi Pembelajaran (Bahan Kajian)}
 
-\item Mengimplementasikan AI sederhana untuk NPC (Non-Player Character) menggunakan teknik dasar seperti pathfinding dengan NavMesh, state machine, dan behavior scripting.
+Daftar topik materi yang relevan dengan Sub-CPMK dan CPMK:
 
-\item Menganalisis dan mengoptimalkan performa game melalui profiling, debugging, dan teknik optimasi aset serta kode untuk berbagai platform target.
-
-\item Membangun dan mendeploy game ke berbagai platform (PC, Mobile, Web) dengan memahami proses build, pengaturan platform-specific, dan distribusi game.
-
-\item Merancang dan mengembangkan proyek game utuh yang mencakup semua aspek pembelajaran mulai dari konsep, desain, implementasi, pengujian, hingga publikasi dengan menerapkan best practices industri game development.
+\begin{enumerate}[leftmargin=*]
+  \item Konsep Dasar Game Development (MDA, genre, GDD, lifecycle)
+  \item Pengenalan Unity Engine (instalasi, interface, workflow)
+  \item Dasar Pemrograman C\# untuk Unity (MonoBehaviour, lifecycle functions, OOP)
+  \item GameObject, Component, Prefab, dan Scene
+  \item Input System dan Player Controller
+  \item Physics, Collision, dan Rigidbody
+  \item Animation dan Animator
+  \item UI/UX Game (Canvas, HUD, menu system)
+  \item Audio dalam Game (SFX, BGM, Audio Mixer)
+  \item Level Design dan Game Mechanics
+  \item AI Sederhana untuk Game (NavMesh, state machine)
+  \item Optimization dan Debugging
+  \item Build dan Deployment
 \end{enumerate}
 
-\section{Pemetaan CPMK terhadap CPL}
+\vspace{0.5cm}
 
-\begin{table}[h]
-\centering
-\caption{Pemetaan CPMK terhadap Capaian Pembelajaran Lulusan (CPL)}
-\label{tab:pemetaan_cpl}
-\small
-\begin{tabular}{|p{1.5cm}|p{7cm}|p{6cm}|}
-\hline
-\textbf{CPMK} & \textbf{Deskripsi Singkat} & \textbf{CPL yang Terkait} \\
-\hline
-CPMK1 & Analisis konsep game development dan Unity workflow & \textbf{CPL1:} Sikap (Bertanggung jawab, etis, profesional) \\
- & & \textbf{CPL2:} Pengetahuan (Menguasai konsep dan prinsip) \\
-\hline
-CPMK2 & Penerapan pemrograman C\# untuk Unity & \textbf{CPL3:} Keterampilan Umum (Kemampuan berpikir logis) \\
- & & \textbf{CPL4:} Keterampilan Khusus (Kemampuan pemrograman) \\
-\hline
-CPMK3 & Operasi Unity Editor dan manajemen aset & \textbf{CPL4:} Keterampilan Khusus (Penggunaan tools) \\
-\hline
-CPMK4 & Implementasi sistem kontrol pemain & \textbf{CPL3:} Keterampilan Umum (Problem solving) \\
- & & \textbf{CPL4:} Keterampilan Khusus (Implementasi sistem) \\
-\hline
-CPMK5 & Aplikasi sistem fisika Unity & \textbf{CPL2:} Pengetahuan (Konsep fisika simulasi) \\
- & & \textbf{CPL4:} Keterampilan Khusus (Implementasi fisika) \\
-\hline
-CPMK6 & Pembuatan animasi karakter dan objek & \textbf{CPL4:} Keterampilan Khusus (Animasi dan visual) \\
-\hline
-CPMK7 & Perancangan UI/UX game & \textbf{CPL3:} Keterampilan Umum (Komunikasi visual) \\
- & & \textbf{CPL4:} Keterampilan Khusus (UI/UX design) \\
-\hline
-CPMK8 & Integrasi audio dalam game & \textbf{CPL4:} Keterampilan Khusus (Audio integration) \\
-\hline
-CPMK9 & Perancangan level design dan mechanics & \textbf{CPL2:} Pengetahuan (Game design principles) \\
- & & \textbf{CPL3:} Keterampilan Umum (Kreativitas) \\
-\hline
-CPMK10 & Implementasi AI sederhana & \textbf{CPL2:} Pengetahuan (Konsep AI dasar) \\
- & & \textbf{CPL4:} Keterampilan Khusus (AI implementation) \\
-\hline
-CPMK11 & Analisis dan optimasi performa & \textbf{CPL3:} Keterampilan Umum (Analisis kritis) \\
- & & \textbf{CPL4:} Keterampilan Khusus (Optimization) \\
-\hline
-CPMK12 & Build dan deployment game & \textbf{CPL3:} Keterampilan Umum (Project management) \\
- & & \textbf{CPL4:} Keterampilan Khusus (Deployment) \\
-\hline
-CPMK13 & Pengembangan proyek game utuh & \textbf{CPL1:} Sikap (Komitmen, profesionalisme) \\
- & & \textbf{CPL3:} Keterampilan Umum (Komprehensif) \\
- & & \textbf{CPL4:} Keterampilan Khusus (Full-stack development) \\
-\hline
-\end{tabular}
-\end{table}
+% ============================================================
+% 6. METODE PEMBELAJARAN
+% ============================================================
+\section*{6. Metode Pembelajaran}
 
-\textit{Catatan: CPL (Capaian Pembelajaran Lulusan) disesuaikan dengan program studi masing-masing.}
+Strategi atau pendekatan pembelajaran yang dipilih sesuai OBE yang menekankan aktivitas mahasiswa:
 
-\section{Bahan Kajian}
-
-\subsection{Konsep Dasar Game Development}
-\begin{itemize}
-\item Pengertian game, elemen-elemen game (mechanics, dynamics, aesthetics)
-\item Genre game dan karakteristiknya
-\item Game design document (GDD) dan konsep dasar game design
-\item Lifecycle pengembangan game (pre-production, production, post-production)
-\item Peran dan tanggung jawab dalam tim pengembangan game
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Praktikum:} Hands-on practice menggunakan Unity Editor dan Visual Studio/VS Code setiap pertemuan
+  \item \textbf{Project-Based Learning (PBL):} Pengembangan proyek game secara bertahap dari pertemuan pertama hingga akhir semester
+  \item \textbf{Problem-Based Learning:} Studi kasus dan permasalahan nyata dalam pengembangan game
+  \item \textbf{Studi Kasus:} Analisis game populer dan mekaniknya untuk memahami implementasi konsep
+  \item \textbf{Presentasi dan Diskusi:} Presentasi progress proyek secara berkala
+  \item \textbf{Peer Review:} Saling memberikan feedback terhadap proyek teman sekelas
+  \item \textbf{Flipped Classroom:} Materi dipelajari mandiri sebelum kelas, diskusi dan praktik di kelas
 \end{itemize}
 
-\subsection{Pengenalan Unity Engine}
-\begin{itemize}
-\item Sejarah dan keunggulan Unity Engine
-\item Instalasi dan setup Unity Hub
-\item Unity Editor interface (Scene view, Game view, Hierarchy, Inspector, Project, Console)
-\item Workflow pengembangan game di Unity
-\item Unity Asset Store dan manajemen package
+\vspace{0.5cm}
+
+% ============================================================
+% 7. PENGALAMAN BELAJAR MAHASISWA
+% ============================================================
+\section*{7. Pengalaman Belajar Mahasiswa}
+
+Deskripsi tugas, aktivitas, atau pengalaman belajar yang mendukung pencapaian Sub-CPMK:
+
+\begin{itemize}[leftmargin=*]
+  \item Menganalisis game favorit menggunakan MDA framework dan mengidentifikasi elemen game (mechanics, dynamics, aesthetics)
+  \item Menginstalasi Unity Hub dan Unity Editor serta mengeksplorasi interface Editor
+  \item Membuat project, scene, dan mengimport asset dari Asset Store
+  \item Membuat skrip C\#, memanipulasi GameObject dan Transform, membuat Prefab
+  \item Mengimplementasikan player controller dan sistem fisika serta collision detection
+  \item Membuat Animator Controller, mengintegrasikan animasi, UI/UX (HUD, menu), dan audio (SFX, BGM)
+  \item Mengimplementasikan spawn system, AI sederhana, dan optimasi
+  \item Mengembangkan game lengkap (Space Survivor atau konsep serupa) dengan dokumentasi
+  \item Mempresentasikan proyek dan melakukan build serta deploy
+  \item Melakukan self-assessment menggunakan checklist kompetensi dan identifikasi area peningkatan
+  \item Melakukan peer review kode dan game serta diskusi solusi teknis dalam tim
 \end{itemize}
 
-\subsection{Dasar Pemrograman C\# untuk Unity}
-\begin{itemize}
-\item Struktur skrip C\# di Unity (MonoBehaviour)
-\item Fungsi \texttt{Start()}, \texttt{Update()}, \texttt{Awake()}, \texttt{OnEnable()}
-\item Variabel dan tipe data (int, float, bool, string, Vector2, Vector3)
-\item Kontrol alur program (if-else, switch, loop)
-\item Fungsi dan method
-\item Konsep object-oriented programming (class, inheritance, polymorphism)
-\item Coroutine dan async programming dasar
-\item Event dan delegate
-\end{itemize}
+\vspace{0.5cm}
 
-\subsection{Game Object, Component, Prefab, dan Scene}
-\begin{itemize}
-\item Konsep GameObject dan Hierarchy
-\item Transform component (position, rotation, scale)
-\item Komponen-komponen Unity (Rigidbody, Collider, Renderer, AudioSource, dll)
-\item Prefab dan instantiation
-\item Scene management dan Scene loading
-\item Tag dan Layer
-\item Parenting dan child objects
-\end{itemize}
+% ============================================================
+% 8. KRITERIA, INDIKATOR, DAN BOBOT PENILAIAN
+% ============================================================
+\section*{8. Kriteria, Indikator, dan Bobot Penilaian}
 
-\subsection{Input System dan Player Controller}
-\begin{itemize}
-\item Unity Input System (legacy dan new Input System)
-\item Keyboard dan mouse input
-\item Touch input untuk mobile
-\item Gamepad/controller input
-\item Player movement (2D dan 3D)
-\item Camera control dan follow camera
-\item Character controller vs Rigidbody movement
-\end{itemize}
+Teknik/alat asesmen dipetakan ke Sub-CPMK/CPMK dengan bobot yang jelas:
 
-\subsection{Physics, Collision, dan Rigidbody}
-\begin{itemize}
-\item Konsep fisika dalam game
-\item Rigidbody component dan propertinya
-\item Collider types (Box, Sphere, Capsule, Mesh)
-\item Collision detection (OnCollisionEnter, OnTriggerEnter)
-\item Physics Material dan friction
-\item Raycast dan Linecast
-\item Joints dan constraints
-\end{itemize}
-
-\subsection{Animation dan Animator}
-\begin{itemize}
-\item Konsep animasi dalam game
-\item Animator Controller dan state machine
-\item Animation states dan transitions
-\item Parameters (float, int, bool, trigger)
-\item Blend trees untuk smooth transitions
-\item Animation events
-\item Runtime animation control melalui script
-\end{itemize}
-
-\subsection{UI/UX Game}
-\begin{itemize}
-\item Canvas dan Canvas Scaler
-\item UI Components (Button, Text, Image, Slider, Toggle, Input Field)
-\item Event System dan UI events
-\item HUD (Heads-Up Display) design
-\item Menu system (Main menu, Pause menu, Settings)
-\item Scoring system dan display
-\item Health bar dan progress indicators
-\item UI Layout (Horizontal, Vertical, Grid Layout Group)
-\end{itemize}
-
-\subsection{Audio dalam Game}
-\begin{itemize}
-\item Konsep audio dalam game (sound effect vs background music)
-\item AudioSource dan AudioListener
-\item Audio Clip dan format audio
-\item 2D vs 3D audio
-\item Audio Mixer dan mixing
-\item Dynamic audio (volume control, pitch variation)
-\item Audio pooling untuk optimasi
-\end{itemize}
-
-\subsection{Level Design dan Game Mechanics}
-\begin{itemize}
-\item Prinsip level design (flow, pacing, challenge)
-\item Spawn system dan object pooling
-\item Game state management (playing, paused, game over)
-\item Win/lose conditions
-\item Progression system (leveling, unlocking)
-\item Power-ups dan collectibles
-\item Checkpoint system
-\end{itemize}
-
-\subsection{AI Sederhana untuk Game}
-\begin{itemize}
-\item Konsep AI dalam game
-\item NPC behavior patterns (patrol, chase, attack, flee)
-\item NavMesh dan pathfinding
-\item State Machine untuk AI behavior
-\item Line of sight detection
-\item Decision making (if-else, finite state machine)
-\item AI optimization techniques
-\end{itemize}
-
-\subsection{Optimization dan Debugging}
-\begin{itemize}
-\item Profiling tools (Unity Profiler, Frame Debugger)
-\item Performance bottlenecks (CPU, GPU, memory)
-\item Optimization techniques:
-\begin{itemize}
-\item Object pooling
-\item LOD (Level of Detail)
-\item Occlusion culling
-\item Texture compression
-\item Code optimization
-\end{itemize}
-\item Debugging tools dan techniques
-\item Logging dan error handling
-\end{itemize}
-
-\subsection{Build dan Deployment}
-\begin{itemize}
-\item Build settings dan platform selection
-\item Platform-specific settings (PC, Android, iOS, WebGL)
-\item Asset optimization untuk target platform
-\item Build process dan troubleshooting
-\item Testing pada target platform
-\item Distribution channels (itch.io, Google Play, App Store, Steam)
-\item Version control dengan Git untuk game projects
-\end{itemize}
-
-\section{Rencana Pembelajaran Semester (RPS)}
-
-\begin{longtable}{|p{0.8cm}|p{3.5cm}|p{4cm}|p{4cm}|p{2.5cm}|}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{5.5cm}|c|}
 \hline
-\textbf{No} & \textbf{Tujuan Pembelajaran} & \textbf{Materi Pembelajaran} & \textbf{Aktivitas Praktik} & \textbf{Evaluasi} \\
+\textbf{Komponen} & \textbf{Teknik Asesmen} & \textbf{Indikator/CPMK} & \textbf{Bobot (\%)} \\
 \hline
 \endfirsthead
-
 \hline
-\textbf{No} & \textbf{Tujuan Pembelajaran} & \textbf{Materi Pembelajaran} & \textbf{Aktivitas Praktik} & \textbf{Evaluasi} \\
+\textbf{Komponen} & \textbf{Teknik Asesmen} & \textbf{Indikator/CPMK} & \textbf{Bobot (\%)} \\
 \hline
 \endhead
-
 \hline
 \endfoot
 
+Tugas Praktikum & Lab Exercise (8 tugas) & Sub-CPMK 2.1--11.2 & 25 \\
 \hline
-\endlastfoot
-
-1 & Mahasiswa mampu menjelaskan konsep dasar game development, genre game, dan workflow pengembangan game menggunakan Unity. & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Konsep dasar game dan elemen-elemen game
-\item Genre game dan karakteristiknya
-\item Lifecycle pengembangan game
-\item Pengenalan Unity Engine dan keunggulannya
-\item Instalasi Unity Hub dan Unity Editor
-\end{itemize} & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Diskusi tentang game favorit dan analisis elemen-elemennya
-\item Instalasi Unity Hub dan Unity Editor
-\item Eksplorasi Unity Editor interface
-\item Membuat project Unity pertama
-\end{itemize} & 
-Kuis: Konsep dasar game development \\
+Kuis & Multiple Choice \& Essay (2 kuis) & Sub-CPMK 1.1, 1.2, 2.1 & 10 \\
 \hline
-
-2 & Mahasiswa mampu mengoperasikan Unity Editor dengan mahir dan memahami struktur project Unity. & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Unity Editor interface detail (Scene, Game, Hierarchy, Inspector, Project, Console)
-\item Workflow pengembangan game di Unity
-\item Membuat dan mengelola Scene
-\item Unity Asset Store dan package management
-\end{itemize} & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Praktik navigasi Unity Editor
-\item Membuat Scene baru dengan berbagai objek dasar
-\item Import asset dari Asset Store
-\item Setup project structure yang rapi
-\end{itemize} & 
-Tugas: Setup project Unity dengan struktur folder yang baik \\
+UTS & Written Exam \& Demo & CPMK-1 s.d. CPMK-7 & 20 \\
 \hline
-
-3 & Mahasiswa mampu membuat skrip C\# dasar untuk Unity dan memahami lifecycle MonoBehaviour. & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Struktur skrip C\# di Unity (MonoBehaviour)
-\item Fungsi \texttt{Start()}, \texttt{Update()}, \texttt{Awake()}, \texttt{OnEnable()}
-\item Variabel dan tipe data dasar
-\item Debug.Log untuk debugging
-\end{itemize} & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Membuat skrip C\# pertama di Unity
-\item Praktik penggunaan fungsi lifecycle
-\item Manipulasi variabel dan output ke Console
-\item Latihan membuat skrip sederhana (rotasi objek)
-\end{itemize} & 
-Tugas: Membuat skrip rotasi dan pergerakan objek sederhana \\
+Proyek Akhir & Application Development & CPMK-1 s.d. CPMK-13 & 30 \\
 \hline
-
-4 & Mahasiswa mampu menguasai konsep GameObject, Component, Transform, dan Prefab. & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Konsep GameObject dan Hierarchy
-\item Transform component (position, rotation, scale)
-\item Komponen-komponen Unity dasar
-\item Prefab dan instantiation
-\item Tag dan Layer
-\end{itemize} & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Praktik manipulasi Transform melalui Inspector dan script
-\item Membuat Prefab dari GameObject
-\item Instantiate Prefab melalui script
-\item Latihan membuat scene dengan berbagai objek dan prefab
-\end{itemize} & 
-Tugas: Membuat scene dengan prefab system \\
+UAS & Presentasi \& Demo Gameplay & CPMK-1 s.d. CPMK-13 & 15 \\
 \hline
-
-5 & Mahasiswa mampu mengimplementasikan sistem input dan kontrol pemain dasar. & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Unity Input System (legacy dan new)
-\item Keyboard dan mouse input
-\item Player movement 2D dan 3D
-\item Camera control dasar
-\end{itemize} & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Implementasi player movement dengan keyboard
-\item Membuat karakter yang dapat bergerak (WASD/Arrow keys)
-\item Setup camera follow untuk karakter
-\item Latihan membuat kontrol pemain yang responsif
-\end{itemize} & 
-Tugas: Game sederhana dengan player controller (contoh: menggerakkan kotak) \\
+\textbf{Total} & & & \textbf{100} \\
 \hline
-
-6 & Mahasiswa mampu mengaplikasikan sistem fisika Unity untuk simulasi gerak dan tumbukan. & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Rigidbody component dan propertinya
-\item Collider types dan collision detection
-\item Physics Material
-\item OnCollisionEnter dan OnTriggerEnter
-\end{itemize} & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Setup Rigidbody dan Collider pada objek
-\item Membuat simulasi fisika (jatuh, tumbukan)
-\item Implementasi trigger untuk collectibles
-\item Latihan membuat game dengan mekanik fisika (contoh: platformer sederhana)
-\end{itemize} & 
-Tugas: Game dengan sistem fisika (contoh: platformer atau puzzle game sederhana) \\
-\hline
-
-7 & Mahasiswa mampu membuat animasi karakter menggunakan Animator Controller. & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Konsep animasi dalam game
-\item Animator Controller dan state machine
-\item Animation states dan transitions
-\item Parameters (float, int, bool, trigger)
-\end{itemize} & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Membuat Animator Controller
-\item Setup animation states (idle, walk, jump)
-\item Membuat transitions antar states
-\item Kontrol animasi melalui script
-\end{itemize} & 
-Tugas: Karakter dengan animasi dasar (idle, walk, jump) \\
-\hline
-
-8 & \textbf{UTS - Ujian Tengah Semester} & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Review materi pertemuan 1-7
-\item Konsep game development
-\item Unity Editor dan workflow
-\item Pemrograman C\# untuk Unity
-\item GameObject, Component, Prefab
-\item Input System dan Player Controller
-\item Physics dan Collision
-\item Animation dasar
-\end{itemize} & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Ujian teori (pilihan ganda dan esai)
-\item Presentasi progress proyek game individu
-\item Demo game sederhana yang telah dibuat
-\end{itemize} & 
-UTS: Ujian teori dan presentasi proyek \\
-\hline
-
-9 & Mahasiswa mampu merancang dan mengimplementasikan UI/UX game yang efektif. & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Canvas dan Canvas Scaler
-\item UI Components (Button, Text, Image, Slider)
-\item Event System dan UI events
-\item HUD design (health bar, score display)
-\item Menu system (Main menu, Pause menu)
-\end{itemize} & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Membuat Canvas dan setup UI
-\item Implementasi HUD (score, health bar)
-\item Membuat Main Menu dengan navigasi
-\item Implementasi Pause Menu
-\item Latihan membuat UI yang responsif
-\end{itemize} & 
-Tugas: Game dengan UI lengkap (HUD + Menu) \\
-\hline
-
-10 & Mahasiswa mampu mengintegrasikan audio dalam game untuk meningkatkan immersi. & 
-\begin{itemize}[leftmargin=*,nosep]
-\item AudioSource dan AudioListener
-\item Sound effect vs background music
-\item 2D vs 3D audio
-\item Audio Mixer dasar
-\item Dynamic audio control
-\end{itemize} & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Import audio assets
-\item Setup AudioSource untuk sound effect
-\item Implementasi background music
-\item Kontrol volume melalui UI
-\item Latihan membuat audio yang sesuai dengan gameplay
-\end{itemize} & 
-Tugas: Menambahkan audio (SFX + BGM) ke game \\
-\hline
-
-11 & Mahasiswa mampu merancang level design dan game mechanics yang menarik. & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Prinsip level design (flow, pacing, challenge)
-\item Game state management
-\item Win/lose conditions
-\item Spawn system dan object pooling
-\item Collectibles dan power-ups
-\end{itemize} & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Merancang level dengan prinsip level design
-\item Implementasi game state (playing, paused, game over)
-\item Membuat sistem spawn untuk enemies/objects
-\item Implementasi collectibles dan scoring
-\item Latihan membuat level yang seimbang dan menarik
-\end{itemize} & 
-Tugas: Level design dengan mechanics lengkap \\
-\hline
-
-12 & Mahasiswa mampu mengimplementasikan AI sederhana untuk NPC menggunakan teknik dasar. & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Konsep AI dalam game
-\item NPC behavior patterns (patrol, chase, attack)
-\item NavMesh dan pathfinding
-\item State Machine untuk AI
-\item Line of sight detection
-\end{itemize} & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Setup NavMesh untuk pathfinding
-\item Membuat NPC dengan behavior patrol
-\item Implementasi chase behavior untuk enemy
-\item State Machine untuk AI (idle, patrol, chase, attack)
-\item Latihan membuat AI yang menantang namun fair
-\end{itemize} & 
-Tugas: Game dengan AI enemy (patrol + chase) \\
-\hline
-
-13 & Mahasiswa mampu menganalisis dan mengoptimalkan performa game. & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Unity Profiler dan Frame Debugger
-\item Performance bottlenecks (CPU, GPU, memory)
-\item Optimization techniques (object pooling, LOD, occlusion culling)
-\item Debugging tools dan techniques
-\end{itemize} & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Menggunakan Profiler untuk analisis performa
-\item Implementasi object pooling
-\item Optimasi texture dan model
-\item Debugging game yang sudah dibuat
-\item Latihan mengoptimalkan game untuk performa lebih baik
-\end{itemize} & 
-Tugas: Optimasi game yang telah dibuat \\
-\hline
-
-14 & Mahasiswa mampu membangun dan mendeploy game ke berbagai platform. & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Build settings dan platform selection
-\item Platform-specific settings (PC, Android, WebGL)
-\item Asset optimization untuk target platform
-\item Build process dan troubleshooting
-\item Distribution channels
-\end{itemize} & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Setup build settings untuk PC
-\item Build game untuk WebGL
-\item Setup build untuk Android (jika memungkinkan)
-\item Testing build pada target platform
-\item Upload ke platform distribusi (itch.io)
-\end{itemize} & 
-Tugas: Build dan deploy game ke platform \\
-\hline
-
-15 & Mahasiswa mampu mengembangkan proyek game utuh dengan menerapkan semua aspek pembelajaran. & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Review semua materi pembelajaran
-\item Best practices game development
-\item Project management untuk game development
-\item Version control dengan Git
-\item Testing dan quality assurance
-\end{itemize} & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Finalisasi proyek game akhir
-\item Implementasi fitur-fitur yang belum ada
-\item Testing menyeluruh
-\item Dokumentasi proyek
-\item Persiapan presentasi final
-\end{itemize} & 
-Progress check: Review proyek akhir \\
-\hline
-
-16 & \textbf{UAS - Ujian Akhir Semester} & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Presentasi proyek game akhir
-\item Demo game yang telah dikembangkan
-\item Q\&A tentang implementasi dan konsep
-\item Refleksi pembelajaran
-\end{itemize} & 
-\begin{itemize}[leftmargin=*,nosep]
-\item Presentasi proyek game akhir (15-20 menit)
-\item Demo gameplay
-\item Penjelasan implementasi teknis
-\item Diskusi dan evaluasi
-\end{itemize} & 
-UAS: Presentasi dan demo proyek akhir \\
-\hline
-
 \end{longtable}
 
-\section{Metode Pembelajaran}
+\textbf{Kriteria Penilaian:}
+\begin{itemize}[leftmargin=*]
+  \item A (85-100): Menguasai semua CPMK dengan sangat baik, mampu menerapkan dalam kasus kompleks
+  \item B (70-84): Menguasai sebagian besar CPMK dengan baik
+  \item C (60-69): Menguasai CPMK dasar dengan cukup
+  \item D (50-59): Menguasai sebagian kecil CPMK
+  \item E (<50): Belum menguasai CPMK yang ditetapkan
+\end{itemize}
 
-Mata kuliah ini menggunakan pendekatan pembelajaran yang berorientasi pada praktik dengan metode sebagai berikut:
+\vspace{0.5cm}
 
-\subsection{Praktikum}
-Setiap pertemuan mencakup sesi praktikum langsung menggunakan Unity Editor dan Visual Studio/Visual Studio Code. Mahasiswa akan melakukan hands-on practice dengan bimbingan dosen untuk menguasai tools dan teknik pengembangan game.
+% ============================================================
+% 9. EVALUASI DAN REFLEKSI PEMBELAJARAN (OPSIONAL)
+% ============================================================
+\section*{9. Evaluasi dan Refleksi Pembelajaran}
 
-\subsection{Project-Based Learning (PBL)}
-Mahasiswa akan mengembangkan proyek game secara bertahap mulai dari pertemuan pertama hingga akhir semester. Proyek ini akan berkembang seiring dengan materi yang dipelajari, sehingga mahasiswa dapat langsung menerapkan konsep yang dipelajari ke dalam proyek nyata.
+Penilaian sumatif/formatif untuk memantau ketercapaian outcome secara menyeluruh:
 
-\subsection{Problem-Based Learning}
-Mahasiswa diberikan studi kasus dan permasalahan nyata dalam pengembangan game, kemudian diminta untuk menganalisis dan mencari solusi menggunakan tools dan teknik yang telah dipelajari.
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Evaluasi Formatif:} Kuis dan tugas praktikum untuk memberikan feedback berkelanjutan terhadap pencapaian Sub-CPMK
+  \item \textbf{Evaluasi Sumatif:} UTS dan UAS untuk mengukur pencapaian CPMK secara komprehensif
+  \item \textbf{Refleksi Mahasiswa:} Self-assessment menggunakan checklist kompetensi di buku ajar untuk refleksi diri terhadap pemahaman materi
+  \item \textbf{Evaluasi Dosen:} Survey kepuasan mahasiswa di tengah dan akhir semester
+  \item \textbf{Continuous Improvement:} Analisis hasil penilaian untuk perbaikan RPS di semester berikutnya
+\end{itemize}
 
-\subsection{Studi Kasus}
-Analisis game-game populer dan mekaniknya untuk memahami implementasi konsep-konsep game development dalam produk komersial.
+\vspace{0.5cm}
 
-\subsection{Presentasi dan Diskusi}
-Mahasiswa mempresentasikan progress proyek mereka secara berkala dan berdiskusi tentang tantangan serta solusi yang ditemukan dalam proses pengembangan.
+% ============================================================
+% 10. DAFTAR REFERENSI
+% ============================================================
+\section*{10. Daftar Referensi}
 
-\subsection{Peer Review}
-Mahasiswa saling memberikan feedback terhadap proyek teman sekelas untuk meningkatkan kualitas dan pembelajaran kolaboratif.
+Sumber belajar utama yang digunakan dalam penyusunan materi dan asesmen:
 
-\section{Evaluasi dan Penilaian}
-
-\subsection{Bobot Penilaian}
-
-\begin{table}[h]
-\centering
-\caption{Distribusi Bobot Penilaian}
-\label{tab:bobot_penilaian}
-\begin{tabular}{|l|c|}
-\hline
-\textbf{Komponen Penilaian} & \textbf{Bobot (\%)} \\
-\hline
-Tugas Praktikum (8 tugas) & 25\% \\
-Kuis (2 kuis) & 10\% \\
-UTS (Ujian Tengah Semester) & 20\% \\
-Proyek Akhir & 30\% \\
-UAS (Ujian Akhir Semester) & 15\% \\
-\hline
-\textbf{Total} & \textbf{100\%} \\
-\hline
-\end{tabular}
-\end{table}
-
-\subsection{Rubrik Penilaian Berbasis OBE}
-
-\subsubsection{Rubrik Penilaian Tugas Praktikum}
-
-\begin{table}[h]
-\centering
-\caption{Rubrik Penilaian Tugas Praktikum}
-\label{tab:rubrik_tugas}
-\small
-\begin{tabular}{|p{2cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
-\hline
-\textbf{Kriteria} & \textbf{Sangat Baik (85-100)} & \textbf{Baik (70-84)} & \textbf{Cukup (60-69)} \\
-\hline
-\textbf{Fungsionalitas} & Semua fitur berfungsi dengan sempurna, tidak ada bug yang mengganggu gameplay & Sebagian besar fitur berfungsi, ada beberapa bug minor & Fitur dasar berfungsi, namun ada bug yang mempengaruhi gameplay \\
-\hline
-\textbf{Implementasi Teknis} & Kode rapi, terstruktur, menggunakan best practices, komentar jelas & Kode cukup rapi, struktur baik, beberapa best practices diterapkan & Kode berfungsi namun kurang rapi, struktur perlu perbaikan \\
-\hline
-\textbf{Kreativitas} & Implementasi kreatif dan inovatif, menambahkan fitur tambahan yang relevan & Implementasi standar dengan beberapa variasi kreatif & Implementasi sesuai instruksi tanpa variasi \\
-\hline
-\textbf{Ketepatan Waktu} & Dikumpulkan tepat waktu atau lebih awal & Dikumpulkan dengan keterlambatan maksimal 1 hari & Dikumpulkan dengan keterlambatan lebih dari 1 hari \\
-\hline
-\end{tabular}
-\end{table}
-
-\subsubsection{Rubrik Penilaian Proyek Akhir}
-
-\begin{table}[h]
-\centering
-\caption{Rubrik Penilaian Proyek Akhir}
-\label{tab:rubrik_proyek}
-\small
-\begin{tabular}{|p{2cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
-\hline
-\textbf{Kriteria} & \textbf{Sangat Baik (85-100)} & \textbf{Baik (70-84)} & \textbf{Cukup (60-69)} \\
-\hline
-\textbf{Kompleksitas dan Scope} & Game lengkap dengan multiple levels, berbagai mechanics, dan fitur advanced & Game cukup lengkap dengan beberapa levels dan mechanics yang bervariasi & Game dasar dengan 1-2 levels dan mechanics sederhana \\
-\hline
-\textbf{Fungsionalitas} & Semua sistem berfungsi sempurna, gameplay smooth, tidak ada bug kritis & Sebagian besar sistem berfungsi, ada beberapa bug minor & Fitur dasar berfungsi, namun ada bug yang mempengaruhi experience \\
-\hline
-\textbf{Desain dan UX} & UI/UX sangat menarik dan intuitif, visual polish tinggi, audio terintegrasi dengan baik & UI/UX baik dan fungsional, visual cukup menarik, audio ada namun kurang optimal & UI/UX dasar, visual sederhana, audio minimal atau tidak ada \\
-\hline
-\textbf{Kualitas Kode} & Kode sangat rapi, terstruktur dengan baik, menggunakan design patterns, dokumentasi lengkap & Kode rapi dan terstruktur, beberapa design patterns digunakan, dokumentasi ada & Kode berfungsi namun perlu refactoring, dokumentasi minimal \\
-\hline
-\textbf{Presentasi} & Presentasi sangat jelas, menjelaskan semua aspek dengan detail, demo smooth & Presentasi jelas, menjelaskan aspek utama, demo berjalan dengan baik & Presentasi cukup, beberapa aspek kurang jelas, demo ada beberapa masalah \\
-\hline
-\textbf{Inovasi dan Kreativitas} & Game sangat kreatif dengan konsep unik, inovasi dalam mechanics atau implementasi & Game kreatif dengan beberapa elemen unik & Game mengikuti konsep umum tanpa banyak inovasi \\
-\hline
-\end{tabular}
-\end{table}
-
-\subsubsection{Rubrik Penilaian Ujian (UTS/UAS)}
-
-\begin{table}[h]
-\centering
-\caption{Rubrik Penilaian Ujian Teori}
-\label{tab:rubrik_ujian}
-\small
-\begin{tabular}{|p{2cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
-\hline
-\textbf{Kriteria} & \textbf{Sangat Baik (85-100)} & \textbf{Baik (70-84)} & \textbf{Cukup (60-69)} \\
-\hline
-\textbf{Pemahaman Konsep} & Menjawab dengan akurat, menunjukkan pemahaman mendalam, memberikan contoh yang relevan & Menjawab dengan benar, menunjukkan pemahaman baik, memberikan beberapa contoh & Menjawab sebagian benar, pemahaman dasar ada namun kurang mendalam \\
-\hline
-\textbf{Aplikasi Praktis} & Mampu mengaplikasikan konsep ke situasi nyata dengan solusi yang tepat dan kreatif & Mampu mengaplikasikan konsep dengan solusi yang tepat & Mampu mengaplikasikan konsep dasar namun solusi kurang optimal \\
-\hline
-\textbf{Analisis dan Evaluasi} & Analisis mendalam, evaluasi kritis, memberikan insight yang berharga & Analisis cukup baik, evaluasi ada namun kurang mendalam & Analisis dasar, evaluasi minimal \\
-\hline
-\end{tabular}
-\end{table}
-
-\subsection{Strategi Penilaian OBE}
-
-Penilaian dalam mata kuliah ini mengikuti prinsip Outcome-Based Education dengan fokus pada:
-
-\begin{enumerate}
-\item \textbf{Authentic Assessment}: Penilaian dilakukan melalui proyek nyata pengembangan game yang mencerminkan kompetensi yang diharapkan.
-
-\item \textbf{Continuous Assessment}: Penilaian dilakukan secara berkelanjutan melalui tugas praktikum, bukan hanya pada ujian akhir.
-
-\item \textbf{Multiple Assessment Methods}: Menggunakan berbagai metode penilaian (tugas praktik, proyek, ujian teori, presentasi) untuk menilai berbagai aspek kompetensi.
-
-\item \textbf{Competency-Based}: Penilaian berdasarkan pencapaian kompetensi (CPMK) yang telah ditetapkan, bukan hanya berdasarkan nilai akhir.
-
-\item \textbf{Feedback-Oriented}: Setiap penilaian disertai dengan feedback konstruktif untuk membantu mahasiswa meningkatkan kompetensinya.
+\begin{enumerate}[leftmargin=*]
+  \item Unity Technologies. (2024). \textit{Unity User Manual}. \url{https://docs.unity3d.com/Manual/}
+  
+  \item Unity Technologies. (2024). \textit{Unity Scripting API}. \url{https://docs.unity3d.com/ScriptReference/}
+  
+  \item Microsoft. (2024). \textit{C\# Documentation}. \url{https://learn.microsoft.com/dotnet/csharp/}
+  
+  \item Schell, J. (2019). \textit{The Art of Game Design: A Book of Lenses} (3rd ed.). CRC Press.
+  
+  \item Nystrom, R. (2014). \textit{Game Programming Patterns}. \url{https://gameprogrammingpatterns.com/}
+  
+  \item Gregory, J. (2018). \textit{Game Engine Architecture} (3rd ed.). CRC Press.
+  
+  \item Salen, K., \& Zimmerman, E. (2004). \textit{Rules of Play: Game Design Fundamentals}. MIT Press.
+  
+  \item Hunicke, R., LeBlanc, M., \& Zubek, R. (2004). MDA: A Formal Approach to Game Design and Game Research. \textit{AAAI Workshop on Challenges in Game AI}.
+  
+  \item Hocking, J. (2018). \textit{Unity in Action: Multiplatform Game Development in C\#} (2nd ed.). Manning Publications.
+  
+  \item Gibson, J. (2014). \textit{Introduction to Game Design, Prototyping, and Development with Unity and C\#}. Addison-Wesley.
 \end{enumerate}
 
-\section{Media dan Perangkat Pembelajaran}
+\vspace{1cm}
 
-\subsection{Perangkat Lunak}
-\begin{itemize}
-\item \textbf{Unity Hub}: Untuk manajemen instalasi Unity dan project
-\item \textbf{Unity Editor} (versi LTS terbaru): Game engine utama
-\item \textbf{Visual Studio} atau \textbf{Visual Studio Code}: IDE untuk pemrograman C\#
-\item \textbf{Git}: Version control system
-\item \textbf{Unity Asset Store}: Sumber asset gratis dan berbayar
-\item \textbf{Audacity} atau \textbf{Adobe Audition}: Editor audio (opsional)
-\item \textbf{GIMP} atau \textbf{Photoshop}: Editor gambar (opsional)
-\end{itemize}
-
-\subsection{Perangkat Keras}
-\begin{itemize}
-\item Komputer/laptop dengan spesifikasi minimal:
-\begin{itemize}
-\item Processor: Intel Core i5 atau AMD equivalent
-\item RAM: 8 GB (16 GB direkomendasikan)
-\item Graphics Card: DirectX 11 compatible
-\item Storage: 20 GB free space untuk Unity dan project
-\end{itemize}
-\item Mouse dengan scroll wheel (penting untuk navigasi Unity Editor)
-\item Headphone/speaker untuk audio development
-\end{itemize}
-
-\subsection{Sumber Belajar Online}
-\begin{itemize}
-\item \textbf{Unity Learn}: Platform pembelajaran resmi Unity (https://learn.unity.com/)
-\item \textbf{Unity Documentation}: Dokumentasi resmi Unity (https://docs.unity3d.com/)
-\item \textbf{Brackeys YouTube Channel}: Tutorial Unity populer
-\item \textbf{Code Monkey YouTube Channel}: Tutorial Unity advanced
-\item \textbf{Unity Forum}: Komunitas dan diskusi (https://forum.unity.com/)
-\item \textbf{Stack Overflow}: Q\&A untuk troubleshooting
-\end{itemize}
-
-\subsection{Asset dan Resources}
-\begin{itemize}
-\item Unity Asset Store (free assets)
-\item Kenney.nl (free game assets)
-\item OpenGameArt.org (free game assets)
-\item Freesound.org (free audio assets)
-\item Unity Learn Project Files
-\end{itemize}
-
-\section{Referensi}
-
-\subsection{Referensi Utama}
-
-\begin{enumerate}
-\item Unity Technologies. (2024). \textit{Unity User Manual}. Unity Documentation. https://docs.unity3d.com/Manual/index.html
-
-\item Unity Technologies. (2024). \textit{Unity Scripting API}. Unity Documentation. https://docs.unity3d.com/ScriptReference/index.html
-
-\item Microsoft. (2024). \textit{C\# Documentation}. Microsoft Learn. https://learn.microsoft.com/en-us/dotnet/csharp/
-
-\item Schell, J. (2019). \textit{The Art of Game Design: A Book of Lenses} (3rd ed.). CRC Press.
-
-\item Nystrom, R. (2014). \textit{Game Programming Patterns}. Genever Benning. https://gameprogrammingpatterns.com/
-
-\item Gregory, J. (2018). \textit{Game Engine Architecture} (3rd ed.). CRC Press.
-
-\item Salen, K., \& Zimmerman, E. (2004). \textit{Rules of Play: Game Design Fundamentals}. MIT Press.
-\end{enumerate}
-
-\subsection{Referensi Pendukung}
-
-\begin{enumerate}
-\item Unity Learn. (2024). \textit{Unity Learn Platform}. https://learn.unity.com/
-
-\item Brackeys. (2024). \textit{Unity Tutorials}. YouTube Channel. https://www.youtube.com/c/Brackeys
-
-\item Code Monkey. (2024). \textit{Unity Tutorials}. YouTube Channel. https://www.youtube.com/c/CodeMonkeyUnity
-
-\item GameDev.tv. (2024). \textit{Complete C\# Unity Game Developer 3D}. Udemy Course.
-
-\item Fogue, M. (2023). \textit{Unity Game Development Cookbook}. O'Reilly Media.
-
-\item Hocking, J. (2018). \textit{Unity in Action: Multiplatform Game Development in C\#} (2nd ed.). Manning Publications.
-
-\item Thorn, A. (2017). \textit{Learn to Code by Making Games: The Complete Unity Developer}. Udemy Course.
-
-\item Gibson, J. (2014). \textit{Introduction to Game Design, Prototyping, and Development: From Concept to Playable Game with Unity and C\#}. Addison-Wesley Professional.
-
-\item Blackman, S. (2013). \textit{Beginning 3D Game Development with Unity 4: All-in-One, Multi-Platform Game Development}. Apress.
-
-\item Smith, M. (2020). \textit{Unity Game Development in 24 Hours}. Sams Publishing.
-\end{enumerate}
-
-\subsection{Referensi Online dan Komunitas}
-
-\begin{itemize}
-\item Unity Forum: https://forum.unity.com/
-\item Unity Answers: https://answers.unity.com/
-\item Stack Overflow (Unity tag): https://stackoverflow.com/questions/tagged/unity3d
-\item Reddit r/Unity3D: https://www.reddit.com/r/Unity3D/
-\item Unity Discord Server
-\item GameDev.net: https://www.gamedev.net/
-\end{itemize}
-
-\vspace{2cm}
-
-\begin{center}
-\textit{Dokumen ini disusun berdasarkan kurikulum Outcome-Based Education (OBE) dan akan direview secara berkala untuk memastikan relevansi dengan kebutuhan industri dan perkembangan teknologi game development.}
-\end{center}
+\begin{flushright}
+\begin{tabular}{c}
+Disusun oleh,\\[2cm]
+\textbf{[Nama Dosen]}\\
+NIP. [NIP]
+\end{tabular}
+\end{flushright}
 
 \end{document}

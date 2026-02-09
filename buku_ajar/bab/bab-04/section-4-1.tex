@@ -1,73 +1,52 @@
-\section{Konsep Encapsulation dan Access Modifier}
-\begin{subcpmk}
-  \item Sub-CPMK 1.3: Mendemonstrasikan konsep encapsulation dengan access modifier
-\end{subcpmk}
+\section{MonoBehaviour dan Lifecycle Functions}
 
-\begin{konsep}
-\textbf{Encapsulation} adalah prinsip OOP yang menggabungkan data (attributes) dan perilaku (methods) dalam satu class, sekaligus menyembunyikan detail internal dari akses langsung luar \cite{ref2}. Tujuannya adalah menjaga \textit{class invariant} agar data selalu dalam kondisi valid.
-\end{konsep}
+\begin{learningoutcomes}
+\item Memahami konsep MonoBehaviour
+\item Mampu membuat skrip C\# pertama di Unity
+\item Memahami urutan eksekusi lifecycle functions
+\item Membedakan FixedUpdate() dan Update()
+\end{learningoutcomes}
 
-Dengan encapsulation, kita dapat:
-\begin{itemize}
-  \item Melindungi data dari perubahan yang tidak sah
-  \item Mengontrol akses melalui method publik
-  \item Memudahkan perawatan dan perubahan implementasi internal
-\end{itemize}
+\subsection{Pengertian MonoBehaviour}
 
-\subsection{Access Modifier di Java}
+\begin{definisi}[MonoBehaviour]
+MonoBehaviour adalah kelas dasar untuk skrip Unity yang memungkinkannya melekat pada GameObject dan berinteraksi dengan Unity Engine \cite{UnityScriptingAPI2024}.
+\end{definisi}
 
-Java menyediakan access modifier untuk mengatur visibilitas anggota class:
+\subsection{Struktur Dasar Skrip Unity}
 
-\begin{table}[h]
-\centering
-\begin{tabular}{|p{3cm}|p{4cm}|p{6cm}|}
-\hline
-\textbf{Modifier} & \textbf{Akses} & \textbf{Keterangan} \\
-\hline
-public & Semua class & Dapat diakses dari mana saja \\
-\hline
-protected & Package + subclass & Dapat diakses dari package yang sama dan subclass \\
-\hline
-(default) & Package & Tanpa keyword, hanya dalam package yang sama \\
-\hline
-private & Class sendiri & Hanya dapat diakses di dalam class \\
-\hline
-\end{tabular}
-\caption{Access Modifier di Java}
-\end{table}
+\begin{lstlisting}[language={[Sharp]C}, caption=Contoh Skrip Unity Dasar]
+using UnityEngine;
 
-\subsection{Contoh Encapsulation Sederhana}
-
-\begin{javacode}[caption={Encapsulation pada class RekeningBank}]
-public class RekeningBank {
-    private String nomorRekening;
-    private String namaPemilik;
-    private double saldo;
-
-    public RekeningBank(String nomorRekening, String namaPemilik) {
-        this.nomorRekening = nomorRekening;
-        this.namaPemilik = namaPemilik;
-        this.saldo = 0.0;
+public class PlayerController : MonoBehaviour
+{
+    public float speed = 5f;
+    
+    void Start()
+    {
+        Debug.Log("Player Controller Started");
     }
-
-    public void setor(double jumlah) {
-        if (jumlah <= 0) {
-            throw new IllegalArgumentException("Jumlah harus positif");
-        }
-        saldo += jumlah;
-    }
-
-    public void tarik(double jumlah) {
-        if (jumlah <= 0 || jumlah > saldo) {
-            throw new IllegalArgumentException("Saldo tidak mencukupi");
-        }
-        saldo -= jumlah;
-    }
-
-    public double getSaldo() {
-        return saldo;
+    
+    void Update()
+    {
+        // Code yang dijalankan setiap frame
     }
 }
-\end{javacode}
+\end{lstlisting}
 
-Contoh di atas menunjukkan bahwa \code{saldo} hanya dapat diubah melalui method \method{setor} dan \method{tarik}, sehingga aturan bisnis dapat dijaga dengan konsisten.
+\subsection{Urutan Lifecycle Functions}
+
+\begin{enumerate}
+\item \textbf{Awake()}: Dipanggil sekali saat object dibuat, sebelum Start()
+\item \textbf{OnEnable()}: Dipanggil setiap kali object diaktifkan
+\item \textbf{Start()}: Dipanggil sekali sebelum frame pertama Update()
+\item \textbf{Update()}: Dipanggil setiap frame (logika game)
+\item \textbf{FixedUpdate()}: Dipanggil pada fixed timestep (fisika)
+\item \textbf{LateUpdate()}: Dipanggil setelah semua Update() selesai (kamera)
+\item \textbf{OnDisable()}: Dipanggil saat object dinonaktifkan
+\item \textbf{OnDestroy()}: Dipanggil saat object dihancurkan
+\end{enumerate}
+
+\begin{catatan}
+Gunakan Awake() untuk inisialisasi yang tidak bergantung pada GameObject lain. Gunakan Start() untuk inisialisasi yang memerlukan GameObject lain sudah siap. FixedUpdate() untuk physics, Update() untuk input dan logika game.
+\end{catatan}

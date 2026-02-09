@@ -1,32 +1,59 @@
-\section{Keuntungan dan Tantangan OOP}
+\section{Lifecycle Pengembangan Game}
 
-\subsection{Keuntungan OOP}
+\begin{learningoutcomes}
+\item Memahami fase-fase dalam lifecycle pengembangan game
+\item Mengetahui aktivitas utama setiap fase
+\item Memahami pentingnya planning dan documentation
+\item Mampu mengidentifikasi milestone dalam development
+\end{learningoutcomes}
 
+\subsection{Pengertian Lifecycle Pengembangan Game}
+
+\begin{definisi}[Game Development Lifecycle]
+Lifecycle pengembangan game adalah proses sistematis dari konsep awal hingga rilis dan maintenance game, yang terdiri dari beberapa fase utama \cite{Gregory2018}.
+\end{definisi}
+
+\subsection{Fase-Fase Pengembangan Game}
+
+\subsubsection{1. Pre-Production}
+
+\textbf{Tujuan}: Membangun fondasi dan visi game
+
+\textbf{Aktivitas Utama}: Brainstorming konsep, market research, prototyping core mechanics, menyusun GDD, budgeting dan resource planning, team assembly.
+
+\textbf{Output}: GDD lengkap, prototype yang dapat dimainkan, art bible dan style guide, technical design document, project plan dan timeline.
+
+\subsubsection{2. Production}
+
+\textbf{Tujuan}: Membangun konten dan fitur game
+
+\textbf{Aktivitas Utama}: Asset creation (art, audio, models), programming dan implementation, level design, integration dan testing, iterasi berdasarkan feedback.
+
+\textbf{Fase dalam Production}:
 \begin{enumerate}
-  \item \textbf{Modularitas}: Kode terorganisir dalam class-class yang independen
-  \item \textbf{Reusability}: Code reuse melalui inheritance dan composition
-  \item \textbf{Maintainability}: Lebih mudah menemukan dan memperbaiki bug
-  \item \textbf{Scalability}: Mudah menambah fitur baru tanpa mengubah kode existing
-  \item \textbf{Real-world Modeling}: Lebih natural dalam memodelkan dunia nyata
-  \item \textbf{Data Security}: Enkapsulasi melindungi data
-  \item \textbf{Collaboration}: Tim dapat bekerja pada class yang berbeda secara paralel
+\item \textbf{Alpha}: Core features implemented, masih banyak bug
+\item \textbf{Beta}: Feature-complete, focus pada bug fixing dan polish
+\item \textbf{Gold Master}: Final version siap untuk rilis
 \end{enumerate}
 
-\subsection{Tantangan OOP}
+\subsubsection{3. Post-Production}
 
-\begin{enumerate}
-  \item \textbf{Learning Curve}: Membutuhkan pemahaman konsep yang lebih dalam
-  \item \textbf{Overhead}: Bisa lebih lambat untuk program sederhana
-  \item \textbf{Complexity}: Bisa menjadi terlalu kompleks jika tidak dirancang dengan baik
-  \item \textbf{Design Effort}: Membutuhkan perencanaan dan desain yang matang
-\end{enumerate}
+\textbf{Tujuan}: Rilis, marketing, dan maintenance
 
-\begin{catatan}
-OOP bukan solusi untuk semua masalah. Untuk program sederhana atau script kecil, pendekatan prosedural mungkin lebih efisien. Gunakan OOP ketika:
-\begin{itemize}
-  \item Program cukup besar dan kompleks
-  \item Membutuhkan code reuse yang tinggi
-  \item Banyak developer bekerja pada proyek yang sama
-  \item Sistem perlu mudah di-maintain dan di-extend
-\end{itemize}
-\end{catatan}
+\textbf{Aktivitas Utama}: Final testing dan QA, marketing dan promotion, launch preparation, distribution, post-launch support, updates dan patches, DLC development.
+
+\subsection{Metodologi Pengembangan}
+
+\textbf{Waterfall}: Pendekatan linear dengan fase berurutan. Keuntungan: terstruktur. Kekurangan: kurang fleksibel.
+
+\textbf{Agile/Scrum}: Pendekatan iteratif dengan sprint pendek. Keuntungan: fleksibel, adaptif. Kekurangan: memerlukan komunikasi intensif.
+
+\textbf{Hybrid}: Kombinasi waterfall untuk planning dan agile untuk execution.
+
+\subsection{Milestone Penting}
+
+Concept Approval, Prototype Complete, Pre-Alpha, Alpha, Beta, Gold, Launch.
+
+\subsection{Best Practices}
+
+Start Small, Prototype Early, Iterate Often, Document Everything, Test Continuously.

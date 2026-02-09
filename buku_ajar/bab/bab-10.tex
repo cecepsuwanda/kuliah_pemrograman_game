@@ -1,12 +1,47 @@
-\documentclass[c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/main.tex]{subfiles}
+\documentclass[../main]{subfiles}
 \ifSubfilesClassLoaded{\setcounter{chapter}{9}}{}
 \begin{document}
-\chapter{Prinsip SOLID dalam Desain OOP}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-10/section-10-1}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-10/section-10-2}
+
+\chapter{Audio dalam Game}
+
+\begin{subcpmk}
+  \item Sub-CPMK 8.1: Menggunakan AudioSource dan AudioListener untuk memainkan SFX dan BGM
+  \item Sub-CPMK 8.2: Menggunakan Audio Mixer untuk kontrol volume
+\end{subcpmk}
+
+\input{bab-10/section-10-1}
+\input{bab-10/section-10-2}
+
+\begin{aktivitas}
+  \item Tambahkan SFX tembakan dan ledakan ke Space Survivor
+  \item Tambahkan BGM loop
+  \item Eksplorasi Audio Mixer
+\end{aktivitas}
+
+\begin{latihan}
+  \item Jelaskan perbedaan Audio Clip dan Audio Source!
+  \item Kapan menggunakan PlayOneShot vs Play?
+  \item Apa fungsi Audio Listener?
+\end{latihan}
+
+\begin{asesmen}
+\textbf{Praktik}: Implementasi audio lengkap (SFX, BGM).
+\textbf{Rubrik}: Lihat Lampiran A
+\end{asesmen}
+
+\begin{checklist}
+  \item Saya dapat menambahkan Audio Source
+  \item Saya dapat memainkan SFX dan BGM
+  \item Saya memahami Audio Mixer
+\end{checklist}
+
+\begin{rangkuman}
+Audio Clip = file. Audio Source = pemancar. Audio Listener = pendengar (Main Camera). PlayOneShot untuk SFX. Loop untuk BGM. Audio Mixer untuk kontrol volume.
+\end{rangkuman}
+
 \ifSubfilesClassLoaded{
   \renewcommand{\bibname}{Daftar Pustaka}
   \bibliographystyle{plain}
-  \bibliography{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/references}
+  \bibliography{../references}
 }{}
 \end{document}

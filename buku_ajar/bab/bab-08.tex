@@ -1,12 +1,47 @@
-\documentclass[c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/main.tex]{subfiles}
+\documentclass[../main]{subfiles}
 \ifSubfilesClassLoaded{\setcounter{chapter}{7}}{}
 \begin{document}
-\chapter{Perancangan dengan UML}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-08/section-8-1}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-08/section-8-2}
+
+\chapter{Animation dan Animator}
+
+\begin{subcpmk}
+  \item Sub-CPMK 6.1: Membuat Animator Controller dan mengatur state serta transition
+  \item Sub-CPMK 6.2: Menggunakan parameter (Trigger, Bool) dan kontrol animasi dari script
+\end{subcpmk}
+
+\input{bab-08/section-8-1}
+\input{bab-08/section-8-2}
+
+\begin{aktivitas}
+  \item Buat animasi explosion untuk asteroid
+  \item Implementasikan animasi di script saat collision
+  \item Eksplorasi Animator parameters dan transitions
+\end{aktivitas}
+
+\begin{latihan}
+  \item Jelaskan perbedaan Animator Controller dan Animation Clip!
+  \item Apa fungsi parameter Trigger di Animator?
+  \item Bagaimana memanggil animasi dari script?
+\end{latihan}
+
+\begin{asesmen}
+\textbf{Praktik}: Buat animasi explosion dan integrasikan ke Space Survivor.
+\textbf{Rubrik}: Lihat Lampiran A
+\end{asesmen}
+
+\begin{checklist}
+  \item Saya memahami Animator Controller
+  \item Saya dapat membuat Animation Clip
+  \item Saya dapat menggunakan Animator.SetTrigger
+\end{checklist}
+
+\begin{rangkuman}
+Animator Controller mengatur state machine animasi. Animation Clip berisi data gerakan. Gunakan Animator.SetTrigger untuk memicu transisi. Animation Event untuk callback saat frame tertentu.
+\end{rangkuman}
+
 \ifSubfilesClassLoaded{
   \renewcommand{\bibname}{Daftar Pustaka}
   \bibliographystyle{plain}
-  \bibliography{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/references}
+  \bibliography{../references}
 }{}
 \end{document}

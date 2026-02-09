@@ -1,56 +1,27 @@
-\section{Polymorphism dan Method Overloading}
-\begin{subcpmk}
-  \item Sub-CPMK 3.2: Menerapkan polymorphism dalam desain aplikasi
-\end{subcpmk}
+\section{Input System dan Player Movement}
 
-\begin{konsep}
-\textbf{Polymorphism} adalah kemampuan suatu object untuk mengambil berbagai bentuk \cite{ref4}. Dalam Java, polymorphism muncul dalam dua bentuk: compile-time (overloading) dan runtime (overriding).
-\end{konsep}
+\begin{learningoutcomes}
+\item Menggunakan Unity Input System (Legacy/New)
+\item Mengimplementasikan keyboard dan mouse input
+\item Membuat player movement yang responsif
+\end{learningoutcomes}
 
-\subsection{Compile-time Polymorphism (Overloading)}
-Method overloading terjadi ketika terdapat beberapa method dengan nama sama, tetapi parameter berbeda.
+\subsection{Konsep Input di Unity}
 
-\begin{javacode}[caption={Contoh Overloading}]
-class Kalkulator {
-    public int tambah(int a, int b) {
-        return a + b;
-    }
+Input Manager (Edit $\rightarrow$ Project Settings $\rightarrow$ Input Manager): Horizontal (A/D), Vertical (W/S), Fire1 (Ctrl, Mouse0), Jump (Space), Mouse X/Y.
 
-    public double tambah(double a, double b) {
-        return a + b;
-    }
+\subsection{Implementasi Movement}
 
-    public int tambah(int a, int b, int c) {
-        return a + b + c;
-    }
+\begin{lstlisting}[language={[Sharp]C}]
+void Update()
+{
+    float h = Input.GetAxis("Horizontal");
+    float v = Input.GetAxis("Vertical");
+    Vector3 move = new Vector3(h, v, 0) * speed * Time.deltaTime;
+    transform.Translate(move);
 }
-\end{javacode}
+\end{lstlisting}
 
-\subsection{Keuntungan Overloading}
-\begin{itemize}
-  \item Memudahkan penggunaan API karena nama method konsisten
-  \item Mengurangi kompleksitas nama method
-  \item Membuat kode lebih mudah dibaca
-\end{itemize}
+\subsection{Camera Follow}
 
-\subsection{Perbandingan Overloading vs Overriding}
-
-\begin{table}[h]
-\centering
-\begin{tabular}{|p{3cm}|p{5cm}|p{5cm}|}
-\hline
-\textbf{Aspek} & \textbf{Overloading} & \textbf{Overriding} \\
-\hline
-Binding Time & Compile-time (Static) & Runtime (Dynamic) \\
-\hline
-Class & Dalam class yang sama & Antara superclass dan subclass \\
-\hline
-Keyword & Tidak ada & \keyword{@Override} (Opsional tapi disarankan) \\
-\hline
-Parameter & Harus berbeda & Harus sama \\
-\hline
-Return Type & Boleh berbeda & Harus sama atau sub-type \\
-\hline
-\end{tabular}
-\caption{Perbandingan Overloading dan Overriding}
-\end{table}
+Gunakan LateUpdate() untuk follow player. Atur posisi Main Camera mengikuti target.

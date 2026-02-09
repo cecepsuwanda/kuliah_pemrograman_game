@@ -1,5 +1,6 @@
 % ============================================================
-% Preamble untuk Buku Ajar OBE - Pemrograman Berorientasi Objek
+% Preamble untuk Buku Ajar OBE - Pemrograman Game
+% Menggabungkan OBE environments + C# listings
 % ============================================================
 
 % --- Encoding dan Bahasa ---
@@ -7,97 +8,54 @@
 \usepackage[T1]{fontenc}
 \usepackage[indonesian]{babel}
 \usepackage{lmodern}
+\usepackage{times}
 
 % --- Layout Halaman ---
 \usepackage{geometry}
-\geometry{a4paper, margin=2.5cm, headheight=15pt}
+\geometry{a4paper, left=3cm, right=2cm, top=2.5cm, bottom=2cm, headheight=15pt}
 
 % --- Grafik dan Tabel ---
 \usepackage{graphicx}
+\graphicspath{{figures/}{../figures/}}
+\usepackage{float}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
 \usepackage{multirow}
 \usepackage{xcolor}
 \usepackage{amssymb}
+\usepackage{amsmath,amsthm}
 
 % --- TikZ untuk Diagram ---
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows,positioning,calc}
 \tikzset{
-  class/.style={
-    rectangle,
-    draw=black,
-    fill=blue!10,
-    minimum width=3cm,
-    minimum height=1cm,
-    text centered,
-    font=\bfseries
-  },
-  object/.style={
-    rectangle,
-    rounded corners,
-    draw=black,
-    fill=green!10,
-    minimum width=3cm,
-    minimum height=1cm,
-    text centered
-  },
-  arrow/.style={
-    thick,
-    ->,
-    >=stealth
-  }
+  block/.style={rectangle, draw, fill=blue!20, minimum height=1.2em, minimum width=2.5em, align=center, rounded corners=2pt},
+  line/.style={draw},
+  class/.style={rectangle, draw=black, fill=blue!10, minimum width=3cm, minimum height=1cm, text centered, font=\bfseries},
+  object/.style={rectangle, rounded corners, draw=black, fill=green!10, minimum width=3cm, minimum height=1cm, text centered},
+  arrow/.style={thick, ->, >=stealth}
 }
-
 
 % --- List dan Enumerasi ---
 \usepackage{enumitem}
-
-% --- Hyperlinks ---
-\usepackage{xurl}
-\usepackage{hyperref}
-\hypersetup{
-  colorlinks=true,
-  linkcolor=blue,
-  urlcolor=blue,
-  citecolor=blue,
-  bookmarksnumbered=true,
-  pdfstartview=FitH
-}
+\setlist[itemize]{leftmargin=*,topsep=0.5em}
+\setlist[enumerate]{leftmargin=*,topsep=0.5em}
 
 % --- Subfiles untuk Modular Structure ---
 \usepackage{subfiles}
+\providecommand{\ifSubfilesClassLoaded}[2]{\IfSubfilesClassLoadedTF{#1}{#2}}
 
-% --- Header dan Footer ---
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[LE,RO]{\thepage}
-\fancyhead[RE]{\leftmark}
-\fancyhead[LO]{\rightmark}
-\renewcommand{\headrulewidth}{0.4pt}
-
-% --- Code Listings untuk Java ---
+% --- Code Listings untuk C# ---
 \usepackage{listings}
-\usepackage{xcolor}
-
-% Definisi warna untuk syntax highlighting
-\definecolor{javared}{rgb}{0.6,0,0}
-\definecolor{javagreen}{rgb}{0.25,0.5,0.35}
-\definecolor{javapurple}{rgb}{0.5,0,0.35}
-\definecolor{javadocblue}{rgb}{0.25,0.35,0.75}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codebg}{rgb}{0.95,0.95,0.95}
-
-% Style untuk Java code
-\lstdefinestyle{javastyle}{
-  language=Java,
+\lstdefinestyle{csharpstyle}{
+  language=[Sharp]C,
   basicstyle=\ttfamily\small,
-  keywordstyle=\color{javapurple}\bfseries,
-  stringstyle=\color{javared},
-  commentstyle=\color{javagreen},
-  morecomment=[s][\color{javadocblue}]{/**}{*/},
+  keywordstyle=\color{blue}\bfseries,
+  commentstyle=\color{green!60!black},
+  stringstyle=\color{red},
   numbers=left,
   numberstyle=\tiny\color{codegray},
   stepnumber=1,
@@ -105,7 +63,6 @@
   backgroundcolor=\color{codebg},
   showspaces=false,
   showstringspaces=false,
-  showtabs=false,
   frame=single,
   tabsize=2,
   captionpos=b,
@@ -115,22 +72,38 @@
   xleftmargin=15pt,
   xrightmargin=5pt
 }
-
-     
 \renewcommand{\lstlistlistingname}{Daftar Kode Program}
 \renewcommand{\lstlistingname}{Kode Program}
-\lstset{style=javastyle}
+\lstset{style=csharpstyle}
 
-% Environment untuk Java code dengan caption
-\lstnewenvironment{javacode}[1][]{
-  \lstset{style=javastyle, #1}
-}{}
+% --- Theorems untuk Definisi, Contoh, Catatan ---
+\newtheorem{definisi}{Definisi}[section]
+\newtheorem{contohtheorem}{Contoh}[section]
+\newtheorem{tips}{Tips}[section]
+\newenvironment{learningoutcomes}{%
+  \par\noindent\textbf{Learning Outcomes:}\par\vspace{0.3em}%
+  \begin{itemize}[leftmargin=*, itemsep=0.2em]%
+}{%
+  \end{itemize}%
+}
 
 % --- Boxes untuk Highlight ---
 \usepackage{tcolorbox}
 \tcbuselibrary{skins,breakable}
-
-% Box untuk konsep penting
+\newtcolorbox{catatan}{
+  colback=yellow!5!white,
+  colframe=yellow!75!black,
+  fonttitle=\bfseries,
+  title=Catatan,
+  breakable
+}
+\newtcolorbox{contoh}{
+  colback=green!5!white,
+  colframe=green!75!black,
+  fonttitle=\bfseries,
+  title=Contoh,
+  breakable
+}
 \newtcolorbox{konsep}{
   colback=blue!5!white,
   colframe=blue!75!black,
@@ -139,29 +112,7 @@
   breakable
 }
 
-% Box untuk catatan
-\newtcolorbox{catatan}{
-  colback=yellow!5!white,
-  colframe=yellow!75!black,
-  fonttitle=\bfseries,
-  title=Catatan,
-  breakable
-}
-
-% Box untuk contoh
-\newtcolorbox{contoh}{
-  colback=green!5!white,
-  colframe=green!75!black,
-  fonttitle=\bfseries,
-  title=Contoh,
-  breakable
-}
-
-% ============================================================
-% Custom Environments untuk OBE
-% ============================================================
-
-% --- Environment untuk Sub-CPMK ---
+% --- Custom Environments untuk OBE ---
 \newenvironment{subcpmk}{
   \vspace{0.5cm}
   \noindent\colorbox{blue!10}{\parbox{\dimexpr\textwidth-2\fboxsep}{
@@ -174,7 +125,6 @@
   \vspace{0.5cm}
 }
 
-% --- Environment untuk Aktivitas Pembelajaran ---
 \newenvironment{aktivitas}{
   \vspace{0.5cm}
   \noindent\colorbox{green!10}{\parbox{\dimexpr\textwidth-2\fboxsep}{
@@ -187,7 +137,6 @@
   \vspace{0.5cm}
 }
 
-% --- Environment untuk Latihan ---
 \newenvironment{latihan}{
   \vspace{0.5cm}
   \noindent\colorbox{orange!10}{\parbox{\dimexpr\textwidth-2\fboxsep}{
@@ -200,7 +149,6 @@
   \vspace{0.5cm}
 }
 
-% --- Environment untuk Asesmen ---
 \newenvironment{asesmen}{
   \vspace{0.5cm}
   \noindent\colorbox{red!10}{\parbox{\dimexpr\textwidth-2\fboxsep}{
@@ -211,7 +159,6 @@
   \vspace{0.5cm}
 }
 
-% --- Environment untuk Checklist Kompetensi ---
 \newenvironment{checklist}{
   \vspace{0.5cm}
   \noindent\colorbox{purple!10}{\parbox{\dimexpr\textwidth-2\fboxsep}{
@@ -226,7 +173,6 @@
   \vspace{0.5cm}
 }
 
-% --- Environment untuk Rangkuman ---
 \newenvironment{rangkuman}{
   \vspace{0.5cm}
   \noindent\colorbox{gray!10}{\parbox{\dimexpr\textwidth-2\fboxsep}{
@@ -237,33 +183,38 @@
   \vspace{0.5cm}
 }
 
-% ============================================================
-% Custom Commands
-% ============================================================
-
-% Command untuk highlight istilah OOP
-\newcommand{\oop}[1]{\textbf{\textit{#1}}}
-
-% Command untuk code inline
+% --- Custom Commands ---
 \newcommand{\code}[1]{\texttt{#1}}
-
-% Command untuk class name
 \newcommand{\class}[1]{\texttt{\textbf{#1}}}
-
-% Command untuk method name
 \newcommand{\method}[1]{\texttt{#1()}}
+\newcommand{\keyword}[1]{\texttt{\textbf{#1}}}
 
-% Command untuk keyword Java
-\newcommand{\keyword}[1]{\textcolor{javapurple}{\texttt{\textbf{#1}}}}
+% --- Hyperlinks ---
+\usepackage{xurl}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue,
+  citecolor=blue,
+  bookmarksnumbered=true,
+  pdfstartview=FitH,
+  pdftitle={Buku Ajar Pemrograman Game},
+  pdfsubject={Game Development dengan Unity}
+}
 
-% ============================================================
-% Pengaturan Tambahan
-% ============================================================
+% --- Header dan Footer ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\leftmark}
+\fancyhead[LO]{\rightmark}
+\renewcommand{\headrulewidth}{0.4pt}
 
-% Spacing untuk paragraf
+% --- Spacing ---
 \setlength{\parskip}{0.5em}
-\setlength{\parindent}{0pt}
-
-% Depth untuk table of contents
+\setlength{\parindent}{1.5em}
+\renewcommand{\baselinestretch}{1.5}
 \setcounter{tocdepth}{2}
 \setcounter{secnumdepth}{3}

@@ -1,12 +1,57 @@
-\documentclass[c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/main.tex]{subfiles}
+\documentclass[../main]{subfiles}
 \ifSubfilesClassLoaded{\setcounter{chapter}{3}}{}
 \begin{document}
-\chapter{Encapsulation dan Information Hiding}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-04/section-4-1}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-04/section-4-2}
+
+\chapter{Dasar Pemrograman C\# untuk Unity}
+
+\begin{subcpmk}
+  \item Sub-CPMK 2.1: Membuat skrip MonoBehaviour dan menggunakan lifecycle functions (Start, Update, Awake, FixedUpdate)
+  \item Sub-CPMK 2.2: Menggunakan tipe data Unity (Vector3, Quaternion) dan menerapkan OOP, coroutine, event
+\end{subcpmk}
+
+\input{bab-04/section-4-1}
+\input{bab-04/section-4-2}
+\input{bab-04/section-4-3}
+\input{bab-04/section-4-4}
+
+\begin{aktivitas}
+  \item \textbf{Skrip Pertama}: Buat skrip C\# yang menampilkan pesan di Start() dan Update(). Lampirkan ke GameObject.
+  \item \textbf{Lifecycle}: Buat skrip yang menampilkan urutan Awake, Start, Update, OnDestroy dengan Debug.Log.
+  \item \textbf{Coroutine}: Buat countdown 3-2-1-Go menggunakan coroutine.
+  \item \textbf{Event}: Implementasikan event OnScoreChanged dan subscribe dari script lain.
+\end{aktivitas}
+
+\begin{latihan}
+  \item Jelaskan perbedaan Awake(), Start(), dan Update()!
+  \item Kapan menggunakan FixedUpdate() vs Update()?
+  \item Apa fungsi SerializeField? Kapan menggunakannya?
+  \item Jelaskan cara kerja coroutine dengan yield return!
+  \item Mengapa harus unsubscribe event di OnDisable?
+\end{latihan}
+
+\begin{asesmen}
+\textbf{Instrumen Penilaian untuk Sub-CPMK 2.1, 2.2}
+
+\textbf{A. Pilihan Ganda}: Mengenai MonoBehaviour, lifecycle, tipe data Unity, coroutine.
+\textbf{B. Praktik}: Buat skrip Player dengan health, TakeDamage(), dan event OnDeath.
+\textbf{Rubrik}: Lihat Lampiran A
+\end{asesmen}
+
+\begin{checklist}
+  \item Saya dapat membuat skrip MonoBehaviour
+  \item Saya memahami lifecycle functions
+  \item Saya dapat menggunakan Vector3, Transform, dll
+  \item Saya dapat menggunakan coroutine
+  \item Saya dapat mengimplementasikan event
+\end{checklist}
+
+\begin{rangkuman}
+Bab ini membahas dasar C\# untuk Unity: MonoBehaviour, lifecycle (Awake, Start, Update, FixedUpdate), tipe data (Vector3, Quaternion), kontrol alur, OOP, coroutine, dan event system.
+\end{rangkuman}
+
 \ifSubfilesClassLoaded{
   \renewcommand{\bibname}{Daftar Pustaka}
   \bibliographystyle{plain}
-  \bibliography{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/references}
+  \bibliography{../references}
 }{}
 \end{document}

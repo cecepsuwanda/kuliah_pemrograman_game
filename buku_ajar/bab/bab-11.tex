@@ -1,12 +1,47 @@
-\documentclass[c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/main.tex]{subfiles}
+\documentclass[../main]{subfiles}
 \ifSubfilesClassLoaded{\setcounter{chapter}{10}}{}
 \begin{document}
-\chapter{Design Patterns Dasar}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-11/section-11-1}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-11/section-11-2}
+
+\chapter{Level Design dan Game Mechanics}
+
+\begin{subcpmk}
+  \item Sub-CPMK 9.1: Merancang level dengan prinsip level design dan mengimplementasikan spawn system
+  \item Sub-CPMK 9.2: Mengimplementasikan game state management, progression system, dan object pooling
+\end{subcpmk}
+
+\input{bab-11/section-11-1}
+\input{bab-11/section-11-2}
+
+\begin{aktivitas}
+  \item Implementasikan AsteroidSpawner dengan coroutine
+  \item Tambahkan score system dan high score
+  \item Implementasikan difficulty scaling
+\end{aktivitas}
+
+\begin{latihan}
+  \item Jelaskan prinsip level design untuk game arcade!
+  \item Apa keuntungan Object Pooling?
+  \item Bagaimana implementasi wave system?
+\end{latihan}
+
+\begin{asesmen}
+\textbf{Praktik}: Spawn system lengkap dengan progression.
+\textbf{Rubrik}: Lihat Lampiran A
+\end{asesmen}
+
+\begin{checklist}
+  \item Saya dapat mengimplementasikan spawn system
+  \item Saya memahami core game loop
+  \item Saya dapat menggunakan PlayerPrefs
+\end{checklist}
+
+\begin{rangkuman}
+Level design: flow, pacing. Spawn: Instantiate, coroutine/InvokeRepeating. Object Pooling untuk optimasi. Score, high score, difficulty scaling. Game state management.
+\end{rangkuman}
+
 \ifSubfilesClassLoaded{
   \renewcommand{\bibname}{Daftar Pustaka}
   \bibliographystyle{plain}
-  \bibliography{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/references}
+  \bibliography{../references}
 }{}
 \end{document}

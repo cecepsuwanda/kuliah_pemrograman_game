@@ -1,12 +1,48 @@
-\documentclass[c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/main.tex]{subfiles}
+\documentclass[../main]{subfiles}
 \ifSubfilesClassLoaded{\setcounter{chapter}{5}}{}
 \begin{document}
-\chapter{Polymorphism dan Dynamic Binding}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-06/section-6-1}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-06/section-6-2}
+
+\chapter{Input System dan Player Controller}
+
+\begin{subcpmk}
+  \item Sub-CPMK 4.1: Mengimplementasikan keyboard/mouse input dan membuat player movement
+  \item Sub-CPMK 4.2: Mengatur camera follow dan menangani touch/gamepad untuk platform mobile
+\end{subcpmk}
+
+\input{bab-06/section-6-1}
+\input{bab-06/section-6-2}
+
+\begin{aktivitas}
+  \item Implementasikan PlayerController untuk Space Survivor dengan WASD movement
+  \item Tambahkan shooting mechanic dengan Instantiate bullet
+  \item Implementasikan camera follow
+\end{aktivitas}
+
+\begin{latihan}
+  \item Jelaskan Input.GetAxis vs Input.GetButton!
+  \item Mengapa gunakan Time.deltaTime untuk movement?
+  \item Bagaimana Implementasi shooting dengan Prefab?
+\end{latihan}
+
+\begin{asesmen}
+\textbf{Praktik}: Buat PlayerController lengkap dengan movement dan shooting.
+\textbf{Rubrik}: Lihat Lampiran A
+\end{asesmen}
+
+\begin{checklist}
+  \item Saya dapat menggunakan Input Manager
+  \item Saya dapat mengimplementasikan player movement
+  \item Saya dapat membuat shooting mechanic
+  \item Saya dapat mengatur camera follow
+\end{checklist}
+
+\begin{rangkuman}
+Input Manager untuk keyboard/mouse. Input.GetAxis untuk movement smooth. Input.GetButtonDown untuk aksi sekali. Instantiate untuk spawn bullet. LateUpdate untuk camera follow.
+\end{rangkuman}
+
 \ifSubfilesClassLoaded{
   \renewcommand{\bibname}{Daftar Pustaka}
   \bibliographystyle{plain}
-  \bibliography{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/references}
+  \bibliography{../references}
 }{}
 \end{document}

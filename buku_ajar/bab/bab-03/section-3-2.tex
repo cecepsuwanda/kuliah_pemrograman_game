@@ -1,23 +1,41 @@
-\section{Attributes (Instance Variables)}
+\section{Instalasi dan Setup Unity}
 
-\subsection{Definisi Attributes}
+\begin{learningoutcomes}
+\item Mampu mengunduh dan menginstal Unity Hub
+\item Mampu menginstal Unity Editor
+\item Memahami konfigurasi project Unity
+\item Mampu membuat project Unity pertama
+\end{learningoutcomes}
 
-\textbf{Attributes} adalah variabel yang didefinisikan di dalam class untuk menyimpan state/data dari object.
+\subsection{Unity Hub}
 
-\begin{javacode}[caption={Contoh Attributes}]
-public class Mahasiswa {
-    // Attributes
-    String nim;
-    String nama;
-    String jurusan;
-    int semester;
-    double ipk;
-} \cite{ref2, ref7}
-\end{javacode}
+Unity Hub adalah aplikasi manajemen untuk Unity yang memungkinkan menginstal berbagai versi Unity, mengelola project Unity, dan mengakses Unity Learn dan resources.
 
-\subsection{Jenis Attributes}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/unity_hub.png}
+    \caption{Antarmuka Unity Hub}
+    \label{fig:unity_hub}
+\end{figure}
+
+\subsection{Langkah Instalasi}
 
 \begin{enumerate}
-  \item \textbf{Instance Variables}: Unik untuk setiap object
-  \item \textbf{Static Variables}: Dibagi oleh semua object (akan dibahas nanti)
+\item \textbf{Download Unity Hub}: Kunjungi unity.com/download
+\item \textbf{Install Unity Hub}: Jalankan installer
+\item \textbf{Login/Register}: Buat akun Unity (gratis)
+\item \textbf{Install Unity Editor}: Pilih versi LTS (Long Term Support) yang stabil
+\item \textbf{Install Modules}: Pilih platform target (Windows, Android, iOS, dll)
 \end{enumerate}
+
+\subsection{Membuat Project Baru}
+
+Buka Unity Hub, klik ``New Project'', pilih template (2D, 3D), tentukan nama dan lokasi project, klik ``Create Project''.
+
+\subsection{Struktur Folder Project}
+
+\textbf{Assets/}: Semua assets game. \textbf{Library/}: File cache Unity. \textbf{Logs/}: Log files. \textbf{Packages/}: Package manifest. \textbf{ProjectSettings/}: Pengaturan project.
+
+\subsection{Konfigurasi Awal}
+
+Project Settings penting: Player Settings (nama aplikasi, icon), Graphics Settings (rendering pipeline), Input Manager, Physics Settings (gravity, timestep).

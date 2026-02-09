@@ -1,75 +1,48 @@
-\section{Definisi Class dan Object}
+\section{Sejarah dan Keunggulan Unity Engine}
 
-\subsection{Apa itu Class?}
+\begin{learningoutcomes}
+\item Mengetahui sejarah perkembangan Unity Engine
+\item Memahami keunggulan Unity dibanding engine lain
+\item Mengetahui platform yang didukung Unity
+\item Memahami lisensi Unity
+\end{learningoutcomes}
 
-\begin{konsep}
-\textbf{Class} adalah blueprint atau template yang mendefinisikan karakteristik dan perilaku dari suatu entitas \cite{ref2}. Class mendefinisikan attributes (data) dan methods (behavior) yang akan dimiliki oleh objek.
+\subsection{Sejarah Unity}
 
-Analogi: Class seperti cetak biru rumah, sedangkan object adalah rumah yang dibangun berdasarkan cetak biru tersebut.
-\end{konsep}
+Unity Technologies didirikan pada tahun 2004 di Denmark. Unity Engine pertama kali dirilis pada tahun 2005 dengan fokus pada pengembangan game untuk Mac. Sejak itu, Unity telah berkembang menjadi salah satu game engine paling populer di dunia \cite{UnityManual2024}.
 
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}[node distance=2cm]
-  \node (class) [class] {Class: Blueprint Rumah};
-  \node (obj1) [object, below left=of class] {Object 1: Rumah A};
-  \node (obj2) [object, below right=of class] {Object 2: Rumah B};
-  
-  \draw [arrow] (class) -- (obj1) node[midway, left] {instansiasi};
-  \draw [arrow] (class) -- (obj2) node[midway, right] {instansiasi};
-\end{tikzpicture}
-\caption{Konsep Class dan Object}
-\end{figure}
+\textbf{Timeline Penting}:
+\begin{itemize}
+    \item \textbf{2005}: Unity 1.0 dirilis (Mac only)
+    \item \textbf{2009}: Unity 2.0 (Windows support)
+    \item \textbf{2010}: Unity 3.0 (iOS \& Android support)
+    \item \textbf{2012}: Unity 4.0 (WebGL, DirectX 11)
+    \item \textbf{2017}: Unity 2017 (Timeline, Cinemachine)
+    \item \textbf{2020}: Unity 2020 LTS (Stability focus)
+    \item \textbf{2023}: Unity 6 (DOTS, Performance)
+\end{itemize}
 
-Dalam Java, class didefinisikan dengan keyword \keyword{class}:
+\subsection{Keunggulan Unity Engine}
 
-\begin{javacode}[caption={Struktur Dasar Class}]
-public class NamaClass {
-    // Attributes (instance variables)
-    tipeData namaAttribute;
-    
-    // Constructor
-    public NamaClass() {
-        // Inisialisasi
-    }
-    
-    // Methods
-    public void namaMethod() {
-        // Implementasi
-    }
-}
-\end{javacode}
+\begin{enumerate}
+\item \textbf{Cross-Platform}: Build sekali, deploy ke banyak platform
+\item \textbf{User-Friendly}: Interface yang intuitif untuk pemula
+\item \textbf{Asset Store}: Marketplace besar untuk assets dan tools
+\item \textbf{Community}: Komunitas besar dan aktif
+\item \textbf{Documentation}: Dokumentasi lengkap dan tutorial
+\item \textbf{Free Version}: Unity Personal gratis untuk individu dan small teams
+\item \textbf{C\# Scripting}: Bahasa pemrograman modern dan powerful
+\item \textbf{Visual Editor}: WYSIWYG editor untuk level design
+\end{enumerate}
 
-\subsection{Apa itu Object?}
+\subsection{Platform yang Didukung}
 
-\begin{konsep}
-\textbf{Object} adalah instance (perwujudan) dari class. Object memiliki state (nilai attributes) dan behavior (methods) yang didefinisikan oleh class-nya.
-\end{konsep}
+Unity mendukung deployment ke berbagai platform: Desktop (Windows, Mac, Linux), Mobile (iOS, Android), Web (WebGL), Console (PlayStation, Xbox, Nintendo Switch), VR/AR (Oculus, HTC Vive, ARKit, ARCore).
 
-Membuat object dalam Java menggunakan keyword \keyword{new}:
+\subsection{Lisensi Unity}
 
-\begin{javacode}[caption={Membuat Object}]
-NamaClass namaObject = new NamaClass();
-\end{javacode}
+\textbf{Unity Personal}: Gratis untuk individu dan perusahaan dengan revenue < \$100K/tahun. \textbf{Unity Pro}: Berbayar dengan fitur tambahan. \textbf{Unity Enterprise}: Untuk perusahaan besar.
 
-\subsection{Hubungan Class dan Object}
-
-\begin{table}[h]
-\centering
-\begin{tabular}{|p{3cm}|p{5cm}|p{5cm}|}
-\hline
-\textbf{Aspek} & \textbf{Class} & \textbf{Object} \\
-\hline
-Definisi & Template/Blueprint & Instance dari class \\
-\hline
-Keberadaan & Logical entity & Physical entity \\
-\hline
-Memory & Tidak menggunakan memory & Menggunakan memory \\
-\hline
-Jumlah & Satu class & Banyak object dari satu class \\
-\hline
-Keyword & \code{class} & \code{new} \\
-\hline
-\end{tabular}
-\caption{Hubungan Class dan Object}
-\end{table}
+\begin{catatan}
+Unity Personal sudah cukup untuk pembelajaran dan pengembangan game indie. Upgrade ke Pro hanya diperlukan jika membutuhkan fitur khusus atau untuk komersialisasi skala besar.
+\end{catatan}

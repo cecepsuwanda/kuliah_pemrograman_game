@@ -1,21 +1,15 @@
-\section{SRP, OCP, dan LSP}
-\begin{subcpmk}
-  \item Sub-CPMK 4.1: Menganalisis code smell dan melakukan refactoring
-\end{subcpmk}
+\section{Audio Source dan Audio Listener}
 
-\begin{konsep}
-\textbf{SOLID} adalah lima prinsip desain yang membuat perangkat lunak lebih mudah dipahami, fleksibel, dan maintainable \cite{ref3}.
-\end{konsep}
+\begin{learningoutcomes}
+\item Memahami Audio Clip, Audio Source, Audio Listener
+\item Memainkan SFX dan BGM
+\item Mengatur volume dan loop
+\end{learningoutcomes}
 
-\subsection{Single Responsibility Principle (SRP)}
-Satu class sebaiknya memiliki satu alasan untuk berubah.
+\subsection{Komponen Audio}
 
-\subsection{Open/Closed Principle (OCP)}
-Class harus terbuka untuk extension tetapi tertutup untuk modification.
+Audio Clip: file suara (.mp3, .wav). Audio Source: pemancar suara di GameObject. Audio Listener: biasanya di Main Camera (satu saja per scene). PlayOnAwake, Loop, Volume.
 
-\subsection{Liskov Substitution Principle (LSP)}
-Objek subclass harus dapat menggantikan objek superclass tanpa merusak perilaku program.
+\subsection{Implementasi SFX}
 
-\begin{catatan}
-Jika class sering berubah karena banyak alasan, itu adalah tanda pelanggaran SRP.
-\end{catatan}
+AudioSource.PlayOneShot(clip) untuk sound effect (tembakan, ledakan). Tidak menghentikan clip yang sedang diputar. Attach AudioSource ke Player atau buat prefab audio.

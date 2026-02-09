@@ -1,12 +1,47 @@
-\documentclass[c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/main.tex]{subfiles}
+\documentclass[../main]{subfiles}
 \ifSubfilesClassLoaded{\setcounter{chapter}{12}}{}
 \begin{document}
-\chapter{Unit Testing, TDD, dan Refactoring}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-13/section-13-1}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-13/section-13-2}
+
+\chapter{Optimization dan Debugging}
+
+\begin{subcpmk}
+  \item Sub-CPMK 11.1: Menggunakan Unity Profiler dan implementasi Object Pooling
+  \item Sub-CPMK 11.2: Menerapkan teknik optimasi (LOD, occlusion culling) dan debugging efektif
+\end{subcpmk}
+
+\input{bab-13/section-13-1}
+\input{bab-13/section-13-2}
+
+\begin{aktivitas}
+  \item Analisis Space Survivor dengan Profiler
+  \item Implementasikan Object Pooling untuk bullet
+  \item Gunakan Debug.DrawLine untuk visualisasi
+\end{aktivitas}
+
+\begin{latihan}
+  \item Apa fungsi Unity Profiler?
+  \item Jelaskan Object Pooling!
+  \item Sebutkan 3 best practices Unity!
+\end{latihan}
+
+\begin{asesmen}
+\textbf{Praktik}: Optimasi project dengan Profiler dan Object Pooling.
+\textbf{Rubrik}: Lihat Lampiran A
+\end{asesmen}
+
+\begin{checklist}
+  \item Saya dapat menggunakan Profiler
+  \item Saya dapat mengimplementasikan Object Pooling
+  \item Saya mengetahui debugging techniques
+\end{checklist}
+
+\begin{rangkuman}
+Profiler untuk analisis performa. Object Pooling untuk reduce Instantiate/Destroy. Cache GetComponent. CompareTag. Debug.Log, breakpoint, Debug.DrawLine.
+\end{rangkuman}
+
 \ifSubfilesClassLoaded{
   \renewcommand{\bibname}{Daftar Pustaka}
   \bibliographystyle{plain}
-  \bibliography{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/references}
+  \bibliography{../references}
 }{}
 \end{document}

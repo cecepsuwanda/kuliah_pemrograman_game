@@ -1,12 +1,47 @@
-\documentclass[c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/main.tex]{subfiles}
+\documentclass[../main]{subfiles}
 \ifSubfilesClassLoaded{\setcounter{chapter}{6}}{}
 \begin{document}
-\chapter{Abstract Class dan Interface}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-07/section-7-1}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-07/section-7-2}
+
+\chapter{Physics, Collision, dan Rigidbody}
+
+\begin{subcpmk}
+  \item Sub-CPMK 5.1: Mengkonfigurasi Rigidbody dan Collider, mengimplementasikan OnCollisionEnter/OnTriggerEnter
+  \item Sub-CPMK 5.2: Membedakan trigger dan collision dalam implementasi game
+\end{subcpmk}
+
+\input{bab-07/section-7-1}
+\input{bab-07/section-7-2}
+
+\begin{aktivitas}
+  \item Implementasikan collision Bullet-Asteroid (Destroy, AddScore)
+  \item Implementasikan Player-Asteroid collision (Game Over)
+  \item Gunakan Tag untuk identifikasi GameObject
+\end{aktivitas}
+
+\begin{latihan}
+  \item Jelaskan syarat terjadinya collision!
+  \item Apa perbedaan OnTriggerEnter dan OnCollisionEnter?
+  \item Kapan menggunakan Rigidbody Kinematic?
+\end{latihan}
+
+\begin{asesmen}
+\textbf{Praktik}: Implementasi collision detection lengkap untuk Space Survivor.
+\textbf{Rubrik}: Lihat Lampiran A
+\end{asesmen}
+
+\begin{checklist}
+  \item Saya memahami Rigidbody dan Collider
+  \item Saya dapat mengimplementasikan collision detection
+  \item Saya dapat membedakan Trigger dan Collision
+\end{checklist}
+
+\begin{rangkuman}
+Rigidbody untuk fisika, Collider untuk deteksi. OnTriggerEnter untuk trigger (peluru), OnCollisionEnter untuk fisik. Gunakan Tag untuk identifikasi.
+\end{rangkuman}
+
 \ifSubfilesClassLoaded{
   \renewcommand{\bibname}{Daftar Pustaka}
   \bibliographystyle{plain}
-  \bibliography{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/references}
+  \bibliography{../references}
 }{}
 \end{document}

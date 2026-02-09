@@ -1,34 +1,34 @@
-\documentclass[c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/main.tex]{subfiles}
+\documentclass[../main]{subfiles}
 \ifSubfilesClassLoaded{\setcounter{chapter}{1}}{}
 \begin{document}
 
-\chapter{Landasan Teori dan Konsep Dasar OOP}
+\chapter{Landasan Teori dan Konsep Dasar}
 
 \begin{subcpmk}
-  \item Sub-CPMK 1.1: Menjelaskan perbedaan antara pemrograman prosedural dan berorientasi objek serta mengidentifikasi karakteristik utama paradigma OOP
+  \item Sub-CPMK 1.1: Menjelaskan MDA framework dan mengidentifikasi genre game
+  \item Sub-CPMK 1.2: Menyusun GDD dan menjelaskan lifecycle pengembangan game
 \end{subcpmk}
 
 % ============================================================
 % MATERI POKOK
 % ============================================================
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-02/section-2-1}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-02/section-2-2}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-02/section-2-3}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-02/section-2-4}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-02/section-2-5}
+\input{bab-02/section-2-1}
+\input{bab-02/section-2-2}
+\input{bab-02/section-2-3}
+\input{bab-02/section-2-4}
 
 % ============================================================
 % AKTIVITAS PEMBELAJARAN
 % ============================================================
 
 \begin{aktivitas}
-  \item \textbf{Diskusi Kelompok}: Identifikasi 5 contoh objek di dunia nyata (misalnya: mobil, HP, ATM) dan tentukan attributes dan behaviors yang bisa dimodelkan dalam OOP.
+  \item \textbf{Analisis Game}: Pilih satu game favorit dan analisis menggunakan MDA framework. Identifikasi mechanics, dynamics, dan aesthetics-nya.
   
-  \item \textbf{Analisis Kode}: Diberikan kode prosedural untuk sistem perpustakaan sederhana, identifikasi bagian mana yang bisa diubah menjadi class dalam OOP.
+  \item \textbf{Analisis Genre}: Pilih 3 game dari genre berbeda. Identifikasi genre utama dan karakteristik yang membuat game tersebut termasuk dalam genre tersebut.
   
-  \item \textbf{Perbandingan}: Tulis program sederhana (misalnya kalkulator) dalam dua versi: prosedural dan OOP. Bandingkan kelebihan dan kekurangan masing-masing.
+  \item \textbf{Membuat GDD}: Buat Game Design Document untuk konsep game sederhana dengan Executive Summary, Game Overview, Core Gameplay Mechanics, dan Development Timeline.
   
-  \item \textbf{Mind Mapping}: Buat mind map yang menghubungkan 4 pilar OOP dengan contoh implementasi konkret dalam Java.
+  \item \textbf{Timeline Pengembangan}: Buat timeline pengembangan untuk game sederhana dengan breakdown fase pre-production, production, post-production beserta milestone.
 \end{aktivitas}
 
 % ============================================================
@@ -36,19 +36,17 @@
 % ============================================================
 
 \begin{latihan}
-  \item Jelaskan perbedaan utama antara pemrograman prosedural dan OOP! Berikan contoh kasus di mana OOP lebih cocok digunakan.
+  \item Jelaskan definisi game menurut MDA framework! Apa perbedaan antara Mechanics, Dynamics, dan Aesthetics?
   
-  \item Sebutkan dan jelaskan 4 pilar OOP! Berikan contoh sederhana untuk masing-masing pilar.
+  \item Sebutkan minimal 5 genre game dan karakteristik utamanya! Berikan contoh game untuk masing-masing genre.
   
-  \item Mengapa enkapsulasi penting dalam OOP? Apa yang terjadi jika semua data dalam class bersifat public?
+  \item Apa fungsi Game Design Document? Sebutkan minimal 5 komponen utama dalam GDD.
   
-  \item Berikan 3 keuntungan dan 2 tantangan dalam menggunakan OOP.
+  \item Jelaskan fase-fase dalam lifecycle pengembangan game (pre-production, production, post-production)! Apa output utama dari setiap fase?
   
-  \item Identifikasi objek-objek dalam sistem e-commerce (misalnya Tokopedia). Sebutkan minimal 5 class yang mungkin ada beserta attributes dan methods-nya.
+  \item Analisis game Mobile Legends atau game favorit Anda menggunakan MDA framework. Identifikasi mechanics, dynamics, dan aesthetics.
   
-  \item Apakah semua program harus ditulis dengan OOP? Jelaskan kapan sebaiknya menggunakan OOP dan kapan tidak.
-  
-  \item \textbf{Refleksi}: Bagaimana pemahaman Anda tentang OOP sebelum dan sesudah mempelajari bab ini? Konsep mana yang paling sulit dipahami?
+  \item \textbf{Refleksi}: Bagaimana pemahaman Anda tentang game development sebelum dan sesudah mempelajari bab ini?
 \end{latihan}
 
 % ============================================================
@@ -56,42 +54,42 @@
 % ============================================================
 
 \begin{asesmen}
-\textbf{Instrumen Penilaian untuk Sub-CPMK 1.1}
+\textbf{Instrumen Penilaian untuk Sub-CPMK 1.1, 1.2}
 
 \textbf{A. Pilihan Ganda}
 
 \begin{enumerate}
-  \item Manakah yang BUKAN merupakan pilar OOP?
+  \item Manakah yang BUKAN merupakan elemen MDA framework?
   \begin{enumerate}
-    \item Abstraksi
-    \item Enkapsulasi
-    \item Kompilasi
-    \item Polimorfisme
+    \item Mechanics
+    \item Dynamics
+    \item Animation
+    \item Aesthetics
   \end{enumerate}
   
-  \item Dalam OOP, data dan method yang beroperasi pada data tersebut digabung dalam satu unit yang disebut:
+  \item Fase dalam lifecycle pengembangan game yang fokus pada asset creation dan programming adalah:
   \begin{enumerate}
-    \item Function
-    \item Module
-    \item Class
-    \item Library
+    \item Pre-production
+    \item Production
+    \item Post-production
+    \item Prototyping
   \end{enumerate}
   
-  \item Keuntungan utama enkapsulasi adalah:
+  \item Dokumen yang menjelaskan konsep, mekanik, dan desain game secara detail disebut:
   \begin{enumerate}
-    \item Membuat program lebih cepat
-    \item Melindungi data dari akses tidak sah
-    \item Mengurangi ukuran file
-    \item Mempermudah kompilasi
+    \item Technical Design Document
+    \item Game Design Document
+    \item Project Plan
+    \item Art Bible
   \end{enumerate}
 \end{enumerate}
 
 \textbf{B. Essay}
 
 \begin{enumerate}
-  \item Jelaskan dengan kata-kata Anda sendiri apa yang dimaksud dengan "objek" dalam OOP dan berikan 2 contoh objek dari dunia nyata beserta attributes dan behaviors-nya.
+  \item Jelaskan hubungan antara Mechanics, Dynamics, dan Aesthetics dalam MDA framework. Berikan contoh dari game yang Anda kenal.
   
-  \item Bandingkan pendekatan prosedural dan OOP dalam menyelesaikan masalah pengelolaan data mahasiswa. Mana yang lebih cocok dan mengapa?
+  \item Buat outline GDD untuk game 2D platformer sederhana. Cantumkan minimal 5 komponen utama.
 \end{enumerate}
 
 \textbf{Rubrik Penilaian}: Lihat Lampiran A
@@ -102,12 +100,11 @@
 % ============================================================
 
 \begin{checklist}
-  \item Saya dapat menjelaskan perbedaan antara pemrograman prosedural dan OOP
-  \item Saya dapat menyebutkan dan menjelaskan 4 pilar OOP
-  \item Saya dapat memberikan contoh konkret untuk setiap pilar OOP
-  \item Saya dapat mengidentifikasi kapan sebaiknya menggunakan OOP
-  \item Saya memahami keuntungan dan tantangan dalam menggunakan OOP
-  \item Saya dapat mengidentifikasi objek, attributes, dan methods dari dunia nyata
+  \item Saya dapat menjelaskan definisi game dan elemen MDA (Mechanics, Dynamics, Aesthetics)
+  \item Saya dapat mengidentifikasi genre game dan karakteristiknya
+  \item Saya dapat menyusun GDD untuk konsep game sederhana
+  \item Saya dapat menjelaskan lifecycle pengembangan game
+  \item Saya dapat menganalisis game menggunakan MDA framework
 \end{checklist}
 
 % ============================================================
@@ -115,23 +112,21 @@
 % ============================================================
 
 \begin{rangkuman}
-Bab ini membahas landasan teori Pemrograman Berorientasi Objek, termasuk evolusi paradigma pemrograman, perbandingan antara pendekatan prosedural dan OOP, serta 4 pilar utama OOP.
+Bab ini membahas landasan teori pengembangan game, termasuk definisi game, MDA framework, genre game, Game Design Document, dan lifecycle pengembangan.
 
 \textbf{Poin Kunci:}
 \begin{itemize}
-  \item OOP adalah paradigma yang berfokus pada objek yang mengenkapsulasi data dan perilaku
-  \item 4 Pilar OOP: Abstraksi, Enkapsulasi, Inheritance, Polimorfisme
-  \item OOP menawarkan modularitas, reusability, dan maintainability yang lebih baik
-  \item OOP lebih cocok untuk sistem besar dan kompleks
-  \item Pemahaman konsep dasar OOP adalah fondasi untuk mempelajari implementasi OOP dalam Java
+  \item Game adalah aktivitas terstruktur dengan tujuan, aturan, dan umpan balik
+  \item MDA framework: Mechanics (aturan), Dynamics (perilaku), Aesthetics (pengalaman)
+  \item Genre game mengklasifikasikan game berdasarkan mekanik dan gaya permainan
+  \item GDD adalah blueprint pengembangan game
+  \item Lifecycle: pre-production, production, post-production
 \end{itemize}
-
-\textbf{Kata Kunci}: \oop{OOP}, \oop{Class}, \oop{Object}, \oop{Abstraksi}, \oop{Enkapsulasi}, \oop{Inheritance}, \oop{Polimorfisme}, \oop{Modularitas}
 \end{rangkuman}
 
 \ifSubfilesClassLoaded{
   \renewcommand{\bibname}{Daftar Pustaka}
   \bibliographystyle{plain}
-  \bibliography{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/references}
+  \bibliography{../references}
 }{}
 \end{document}

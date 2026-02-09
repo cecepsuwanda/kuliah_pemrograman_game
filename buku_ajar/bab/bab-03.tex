@@ -1,40 +1,31 @@
-\documentclass[c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/main.tex]{subfiles}
+\documentclass[../main]{subfiles}
 \ifSubfilesClassLoaded{\setcounter{chapter}{2}}{}
 \begin{document}
 
-\chapter{Konsep Class dan Object}
+\chapter{Pengenalan Unity Engine}
 
 \begin{subcpmk}
-  \item Sub-CPMK 1.2: Mengidentifikasi class, object, dan attribute dalam studi kasus nyata, serta membuat class sederhana dengan attributes dan methods
-  \item Sub-CPMK 1.2: Memahami perbedaan antara class dan object
+  \item Sub-CPMK 3.1: Mengoperasikan panel Unity Editor dan mengelola Hierarchy serta Transform
 \end{subcpmk}
 
 % ============================================================
 % MATERI POKOK
 % ============================================================
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-03/section-3-1}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-03/section-3-2}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-03/section-3-3}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-03/section-3-4}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-03/section-3-5}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-03/section-3-6}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-03/section-3-7}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-03/section-3-8}
+\input{bab-03/section-3-1}
+\input{bab-03/section-3-2}
+\input{bab-03/section-3-3}
+\input{bab-03/section-3-4}
 
 % ============================================================
 % AKTIVITAS PEMBELAJARAN
 % ============================================================
 
 \begin{aktivitas}
-  \item \textbf{Identifikasi Class}: Dari studi kasus sistem perpustakaan, identifikasi minimal 5 class yang diperlukan beserta attributes dan methods-nya.
+  \item \textbf{Setup Project}: Install Unity Hub dan Unity Editor (versi LTS), buat project baru dengan template 3D, eksplorasi struktur folder project.
   
-  \item \textbf{Implementasi Class}: Buat class \class{Mobil} dengan attributes: merk, model, tahun, warna, harga. Tambahkan constructor dan methods yang sesuai.
+  \item \textbf{Eksplorasi Interface}: Buka semua panel utama Unity Editor, coba setiap tool di toolbar, buat beberapa GameObject dan eksplorasi Hierarchy serta Inspector.
   
-  \item \textbf{Object Interaction}: Buat class \class{Dosen} dan \class{MataKuliah}. Buat program yang mendemonstrasikan interaksi antara object dosen dan mata kuliah.
-  
-  \item \textbf{Static vs Instance}: Buat class \class{Counter} dengan static variable untuk menghitung jumlah object yang dibuat. Test dengan membuat beberapa object.
-  
-  \item \textbf{Code Review}: Bertukar kode dengan teman, review class yang dibuat teman Anda. Berikan feedback tentang naming, encapsulation, dan design.
+  \item \textbf{Setup Workflow}: Buat struktur folder yang terorganisir, buat scene baru dan setup basic hierarchy, buat beberapa GameObject dan convert ke Prefab.
 \end{aktivitas}
 
 % ============================================================
@@ -42,21 +33,19 @@
 % ============================================================
 
 \begin{latihan}
-  \item Jelaskan perbedaan antara class dan object! Berikan analogi dari dunia nyata.
+  \item Jelaskan sejarah singkat Unity Engine dan keunggulannya dibanding engine lain!
   
-  \item Apa fungsi constructor? Apa yang terjadi jika tidak mendefinisikan constructor dalam class?
+  \item Sebutkan langkah-langkah instalasi Unity Editor! Apa fungsi Unity Hub?
   
-  \item Jelaskan perbedaan antara instance variable dan static variable! Kapan sebaiknya menggunakan static variable?
+  \item Sebutkan 6 panel utama Unity Editor dan fungsinya masing-masing!
   
-  \item Buat class \class{RekeningBank} dengan attributes: nomorRekening, namaPemilik, saldo. Tambahkan methods: setor(), tarik(), cekSaldo(). Implementasikan validasi yang sesuai.
+  \item Apa perbedaan antara Scene dan Prefab? Kapan sebaiknya menggunakan Prefab?
   
-  \item Buat class \class{Lingkaran} dengan attribute radius. Tambahkan methods untuk menghitung luas dan keliling. Buat program untuk membuat beberapa object lingkaran dengan radius berbeda.
+  \item Jelaskan workflow dasar pengembangan game di Unity!
   
-  \item Modifikasi class \class{Mahasiswa} untuk menambahkan array nilai mata kuliah. Tambahkan method untuk menghitung IPK berdasarkan nilai-nilai tersebut.
+  \item Sebutkan struktur folder project yang disarankan untuk project Unity!
   
-  \item Buat class \class{Produk} untuk sistem e-commerce dengan attributes yang sesuai. Implementasikan method untuk menghitung harga setelah diskon.
-  
-  \item \textbf{Refleksi}: Apa tantangan terbesar yang Anda hadapi dalam memahami konsep class dan object? Bagaimana Anda mengatasinya?
+  \item \textbf{Refleksi}: Apa tantangan yang Anda hadapi saat pertama kali menggunakan Unity Editor?
 \end{latihan}
 
 % ============================================================
@@ -64,64 +53,41 @@
 % ============================================================
 
 \begin{asesmen}
-\textbf{Instrumen Penilaian untuk Sub-CPMK 1.2}
+\textbf{Instrumen Penilaian untuk Sub-CPMK 3.1}
 
 \textbf{A. Pilihan Ganda}
 
 \begin{enumerate}
-  \item Keyword yang digunakan untuk membuat object dalam Java adalah:
+  \item Aplikasi untuk mengelola berbagai versi Unity dan project disebut:
   \begin{enumerate}
-    \item create
-    \item new
-    \item object
-    \item instance
+    \item Unity Editor
+    \item Unity Hub
+    \item Asset Store
+    \item Package Manager
   \end{enumerate}
   
-  \item Manakah pernyataan yang BENAR tentang constructor?
+  \item Panel yang menampilkan semua GameObject dalam scene aktif adalah:
   \begin{enumerate}
-    \item Constructor harus memiliki return type
-    \item Nama constructor harus berbeda dengan nama class
-    \item Constructor dipanggil otomatis saat object dibuat
-    \item Satu class hanya boleh memiliki satu constructor
+    \item Inspector
+    \item Project
+    \item Hierarchy
+    \item Console
   \end{enumerate}
   
-  \item Static variable dalam class:
+  \item Template GameObject yang dapat digunakan kembali dan diinstansiasi berkali-kali disebut:
   \begin{enumerate}
-    \item Unik untuk setiap object
-    \item Dibagi oleh semua object
-    \item Tidak bisa diakses dari luar class
-    \item Harus selalu private
-  \end{enumerate}
-  
-  \item Keyword \code{this} digunakan untuk:
-  \begin{enumerate}
-    \item Merujuk pada superclass
-    \item Merujuk pada object saat ini
-    \item Membuat object baru
-    \item Menghapus object
+    \item Scene
+    \item Asset
+    \item Prefab
+    \item Component
   \end{enumerate}
 \end{enumerate}
 
 \textbf{B. Essay}
 
 \begin{enumerate}
-  \item Jelaskan perbedaan antara instance method dan static method! Berikan contoh penggunaan masing-masing.
-  
-  \item Mengapa encapsulation penting? Jelaskan menggunakan class \class{RekeningBank} sebagai contoh.
-\end{enumerate}
-
-\textbf{C. Coding Challenge}
-
-\begin{enumerate}
-  \item Buat class \class{Karyawan} dengan attributes: nik, nama, jabatan, gajiPokok. Tambahkan:
-  \begin{itemize}
-    \item Constructor dengan parameter
-    \item Getter dan setter methods
-    \item Method hitungGajiBersih() yang menghitung gaji setelah potongan pajak 10\%
-    \item Method tampilkanInfo()
-  \end{itemize}
-  
-  \item Buat program main yang membuat minimal 3 object karyawan dan menampilkan informasi mereka.
+  \item Jelaskan workflow pengembangan game di Unity dari planning hingga build!
+  \item Mengapa organisasi project penting? Sebutkan struktur folder yang disarankan!
 \end{enumerate}
 
 \textbf{Rubrik Penilaian}: Lihat Lampiran A
@@ -132,14 +98,12 @@
 % ============================================================
 
 \begin{checklist}
-  \item Saya dapat menjelaskan perbedaan antara class dan object
-  \item Saya dapat membuat class dengan attributes dan methods
-  \item Saya dapat membuat constructor dengan dan tanpa parameter
-  \item Saya dapat membuat dan menggunakan object dari class
-  \item Saya memahami penggunaan keyword \code{this}
-  \item Saya dapat membedakan instance variable dan static variable
-  \item Saya dapat mengidentifikasi class dan object dari studi kasus nyata
-  \item Saya dapat mengimplementasikan getter dan setter methods
+  \item Saya dapat menjelaskan sejarah dan keunggulan Unity
+  \item Saya dapat menginstal Unity Hub dan Unity Editor
+  \item Saya dapat mengoperasikan panel Scene, Game, Hierarchy, Inspector, Project, Console
+  \item Saya dapat membuat project baru dan memahami struktur foldernya
+  \item Saya memahami konsep Scene dan Prefab
+  \item Saya dapat mengelola Hierarchy dan Transform
 \end{checklist}
 
 % ============================================================
@@ -147,24 +111,21 @@
 % ============================================================
 
 \begin{rangkuman}
-Bab ini membahas konsep fundamental OOP: Class dan Object. Class adalah blueprint untuk membuat object, sedangkan object adalah instance dari class.
+Bab ini membahas pengenalan Unity Engine termasuk sejarah, instalasi, interface editor, workflow, dan package management.
 
 \textbf{Poin Kunci:}
 \begin{itemize}
-  \item Class terdiri dari attributes (data) dan methods (behavior)
-  \item Object dibuat menggunakan keyword \keyword{new}
-  \item Constructor adalah method khusus untuk inisialisasi object
-  \item Keyword \keyword{this} merujuk pada object saat ini
-  \item Instance members milik object, static members milik class
-  \item Encapsulation dicapai dengan access modifiers dan getter/setter
+  \item Unity adalah game engine cross-platform yang powerful dan user-friendly
+  \item Unity Hub untuk mengelola versi dan project
+  \item Panel utama: Scene, Game, Hierarchy, Inspector, Project, Console
+  \item Workflow: Planning, Asset Creation, Scene Setup, Scripting, Testing, Build
+  \item Scene dan Prefab adalah konsep fundamental Unity
 \end{itemize}
-
-\textbf{Kata Kunci}: \oop{Class}, \oop{Object}, \oop{Attribute}, \oop{Method}, \oop{Constructor}, \oop{this}, \oop{static}, \oop{instance}, \oop{instantiation}
 \end{rangkuman}
 
 \ifSubfilesClassLoaded{
   \renewcommand{\bibname}{Daftar Pustaka}
   \bibliographystyle{plain}
-  \bibliography{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/references}
+  \bibliography{../references}
 }{}
 \end{document}

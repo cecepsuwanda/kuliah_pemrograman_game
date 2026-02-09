@@ -1,33 +1,15 @@
-\section{Java Collections Framework dan Generics}
-\begin{subcpmk}
-  \item Sub-CPMK 3.1: Mengimplementasikan struktur data dengan Collections dan Generics
-\end{subcpmk}
+\section{AI Sederhana: Chase dan Patrol}
 
-\textbf{Java Collections Framework} adalah arsitektur terpadu untuk merepresentasikan dan memanipulasi koleksi object \cite{ref4}.
+\begin{learningoutcomes}
+\item Mengimplementasikan enemy chase (follow player)
+\item Mengimplementasikan patrol behavior
+\item Menggunakan NavMesh untuk pathfinding (3D)
+\end{learningoutcomes}
 
-\subsection{Jenis Collections}
-\begin{itemize}
-  \item \textbf{List}: urutan terjaga, boleh duplikat (ArrayList, LinkedList)
-  \item \textbf{Set}: tidak boleh duplikat (HashSet, TreeSet)
-  \item \textbf{Map}: pasangan key-value (HashMap, TreeMap)
-  \item \textbf{Queue}: antrian (PriorityQueue)
-\end{itemize}
+\subsection{Chase AI}
 
-\subsection{Generics}
-Generics membuat koleksi lebih aman terhadap tipe data dan mengurangi casting.
+Cari Transform player. Di Update: direction = (player.position - transform.position).normalized. MoveTowards atau velocity. Rotate menghadap player. Simple namun efektif untuk top-down/shooter.
 
-\begin{javacode}[caption={Contoh Collections dan Generics}]
-import java.util.ArrayList;
-import java.util.List;
+\subsection{Patrol AI}
 
-public class DemoList {
-    public static void main(String[] args) {
-        List<String> nama = new ArrayList<>();
-        nama.add("Ayu");
-        nama.add("Bima");
-        for (String n : nama) {
-            System.out.println(n);
-        }
-    }
-}
-\end{javacode}
+Array waypoints. Current waypoint index. MoveTowards(waypoints[index]). Saat sampai: index = (index+1) \% length. Atau patrol between two points.

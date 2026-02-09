@@ -1,41 +1,39 @@
-\section{Methods (Behavior)}
+\section{Unity Editor Interface}
 
-\subsection{Definisi Methods}
+\begin{learningoutcomes}
+\item Mengenal semua panel utama Unity Editor
+\item Memahami fungsi setiap panel
+\item Mampu mengatur layout editor
+\item Mampu melakukan navigasi dasar di Unity Editor
+\end{learningoutcomes}
 
-\textbf{Methods} adalah fungsi yang didefinisikan di dalam class untuk menentukan behavior dari object.
+\subsection{Panel Utama Unity Editor}
 
-\begin{javacode}[caption={Contoh Methods}]
-public class Mahasiswa {
-    String nim;
-    String nama;
-    double ipk;
-    
-    // Method untuk menampilkan info
-    public void tampilkanInfo() {
-        System.out.println("NIM: " + nim);
-        System.out.println("Nama: " + nama);
-        System.out.println("IPK: " + ipk);
-    }
-    
-    // Method untuk mengecek kelulusan
-    public boolean lulus() {
-        return ipk >= 2.0;
-    }
-    
-    // Method untuk mendapatkan predikat
-    public String getPredikat() {
-        if (ipk >= 3.5) return "Cum Laude";
-        else if (ipk >= 3.0) return "Sangat Memuaskan";
-        else if (ipk >= 2.5) return "Memuaskan";
-        else return "Cukup";
-    }
-}
-\end{javacode}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{figures/unity_editor.png}
+    \caption{Layout Standar Unity Editor}
+    \label{fig:unity_editor}
+\end{figure}
 
-\subsection{Jenis Methods}
+\subsubsection{Scene View}
+Area untuk mengedit dan mengatur scene. Navigasi: Pan (Q), Rotate (E), Scale (R), Move (W). Gizmos untuk manipulasi objek.
 
-\begin{enumerate}
-  \item \textbf{Accessor Methods (Getter)}: Mengambil nilai attribute
-  \item \textbf{Mutator Methods (Setter)}: Mengubah nilai attribute
-  \item \textbf{Utility Methods}: Melakukan operasi tertentu
-\end{enumerate}
+\subsubsection{Game View}
+Preview bagaimana game akan terlihat saat dimainkan. Aspect ratio dan resolution testing, Play mode preview.
+
+\subsubsection{Hierarchy}
+Menampilkan semua GameObject dalam scene aktif. Struktur parent-child, drag-and-drop untuk mengatur hierarchy.
+
+\subsubsection{Inspector}
+Menampilkan properti GameObject atau asset yang dipilih: Component properties, Transform values, Script variables.
+
+\subsubsection{Project}
+File browser untuk semua assets dalam project. Folder structure, asset preview, search dan filter.
+
+\subsubsection{Console}
+Menampilkan log, warning, dan error. Debug messages, error tracking.
+
+\subsection{Shortcuts Penting}
+
+\textbf{Ctrl/Cmd + S}: Save scene. \textbf{Ctrl/Cmd + Shift + N}: New GameObject. \textbf{F}: Focus pada objek terpilih. \textbf{Space}: Play/Pause. \textbf{Ctrl/Cmd + Shift + C}: Clear Console.

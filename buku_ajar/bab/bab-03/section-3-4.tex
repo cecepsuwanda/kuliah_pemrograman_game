@@ -1,47 +1,36 @@
-\section{Constructor}
+\section{Workflow Pengembangan Game di Unity}
 
-\subsection{Apa itu Constructor?}
+\begin{learningoutcomes}
+\item Memahami workflow dasar pengembangan game di Unity
+\item Mengetahui urutan kerja yang efisien
+\item Memahami konsep Scene dan Prefab
+\item Mampu mengorganisir project dengan baik
+\end{learningoutcomes}
 
-\begin{konsep}
-\textbf{Constructor} adalah method khusus yang dipanggil saat object dibuat. Constructor digunakan untuk menginisialisasi attributes object.
+\subsection{Workflow Dasar}
 
-Ciri-ciri constructor:
-\begin{itemize}
-  \item Nama sama dengan nama class
-  \item Tidak memiliki return type (bahkan bukan \code{void})
-  \item Dipanggil otomatis saat object dibuat dengan \keyword{new}
-\end{itemize}
-\end{konsep}
+Planning, Asset Creation, Scene Setup, Scripting, Testing (Play mode), Iteration, Build untuk target platform.
 
-\begin{javacode}[caption={Contoh Constructor}]
-public class Mahasiswa {
-    String nim;
-    String nama;
-    double ipk;
-    
-    // Constructor tanpa parameter (default constructor)
-    public Mahasiswa() {
-        nim = "0000";
-        nama = "Unknown";
-        ipk = 0.0;
-    }
-    
-    // Constructor dengan parameter
-    public Mahasiswa(String nim, String nama) {
-        this.nim = nim;
-        this.nama = nama;
-        this.ipk = 0.0;
-    }
-    
-    // Constructor dengan semua parameter
-    public Mahasiswa(String nim, String nama, double ipk) {
-        this.nim = nim;
-        this.nama = nama;
-        this.ipk = ipk;
-    }
-}
-\end{javacode}
+\subsection{Konsep Scene}
 
-\subsection{Constructor Overloading}
+\begin{definisi}[Scene]
+Scene adalah container yang berisi semua GameObject, lighting, dan settings untuk level atau bagian tertentu dari game \cite{UnityManual2024}.
+\end{definisi}
 
-Class dapat memiliki multiple constructors dengan parameter yang berbeda. Ini disebut \oop{constructor overloading}.
+Best Practices: Satu scene per level, organize dengan folder dalam Hierarchy, gunakan empty GameObject sebagai organizer, save scene secara teratur.
+
+\subsection{Konsep Prefab}
+
+\begin{definisi}[Prefab]
+Prefab adalah template GameObject yang dapat digunakan kembali dan diinstansiasi berkali-kali \cite{UnityManual2024}.
+\end{definisi}
+
+Gunakan Prefab untuk: GameObject yang digunakan berulang kali, konfigurasi kompleks, atau yang perlu diupdate secara konsisten.
+
+\subsection{Organisasi Project}
+
+Struktur folder yang disarankan: Scenes/, Scripts/, Art/, Audio/, Prefabs/, Materials/, Animations/.
+
+\subsection{Version Control}
+
+Unity bekerja dengan Git. Gunakan .gitignore untuk Unity. Jangan commit Library/ dan Temp/. Commit Assets/ dan ProjectSettings/.

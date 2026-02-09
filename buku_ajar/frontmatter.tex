@@ -6,16 +6,17 @@
 \begin{titlepage}
   \centering
   \vspace*{1cm}
-  {\LARGE\bfseries Pemrograman Berorientasi Objek\par}
+  {\LARGE\bfseries Pemrograman Game\par}
+  \vspace{0.5cm}
+  {\large Menggunakan Unity Engine dan C\#\par}
   \vspace{0.5cm}
   {\large Buku Ajar Berbasis Outcome-Based Education (OBE)\par}
   \vspace{1cm}
-  {\large Mata Kuliah: Pemrograman Berorientasi Objek\par}
-  {\large Kode: TIF-301\par}
+  {\large Mata Kuliah: Pemrograman Game\par}
+  {\large Kode: IF-XXX\par}
   \vspace{2cm}
-  {\large Program Studi Teknik Informatika\par}
-  {\large Fakultas Teknik\par}
-  {\large Universitas Lorem Ipsum\par}
+  {\large Program Studi S1 Informatika\par}
+  {\large Fakultas Teknologi Informasi\par}
   \vfill
   {\large 2026\par}
 \end{titlepage}
@@ -28,26 +29,25 @@
 \chapter*{Kata Pengantar}
 \addcontentsline{toc}{chapter}{Kata Pengantar}
 
-Puji syukur kehadirat Tuhan Yang Maha Esa atas terselesaikannya buku ajar \textit{Pemrograman Berorientasi Objek} ini. Buku ini disusun dengan pendekatan \textbf{Outcome-Based Education (OBE)}, yang berfokus pada pencapaian kompetensi terukur sesuai dengan Capaian Pembelajaran Lulusan (CPL) dan Capaian Pembelajaran Mata Kuliah (CPMK).
+Puji syukur kehadirat Tuhan Yang Maha Esa atas terselesaikannya buku ajar \textit{Pemrograman Game} ini. Buku ini disusun dengan pendekatan \textbf{Outcome-Based Education (OBE)}, yang berfokus pada pencapaian kompetensi terukur sesuai dengan Capaian Pembelajaran Lulusan (CPL) dan Capaian Pembelajaran Mata Kuliah (CPMK).
 
-Pemrograman Berorientasi Objek (OOP) merupakan paradigma pemrograman fundamental yang harus dikuasai oleh setiap mahasiswa Teknik Informatika. Paradigma ini tidak hanya mengajarkan cara menulis kode, tetapi juga cara berpikir dalam merancang solusi perangkat lunak yang modular, reusable, dan maintainable.
+Pemrograman Game merupakan mata kuliah yang mengajarkan pengembangan game menggunakan Unity Engine dan bahasa pemrograman C\#. Materi mencakup konsep dasar game development, pengenalan Unity, pemrograman C\# untuk game, serta implementasi fitur-fitur game seperti physics, animasi, UI, audio, dan AI.
 
-Buku ini dirancang untuk mendukung pembelajaran mahasiswa semester 3 dengan pendekatan student-centered learning. Setiap bab dilengkapi dengan:
+Buku ini dirancang untuk mendukung pembelajaran dengan pendekatan student-centered learning. Setiap bab dilengkapi dengan:
 \begin{itemize}
   \item Sub-CPMK yang jelas dan terukur
-  \item Materi pokok dengan contoh kode Java yang lengkap
+  \item Materi pokok dengan contoh kode C\# dan Unity yang lengkap
   \item Aktivitas pembelajaran yang mendorong eksplorasi mandiri
   \item Latihan dan refleksi untuk penguatan pemahaman
   \item Asesmen untuk mengukur pencapaian kompetensi
   \item Checklist kompetensi untuk self-assessment
 \end{itemize}
 
-Kami berharap buku ini dapat menjadi panduan yang efektif dalam perjalanan pembelajaran Anda menguasai Pemrograman Berorientasi Objek.
+Kami berharap buku ini dapat menjadi panduan yang efektif dalam perjalanan pembelajaran Anda menguasai Pemrograman Game.
 
 \vspace{1cm}
 \begin{flushright}
-Penyusun\\
-Dr. Lorem Ipsum, M.Kom.
+Penyusun
 \end{flushright}
 
 \cleardoublepage
@@ -65,23 +65,23 @@ Buku ajar ini dirancang dengan pendekatan OBE untuk memaksimalkan pencapaian pem
 \textbf{Bab I: Pendahuluan dan Orientasi}\\
 Memperkenalkan tujuan buku, keterkaitan dengan RPS, dan konteks kurikulum OBE.
 
-\textbf{Bab II: Landasan Teori}\\
-Menyajikan fondasi teoretis OOP yang menjadi basis pembelajaran seluruh bab berikutnya.
+\textbf{Bab II: Landasan Teori dan Konsep Dasar}\\
+Menyajikan fondasi teoretis game development (MDA framework, genre, GDD, lifecycle) yang menjadi basis pembelajaran seluruh bab berikutnya.
 
-\textbf{Bab III-XIII: Unit Materi Inti}\\
-Setiap bab mencakup satu topik utama OOP dengan struktur lengkap: Sub-CPMK, materi, aktivitas, latihan, asesmen, dan checklist.
+\textbf{Bab III-XIV: Unit Materi Inti}\\
+Setiap bab mencakup satu topik utama pengembangan game dengan Unity dan C\#: Unity Engine, C\#, GameObject, Input, Physics, Animation, UI, Audio, Level Design, AI, Optimization, dan Build.
 
-\textbf{Bab XIV: Evaluasi dan Integrasi}\\
+\textbf{Bab XV: Evaluasi dan Integrasi}\\
 Berisi asesmen komprehensif dan panduan refleksi untuk mengukur pencapaian kompetensi secara menyeluruh.
 
 \textbf{Lampiran}\\
-Menyediakan rubrik penilaian, glosarium istilah OOP, dan referensi tambahan.
+Menyediakan rubrik penilaian, glosarium istilah game development, dan referensi tambahan.
 
 \section*{Komponen dalam Setiap Bab}
 
 \begin{enumerate}
   \item \textbf{Sub-CPMK}: Baca dengan seksama untuk memahami kompetensi yang harus dicapai
-  \item \textbf{Materi Pokok}: Pelajari dengan cermat, jalankan semua contoh kode
+  \item \textbf{Materi Pokok}: Pelajari dengan cermat, jalankan semua contoh kode di Unity
   \item \textbf{Aktivitas Pembelajaran}: Lakukan secara mandiri atau berkelompok
   \item \textbf{Latihan}: Kerjakan untuk menguji pemahaman Anda
   \item \textbf{Asesmen}: Gunakan untuk mengukur pencapaian Sub-CPMK
@@ -91,12 +91,12 @@ Menyediakan rubrik penilaian, glosarium istilah OOP, dan referensi tambahan.
 \section*{Tips Belajar Efektif}
 
 \begin{itemize}
-  \item Jangan hanya membaca, praktikkan semua contoh kode
-  \item Gunakan IDE (Eclipse, IntelliJ IDEA, atau NetBeans) untuk eksperimen
+  \item Jangan hanya membaca, praktikkan semua contoh kode di Unity Editor
+  \item Gunakan Unity Hub dan Visual Studio / VS Code untuk pengembangan
   \item Kerjakan latihan sebelum melihat solusi
   \item Diskusikan konsep yang sulit dengan teman atau dosen
   \item Manfaatkan checklist untuk self-assessment berkala
-  \item Kerjakan proyek mini untuk mengintegrasikan konsep yang dipelajari
+  \item Kerjakan proyek game mini untuk mengintegrasikan konsep yang dipelajari
 \end{itemize}
 
 \cleardoublepage
@@ -108,13 +108,12 @@ Menyediakan rubrik penilaian, glosarium istilah OOP, dan referensi tambahan.
 \addcontentsline{toc}{chapter}{Identitas Mata Kuliah}
 
 \begin{tabular}{ll}
-  Nama Program Studi & : Teknik Informatika \\
-  Nama Mata Kuliah & : Pemrograman Berorientasi Objek \\
-  Kode Mata Kuliah & : TIF-301 \\
+  Nama Program Studi & : S1 Informatika \\
+  Nama Mata Kuliah & : Pemrograman Game \\
+  Kode Mata Kuliah & : IF-XXX \\
   Semester & : 3 (Tiga) \\
   SKS / Bobot Kredit & : 3 SKS (2 Teori, 1 Praktikum) \\
-  Dosen Pengampu & : Dr. Lorem Ipsum, M.Kom. \\
-  Tanggal Penyusunan & : 31 Januari 2026 \\
+  Tanggal Penyusunan & : 9 Februari 2026 \\
 \end{tabular}
 
 \vspace{1cm}
@@ -128,7 +127,7 @@ CPL yang dibebankan pada mata kuliah ini mencakup kompetensi lulusan dalam aspek
   
   \item \textbf{CPL-2 (Keterampilan Umum):} Mampu menerapkan pemikiran logis, kritis, sistematis, dan inovatif dalam konteks pengembangan atau implementasi ilmu pengetahuan dan teknologi yang memperhatikan dan menerapkan nilai humaniora.
   
-  \item \textbf{CPL-3 (Keterampilan Khusus):} Mampu merancang, mengimplementasikan, dan mengevaluasi sistem perangkat lunak menggunakan paradigma berorientasi objek dengan mempertimbangkan standar kualitas perangkat lunak.
+  \item \textbf{CPL-3 (Keterampilan Khusus):} Mampu merancang, mengimplementasikan, dan mengevaluasi sistem perangkat lunak termasuk aplikasi game dengan mempertimbangkan standar kualitas perangkat lunak.
   
   \item \textbf{CPL-4 (Sikap):} Menunjukkan sikap bertanggung jawab atas pekerjaan di bidang keahliannya secara mandiri dan mampu bekerja sama dalam tim.
 \end{enumerate}
@@ -138,40 +137,53 @@ CPL yang dibebankan pada mata kuliah ini mencakup kompetensi lulusan dalam aspek
 Kemampuan atau kompetensi spesifik yang diharapkan mahasiswa kuasai setelah menyelesaikan mata kuliah:
 
 \begin{enumerate}
-  \item \textbf{CPMK-1:} Mahasiswa mampu memahami dan menjelaskan konsep dasar pemrograman berorientasi objek (class, object, encapsulation, inheritance, polymorphism).
+  \item \textbf{CPMK-1:} Mahasiswa mampu menganalisis konsep dasar game development (mechanics, dynamics, aesthetics, GDD, lifecycle) dan menjelaskan workflow pengembangan game menggunakan Unity Engine.
   
-  \item \textbf{CPMK-2:} Mahasiswa mampu merancang solusi permasalahan menggunakan diagram UML (Use Case, Class Diagram, Sequence Diagram).
+  \item \textbf{CPMK-2:} Mahasiswa mampu menerapkan pemrograman C\# untuk Unity dengan menguasai struktur skrip (MonoBehaviour), lifecycle functions, variabel, kontrol alur program, dan konsep object-oriented programming dalam konteks game development.
   
-  \item \textbf{CPMK-3:} Mahasiswa mampu mengimplementasikan konsep OOP dalam bahasa pemrograman Java dengan menerapkan prinsip SOLID.
+  \item \textbf{CPMK-3:} Mahasiswa mampu mengoperasikan Unity Editor dengan mahir dalam mengelola GameObject, komponen (Transform, Rigidbody, Collider), Prefab, Scene, dan manajemen aset.
   
-  \item \textbf{CPMK-4:} Mahasiswa mampu menganalisis dan mengevaluasi kualitas kode program berorientasi objek berdasarkan best practices dan design patterns.
+  \item \textbf{CPMK-4:} Mahasiswa mampu mengimplementasikan sistem kontrol pemain menggunakan Input System Unity, menggerakkan karakter, dan menangani interaksi pemain dengan game world.
+  
+  \item \textbf{CPMK-5:} Mahasiswa mampu mengaplikasikan sistem fisika Unity (Rigidbody, Collider) untuk simulasi gerak, tumbukan, dan interaksi fisik dalam game.
+  
+  \item \textbf{CPMK-6:} Mahasiswa mampu membuat animasi karakter dan objek menggunakan Animator Controller, mengelola transisi animasi, dan mengintegrasikan animasi dengan gameplay.
+  
+  \item \textbf{CPMK-7:} Mahasiswa mampu merancang dan mengimplementasikan UI/UX game yang efektif meliputi HUD, menu navigasi, sistem scoring, dan feedback visual.
+  
+  \item \textbf{CPMK-8:} Mahasiswa mampu mengintegrasikan audio dalam game meliputi sound effect dan background music menggunakan AudioSource, AudioListener, dan Audio Mixer.
+  
+  \item \textbf{CPMK-9:} Mahasiswa mampu merancang level design dan game mechanics yang menarik, termasuk sistem progresi, tantangan, dan reward yang seimbang.
+  
+  \item \textbf{CPMK-10:} Mahasiswa mampu mengimplementasikan AI sederhana untuk NPC menggunakan teknik dasar seperti pathfinding dengan NavMesh, state machine, dan behavior scripting.
+  
+  \item \textbf{CPMK-11:} Mahasiswa mampu menganalisis dan mengoptimalkan performa game melalui profiling, debugging, dan teknik optimasi aset serta kode untuk berbagai platform target.
+  
+  \item \textbf{CPMK-12:} Mahasiswa mampu membangun dan mendeploy game ke berbagai platform (PC, Mobile, Web) dengan memahami proses build, pengaturan platform-specific, dan distribusi game.
+  
+  \item \textbf{CPMK-13:} Mahasiswa mampu merancang dan mengembangkan proyek game utuh yang mencakup semua aspek pembelajaran mulai dari konsep, desain, implementasi, pengujian, hingga publikasi dengan menerapkan best practices industri game development.
 \end{enumerate}
 
 \section*{Matriks Keterkaitan CPL dan CPMK}
 
 \begin{table}[h]
 \centering
-\begin{tabular}{|c|c|c|p{5cm}|}
+\small
+\begin{tabular}{|c|c|c|p{4.5cm}|}
   \hline
   \textbf{CPL} & \textbf{CPMK} & \textbf{Kontribusi} & \textbf{Keterangan} \\
   \hline
-  CPL-1 & CPMK-1 & Tinggi & Penguasaan konsep teoretis OOP \\
+  CPL-1 & CPMK-1 & Tinggi & Penguasaan konsep teoretis game development \\
   \hline
-  CPL-1 & CPMK-2 & Tinggi & Kemampuan merancang solusi dengan UML \\
+  CPL-1 & CPMK-2 & Tinggi & Kemampuan pemrograman C\# untuk Unity \\
   \hline
-  CPL-2 & CPMK-3 & Tinggi & Penerapan pemikiran sistematis dalam implementasi \\
+  CPL-2 & CPMK-3 s.d. 11 & Tinggi & Penerapan pemikiran sistematis dalam implementasi \\
   \hline
-  CPL-2 & CPMK-4 & Sedang & Pemikiran kritis dalam evaluasi kode \\
+  CPL-2 & CPMK-12, 13 & Sedang & Pemikiran kritis dalam optimasi dan deployment \\
   \hline
-  CPL-3 & CPMK-2 & Tinggi & Perancangan sistem perangkat lunak \\
+  CPL-3 & CPMK-2 s.d. 13 & Tinggi & Perancangan, implementasi, dan evaluasi game \\
   \hline
-  CPL-3 & CPMK-3 & Tinggi & Implementasi dengan standar kualitas \\
-  \hline
-  CPL-3 & CPMK-4 & Tinggi & Evaluasi kualitas perangkat lunak \\
-  \hline
-  CPL-4 & CPMK-3 & Sedang & Tanggung jawab dalam implementasi \\
-  \hline
-  CPL-4 & CPMK-4 & Sedang & Kerja sama dalam code review \\
+  CPL-4 & CPMK-13 & Sedang & Tanggung jawab dan kerja sama dalam proyek \\
   \hline
 \end{tabular}
 \caption{Matriks Keterkaitan CPL dan CPMK}
@@ -202,4 +214,3 @@ Kemampuan atau kompetensi spesifik yang diharapkan mahasiswa kuasai setelah meny
 \addcontentsline{toc}{chapter}{Daftar Kode Program}
 \lstlistoflistings
 \cleardoublepage
-

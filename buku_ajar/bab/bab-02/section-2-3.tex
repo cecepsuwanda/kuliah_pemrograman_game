@@ -1,57 +1,56 @@
-\section{Konsep Dasar OOP}
+\section{Game Design Document (GDD)}
 
-OOP dibangun di atas empat pilar utama:
+\begin{learningoutcomes}
+\item Memahami tujuan dan fungsi Game Design Document
+\item Mengetahui struktur dan komponen GDD
+\item Mampu menyusun GDD untuk konsep game
+\item Memahami pentingnya dokumentasi dalam pengembangan game
+\end{learningoutcomes}
 
-\subsection{1. Abstraksi (Abstraction)}
+\subsection{Pengertian Game Design Document}
 
-\begin{konsep}
-\textbf{Abstraksi} adalah proses menyembunyikan detail implementasi dan hanya menampilkan fungsionalitas kepada pengguna.
+\begin{definisi}[Game Design Document]
+Game Design Document (GDD) adalah dokumen komprehensif yang menjelaskan konsep, mekanik, desain, dan visi keseluruhan dari sebuah game \cite{Schell2019}.
+\end{definisi}
 
-Contoh: Ketika menggunakan mobil, Anda hanya perlu tahu cara menggunakan setir, pedal gas, dan rem. Anda tidak perlu tahu detail mesin internal.
-\end{konsep}
+GDD berfungsi sebagai blueprint untuk pengembangan game, komunikasi antara anggota tim, referensi selama proses development, dan dokumentasi untuk investor atau publisher.
 
-Dalam OOP, abstraksi dicapai melalui:
-\begin{itemize}
-  \item Abstract classes
-  \item Interfaces
-  \item Encapsulation
-\end{itemize}
+\subsection{Struktur GDD}
 
-\subsection{2. Enkapsulasi (Encapsulation)}
+\subsubsection{1. Executive Summary}
+Ringkasan singkat: judul game, genre, platform target, target audience, unique selling point.
 
-\begin{konsep}
-\textbf{Enkapsulasi} adalah pembungkusan data dan method yang beroperasi pada data tersebut dalam satu unit (class), serta menyembunyikan detail internal dari luar.
-\end{konsep}
+\subsubsection{2. Game Overview}
+Deskripsi umum: konsep inti, tema dan setting, tone dan mood, visual style.
 
-Manfaat enkapsulasi:
-\begin{itemize}
-  \item \textbf{Data Hiding}: Melindungi data dari akses tidak sah
-  \item \textbf{Modularity}: Kode lebih terorganisir
-  \item \textbf{Flexibility}: Mudah mengubah implementasi internal
-  \item \textbf{Maintainability}: Lebih mudah dipelihara
-\end{itemize}
+\subsubsection{3. Gameplay Mechanics}
+Detail mekanik: core mechanics, control scheme, progression system, win/lose conditions.
 
-\subsection{3. Pewarisan (Inheritance)}
+\subsubsection{4. Story and Narrative}
+Elemen naratif: plot overview, karakter utama, world building, dialog system.
 
-\begin{konsep}
-\textbf{Inheritance} adalah mekanisme di mana class baru (subclass) dapat mewarisi properties dan methods dari class yang sudah ada (superclass).
-\end{konsep}
+\subsubsection{5. Art and Visual Design}
+Arah visual: art style, color palette, character design, environment design.
 
-Manfaat inheritance:
-\begin{itemize}
-  \item \textbf{Code Reusability}: Tidak perlu menulis ulang kode yang sama
-  \item \textbf{Hierarchical Classification}: Organisasi class yang terstruktur
-  \item \textbf{Extensibility}: Mudah menambah fitur baru
-\end{itemize}
+\subsubsection{6. Audio Design}
+Elemen audio: music style, sound effects, voice acting, audio implementation.
 
-\subsection{4. Polimorfisme (Polymorphism)}
+\subsubsection{7. Technical Specifications}
+Spesifikasi teknis: engine yang digunakan, platform requirements, performance targets.
 
-\begin{konsep}
-\textbf{Polimorfisme} adalah kemampuan objek untuk mengambil banyak bentuk. Dalam OOP, ini berarti satu interface dapat digunakan untuk tipe data yang berbeda.
-\end{konsep}
+\subsubsection{8. Development Timeline}
+Jadwal pengembangan: milestones, resource requirements, risk assessment.
 
-Jenis polimorfisme:
-\begin{itemize}
-  \item \textbf{Compile-time Polymorphism}: Method overloading
-  \item \textbf{Runtime Polymorphism}: Method overriding
-\end{itemize}
+\subsection{Best Practices dalam Menulis GDD}
+
+\begin{enumerate}
+\item \textbf{Jelas dan Spesifik}: Hindari ambiguitas
+\item \textbf{Visual}: Gunakan diagram, mockup, dan referensi visual
+\item \textbf{Organized}: Struktur yang mudah diikuti
+\item \textbf{Accessible}: Mudah dipahami oleh semua anggota tim
+\item \textbf{Version Control}: Kelola perubahan dengan baik
+\end{enumerate}
+
+\begin{catatan}
+GDD adalah dokumen hidup yang dapat berubah selama proses development. Penting untuk menjaga GDD tetap update dengan perubahan desain.
+\end{catatan}

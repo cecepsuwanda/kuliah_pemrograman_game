@@ -1,0 +1,44 @@
+\section{Coroutine dan Event}
+
+\begin{learningoutcomes}
+\item Memahami konsep coroutine dan IEnumerator
+\item Menggunakan yield return untuk delay
+\item Mengimplementasikan event system
+\end{learningoutcomes}
+
+\subsection{Coroutine}
+
+\begin{definisi}[Coroutine]
+Coroutine adalah fungsi yang dapat menjeda eksekusinya sendiri dan melanjutkan di frame berikutnya \cite{UnityScriptingAPI2024}.
+\end{definisi}
+
+\begin{lstlisting}[language={[Sharp]C}]
+using System.Collections;
+using UnityEngine;
+
+IEnumerator Countdown()
+{
+    for (int i = 5; i > 0; i--)
+    {
+        Debug.Log(i);
+        yield return new WaitForSeconds(1f);
+    }
+}
+\end{lstlisting}
+
+\subsection{Event dan Delegate}
+
+\begin{lstlisting}[language={[Sharp]C}]
+using System;
+
+public static event Action OnGameOver;
+public static event Action<int> OnScoreChanged;
+
+// Subscribe di OnEnable, Unsubscribe di OnDisable
+void OnEnable() { GameManager.OnGameOver += HandleGameOver; }
+void OnDisable() { GameManager.OnGameOver -= HandleGameOver; }
+\end{lstlisting}
+
+\begin{catatan}
+Selalu unsubscribe event di OnDisable untuk menghindari memory leaks.
+\end{catatan}

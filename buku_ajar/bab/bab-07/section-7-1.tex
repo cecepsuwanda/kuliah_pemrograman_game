@@ -1,64 +1,15 @@
-\section{Abstract Class dan Abstraksi}
-\begin{subcpmk}
-  \item Sub-CPMK 3.2: Menerapkan polymorphism dalam desain aplikasi
-\end{subcpmk}
+\section{Physics, Rigidbody, dan Collider}
 
-\begin{konsep}
-\textbf{Abstraksi} melalui abstract class dan interface adalah mekanisme utama untuk mencapai desain yang fleksibel dalam Java \cite{ref4}. Abstract class tidak dapat diinstansiasi dan dapat memiliki method abstrak serta konkret.
-\end{konsep}
+\begin{learningoutcomes}
+\item Memahami konsep fisika Unity
+\item Menggunakan Rigidbody 2D/3D
+\item Mengkonfigurasi Collider untuk collision detection
+\end{learningoutcomes}
 
-\subsection{Karakteristik Abstract Class}
-\begin{itemize}
-  \item Dideklarasikan dengan keyword \keyword{abstract}
-  \item Dapat memiliki atribut dan constructor
-  \item Dapat memiliki method abstract dan non-abstract
-\end{itemize}
+\subsection{Rigidbody vs Collider}
 
-\begin{javacode}[caption={Contoh Abstract Class}]
-abstract class Pegawai {
-    protected String nama;
+Agar collision terjadi: minimal satu objek punya Rigidbody, kedua punya Collider. Rigidbody: fisika (gravity, velocity). Collider: bentuk untuk deteksi tabrakan. Tipe Collider 2D: Box, Circle, Capsule, Polygon.
 
-    public Pegawai(String nama) {
-        this.nama = nama;
-    }
+\subsection{Trigger vs Collision}
 
-    public abstract double hitungGaji();
-
-    public void tampilkanInfo() {
-        System.out.println("Nama: " + nama);
-    }
-}
-
-class PegawaiTetap extends Pegawai {
-    private double gajiBulanan;
-
-    public PegawaiTetap(String nama, double gajiBulanan) {
-        super(nama);
-        this.gajiBulanan = gajiBulanan;
-    }
-
-    @Override
-    public double hitungGaji() {
-        return gajiBulanan;
-    }
-}
-\end{javacode}
-
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}[node distance=2cm]
-  \node (pegawai) [class, fill=gray!20] {\textit{Pegawai}};
-  \node (tetap) [class, below=of pegawai] {PegawaiTetap};
-  
-  \draw [arrow] (tetap) -- (pegawai);
-\end{tikzpicture}
-\caption{Hierarki Class Pegawai (Abstract)}
-\end{figure}
-
-\subsection{Kapan Menggunakan Abstract Class}
-Gunakan abstract class ketika:
-\begin{itemize}
-  \item Ada perilaku umum yang ingin diwariskan
-  \item Ada method yang wajib diimplementasikan subclass
-  \item Dibutuhkan constructor atau state bersama
-\end{itemize}
+Is Trigger = true: OnTriggerEnter/Exit/Stay (tidak memblok fisik). Is Trigger = false: OnCollisionEnter (fisik collision). Peluru: Trigger. Player-Asteroid: Collision (Game Over).

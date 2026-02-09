@@ -1,58 +1,23 @@
-\section{Konsep Inheritance dan Relasi "is-a"}
-\begin{subcpmk}
-  \item Sub-CPMK 3.1: Mengimplementasikan inheritance dan method overriding
-\end{subcpmk}
+\section{GameObject, Transform, dan Hierarchy}
 
-\subsection{Konsep Pewarisan}
-\begin{konsep}
-Inheritance memungkinkan kita untuk membuat class baru berdasarkan class yang sudah ada, mewarisi semua attributes dan methods-nya \cite{ref4}. Relasi ini dikenal sebagai relasi \textit{is-a}.
-\end{konsep}
+\begin{learningoutcomes}
+\item Memahami konsep GameObject dan Hierarchy
+\item Menggunakan Transform component untuk posisi, rotasi, skala
+\item Memahami konsep parent-child
+\end{learningoutcomes}
 
-Keuntungan utama inheritance:
-\begin{itemize}
-  \item \textbf{Code reuse}: mengurangi duplikasi kode
-  \item \textbf{Extensibility}: menambah fitur dengan subclass
-  \item \textbf{Polymorphism}: memungkinkan penggunaan reference superclass
-\end{itemize}
+\subsection{GameObject}
 
-\subsection{Keyword \texttt{extends}}
-Dalam Java, inheritance dideklarasikan dengan keyword \keyword{extends}.
+\begin{definisi}[GameObject]
+GameObject adalah objek dasar dalam Unity yang dapat ditempatkan di scene dan memiliki komponen \cite{UnityManual2024}.
+\end{definisi}
 
-\begin{javacode}[caption={Inheritance Sederhana}]
-class Kendaraan {
-    protected String merk;
+Setiap GameObject memiliki komponen Transform (posisi, rotasi, skala). Buat GameObject: Hierarchy $\rightarrow$ klik kanan $\rightarrow$ 2D Object $\rightarrow$ Sprites.
 
-    public Kendaraan(String merk) {
-        this.merk = merk;
-    }
+\subsection{Transform Component}
 
-    public void nyalakan() {
-        System.out.println("Kendaraan dinyalakan");
-    }
-}
+Transform menyimpan Position (x, y, z), Rotation, dan Scale. Parent-child: saat parent bergerak, child ikut bergerak. Gunakan Empty GameObject sebagai organizer.
 
-class Mobil extends Kendaraan {
-    private int jumlahPintu;
+\subsection{Setup Project Space Survivor}
 
-    public Mobil(String merk, int jumlahPintu) {
-        super(merk);
-        this.jumlahPintu = jumlahPintu;
-    }
-}
-\end{javacode}
-
-\subsection{Hierarki Kelas}
-Hierarki kelas membantu kita mengorganisasi konsep dalam struktur bertingkat:
-
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}[node distance=1.5cm]
-  \node (kendaraan) [class] {Kendaraan};
-  \node (mobil) [class, below left=of kendaraan] {Mobil};
-  \node (motor) [class, below right=of kendaraan] {Motor};
-  
-  \draw [arrow] (mobil) -- (kendaraan);
-  \draw [arrow] (motor) -- (kendaraan);
-\end{tikzpicture}
-\caption{Contoh Hierarki Kelas (Relasi is-a)}
-\end{figure}
+Buat project 2D, struktur folder: Sprites, Scripts, Prefabs, Scenes, Audio. Buat Player dari Sprite Triangle, atur Scale, tambahkan child Engine.

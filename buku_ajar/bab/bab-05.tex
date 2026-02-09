@@ -1,12 +1,49 @@
-\documentclass[c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/main.tex]{subfiles}
+\documentclass[../main]{subfiles}
 \ifSubfilesClassLoaded{\setcounter{chapter}{4}}{}
 \begin{document}
-\chapter{Inheritance dan Hierarki Kelas}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-05/section-5-1}
-\input{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/bab/bab-05/section-5-2}
+
+\chapter{GameObject, Component, Prefab, dan Scene}
+
+\begin{subcpmk}
+  \item Sub-CPMK 3.2: Membuat Prefab dan mengelola Scene serta Build Settings
+\end{subcpmk}
+
+\input{bab-05/section-5-1}
+\input{bab-05/section-5-2}
+
+\begin{aktivitas}
+  \item \textbf{Space Survivor}: Buat project 2D, buat Player (Sprite Triangle), tambahkan Rigidbody 2D dan Collider.
+  \item \textbf{Prefab}: Buat Prefab Bullet dan Asteroid, simpan di folder Prefabs.
+  \item \textbf{Scene}: Buat scene MainMenu dan Gameplay, tambahkan ke Build Settings.
+\end{aktivitas}
+
+\begin{latihan}
+  \item Jelaskan perbedaan GameObject dan Component!
+  \item Apa fungsi Transform? Jelaskan parent-child relationship!
+  \item Kapan menggunakan Prefab?
+  \item Bagaimana menambahkan scene ke Build Settings?
+\end{latihan}
+
+\begin{asesmen}
+\textbf{Instrumen}: Membuat project Space Survivor dengan Player, Prefab Bullet/Asteroid, dan 2 scene.
+\textbf{Rubrik}: Lihat Lampiran A
+\end{asesmen}
+
+\begin{checklist}
+  \item Saya dapat membuat GameObject dan mengatur Hierarchy
+  \item Saya dapat menggunakan Transform
+  \item Saya dapat menambahkan Rigidbody dan Collider
+  \item Saya dapat membuat Prefab
+  \item Saya dapat mengelola Scene
+\end{checklist}
+
+\begin{rangkuman}
+GameObject adalah objek dasar Unity. Transform mengatur posisi, rotasi, skala. Prefab adalah template reusable. Scene adalah container untuk level. Komponen Rigidbody dan Collider untuk fisika dan tabrakan.
+\end{rangkuman}
+
 \ifSubfilesClassLoaded{
   \renewcommand{\bibname}{Daftar Pustaka}
   \bibliographystyle{plain}
-  \bibliography{c:/Matakuliah/template_silabus_buku_ajar/buku_ajar/references}
+  \bibliography{../references}
 }{}
 \end{document}
