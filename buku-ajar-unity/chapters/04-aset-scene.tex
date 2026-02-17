@@ -1,0 +1,45 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\chapter{Manajemen Aset dan Scene}
+
+\section{Impor Aset}
+Unity mendukung impor beragam format aset seperti gambar, audio, dan model 3D, masing-masing dengan pengaturan impor yang memengaruhi kualitas dan kinerja. Untuk tekstur, opsi seperti resolusi, kompresi, dan format (mis. ASTC/ETC) berdampak pada kualitas visual dan ukuran unduhan; untuk audio, pilihan kompresi dan streaming memengaruhi latensi dan memori. Pengaturan yang tepat menyeimbangkan kualitas dengan runtime dan target platform \parencite{unity-import-assets,unity-platform-texture}.
+
+Pengembang dianjurkan menetapkan preset impor agar konsisten di seluruh proyek, terutama dalam tim besar. Gunakan konvensi penamaan dan struktur folder berdasarkan tipe aset untuk mempercepat integrasi dan meminimalkan konflik kontrol versi. Dokumentasikan konfigurasi impor dan pipeline sumber sehingga pembaruan dari vendor eksternal tetap konsisten \parencite{unity-project-structure,unity-import-assets}.
+
+\section{Pengaturan Scene}
+Scene merepresentasikan susunan objek permainan pada konteks tertentu, seperti level atau menu utama. Pembagian fitur ke beberapa scene memudahkan pemuatan bertahap dan pengujian terisolasi, sekaligus mengurangi waktu iterasi. Manajemen ketergantungan antar scene menjadi penting agar transisi mulus dan bebas kebocoran sumber daya \parencite{unity-scenes}.
+
+\textit{Additive scene loading} memungkinkan beberapa scene aktif bersamaan, misalnya memisahkan geometri statis dari UI atau sistem gameplay. Pendekatan ini mendukung organisasi kerja lintas disiplin dan mengurangi konflik saat kontrol versi. Gunakan Build Settings dan indeks scene untuk menjamin urutan pemuatan yang konsisten \parencite{unity-scenes}.
+
+\begin{table}[h]
+  \centering
+  \caption{Strategi organisasi scene}
+  \begin{tabularx}{\textwidth}{@{}lXX@{}}
+    \toprule
+    Strategi & Kelebihan & Pertimbangan \\
+    \midrule
+    Satu scene besar & Sederhana untuk prototipe & Waktu muat panjang, risiko konflik versi \\
+    Multi-scene additive & Paralel lintas disiplin, modular & Butuh manajemen dependensi dan urutan load \\
+    Scene per sistem (UI/level) & Isolasi yang jelas & Koordinasi transisi antar scene \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\section{Pencahayaan Dasar}
+Sistem pencahayaan menentukan persepsi kedalaman, suasana, dan keterbacaan komposisi visual. Unity menyediakan \textit{realtime lighting} untuk sumber dinamis dan \textit{baked lighting} untuk optimasi pada geometri statis; kombinasi yang tepat meningkatkan kinerja tanpa menurunkan kualitas. Kalibrasi intensitas, warna, dan \textit{lightmap} perlu mempertimbangkan target perangkat keras \parencite{unity-lighting}.
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[thick]
+    \node[draw, rounded corners, minimum width=3.4cm, minimum height=1cm] (realtime) {Realtime Lights};
+    \node[draw, rounded corners, right=2.8cm of realtime, minimum width=3.4cm, minimum height=1cm] (baked) {Baked Lights};
+    \draw[<->] (realtime) -- node[above]{kualitas vs kinerja} (baked);
+  \end{tikzpicture}
+  \caption{Spektrum pengaturan pencahayaan antara realtime dan baked \parencite{unity-lighting}.}
+\end{figure}
+
+Penggunaan \textit{reflection probes} dan \textit{light probes} meningkatkan realisme pada objek bergerak tanpa biaya komputasi yang berlebihan. Penempatan dan ukuran volume harus mempertimbangkan material dominan, jarak kamera, dan dinamika adegan. Praktik ini menjaga konsistensi visual lintas platform \parencite{unity-lighting}.
+
+\onlyinsubfile{\printbibliography}
+\end{document}

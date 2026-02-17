@@ -1,0 +1,61 @@
+% Buku Ajar Pemrograman Game Menggunakan Unity
+\documentclass[a4paper,12pt]{book}
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[indonesian]{babel}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta}
+\usepackage{csquotes}
+\usepackage{subfiles}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{bookmark}
+\usepackage{tocloft}
+
+% Bibliografi dengan biblatex
+\usepackage[backend=biber,style=authoryear,sorting=nyt,maxbibnames=99]{biblatex}
+\addbibresource{references.bib}
+
+% Spasi dan tampilan
+\onehalfspacing
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+
+% Makro utilitas untuk subfile: abaikan konten saat dibangun dari buku utama
+\newcommand{\onlyinsubfile}[1]{}
+% (Opsional) placeholder bila ingin memanggil bibliografi per-bab
+\newcommand{\printchapterbibliography}{}
+
+\title{Buku Ajar: Pemrograman Game Menggunakan Unity}
+\author{Tim Pengajar Program Studi Teknik Informatika \\ Fakultas Teknologi Informasi \\ Universitas Bale Bandung}
+\date{\today}
+
+\begin{document}
+\frontmatter
+\maketitle
+\tableofcontents
+
+\mainmatter
+% Bab-bab (subfiles) — setiap bab dapat dikompilasi mandiri
+\subfile{chapters/00-frontmatter}
+\subfile{chapters/01-pengenalan}
+\subfile{chapters/02-dasar-csharp}
+\subfile{chapters/03-gameobject-komponen}
+\subfile{chapters/04-aset-scene}
+\subfile{chapters/05-kontrol-input}
+\subfile{chapters/06-fisika}
+\subfile{chapters/07-animasi}
+\subfile{chapters/08-ui}
+\subfile{chapters/09-audio}
+\subfile{chapters/10-ai-dasar}
+\subfile{chapters/11-mekanik-permainan}
+
+\backmatter
+\printbibliography
+
+\end{document}

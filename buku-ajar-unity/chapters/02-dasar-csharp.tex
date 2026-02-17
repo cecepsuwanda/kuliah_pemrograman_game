@@ -1,0 +1,40 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\chapter{Dasar Pemrograman C\# di Unity}
+
+\section{Struktur Skrip C\#}
+Skrip di Unity umumnya berupa kelas C\# yang mewarisi \texttt{MonoBehaviour} lalu dipasang pada \textit{GameObject}. Struktur ini membuat skrip berpartisipasi dalam pesan siklus hidup (\textit{lifecycle messages}) yang dipanggil mesin Unity seperti \texttt{Awake()}, \texttt{Start()}, dan \texttt{Update()}, serta berinteraksi dengan komponen lain di adegan. Konvensi penamaan yang konsisten dan pembagian tanggung jawab yang jelas antarkomponen meningkatkan keterbacaan dan pemeliharaan \parencite{mslearn-csharp-guide,unity-execution-order}.
+
+Setiap berkas skrip lazimnya memuat \textit{namespace}, deklarasi kelas, bidang (field), dan metode dengan antarmuka publik yang minimal. Praktik yang disarankan adalah menghindari logika bercabang berlebihan di satu kelas, dan memecah perilaku ke komponen kohesif melalui komposisi. Dengan pendekatan ini, proses pengujian, penggantian komponen, dan kolaborasi tim menjadi lebih terstruktur dan dapat diprediksi \parencite{mslearn-csharp-guide}.
+
+\section{Fungsi \texttt{Start()} dan \texttt{Update()}}
+Unity memanggil \texttt{Start()} sekali ketika komponen diinisialisasi secara aktif, dan \texttt{Update()} pada setiap frame saat komponen diaktifkan. Selain itu, \texttt{Awake()} terjadi lebih awal untuk menyiapkan dependensi, \texttt{OnEnable()} dipanggil saat komponen diaktifkan, dan \texttt{LateUpdate()} cocok untuk penyesuaian pasca-\texttt{Update()} seperti kamera. \texttt{FixedUpdate()} digunakan untuk logika fisika pada interval tetap agar simulasi stabil \parencite{unity-scripting-start-update,unity-execution-order}.
+
+Desain yang baik menempatkan inisialisasi yang berat di \texttt{Awake()} atau \texttt{Start()} dan meminimalkan pekerjaan tiap frame di \texttt{Update()}. Untuk mengurangi beban CPU, gunakan \textit{early return}, penjadwalan ulang proses, dan \textit{coroutines} saat menunggu peristiwa atau waktu, sehingga alur tetap responsif tanpa \textit{busy waiting}. Pemisahan logika peristiwa dan status juga membantu mencegah kompleksitas tak terkelola \parencite{unity-scripting-start-update,unity-coroutines}.
+
+\begin{table}[h]
+  \centering
+  \caption{Ringkasan event lifecycle pada \texttt{MonoBehaviour} \parencite{unity-execution-order}}
+  \begin{tabularx}{\textwidth}{@{}lX@{}}
+    \toprule
+    Event & Tujuan singkat \\
+    \midrule
+    \texttt{Awake()} & Inisialisasi awal sebelum referensi antarkomponen siap, dipanggil sekali \\
+    \texttt{OnEnable()} & Dipanggil saat komponen diaktifkan atau diaktifkan kembali \\
+    \texttt{Start()} & Inisialisasi setelah semua \texttt{Awake()}, dipanggil sekali \\
+    \texttt{Update()} & Logika per frame, bergantung laju bingkai \\
+    \texttt{FixedUpdate()} & Logika fisika pada interval tetap \\
+    \texttt{LateUpdate()} & Penyesuaian setelah \texttt{Update()}, misalnya kamera \\
+    \texttt{OnDisable()} & Dipanggil saat komponen dinonaktifkan \\
+    \texttt{OnDestroy()} & Pelepasan sumber daya sebelum objek dihancurkan \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\section{Variabel dan Tipe Data}
+C\# menyediakan tipe nilai dan tipe referensi untuk menyatakan keadaan objek permainan. Pemilihan tipe yang tepat—misalnya \texttt{float} untuk koordinat dan \texttt{Vector3} dari API Unity untuk posisi—meningkatkan kejelasan maksud dan mengurangi kebutuhan konversi. Selain itu, modifikator akses seperti \texttt{public} dan \texttt{private} mengatur enkapsulasi sehingga antarkomponen berinteraksi melalui antarmuka yang jelas \parencite{mslearn-csharp-guide,mslearn-csharp-types}.
+
+Di Unity, bidang bertanda \texttt{[SerializeField]} atau bertipe \texttt{public} dapat diedit melalui \textit{Inspector}, memudahkan penyetelan tanpa mengubah kode. Pemahaman aturan serialisasi Unity—termasuk dukungan terhadap tipe tertentu dan perilaku referensi—membantu menghindari kejutan saat memuat adegan. Untuk data bersama lintas adegan, pola \textit{data-as-asset} menggunakan \texttt{ScriptableObject} dapat dipertimbangkan \parencite{unity-serialization,unity-scriptableobject}.
+
+\onlyinsubfile{\printbibliography}
+\end{document}

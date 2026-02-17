@@ -1,0 +1,38 @@
+\babel@toc {indonesian}{}\relax 
+\contentsline {chapter}{\numberline {1}Pengenalan Pengembangan Game dan Unity}{3}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Konsep Dasar Game}{3}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Genre Game}{3}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Antarmuka dan Proyek Unity}{4}{section.1.3}%
+\contentsline {chapter}{\numberline {2}Dasar Pemrograman C\# di Unity}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Struktur Skrip C\#}{5}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Fungsi \texttt {Start()} dan \texttt {Update()}}{5}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Variabel dan Tipe Data}{6}{section.2.3}%
+\contentsline {chapter}{\numberline {3}GameObject dan Komponen Unity}{7}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Transform}{7}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Rigidbody dan Collider}{7}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Prefab}{8}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Manajemen Aset dan Scene}{9}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Impor Aset}{9}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Pengaturan Scene}{9}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Pencahayaan Dasar}{10}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Minggu 5: Kontrol Pemain dan Input}{11}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Pemrosesan Input}{11}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Menggerakkan Objek}{11}{section.5.2}%
+\contentsline {chapter}{\numberline {6}Minggu 6: Sistem Fisika}{13}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Simulasi Fisika dengan Rigidbody}{13}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Tumbukan dan Material Fisika}{13}{section.6.2}%
+\contentsline {chapter}{\numberline {7}Minggu 7: Animasi Game}{15}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Animator dan Animator Controller}{15}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Animasi Sprite dan 3D}{15}{section.7.2}%
+\contentsline {chapter}{\numberline {8}Minggu 8: Antarmuka Pengguna (UI)}{17}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Kanvas dan Elemen UI}{17}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Membangun HUD}{17}{section.8.2}%
+\contentsline {chapter}{\numberline {9}Minggu 9: Audio dalam Unity}{19}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Sistem Audio}{19}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Musik dan Efek Suara}{19}{section.9.2}%
+\contentsline {chapter}{\numberline {10}Minggu 10: Kecerdasan Buatan (AI) dasar}{21}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Agen Sederhana dan Navigasi}{21}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Skrip Perilaku Dasar}{21}{section.10.2}%
+\contentsline {chapter}{\numberline {11}Minggu 11: Mekanik Permainan}{23}{chapter.11}%
+\contentsline {section}{\numberline {11.1}Sistem Skor dan Progres}{23}{section.11.1}%
+\contentsline {section}{\numberline {11.2}Kondisi Menang/Kalah dan State Machine}{23}{section.11.2}%

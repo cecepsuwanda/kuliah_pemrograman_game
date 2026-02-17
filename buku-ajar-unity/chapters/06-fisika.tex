@@ -1,0 +1,45 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\chapter{Minggu 6: Sistem Fisika}
+
+\section{Simulasi Fisika dengan Rigidbody}
+\texttt{Rigidbody} memungkinkan objek mengikuti hukum dinamika Newton kira-kira melalui integrasi numerik pada setiap langkah simulasi. Parameter seperti massa, drag, dan gravitasi menentukan respons terhadap gaya dan torsi; sementara itu, metode \texttt{AddForce} dan \texttt{AddTorque} memberikan kontrol presisi terhadap akselerasi dan momentum. Dengan pemodelan yang tepat, simulasi terasa responsif namun tetap stabil \parencite{unity-rigidbody}.
+
+Interval simulasi fisika ditentukan oleh langkah tetap (\texttt{Time.fixedDeltaTime}) dan dieksekusi di \texttt{FixedUpdate()}. Ketika laju bingkai rendering berfluktuasi, gunakan interpolasi pada \texttt{Rigidbody.interpolation} untuk menghaluskan pergerakan visual tanpa mengubah hasil simulasi. Pengaturan ini membantu menjaga konsistensi antara domain fisika dan render \parencite{unity-rigidbody}.
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[node distance=2.4cm,>=Stealth,thick]
+    \tikzstyle{blk}=[rectangle, draw, rounded corners, minimum width=3.1cm, minimum height=1cm, align=center]
+    \node[blk] (input) {Gaya/Torsi};
+    \node[blk, right of=input] (rb) {Rigidbody};
+    \node[blk, right of=rb] (integrator) {Integrator (FixedUpdate)};
+    \node[blk, right of=integrator] (state) {Kecepatan/Posisi baru};
+    \draw[->] (input) -- (rb);
+    \draw[->] (rb) -- (integrator);
+    \draw[->] (integrator) -- (state);
+  \end{tikzpicture}
+  \caption{Alur sederhana penerapan gaya pada \texttt{Rigidbody} dan integrasi pada langkah fisika tetap.}
+\end{figure}
+
+\section{Tumbukan dan Material Fisika}
+Kombinasi collider dan material fisika menentukan sifat kontak seperti gesekan dan pantulan. Penggunaan \texttt{PhysicMaterial} menjaga konsistensi perilaku permukaan, sedangkan pengaturan koefisien restitusi memengaruhi pantulan saat tumbukan. Penyetelan yang hati-hati memastikan pengalaman bermain tetap dapat diprediksi dan menyenangkan \parencite{unity-collider,unity-physic-material}.
+
+Peristiwa \texttt{OnCollisionEnter} dan \texttt{OnTriggerEnter} memberi sinyal interaksi yang dapat dihubungkan ke logika permainan; pisahkan deteksi dari respons untuk menjaga keterbacaan. Atur kategori interaksi menggunakan layer dan matriks tumbukan agar hanya pasangan yang relevan dihitung oleh mesin fisika. Untuk objek berkecepatan tinggi, gunakan mode deteksi tumbukan \textit{continuous} untuk mencegah objek menembus permukaan \parencite{unity-collider,unity-layer-collision,unity-collision-detection}.
+
+\begin{table}[h]
+  \centering
+  \caption{Perbandingan mode deteksi tumbukan}
+  \begin{tabularx}{\textwidth}{@{}lXX@{}}
+    \toprule
+    Mode & Cakupan & Kapan digunakan \\
+    \midrule
+    Discrete & Pemeriksaan pada langkah tetap & Objek lambat/sedang; biaya terendah \\
+    Continuous & Pencegahan tembus pada target statis & Proyektil cepat; permukaan statis \\
+    Continuous Dynamic & Pencegahan tembus antardua objek dinamis & Dua objek cepat; biaya tertinggi \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\onlyinsubfile{\printbibliography}
+\end{document}

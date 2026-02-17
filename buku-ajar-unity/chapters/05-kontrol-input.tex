@@ -1,0 +1,44 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\chapter{Minggu 5: Kontrol Pemain dan Input}
+
+\section{Pemrosesan Input}
+Unity menyediakan dua pendekatan utama untuk input: sistem lama (\textit{Legacy Input}) dan paket \textit{Input System} yang lebih modern. Keduanya mendukung perangkat seperti keyboard, mouse, dan pengendali permainan, namun \textit{Input System} menawarkan pemetaan aksi dan skema kontrol yang lebih terstruktur. Pemilihan sistem hendaknya mempertimbangkan kebutuhan proyek, kompatibilitas platform, dan kemudahan pemeliharaan \parencite{unity-input-legacy,unity-input-system}.
+
+Pemetaan input berbasis aksi memisahkan niat pemain (misalnya \enquote{melompat}) dari perangkat fisik yang digunakan, sehingga mudah mendukung multi-perangkat dan aksesibilitas. Skema ini juga menyederhanakan pengujian karena logika permainan bergantung pada aksi, bukan tombol/axis tertentu. Dokumentasi skema input yang konsisten mempercepat adaptasi anggota tim dan mengurangi regresi saat menambah kontrol baru \parencite{unity-input-system}.
+
+\begin{table}[h]
+  \centering
+  \caption{Perbandingan singkat Legacy Input vs Input System}
+  \begin{tabularx}{\textwidth}{@{}lXX@{}}
+    \toprule
+    Aspek & Legacy Input & Input System \\
+    \midrule
+    Pemetaan & Tombol/axis langsung & Berbasis aksi dan binding fleksibel \\
+    Multi-perangkat & Terbatas & Bawaan, dukungan perangkat luas \\
+    Rebinding & Manual & Bawaan, runtime rebind \\
+    Pengujian & Tergantung perangkat & Mock aksi dan perangkat \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\section{Menggerakkan Objek}
+Pergerakan karakter atau objek dapat diimplementasikan melalui perubahan \texttt{Transform}, penerapan gaya pada \texttt{Rigidbody}, atau penggunaan karakter kontroler. Setiap pendekatan berdampak pada responsivitas dan konsistensi fisika; pilihlah sesuai genre dan tujuan desain. Untuk fisika, gunakan \texttt{FixedUpdate()} dengan penetapan gaya/kecepatan agar simulasi stabil \parencite{unity-rigidbody,unity-transform}.
+
+Untuk menjaga kestabilan, normalisasikan vektor gerak dan batasi kecepatan jika perlu, serta hindari \textit{tunneling} melalui pengaturan deteksi tumbukan yang sesuai. Teknik \textit{lerp} dan \textit{smooth damping} meningkatkan kehalusan transisi, sementara pengujian lintas laju bingkai memastikan perilaku konsisten di perangkat berbeda \parencite{unity-transform}.
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[node distance=2.6cm,>=Stealth,thick]
+    \tikzstyle{blk}=[rectangle, draw, rounded corners, minimum width=3.1cm, minimum height=1cm, align=center]
+    \node[blk] (input) {Input Aksi};
+    \node[blk, right of=input] (logic) {Logika Gerak};
+    \node[blk, right of=logic] (motion) {Transform / Rigidbody};
+    \draw[->] (input) -- (logic);
+    \draw[->] (logic) -- (motion);
+  \end{tikzpicture}
+  \caption{Alur sederhana: aksi input dipetakan ke logika gerak, lalu diterapkan ke \texttt{Transform} atau \texttt{Rigidbody}.}
+\end{figure}
+
+\onlyinsubfile{\printbibliography}
+\end{document}

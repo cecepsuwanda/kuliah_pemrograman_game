@@ -1,0 +1,16 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\chapter{Minggu 11: Mekanik Permainan}
+
+\section{Sistem Skor dan Progres}
+Sistem skor memberikan metrik kuantitatif atas performa pemain dan mendorong eksplorasi strategi yang lebih efektif. Implementasi yang baik memisahkan penyimpanan skor dari presentasi, sehingga perubahan tampilan tidak mempengaruhi logika inti. Penyimpanan persisten melalui \textit{PlayerPrefs} atau sistem penyimpanan khusus memungkinkan retensi progres antar sesi bermain \parencite{unity-manual-overview}.
+
+Pengaturan ekonomi permainan seperti hadiah, penalti, dan \textit{multiplier} harus dirancang untuk menjaga keseimbangan tantangan. Telemetri desain—misalnya distribusi skor dan tingkat penyelesaian—membantu penyesuaian parameter tanpa menebak-nebak. Dengan cara ini, pengalaman bermain dapat dioptimalkan secara bertahap berdasarkan data \parencite{gpp-nystrom}.
+
+\section{Kondisi Menang/Kalah dan State Machine}
+Penentuan kondisi akhir memberikan sasaran yang jelas dan kerangka evaluasi bagi pemain. Struktur \textit{state machine} membantu mengatur transisi antara keadaan seperti \enquote{bermain}, \enquote{jeda}, \enquote{menang}, dan \enquote{kalah}. Dengan membatasi efek samping pada saat transisi, risiko perilaku tak terduga dapat dikurangi \parencite{unity-state-machines}.
+
+Pemodelan keadaan yang eksplisit juga memudahkan integrasi dengan UI dan audio, misalnya memicu animasi kemenangan atau musik latar tertentu. Pengujian jalur kritis—termasuk skenario tepi seperti rematch atau memuat ulang—diperlukan untuk memastikan stabilitas. Praktik dokumentasi keadaan dan transisi menjaga kejelasan arsitektur sepanjang siklus hidup proyek \parencite{unity-state-machines,gpp-nystrom}.
+
+\onlyinsubfile{\printbibliography}
+\end{document}

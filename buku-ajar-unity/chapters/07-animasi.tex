@@ -1,0 +1,44 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\chapter{Minggu 7: Animasi Game}
+
+\section{Animator dan Animator Controller}
+Sistem Animator mengelola keadaan animasi melalui grafik keadaan (state machine) dan transisi yang dipicu parameter. \textit{Animator Controller} memetakan parameter—misalnya \texttt{bool isRunning}, \texttt{float speed}—ke peralihan antar keadaan sehingga animasi merespons input dan logika permainan. Menetapkan parameter yang ringkas dan bermakna menekan kompleksitas transisi tanpa mengorbankan ekspresivitas \parencite{unity-animator,unity-state-machines}.
+
+Lapisan (layers) dan penggabungan (blending) memungkinkan kombinasi animasi sebagian tubuh, seperti berlari sambil menembak. Penyetelan kurva transisi, ambang \textit{exit time}, dan \textit{transition duration} memengaruhi keluwesan dan ketepatan respons. Dokumentasi graf keadaan beserta rasional parameter mempercepat kolaborasi lintas peran \parencite{unity-animator}.
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[node distance=2.8cm,>=Stealth,thick]
+    \tikzstyle{st}=[circle, draw, minimum size=1.1cm, align=center]
+    \node[st] (idle) {Idle};
+    \node[st, right of=idle] (run) {Run};
+    \node[st, right of=run] (jump) {Jump};
+    \draw[->] (idle) -- node[above]{speed > 0} (run);
+    \draw[->] (run) -- node[above]{jump} (jump);
+    \draw[->] (jump) to[bend left=20] node[below]{landed} (idle);
+  \end{tikzpicture}
+  \caption{Contoh graf keadaan Animator dengan transisi bernuansa parameter.}
+\end{figure}
+
+\section{Animasi Sprite dan 3D}
+Untuk sprite 2D, klip animasi sering dibentuk dari rangkaian gambar atau \textit{sprite sheet}, sedangkan pada 3D, klip animasi berasal dari data \textit{rigging} dan \textit{skinning}. Keduanya memanfaatkan klip dan linimasa yang dapat disusun ulang untuk berbagai konteks. Konsistensi \textit{frame rate} dan skala penting untuk menjaga keselarasan gerakan dan menghindari \textit{stutter} \parencite{unity-animation-clips}.
+
+Teknik \textit{root motion} menyelaraskan perpindahan karakter di dunia dengan pergerakan pada klip, mengurangi selisih antara niat desain dan hasil simulasi. Validasi terhadap collider dan NavMesh diperlukan agar animasi tidak menyebabkan penetrasi geometri atau lompatan tak realistis. Dengan siklus iterasi yang baik, kualitas presentasi dapat meningkat tanpa biaya komputasi berlebihan \parencite{unity-animator,unity-state-machines}.
+
+\begin{table}[h]
+  \centering
+  \caption{Perbandingan pendekatan pergerakan}
+  \begin{tabularx}{\textwidth}{@{}lXX@{}}
+    \toprule
+    Pendekatan & Kelebihan & Pertimbangan \\
+    \midrule
+    Root Motion & Sinkron gerak–animasi & Butuh validasi fisika dan NavMesh \\
+    Scripted Motion & Kontrol penuh lewat kode & Sinkronisasi dengan klip diperlukan \\
+    Hybrid & Fleksibel & Kompleksitas integrasi lebih tinggi \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\onlyinsubfile{\printbibliography}
+\end{document}
