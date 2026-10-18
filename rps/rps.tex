@@ -1,0 +1,111 @@
+% =========================================================
+%  rps.tex
+%  SILABUS DAN RENCANA PEMBELAJARAN SEMESTER (RPS)
+%  Mata Kuliah : Pengantar Pemrograman Game (MWCA009)
+%  Program Studi Teknik Informatika
+%  Fakultas Teknologi Informasi
+%  Universitas Bale Bandung
+%
+%  Kompilasi:
+%    latexmk -pdf rps.tex
+%  atau:
+%    pdflatex rps.tex   (jalankan dua kali agar daftar isi terisi)
+% =========================================================
+
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Konfigurasi global --------------------------
+\input{config/packages}
+\input{config/styles}
+\input{config/commands}
+
+% ---------- Metadata PDF --------------------------------
+\hypersetup{
+  pdftitle  = {RPS Pengantar Pemrograman Game (MWCA009)},
+  pdfauthor = {\NamaDosen},
+  pdfsubject = {Silabus dan Rencana Pembelajaran Semester berbasis OBE}
+}
+
+\begin{document}
+
+% =========================================================
+%  HALAMAN JUDUL
+% =========================================================
+\begin{titlepage}
+\centering
+\thispagestyle{empty}
+
+{\large\bfseries\color{ubPrimary}\NamaPT\par}
+\vspace{0.2cm}
+{\large\color{ubPrimary}\NamaFakultas\par}
+{\large\color{ubPrimary}Program Studi \NamaProdi\par}
+
+\vspace{0.8cm}
+{\color{ubAccent}\rule{\textwidth}{1.2pt}}
+
+\vspace{1.4cm}
+
+{\Large\bfseries\color{ubPrimary}
+ SILABUS DAN\\[0.25cm] RENCANA PEMBELAJARAN SEMESTER (RPS)\par}
+
+\vspace{0.5cm}
+{\large Berbasis \istilah{Outcome-Based Education} (OBE)\par}
+
+\vspace{1.4cm}
+
+{\large\bfseries \NamaMK\par}
+\vspace{0.25cm}
+{\large Kode Mata Kuliah: \KodeMK\par}
+\vspace{0.15cm}
+{\large Bobot: 3 SKS (2 SKS teori, 1 SKS praktikum)\par}
+\vspace{0.15cm}
+{\large Semester: \SemesterMK\ --- Tahun Akademik \TahunAkademik\par}
+
+\vspace{1.8cm}
+
+{\color{ubAccent}\rule{\textwidth}{1.2pt}}
+\vspace{0.9cm}
+
+\begin{tabular}{@{}L{3.6cm}L{8.6cm}@{}}
+\textbf{Disusun oleh} & : \NamaDosen \\
+\textbf{Diperiksa oleh} & : Ketua Program Studi \NamaProdi \\
+\textbf{Disahkan oleh} & : Dekan \NamaFakultas \\
+\end{tabular}
+
+\vfill
+
+{\color{ubPrimary}\bfseries \NamaPT\par}
+{\color{ubPrimary}2026\par}
+
+\end{titlepage}
+
+% =========================================================
+%  DAFTAR ISI
+% =========================================================
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+\listoftables
+\newpage
+
+\pagenumbering{arabic}
+
+% =========================================================
+%  ISI DOKUMEN
+% =========================================================
+
+\input{sections/01-identitas}
+\input{sections/02-cpl}
+\input{sections/03-cpmk}
+\input{sections/04-sub-cpmk}
+\input{sections/05-materi}
+\input{sections/06-metode}
+\input{sections/07-pengalaman-belajar}
+\input{sections/08-penilaian}
+\input{sections/09-evaluasi-refleksi}
+\input{sections/10-referensi}
+
+\newpage
+\input{sections/11-pengesahan}
+
+\end{document}

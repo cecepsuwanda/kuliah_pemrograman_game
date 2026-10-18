@@ -1,0 +1,40 @@
+% chapters/07/rangkuman.tex
+\bagian{Rangkuman}
+
+\begin{rangkumanbox}
+\begin{itemize}
+  \item Kelas turunan \code{pygame.sprite.Sprite} menyatukan gambar, persegi
+        pembatas, dan perilaku sebuah benda. Dua anggotanya wajib bernama
+        \code{image} dan \code{rect}.
+  \item Wadah \code{pygame.sprite.Group} menyimpan sekumpulan benda dan
+        mengerjakan \code{update} serta \code{draw} untuk seluruhnya
+        sekaligus. Satu benda boleh berada pada beberapa wadah.
+  \item Tiga perintah pemeriksaan tabrakan: \code{colliderect} untuk dua
+        persegi, \code{spritecollide} untuk satu benda terhadap wadah, dan
+        \code{groupcollide} untuk dua wadah.
+  \item Mendeteksi tabrakan dan menyelesaikannya adalah dua pekerjaan yang
+        berbeda. Pustaka menjawab yang pertama; aturan permainan Anda
+        menentukan yang kedua.
+  \item Penyelesaian tabrakan dilakukan sumbu demi sumbu: gerak mendatar
+        diperiksa dan diselesaikan sampai tuntas, baru gerak tegak. Dengan
+        begitu sisi tabrakan dapat dipastikan dari arah gerak.
+  \item Posisi pada \code{rect} diperbaiki, lalu nilainya disalin kembali ke
+        posisi pecahan, sehingga posisi tetap menjadi sumber kebenaran.
+  \item Kecepatan pada sumbu yang diselesaikan dinolkan, agar benda tidak
+        tertekan ke dalam bongkahan dan bergetar di permukaannya.
+  \item Persegi pembatas kurang teliti untuk benda miring atau berlubang.
+        \istilah{Mask} dipakai untuk keperluan itu, dan cara yang paling
+        hemat adalah memakai persegi pembatas sebagai penyaring lebih dahulu.
+  \item Penanganan tabrakan yang salah tidak menimbulkan pesan kesalahan.
+        Empat gejala yang paling sering adalah benda menembus bongkahan tipis,
+        benda terangkat ke atas bongkahan padahal menabrak sisinya, benda
+        bergetar di permukaan, dan benda dinilai bersentuhan padahal belum.
+  \item Cara menelusurinya: dapatkan gejala yang dapat diulang, persempit
+        wilayahnya, pasang alat ukur, lalu ubah satu hal pada satu waktu.
+  \item Pemeriksa mandiri di dalam program, misalnya penghitung tumpang
+        tindih yang harus selalu bernilai nol, menemukan kesalahan lebih cepat
+        daripada pengamatan mata.
+  \item Bab ini menutup \CPMK{1}. Seluruh perkakas Blok~I---lingkungan kerja,
+        siklus permainan, gerak, fisika, dan tabrakan---telah lengkap.
+\end{itemize}
+\end{rangkumanbox}

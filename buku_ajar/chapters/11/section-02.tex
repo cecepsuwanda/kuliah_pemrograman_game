@@ -1,0 +1,81 @@
+% chapters/11/section-02.tex
+\section{Mengikuti Jalur}
+\label{sec:mengikuti-jalur}
+
+Rute hasil pencarian berupa rangkaian petak, sedangkan benda bergerak dalam
+satuan piksel per detik. Bagian ini menjelaskan cara menjembatani keduanya.
+
+\subsection{Bergerak Menuju Petak Berikutnya}
+
+Pengikut jalur bekerja dengan aturan yang sederhana: lihat petak pertama pada
+jalur, bergeraklah menuju titik tengahnya, dan apabila sudah cukup dekat,
+buanglah petak itu dari rangkaian lalu ulangi dengan petak berikutnya.
+
+\begin{kodekeluaran}
+def ikuti_jalur(self, delta_seconds, kecepatan, dinding):
+    while self.jalur:
+        tujuan = pusat_petak(self.jalur[0])
+        arah = tujuan - self.position
+        if arah.length() <= REACH_DISTANCE:
+            self.jalur.pop(0)
+            continue
+        self.position += arah.normalize() * kecepatan * delta_seconds
+        break
+\end{kodekeluaran}
+
+Tiga hal perlu diperhatikan.
+
+\begin{enumerate}
+  \item \textbf{Perulangan \code{while}, bukan \code{if}.} Perulangan itu
+        penting, sebab dalam satu bingkai NPC dapat melampaui lebih dari satu
+        petak apabila kecepatannya tinggi atau lajunya rendah. Tanpa perulangan,
+        petak-petak yang dilampaui itu tertinggal dan NPC berbalik untuk
+        mencapainya.
+  \item \textbf{Toleransi jarak \code{REACH_DISTANCE}.} Nilainya beberapa
+        piksel, bukan nol. Tanpa toleransi itu, NPC tidak akan pernah tepat
+        berada di titik tengah petak, sehingga petak itu tidak pernah dibuang
+        dan NPC berhenti di tempatnya selamanya.
+  \item \textbf{Jalur diperlakukan sebagai antrean.} Petak yang telah dilalui
+        dibuang dari depan, sehingga petak berikutnya selalu berada di depan.
+        Cara itu jauh lebih murah daripada menelusuri seluruh rangkaian setiap
+        bingkai.
+\end{enumerate}
+
+\subsection{Jalur yang Menjadi Usang}
+
+Ketika pemain berpindah, jalur yang sedang ditempuh menjadi usang: rangkaian
+petaknya masih menuju tempat pemain berada sebelumnya. NPC akan terus
+mengikutinya sampai selang hitung ulangnya habis, lalu memperbaiki arahnya.
+
+Perilaku itu wajar, dan justru itulah pertukaran yang harus Anda nilai pada
+bagian berikutnya. Memperpendek selang hitung ulang membuat NPC lebih tanggap
+tetapi lebih berat dihitung, sedangkan memperpanjangnya menghemat perhitungan
+tetapi membuat NPC sempat menempuh arah yang salah.
+
+\begin{catatabox}
+Pada permainan yang sesungguhnya, keusangan itu sering dikurangi dengan cara
+lain yang lebih murah daripada menghitung ulang: jalur diperiksa apakah masih
+memadai, misalnya dengan memeriksa apakah pemain masih berada di dekat ujung
+jalur. Apabila ya, jalur itu cukup diperpanjang, bukan dihitung ulang
+seluruhnya. Cara itu di luar cakupan bab ini, tetapi perlu Anda ketahui sebagai
+arah pengembangan.
+\end{catatabox}
+
+\subsection{Gerak yang Tidak Selalu Mulus}
+
+NPC bergerak menuju titik tengah setiap petak, sehingga
+lintasannya berupa rangkaian garis lurus antar-petak, bukan garis halus. Pada
+jalur yang berbelok tajam, geraknya terlihat menyudut.
+
+Cara memperhalusnya adalah dengan menyingkirkan petak-petak yang tidak perlu,
+yaitu petak-petak yang terletak pada satu garis lurus dengan petak sebelumnya
+dan berikutnya. Cara itu disebut penghalusan jalur (\istilah{path smoothing}),
+dan hasilnya adalah rangkaian titik belok saja, bukan seluruh petak.
+
+\begin{tipsbox}
+Sebelum menambahkan penghalusan jalur, perhatikan lebih dahulu apakah
+memang diperlukan. Pada permainan dengan petak yang kecil dan jumlah NPC
+yang sedikit, gerak menyudut itu hampir tidak terlihat. Menambahkan
+penghalusan menambah perhitungan dan menambah satu hal yang dapat salah.
+Kebiasaan mengukur lebih dahulu, baru memperbaiki, berlaku di sini.
+\end{tipsbox}

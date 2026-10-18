@@ -1,0 +1,84 @@
+% =========================================================
+%  config/styles.tex
+%  Warna, tipe kolom, format judul, header/footer, keterangan tabel
+% =========================================================
+
+% --- Warna institusi -----------------------------------
+\definecolor{ubPrimary}{HTML}{1F3864}
+\definecolor{ubAccent}{HTML}{2E75B6}
+\definecolor{ubHead}{HTML}{D9E2F3}
+\definecolor{ubAlt}{HTML}{F2F6FC}
+\definecolor{ubLine}{HTML}{BFBFBF}
+
+% --- Tipe kolom ----------------------------------------
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\Centering\arraybackslash}p{#1}}
+\newcolumntype{J}[1]{>{\justifying\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+
+% --- Jarak antar paragraf ------------------------------
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\renewcommand{\arraystretch}{1.25}
+
+% --- Toleransi pemenggalan baris -----------------------
+% Memberi keluaran satu kali lagi dengan peregangan tambahan sehingga
+% kotak teks yang sedikit melebihi lebar kolom dapat dihindari.
+\setlength{\emergencystretch}{2em}
+\tolerance=1500
+
+% --- Format judul section ------------------------------
+\titleformat{\section}
+  {\normalfont\large\bfseries\color{ubPrimary}}
+  {\thesection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.5em}{0.6em}
+
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries\color{ubAccent}}
+  {\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{1.1em}{0.4em}
+
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries}
+  {\thesubsubsection}{0.5em}{}
+\titlespacing*{\subsubsection}{0pt}{0.9em}{0.3em}
+
+% --- Header & footer -----------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\color{ubPrimary}Universitas Bale Bandung}
+\fancyhead[R]{\footnotesize\color{ubPrimary}RPS Pengantar Pemrograman Game}
+\fancyfoot[C]{\footnotesize\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% --- Keterangan tabel & gambar -------------------------
+\captionsetup{
+  font=small,
+  labelfont={bf,color=ubPrimary},
+  skip=4pt
+}
+
+% --- Daftar (list) -------------------------------------
+\setlist[itemize]{topsep=2pt,itemsep=1pt,parsep=0pt,leftmargin=1.2em}
+\setlist[enumerate]{topsep=2pt,itemsep=1pt,parsep=0pt,leftmargin=1.4em}
+
+% --- Tabel ringkas (keterangan di bawah tabel) ---------
+\newcommand{\tabsource}[1]{%
+  \par\vspace{2pt}{\footnotesize\itshape #1\par}%
+}
+
+% --- Garis tabel (booktabs) ----------------------------
+% Header tabel ditandai dengan garis tebal di atas dan tipis di bawah,
+% sebagai pengganti pewarnaan latar baris (colortbl tidak tersedia).
+\renewcommand{\toprule}{\specialrule{1.3pt}{0pt}{0pt}}
+\renewcommand{\midrule}{\specialrule{0.5pt}{0pt}{0pt}}
+
+% --- Tampilan tautan -----------------------------------
+\hypersetup{
+  colorlinks = true,
+  linkcolor  = ubPrimary,
+  urlcolor   = ubAccent,
+  citecolor  = ubAccent,
+  filecolor  = ubAccent
+}

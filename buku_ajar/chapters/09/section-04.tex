@@ -1,0 +1,113 @@
+% chapters/09/section-04.tex
+\section{Menguji Setiap Keadaan dan Perpindahannya}
+\label{sec:menguji-keadaan}
+
+Mesin keadaan sulit diperiksa dengan cara biasa, sebab perilakunya bergantung
+pada posisi pemain dan pada waktu. Bagian ini membahas cara mengujinya, sesuai
+indikator \ind{c} pada bab ini.
+
+\subsection{Mengapa Pengujiannya Sulit}
+
+Bayangkan Anda ingin memeriksa keadaan menyerang. Anda harus mendekatkan pemain
+sampai sedekat mungkin, menunggu NPC menyadarinya, lalu menunggu NPC mendekat.
+Setiap percobaan menuntut puluhan detik, dan hasilnya bergantung pada
+keterampilan Anda mengendalikan pemain. Cara itu jelas tidak memadai untuk
+memeriksa tujuh perpindahan yang berbeda.
+
+Tiga cara berikut dipakai bersama-sama pada bab ini.
+
+\subsection{Cara Pertama: Mencatat Perpindahan beserta Bingkainya}
+
+Program mencatat setiap perpindahan keadaan beserta nomor bingkai ketika
+perpindahan itu terjadi. Catatan itu ditampilkan pada jendela selama permainan
+berlangsung dan dicetak pada terminal ketika program berakhir.
+
+\begin{kodekeluaran}
+    0  berdiam
+   91  berpatroli
+  151  mengejar
+  217  menyerang
+  421  mengejar
+  482  berdiam
+  571  berpatroli
+\end{kodekeluaran}
+
+Catatan itu jauh lebih berguna daripada tangkapan layar. Ia memperlihatkan
+bukan hanya keadaan yang sedang aktif, melainkan urutan dan lamanya setiap
+keadaan. Dari catatan di atas, misalnya, tampak bahwa NPC berdiam selama 91
+bingkai, yaitu sekitar 1,5 detik, sesuai nilai pewaktu yang ditetapkan.
+
+\subsection{Cara Kedua: Skenario yang Dapat Diulang}
+
+Catatan perpindahan menjadi alat pengujian yang sesungguhnya apabila
+permainannya dapat dijalankan dengan skenario tetap. Program bab ini
+menyediakan pilihan \code{--scenario} yang menggerakkan pemain menurut jalur
+yang telah ditentukan, sehingga seluruh perpindahan terjadi dalam urutan yang
+dapat diperkirakan.
+
+Skenario itu menempatkan pemain pada tiga posisi, masing-masing selama jangka
+waktu yang cukup panjang, yaitu di luar jangkauan persepsi, di dalam jangkauan
+persepsi, lalu di luar jangkauan persepsi kembali. Dengan begitu, ketujuh
+perpindahan pada Tabel~\ref{tab:tujuh-perpindahan} terjadi seluruhnya.
+
+\begin{catatabox}
+Skenario itu menuntut pemain berdiri pada jarak yang
+\textbf{cukup jauh} ketika menghilang. Apabila jaraknya kurang jauh, NPC akan
+menemukan pemain kembali sebelum pewaktu tenggangnya habis, sebab NPC tetap
+bergerak mengejar selama pewaktu itu berjalan. Jarak yang diperlukan kira-kira
+sama dengan jari-jari persepsi ditambah kecepatan NPC dikalikan lama pewaktu
+tenggang. Pada nilai yang dipakai bab ini, jaraknya sekitar 410 piksel.
+\end{catatabox}
+
+\subsection{Cara Ketiga: Memeriksa Keabsahan Perpindahan}
+
+Cara kedua menuntut urutan yang tepat, sehingga hasilnya peka terhadap
+perbedaan kecepatan komputer. Karena itu, program bab ini juga memeriksa hal
+yang lebih mendasar: apakah setiap perpindahan yang terjadi termasuk
+perpindahan yang sah.
+
+\begin{kodekeluaran}
+LEGAL_TRANSITIONS = {
+    IDLE_STATE:   {PATROL_STATE, CHASE_STATE},
+    PATROL_STATE: {IDLE_STATE, CHASE_STATE},
+    CHASE_STATE:  {ATTACK_STATE, IDLE_STATE},
+    ATTACK_STATE: {CHASE_STATE},
+}
+\end{kodekeluaran}
+
+Tabel itu adalah diagram pada Gambar~\ref{fig:diagram-keadaan} yang ditulis
+kembali dalam bentuk yang dapat diperiksa program. Setiap pasangan keadaan yang
+berurutan pada catatan perpindahan diperiksa terhadap tabel itu.
+
+Pemeriksaan semacam ini disebut pemeriksaan \textbf{sifat yang harus selalu
+berlaku}. Ia tidak menuntut urutan tertentu, sehingga tahan terhadap perbedaan
+waktu antar-komputer, tetapi tetap mampu menangkap perpindahan yang keliru.
+Pada mesin keadaan yang lebih rumit, cara inilah yang paling berguna.
+
+\subsection{Memandang Keadaan sebagai Garis Waktu}
+
+Catatan perpindahan dapat pula digambarkan sebagai garis waktu, sehingga lama
+setiap keadaan terlihat sekaligus. Gambar~\ref{fig:garis-waktu-keadaan}
+memperlihatkannya untuk skenario pengujian di atas.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/garis-waktu-keadaan.tikz}
+\caption{Garis waktu keadaan NPC pada skenario pengujian}
+\label{fig:garis-waktu-keadaan}
+\end{figure}
+
+Gambar itu memperlihatkan hal yang tidak terlihat pada catatan angka, misalnya
+bahwa keadaan menyerang berlangsung paling lama, yaitu 204 bingkai. Angka itu
+dapat diperiksa dengan perhitungan: pemain berada di dalam jangkauan serang
+selama 3,4 detik, sehingga jumlah serangan seharusnya adalah 3,4 dibagi 0,8
+ditambah satu, yaitu sekitar lima serangan. Program mencatat lima serangan.
+
+\begin{catatabox}
+Apabila hasil pengujian tidak sesuai dengan dugaan Anda, periksalah lebih
+dahulu apakah dugaan Anda yang keliru, bukan programnya. Pengalaman penulis
+selama menyusun bab ini persis demikian: skenario pengujian semula dirancang
+dengan jarak yang tidak cukup jauh, sehingga NPC menemukan pemain kembali dan
+urutan keadaannya berbeda dari dugaan. Programnya benar; rancangan
+skenarionya yang perlu diperbaiki.
+\end{catatabox}

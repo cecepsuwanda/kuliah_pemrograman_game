@@ -1,0 +1,40 @@
+% chapters/09/rangkuman.tex
+\bagian{Rangkuman}
+
+\begin{rangkumanbox}
+\begin{itemize}
+  \item Variabel bernilai benar-salah pada Bab~VIII sudah merupakan mesin
+        keadaan dua keadaan. Yang ditambahkan mesin keadaan yang sesungguhnya
+        adalah keadaan yang lebih dari dua, syarat perpindahan yang tersendiri,
+        dan pekerjaan penyiapan ketika sebuah keadaan dimasuki.
+  \item NPC pada bab ini memiliki empat keadaan: berdiam, berpatroli, mengejar,
+        dan menyerang, dengan tujuh perpindahan yang sah.
+  \item Diagram keadaan--transisi memakai tiga lambang, yaitu kotak untuk
+        keadaan, anak panah untuk perpindahan, dan keterangan pada anak panah
+        untuk syaratnya.
+  \item Setiap perpindahan harus memiliki syarat yang dapat diperiksa, setiap
+        keadaan harus memiliki jalan keluar, dan tidak boleh ada dua syarat
+        yang saling bertentangan.
+  \item Tiga jenis pewaktu dipakai: pewaktu berdiam, pewaktu tenggang, dan
+        pewaktu jeda serangan. Ketiganya dijalankan dengan cara yang sama, yaitu
+        ditambah selang waktu lalu dibandingkan dengan nilai batasnya.
+  \item Di dalam kode, tiga pekerjaan dipisahkan: \code{decide} menentukan
+        keadaan berikutnya, \code{enter_state} menyiapkan keadaan baru, dan
+        \code{act} menjalankan perilakunya. Fungsi \code{decide} tidak mengubah
+        apa pun, sehingga keputusan dapat diperiksa terpisah dari tindakan.
+  \item Mesin keadaan diuji dengan tiga cara: mencatat perpindahan beserta
+        bingkainya, menjalankan skenario yang dapat diulang, dan memeriksa
+        keabsahan setiap perpindahan terhadap tabel perpindahan yang sah.
+  \item Pemeriksaan keabsahan merupakan pemeriksaan sifat yang harus selalu
+        berlaku; ia tidak menuntut urutan tertentu, sehingga tahan terhadap
+        perbedaan kecepatan komputer.
+  \item Ketujuh perpindahan pada skenario pengujian terjadi seluruhnya, dan
+        jumlah serangan yang tercatat, yaitu lima, sesuai dengan hitungan dari
+        lama keadaan menyerang dan pewaktu jedanya.
+  \item Apabila hasil pengujian tidak sesuai dengan dugaan, periksalah lebih
+        dahulu apakah dugaan atau rancangan pengujiannya yang keliru.
+  \item Mesin keadaan menentukan niat, bukan rute. NPC pada bab ini masih belum
+        dapat mengelilingi rintangan; kemampuan itu ditambahkan pada Bab~X
+        melalui pencarian jalur.
+\end{itemize}
+\end{rangkumanbox}

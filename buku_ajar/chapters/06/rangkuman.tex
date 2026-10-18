@@ -1,0 +1,39 @@
+% chapters/06/rangkuman.tex
+\bagian{Rangkuman}
+
+\begin{rangkumanbox}
+\begin{itemize}
+  \item Percepatan ditambahkan pada tahap pembaruan sebagai tingkat kedua:
+        percepatan mengubah kecepatan, lalu kecepatan mengubah posisi.
+  \item Urutan pembaruan itu wajib, sesuai kaidah Euler semi-implisit. Apabila
+        dibalik, benda tampak jatuh lebih cepat daripada seharusnya.
+  \item Pada koordinat layar, gravitasi bernilai positif karena mengarah ke
+        bawah, sedangkan kecepatan lompatan bernilai negatif karena mengarah
+        ke atas.
+  \item Benda yang menyentuh lantai diperiksa dengan tanda ketidaksamaan, bukan
+        kesamaan; pemeriksaan dengan kesamaan akan terlewat ketika benda
+        bergerak cepat.
+  \item Posisi dikembalikan ke permukaan lantai sebelum kecepatan diubah,
+        sehingga benda tidak terbenam ke dalam lantai.
+  \item Pemain memakai koefisien restitusi nol agar berhenti seketika dan
+        kendalinya tetap dapat diandalkan; bola memakai koefisien antara nol
+        dan satu agar pantulannya mereda dengan sendirinya.
+  \item Lompatan adalah impuls: kecepatan diganti, bukan ditambahkan, dan hanya
+        satu baris.
+  \item Lompatan dibaca sebagai peristiwa \code{KEYDOWN} agar menahan tombol
+        tidak menghasilkan lompatan berulang, dan hanya diizinkan ketika benda
+        menyentuh lantai.
+  \item Tinggi lompatan mengikuti $h = v_0^2 / (2g)$, sedangkan lama benda di
+        udara mengikuti $t = 2v_0/g$. Kedua rumus itu dipakai terbalik untuk
+        merancang rasa lompatan.
+  \item Pantulan membalik arah kecepatan dan mengalikannya dengan koefisien
+        restitusi. Tinggi pantulan menyusut sebesar kuadrat koefisien itu,
+        sehingga pada $e = 0{,}8$ tingginya tinggal 64 persen setiap kali.
+  \item Pantulan yang kecepatannya sudah di bawah nilai tertentu dihentikan,
+        agar benda tidak bergetar di permukaan lantai.
+  \item Pengukuran pada program memperlihatkan bahwa galat integrasi Euler
+        menyusut separuh setiap panjang langkah diperkecil separuh, dan bahwa
+        pada 60 bingkai per detik galatnya sekitar empat persen, yaitu tidak
+        terasa oleh pemain.
+\end{itemize}
+\end{rangkumanbox}

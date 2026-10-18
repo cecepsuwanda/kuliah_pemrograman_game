@@ -1,0 +1,127 @@
+% chapters/11/section-05.tex
+\section{Menyusun Skenario Uji dan Merumuskan Perbaikan}
+\label{sec:skenario-perbaikan}
+
+Bagian ini memuat dua indikator sekaligus: menyusun skenario uji
+(indikator \ind{a}) dan merumuskan perbaikan berdasarkan hasilnya
+(indikator \ind{c}).
+
+\subsection{Syarat Skenario Uji yang Berguna}
+
+Skenario uji pada kecerdasan buatan berbeda dari pengujian program biasa.
+Apabila pengujian biasa menuntut jawaban benar atau salah, skenario uji
+perilaku menuntut keadaan yang memicu perilaku tertentu, lalu pengamatan atas
+mutu perilaku itu.
+
+Skenario yang berguna memenuhi empat syarat.
+
+\begin{enumerate}
+  \item \textbf{Dapat diulang dengan hasil yang sama.} Posisi pemain dan
+        urutannya harus tetap, bukan bergantung pada kecakapan orang yang
+        menjalankannya. Cara yang dipakai pada bab ini adalah jalur pemain yang
+        ditentukan oleh nomor bingkai.
+  \item \textbf{Memicu perilaku yang hendak dinilai.} Apabila yang dinilai
+        adalah perilaku mengejar, skenario harus membuat pemain terlihat
+        selama jangka waktu yang cukup panjang.
+  \item \textbf{Memuat ukuran yang dapat dibandingkan.} Setiap skenario harus
+        menghasilkan angka, misalnya jarak rata-rata, banyaknya pencarian, atau
+        waktu yang diperlukan. Angka itulah yang dibandingkan antar-skenario.
+  \item \textbf{Mewakili keadaan pemakaian yang sesungguhnya.} Skenario pada
+        ruang terbuka saja tidak cukup; permainan yang sesungguhnya juga memuat
+        lorong sempit dan tikungan.
+\end{enumerate}
+
+\subsection{Tiga Skenario yang Diminta}
+
+RPS mata kuliah ini menuntut tiga skenario uji pada mini proyek AI. Ketiganya
+dipilih karena memicu kesulitan yang berbeda, dan ketiganya dapat dibangun
+dengan alat yang telah tersedia. Rinciannya pada
+Tabel~\ref{tab:tiga-skenario}.
+
+\begin{table}[htbp]
+\centering
+\caption{Tiga skenario uji beserta keadaan yang dipicu dan yang diamati}
+\label{tab:tiga-skenario}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{2.8cm} L{4.0cm} Y@{}}
+\toprule
+\headrow \textbf{Skenario} & \textbf{Keadaan yang dipicu} & \textbf{Yang diamati} \\
+\midrule
+Ruang terbuka &
+Pemain berlari lurus menjauh, tanpa rintangan di antaranya. &
+Apakah NPC dapat menyusul pemain, dan berapa lama waktu yang diperlukan.
+Pada ruang terbuka, jalur lurus sudah mencukupi, sehingga hasilnya menjadi
+pembanding bagi kedua skenario berikutnya. \\
+\addlinespace
+Labirin &
+Pemain berlari mengelilingi lorong, sehingga jalan lurus selalu terhalang. &
+Apakah NPC menemukan jalan memutar, dan apakah jalurnya berubah-ubah tanpa
+sebab. Perhatikan pula banyaknya pencarian jalur yang dijalankan. \\
+\addlinespace
+Rintangan dinamis &
+Sebuah benda bergerak menutupi lorong yang sedang dilalui NPC. &
+Apakah NPC dapat mengatasi jalur yang menjadi usang di tengah jalan, dan
+berapa lama waktu yang diperlukan untuk memperbaikinya. Skenario ini
+mengungkap kelemahan yang paling penting dari rancangan pada bab ini. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection{Bentuk Laporan Pengamatan}
+
+Hasil pengamatan sebaiknya dicatat dengan bentuk yang tetap, agar dapat
+dibandingkan. Bentuk yang dipakai pada mata kuliah ini memuat empat hal:
+nama skenario, keadaan yang dipicu, angka yang terukur, dan kesan mutu
+perilakunya.
+
+Angka yang terukur diambil dari program, sedangkan kesan mutunya berasal dari
+pengamatan Anda. Keduanya diperlukan: angka tanpa kesan tidak menjelaskan
+apakah perilakunya terasa baik, sedangkan kesan tanpa angka tidak dapat
+dibandingkan antar-skenario.
+
+\subsection{Merumuskan Perbaikan}
+
+Perbaikan yang baik memiliki tiga sifat: berdasarkan pengukuran, terarah pada
+penyebabnya, dan disertai cara mengukur keberhasilannya. Tabel~\ref{tab:perbaikan}
+memuat perbaikan yang penulis rumuskan untuk mini proyek ini, sebagai contoh
+bentuk perumusan yang dimaksud.
+
+\begin{table}[htbp]
+\centering
+\caption{Perbaikan yang dirumuskan berdasarkan hasil evaluasi}
+\label{tab:perbaikan}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.4cm} L{4.2cm} Y@{}}
+\toprule
+\headrow \textbf{Temuan} & \textbf{Usulan perbaikan} & \textbf{Cara mengukur keberhasilannya} \\
+\midrule
+Pencarian setiap bingkai tidak membawa perbaikan perilaku &
+Pakai selang hitung ulang 0,3 detik sebagai bawaan. &
+Banyaknya pencarian turun menjadi sepertiga, sedangkan jarak rata-rata tidak
+membesar. \\
+\addlinespace
+Seluruh NPC menghitung ulang pada bingkai yang sama, sehingga laju bingkai naik
+turun &
+Sebar waktu perhitungan dengan memberikan awal yang berbeda kepada setiap NPC. &
+Simpangan laju bingkai antar-bingkai menyusut, sedangkan rata-ratanya tidak
+berubah. \\
+\addlinespace
+Jalur dihitung ulang walaupun jalur yang lama masih memadai &
+Periksa lebih dahulu apakah ujung jalur masih dekat dengan pemain; apabila ya,
+perpanjang jalur itu alih-alih menghitungnya dari awal. &
+Banyaknya pencarian turun tanpa membesarnya jarak rata-rata. \\
+\addlinespace
+Gerak NPC terlihat menyudut pada tikungan &
+Singkirkan petak yang segaris, sehingga hanya titik belok yang tersisa. &
+Pengamatan atas geraknya, dan penambahan waktu perhitungan yang masih dapat
+diterima. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Tiga perbaikan pertama menuntut pengukuran yang telah Anda
+miliki, sedangkan perbaikan keempat menuntut pengamatan yang lebih halus.
+Membedakan keduanya penting: perbaikan yang dapat diukur dengan angka sebaiknya
+didahulukan, sebab keberhasilannya dapat dibuktikan, bukan hanya dirasakan.
+\end{catatabox}

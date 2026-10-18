@@ -1,0 +1,191 @@
+% =========================================================
+%  frontmatter/learning-outcomes.tex
+%  Capaian pembelajaran dan peta kompetensi
+% =========================================================
+
+\chapter*{Capaian Pembelajaran dan Peta Kompetensi}
+\addcontentsline{toc}{chapter}{Capaian Pembelajaran dan Peta Kompetensi}
+\thispagestyle{plain}
+
+Bagian ini memuat capaian pembelajaran yang dibebankan pada mata kuliah
+\NamaMK\ beserta peta keterkaitannya dengan bab-bab pada buku ini. Pembaca
+yang ingin mengetahui alasan sebuah materi diajarkan, atau ingin memastikan
+materi mana yang menopang suatu asesmen, dapat berpangkal dari tabel-tabel
+berikut.
+
+\section*{Capaian Pembelajaran Lulusan (CPL)}
+
+\begin{table}[htbp]
+\centering
+\caption{Rumusan capaian pembelajaran lulusan yang dibebankan pada mata kuliah}
+\label{tab:cpl-buku}
+\begin{tabularx}{\textwidth}{@{}C{1.8cm} Y@{}}
+\toprule
+\headrow \textbf{Kode} & \textbf{Rumusan} \\
+\midrule
+\CPL{03} &
+Kemampuan merancang dan menganalisis algoritma untuk menyelesaikan
+permasalahan secara optimal, serta memilih dan menerapkannya pada bahasa
+pemrograman tertentu. \\
+\addlinespace
+\CPL{04} &
+Kemampuan mendesain, mengimplementasi, dan mengevaluasi solusi berbasis
+\istilah{computing} yang memenuhi kebutuhan \istilah{computing} pada sebuah
+disiplin program. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section*{Capaian Pembelajaran Mata Kuliah (CPMK)}
+
+\begin{table}[htbp]
+\centering
+\caption{Rumusan CPMK, CPL yang didukung, dan ranah taksonomi Bloom}
+\label{tab:cpmk-buku}
+\begin{tabularx}{\textwidth}{@{}C{1.7cm}Y C{3.4cm} C{1.7cm}@{}}
+\toprule
+\headrow \textbf{Kode} & \textbf{Rumusan CPMK} & \textbf{CPL Terkait} & \textbf{Bloom} \\
+\midrule
+\CPMK{1} & Merancang \istilah{game loop} dan logika fisika sederhana. &
+\CPL{03} (utama), \CPL{04} (pendukung) & C2--C4 \\
+\addlinespace
+\CPMK{2} & Menerapkan algoritma kecerdasan buatan (AI) dasar untuk NPC. &
+\CPL{03} (utama), \CPL{04} (pendukung) & C3--C5 \\
+\addlinespace
+\CPMK{3} & Menggunakan \istilah{game engine} (Unity) untuk membangun level. &
+\CPL{04} (utama), \CPL{03} (pendukung) & C3--C4 \\
+\addlinespace
+\CPMK{4} & Mengintegrasikan aset audio dan visual ke dalam interaksi
+\istilah{game}. &
+\CPL{04} (utama), \CPL{03} (pendukung) & C3--C5 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Matriks hubungan CPL dan CPMK}
+\label{tab:matriks-cpl-cpmk-buku}
+\begin{tabularx}{\textwidth}{@{}L{4.4cm}@{\extracolsep{\fill}}C{2.3cm} C{2.3cm} C{2.3cm} C{2.3cm}@{}}
+\toprule
+\headrow & \textbf{\CPMK{1}} & \textbf{\CPMK{2}} & \textbf{\CPMK{3}} & \textbf{\CPMK{4}} \\
+\headrow & \footnotesize \istilah{Game loop} \& fisika & \footnotesize AI NPC & \footnotesize \istilah{Engine} \& level & \footnotesize Aset audio-visual \\
+\midrule
+\CPL{03} --- Algoritma dan bahasa & \Utama & \Utama & \Pendukung & \Pendukung \\
+\CPL{04} --- Desain, implementasi, evaluasi & \Pendukung & \Pendukung & \Utama & \Utama \\
+\bottomrule
+\end{tabularx}
+\tabsource{Keterangan: \textbf{Utama} = CPMK merupakan perwujudan langsung CPL;
+Pendukung = CPMK memperkuat pencapaian CPL.}
+\end{table}
+
+\clearpage
+
+\section*{Sub-CPMK}
+
+Setiap CPMK dijabarkan menjadi Sub-CPMK yang lebih spesifik dan terukur.
+Setiap Sub-CPMK pada tabel berikut menopang satu bab inti pada buku ini.
+
+\begin{table}[htbp]
+\centering
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\caption{Sub-CPMK, tingkat taksonomi Bloom, dan CPMK induknya}
+\label{tab:subcpmk-buku}
+\begin{tabularx}{\textwidth}{@{}C{1.5cm} Y C{1.6cm} C{1.5cm} C{1.7cm}@{}}
+\toprule
+\headrow \textbf{Kode} & \textbf{Rumusan Sub-CPMK} & \textbf{Bloom} & \textbf{CPMK} & \textbf{CPL} \\
+\midrule
+1.1 & Menjelaskan struktur \istilah{game loop} (input, \istilah{update},
+\istilah{render}) dan peran manajemen waktu dalam permainan. &
+C2 & \CPMK{1} & \CPL{03} \\
+\addlinespace
+1.2 & Merancang dan mengimplementasikan gerak objek berbasis \istilah{delta
+time} dan vektor pada Pygame. & C3 & \CPMK{1} & \CPL{03} \\
+\addlinespace
+1.3 & Menerapkan logika fisika sederhana (gravitasi, lompatan, pantulan)
+dalam simulasi 2D. & C3 & \CPMK{1} & \CPL{03} \\
+\addlinespace
+1.4 & Mendeteksi dan menangani \istilah{collision} menggunakan \code{Rect}
+dan/atau \istilah{mask} pada \istilah{sprite}. &
+C4 & \CPMK{1} & \CPL{03}, \CPL{04} \\
+\addlinespace
+2.1 & Merancang perilaku NPC sederhana (misalnya \istilah{chase})
+berdasarkan posisi pemain. & C3 & \CPMK{2} & \CPL{03} \\
+\addlinespace
+2.2 & Mengimplementasikan \istilah{Finite State Machine} (idle, patrol,
+chase, attack/flee) untuk NPC. & C3 & \CPMK{2} & \CPL{03} \\
+\addlinespace
+2.3 & Menerapkan \istilah{pathfinding} berbasis grid dengan algoritma A*
+untuk navigasi NPC. & C4 & \CPMK{2} & \CPL{03} \\
+\addlinespace
+2.4 & Mengevaluasi perilaku NPC hasil kombinasi FSM dan A* terhadap
+skenario permainan. & C5 & \CPMK{2} & \CPL{03}, \CPL{04} \\
+\addlinespace
+3.1 & Menavigasi antarmuka Unity dan menyusun \istilah{project},
+\istilah{scene}, serta \istilah{GameObject} dasar. &
+C3 & \CPMK{3} & \CPL{04} \\
+\addlinespace
+3.2 & Membangun level 2D/3D sederhana dengan \istilah{collider},
+\istilah{Rigidbody}, dan kontrol pemain. & C4 & \CPMK{3} & \CPL{04} \\
+\addlinespace
+4.1 & Mengimpor dan mengonfigurasi aset visual (\istilah{sprite}/model,
+animasi, UI) ke dalam \istilah{scene}. & C3 & \CPMK{4} & \CPL{04} \\
+\addlinespace
+4.2 & Mengintegrasikan aset audio dan memicu interaksi audio-visual
+berdasarkan peristiwa \istilah{game}. & C4 & \CPMK{4} & \CPL{04} \\
+\addlinespace
+4.3 & Mengevaluasi prototipe \istilah{game} melalui \istilah{playtesting}
+dan memperbaiki integrasi level serta aset. & C5 & \CPMK{4} & \CPL{04} \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\clearpage
+
+\section*{Peta Bab, Materi, dan Minggu Perkuliahan}
+
+Tabel berikut menghubungkan setiap bab pada buku ini dengan materi, Sub-CPMK,
+dan minggu pelaksanaan pada RPS. Kolom \istilah{Teknologi} menunjukkan
+perkakas utama yang dipakai pada bab tersebut.
+
+\begin{table}[htbp]
+\centering
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\caption{Peta bab buku ajar terhadap materi, Sub-CPMK, dan minggu RPS}
+\label{tab:peta-bab}
+\begin{tabularx}{\textwidth}{@{}C{1.2cm} L{4.3cm} C{1.5cm} C{1.8cm} C{1.5cm} Y@{}}
+\toprule
+\headrow \textbf{Bab} & \textbf{Judul Bab} & \textbf{Materi} & \textbf{Sub-CPMK} & \textbf{Minggu} & \textbf{Teknologi} \\
+\midrule
+I   & Pendahuluan dan Orientasi Buku & orientasi & --- & 1 & --- \\
+II  & Landasan Teori dan Konsep Dasar & fondasi & --- & 1 & --- \\
+III & Pengantar Pemrograman Game dan Persiapan Lingkungan & 1 & menuju 1.1 & 1 & Python/Pygame \\
+IV  & \istilah{Game Loop}, \istilah{Event Handling}, dan \istilah{Clock} & 2 & 1.1 & 2 & Python/Pygame \\
+V   & Gerak Objek, \code{Vector2}, Input, dan \istilah{Delta Time} & 3 & 1.2 & 3 & Python/Pygame \\
+VI  & Fisika Sederhana: Gravitasi, Lompatan, dan Pantulan & 4 & 1.3 & 4 & Python/Pygame \\
+VII & \istilah{Sprite}, \istilah{Group}, dan \istilah{Collision Detection} & 5 & 1.4 & 5 & Python/Pygame \\
+VIII& Pengantar AI NPC dan Perilaku \istilah{Chase} & 6 & 2.1 & 6 & Python/Pygame \\
+IX  & \istilah{Finite State Machine} untuk NPC & 7 & 2.2 & 7 & Python/Pygame \\
+X   & \istilah{Pathfinding} Grid: dari BFS/Dijkstra ke A* & 8 & 2.3 & 8 & Python/Pygame \\
+XI  & Integrasi FSM dan A* (Mini Proyek AI) & 9 & 2.4 & 9 & Python/Pygame \\
+---  & \itshape Ujian Tengah Semester & --- & 1.1--2.4 & 10 & --- \\
+XII & Pengenalan Unity: \istilah{Project}, \istilah{Scene}, \istilah{GameObject} & 10 & 3.1 & 11 & Unity \\
+XIII& Membangun Level, \istilah{Physics}, dan Kontrol Pemain & 11 & 3.2 & 12 & Unity \\
+XIV & Impor Aset Visual, Animasi, dan UI Dasar & 12 & 4.1 & 13 & Unity \\
+XV  & Integrasi Audio dan \istilah{Trigger} Interaksi & 13 & 4.2 & 14 & Unity \\
+XVI & Evaluasi Prototipe, \istilah{Playtesting}, dan Presentasi & 14 & 4.3 & 15 & Unity \\
+---  & \itshape Ujian Akhir Semester & --- & 3.1--4.3 & 16 & --- \\
+XVII& Evaluasi, Refleksi, dan Integrasi Kompetensi & penutup & 1.1--4.3 & --- & Python \& Unity \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Sumber: disusun dari RPS mata kuliah \NamaMK\ (\KodeMK).}
+\end{table}
+
+\begin{catatabox}
+Bagian akhir buku memuat empat lampiran pendukung: Lampiran~A rubrik
+penilaian lengkap, Lampiran~B contoh tugas dan lembar kerja penilaian,
+Lampiran~C glosarium istilah, dan Lampiran~D daftar sumber belajar
+tambahan. Peta bobot penilaian terhadap CPMK diuraikan pada Lampiran~A.
+\end{catatabox}
+
+\clearpage

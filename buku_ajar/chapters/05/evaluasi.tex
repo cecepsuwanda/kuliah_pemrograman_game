@@ -1,0 +1,94 @@
+% chapters/05/evaluasi.tex
+\bagian{Asesmen dan Instrumen Penilaian}
+\label{sec:asesmen-gerak}
+
+\begin{asesmenbox}
+\textbf{Kedudukan asesmen bab ini.} Bab ini menuntaskan \SUBCPMK{1.2},
+sehingga ketiga indikatornya diperiksa melalui dua instrumen: penilaian
+artefak program (Tugas Praktikum 03) dan soal konsep.
+
+\vspace{0.4em}
+Materi Bab~V termasuk bahan \textbf{Kuis 1} pada minggu kelima (Materi 1--4)
+dan bahan \textbf{Ujian Tengah Semester} pada minggu kesepuluh.
+\end{asesmenbox}
+
+\subsection*{Instrumen 1: Rubrik Praktikum 03}
+
+\begin{table}[htbp]
+\centering
+\caption{Rubrik penilaian Praktikum 03 beserta indikator yang diukur}
+\label{tab:rubrik-praktikum-03}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.2cm} C{1.3cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{Kriteria} & \textbf{Bobot} & \textbf{Indikator} & \textbf{Deskripsi capaian} \\
+\midrule
+Gerak berbasis vektor dan selang waktu & 35\% & \ind{a} &
+Objek digerakkan dengan \code{Vector2}, perpindahan dihitung dari kecepatan
+dikalikan selang waktu, dan vektor arah dinormalkan sehingga gerak diagonal
+tidak lebih cepat. \\
+\addlinespace
+Konsistensi kecepatan & 35\% & \ind{b} &
+Kecepatan terukur sama pada laju bingkai 30 dan 60; tabel pengukuran pada
+lembar kerja terisi dan disertai kesimpulan yang tepat. \\
+\addlinespace
+Penyelarasan posisi dan \code{Rect} & 30\% & \ind{c} &
+Posisi disimpan sebagai pecahan, \code{Rect} diselaraskan dengan pembulatan,
+dan dijelaskan mengapa pemotongan bilangan bulat merugikan. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection*{Instrumen 2: Soal Konsep}
+
+Jawablah dengan singkat. Kunci jawaban beserta indikator yang diukur
+disajikan pada Tabel~\ref{tab:kunci-konsep-ch05}.
+
+\begin{enumerate}
+  \item Mengapa vektor arah perlu dinormalkan sebelum dikalikan kecepatan?
+        Sertakan perhitungan singkat untuk mendukung jawaban Anda.
+  \item Tuliskan baris perhitungan perpindahan objek, lalu jelaskan satuan
+        setiap unsurnya.
+  \item Mengapa posisi objek disimpan sebagai bilangan pecahan, sedangkan
+        \code{Rect} bertipe bilangan bulat?
+  \item Apa akibatnya apabila posisi objek disimpan sebagai bilangan bulat pada
+        kecepatan 20 piksel per detik?
+  \item Apa perbedaan \code{normalize()} dan \code{normalize_ip()}?
+\end{enumerate}
+
+\begin{table}[htbp]
+\centering
+\caption{Kunci soal konsep Bab V beserta indikator yang diukur}
+\label{tab:kunci-konsep-ch05}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{0.8cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{No} & \textbf{Indikator} & \textbf{Pokok jawaban} \\
+\midrule
+1 & \ind{a} &
+Karena vektor arah dari dua tombol yang ditekan bersamaan bernilai (1, 1)
+dengan panjang $\sqrt{2} \approx 1{,}414$, sehingga kecepatannya menjadi
+$200 \times 1{,}414 = 283$ piksel per detik, yaitu 41 persen lebih cepat
+daripada gerak lurus. Penormalan membuat panjangnya satu untuk segala arah. \\
+\addlinespace
+2 & \ind{a} &
+\code{position = position + velocity * delta_seconds}. Kecepatan dalam piksel
+per detik, selang waktu dalam detik, hasilnya perpindahan dalam piksel. \\
+\addlinespace
+3 & \ind{c} &
+Posisi harus tepat dan berkelanjutan sehingga memerlukan pecahan agar
+perpindahan kecil terakumulasi; \code{Rect} dipakai untuk menggambar dan
+memeriksa tabrakan, dan letak piksel pada layar memang berupa bilangan
+bulat. \\
+\addlinespace
+4 & \ind{c} &
+Perpindahan setiap bingkai 0,333 piksel terpotong menjadi nol pada setiap
+bingkai, sehingga nilainya tidak pernah terakumulasi dan objek tidak bergerak
+sama sekali. \\
+\addlinespace
+5 & \ind{a} &
+\code{normalize()} mengembalikan vektor baru dengan panjang satu dan tidak
+mengubah vektor asalnya; \code{normalize_ip()} mengubah vektor asalnya. \\
+\bottomrule
+\end{tabularx}}
+\end{table}

@@ -1,0 +1,96 @@
+% chapters/09/evaluasi.tex
+\bagian{Asesmen dan Instrumen Penilaian}
+\label{sec:asesmen-fsm}
+
+\begin{asesmenbox}
+\textbf{Kedudukan asesmen bab ini.} Bab ini menuntaskan \SUBCPMK{2.2}.
+Ketiga indikatornya diperiksa melalui penilaian artefak program (Tugas
+Praktikum 07), diagram keadaan buatan sendiri, dan soal konsep.
+
+\vspace{0.4em}
+Materi Bab~IX termasuk bahan \textbf{Kuis 2} pada minggu kedelapan
+(Materi 6--7), sebab bab ini adalah materi terakhir pada blok kuis tersebut,
+dan termasuk bahan \textbf{Ujian Tengah Semester} pada minggu kesepuluh.
+\end{asesmenbox}
+
+\subsection*{Instrumen 1: Rubrik Praktikum 07}
+
+\begin{table}[htbp]
+\centering
+\caption{Rubrik penilaian Praktikum 07 beserta indikator yang diukur}
+\label{tab:rubrik-praktikum-07}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.2cm} C{1.3cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{Kriteria} & \textbf{Bobot} & \textbf{Indikator} & \textbf{Deskripsi capaian} \\
+\midrule
+Diagram keadaan--transisi & 30\% & \ind{a} &
+Diagram memuat empat keadaan beserta keadaan tambahan, setiap perpindahan
+diberi syarat yang dapat diperiksa, dan setiap keadaan memiliki jalan keluar. \\
+\addlinespace
+Penerapan mesin keadaan & 35\% & \ind{b} &
+Keputusan dipisahkan dari tindakan, transisi berbasis jarak dan pewaktu
+diterapkan dengan benar, dan ketiga jenis pewaktu dijelaskan keperluannya. \\
+\addlinespace
+Pengujian dan analisis & 35\% & \ind{c} &
+Catatan perpindahan beserta nomor bingkainya disajikan, skenario pengujian
+dijalankan, pemeriksaan keabsahan berjalan bersih, dan hasil perpindahan yang
+tidak sah dianalisis. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection*{Instrumen 2: Soal Konsep}
+
+Jawablah dengan singkat. Kunci jawaban beserta indikator yang diukur disajikan
+pada Tabel~\ref{tab:kunci-konsep-ch09}.
+
+\begin{enumerate}
+  \item Jelaskan tiga unsur yang ditambahkan mesin keadaan dibandingkan variabel
+        bernilai benar-salah.
+  \item Sebutkan tiga jenis pewaktu pada bab ini beserta keperluan
+        masing-masing.
+  \item Jelaskan mengapa fungsi \code{decide} tidak boleh mengubah keadaan apa
+        pun.
+  \item Sebuah NPC berada pada keadaan menyerang selama 3,6 detik dengan pewaktu
+        jeda serangan 0,9 detik. Hitunglah banyaknya serangan.
+  \item Mengapa pemeriksaan keabsahan perpindahan lebih berguna daripada
+        pemeriksaan urutan keadaan?
+\end{enumerate}
+
+\begin{table}[htbp]
+\centering
+\caption{Kunci soal konsep Bab IX beserta indikator yang diukur}
+\label{tab:kunci-konsep-ch09}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{0.8cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{No} & \textbf{Indikator} & \textbf{Pokok jawaban} \\
+\midrule
+1 & \ind{a} &
+Keadaan yang lebih dari dua beserta perilaku masing-masing; syarat perpindahan
+yang tersendiri untuk setiap pasangan keadaan; dan pekerjaan penyiapan ketika
+sebuah keadaan dimasuki. \\
+\addlinespace
+2 & \ind{b} &
+Pewaktu berdiam agar keadaan berdiam tidak langsung ditinggalkan; pewaktu
+tenggang agar NPC tidak langsung menyerah ketika kehilangan pemain; dan
+pewaktu jeda agar serangan tidak terjadi setiap bingkai. \\
+\addlinespace
+3 & \ind{b} &
+Agar keputusan dapat diperiksa terpisah dari tindakannya. Fungsi yang tidak
+mengubah apa pun dapat dipanggil berulang kali tanpa mempengaruhi jalannya
+permainan, sehingga syarat perpindahan dapat diuji langsung. \\
+\addlinespace
+4 & \ind{b} &
+$3{,}6 \div 0{,}9 = 4$, ditambah serangan pertama yang terjadi segera setelah
+keadaan dimasuki, sehingga seluruhnya 5 serangan. \\
+\addlinespace
+5 & \ind{c} &
+Karena pemeriksaan keabsahan tidak menuntut urutan tertentu, sehingga hasilnya
+tidak berubah walaupun kecepatan komputer berbeda. Pemeriksaan urutan peka
+terhadap perbedaan waktu, sedangkan pemeriksaan keabsahan tetap mampu
+menangkap perpindahan yang keliru. \\
+\bottomrule
+\end{tabularx}}
+\end{table}

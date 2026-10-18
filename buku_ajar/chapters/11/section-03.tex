@@ -1,0 +1,73 @@
+% chapters/11/section-03.tex
+\section{Batasan Kinerja dan Hitung Ulang Berkala}
+\label{sec:batas-kinerja}
+
+Pencarian jalur adalah perhitungan termahal pada blok Python ini. Bagian ini
+menghitung besarnya biaya itu dan menjelaskan cara mengendalikannya.
+
+\subsection{Menghitung Beban Perhitungan}
+
+Biaya pencarian jalur bertambah menurut tiga hal: banyaknya NPC, seringnya
+pencarian diulang, dan mahalnya satu kali pencarian. Ketiganya berlipat, bukan
+menjumlah.
+
+Sebagai gambaran, ambil angka dari pengukuran pada Bab~X, yaitu satu kali
+pencarian memeriksa sekitar 90 sampai 280 petak. Dengan tiga NPC yang
+menghitung ulang setiap bingkai pada laju 60 bingkai per detik, beban
+perhitungannya adalah
+
+\[
+3 \times 60 \times 90 = 16.200 \text{ petak setiap detik},
+\]
+
+yaitu sekitar enam belas ribu kali pemeriksaan petak setiap detik. Angka itu
+belum termasuk pekerjaan lain, yaitu menggambar, memperbarui gerak, dan
+menangani tabrakan.
+
+\begin{catatabox}
+Perhitungan di atas memakai angka \textbf{per detik}, bukan
+per bingkai. Kebiasaan berpikir dalam satuan per detik---yang telah dibangun
+sejak Bab~IV---sangat berguna di sini, sebab beban perhitunganlah yang
+menentukan apakah permainan masih dapat berjalan pada laju bingkai yang wajar.
+\end{catatabox}
+
+\subsection{Mengulang Pencarian Menurut Selang Waktu}
+
+Cara paling langsung untuk menekan beban itu adalah memperlambat pengulangan
+pencarian. Hasil pencarian disimpan pada NPC, lalu dipakai berkali-kali sampai
+selang waktunya habis.
+
+Pada program bab ini, selang itu dapat diatur melalui pilihan \code{--repath}.
+Nilai nol berarti pencarian diulang setiap bingkai, sedangkan nilai yang lebih
+besar memperlambat pengulangannya.
+
+Memperlambat pengulangan bukan tanpa harga. Selama selang itu,
+jalur yang ditempuh NPC menuju tempat pemain berada sebelumnya, sehingga NPC
+sempat menempuh arah yang salah. Menentukan selang yang tepat karena itu
+merupakan pertukaran, dan pertukaran itulah yang diukur pada
+Bagian~\ref{sec:menilai-mutu}.
+
+\subsection{Menyebar Waktu Perhitungan}
+
+Satu persoalan lain muncul ketika jumlah NPC bertambah: apabila seluruh NPC
+menghitung ulang jalurnya pada bingkai yang sama, beban perhitungan menumpuk
+pada bingkai itu, lalu longgar pada bingkai-bingkai berikutnya. Gejalanya
+adalah laju bingkai yang naik turun, walaupun rata-ratanya tetap.
+
+Penanganannya sederhana: \textbf{berikan awal yang berbeda} kepada setiap NPC,
+sehingga waktu perhitungan ulangnya tidak berbarengan.
+
+\begin{kodekeluaran}
+self.selang_tersisa = self.selang * (index / jumlah_npc)
+\end{kodekeluaran}
+
+Dengan pembagian itu, NPC pertama menghitung ulang pada awal selang, NPC kedua
+pada sepertiga selang, dan seterusnya. Beban rata-ratanya sama, tetapi
+sebarannya menjadi rata pula.
+
+\begin{tipsbox}
+Cara yang sama dipakai pada banyak bidang lain di luar permainan, misalnya
+pada peladen yang membagi pekerjaan latar belakangnya, atau pada robot yang
+membagi waktu perhitungan penglihatannya. Prinsipnya satu: pekerjaan yang
+mahal tetapi tidak mendesak sebaiknya disebar, bukan ditumpuk.
+\end{tipsbox}

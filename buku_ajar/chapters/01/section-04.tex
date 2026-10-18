@@ -1,0 +1,179 @@
+% chapters/01/section-04.tex
+\section{Konteks Kurikulum OBE dan Sistem Asesmen}
+\label{sec:kurikulum-obe}
+
+Bagian ini menguraikan bagaimana capaian yang telah Anda baca sebelumnya
+diterjemahkan menjadi penilaian. Memahami bagian ini sejak awal akan membuat
+Anda bekerja dengan arah yang jelas: Anda mengetahui bukti apa yang harus
+dihasilkan, kapan harus dihasilkan, dan dengan ukuran apa dinilai.
+
+\subsection{Ranah Taksonomi Bloom dan Tuntutan Tiap Tingkat}
+
+Setiap Sub-CPMK pada mata kuliah ini diberi tingkat ranah kognitif menurut
+taksonomi Bloom, mulai dari C2 (memahami) sampai C5 (mengevaluasi). Tingkat
+tersebut bukan hiasan, melainkan penanda seberapa jauh Anda dituntut menguasai
+materi. Tabel~\ref{tab:bloom} menjelaskan tuntutan setiap tingkat beserta
+contohnya pada mata kuliah ini.
+
+\begin{table}[htbp]
+\centering
+\caption{Tingkat ranah Bloom, tuntutannya, dan contoh pada mata kuliah ini}
+\label{tab:bloom}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.0cm} L{3.4cm} L{4.3cm} Y@{}}
+\toprule
+\headrow \textbf{Tkt} & \textbf{Kata kerja khas} & \textbf{Tuntutan} & \textbf{Contoh pada mata kuliah ini} \\
+\midrule
+C2 & menjelaskan, mengidentifikasi, membedakan &
+Menunjukkan pemahaman dengan kata-kata sendiri, tanpa menuntut karya baru. &
+Menjelaskan urutan tahapan \istilah{game loop} dan peran pembatasan laju
+bingkai (\SUBCPMK{1.1}). \\
+\addlinespace
+C3 & menulis, mengimplementasikan, mengonfigurasi &
+Menghasilkan karya yang berjalan sesuai maksud, dengan mengikuti konsep yang
+sudah dipelajari. &
+Menulis kode gerak berbasis \istilah{delta time} pada Pygame
+(\SUBCPMK{1.2}); mengonfigurasi \istilah{Collider} pada Unity
+(\SUBCPMK{3.2}). \\
+\addlinespace
+C4 & menganalisis, memilih, menyesuaikan, memperbaiki &
+Menemukan penyebab kegagalan atau memilih di antara beberapa cara, dengan
+alasan yang dapat dipertanggungjawabkan. &
+Memilih metode deteksi tabrakan yang sesuai dan memperbaiki tabrakan yang
+lolos deteksi (\SUBCPMK{1.4}); menganalisis pengaruh heuristik pada A*
+(\SUBCPMK{2.3}). \\
+\addlinespace
+C5 & mengevaluasi, menilai, merumuskan perbaikan &
+Menilai mutu hasil kerja sendiri berdasarkan kriteria, lalu merumuskan
+perbaikan yang ditindaklanjuti. &
+Menilai perilaku NPC hasil gabungan mesin keadaan dan A* terhadap skenario
+permainan (\SUBCPMK{2.4}); mengevaluasi prototipe melalui
+\istilah{playtesting} (\SUBCPMK{4.3}). \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Tuntutan meningkat dari blok ke blok. Blok I dan Blok II
+banyak menuntut C3 dan C4 (menghasilkan dan menganalisis), sedangkan Blok II
+dan Blok IV menutup dengan C5 (mengevaluasi). Pola ini menjelaskan mengapa
+laporan \istilah{playtest} dan refleksi menjadi bagian penilaian, bukan
+pelengkap.
+
+\subsection{Asesmen Autentik dan Portofolio}
+
+Asesmen pada mata kuliah ini bersifat autentik: yang dinilai adalah artefak
+nyata hasil pekerjaan Anda, bukan kemampuan mengingat. Bentuk artefaknya
+berupa kode program yang dapat dijalankan, level yang dapat dimainkan,
+laporan pengujian, dan lembar refleksi.
+
+Praktikum dikerjakan setiap minggu secara individual dan dikumpulkan melalui
+repositori Git pribadi. Setiap tugas memuat kode program, tangkapan layar
+hasil, serta catatan singkat mengenai kendala yang dihadapi dan cara
+penyelesaiannya. Dosen menilai enam sampel portofolio secara acak sebagai
+dasar nilai portofolio. Cara ini dipilih dengan sengaja: karena sampelnya
+acak, mengerjakan seluruh rangkaian tugas secara berkelanjutan menjadi jauh
+lebih menguntungkan daripada mengerjakan sebagian tugas dengan sangat baik.
+
+Umpan balik diberikan setiap minggu, bukan hanya pada akhir blok. Manfaatkan
+umpan balik tersebut selagi materinya masih dekat, karena memperbaiki kode
+yang Anda tulis minggu ini jauh lebih mudah daripada memperbaiki kode yang
+sama tiga minggu kemudian.
+
+\subsection{Komponen Asesmen dan Waktu Pelaksanaannya}
+
+Penilaian pada mata kuliah ini berasal dari enam komponen yang tersebar
+sepanjang semester.
+
+\begin{itemize}
+  \item \textbf{Tugas praktikum dan portofolio} (dikerjakan sepanjang
+        semester). Dua belas tugas praktikum pada minggu 1--8 dan 11--14
+        dikumpulkan melalui repositori Git, masing-masing berisi kode,
+        tangkapan layar, dan catatan kendala. Enam di antaranya dinilai sebagai
+        sampel. Komponen ini mengukur \CPMK{1} sampai \CPMK{4}.
+  \item \textbf{Kuis 1} (minggu 5) atas Materi 1--4 dan \textbf{Kuis 2}
+        (minggu 8) atas Materi 6--7. Keduanya berupa tes singkat 15--20 menit
+        yang mengukur \CPMK{1} dan \CPMK{2} secara formatif.
+  \item \textbf{Mini proyek AI} (dikumpulkan dan dipresentasikan pada minggu
+        9). Dinilai dari kode NPC bermesin keadaan dan pencarian jalur A*,
+        laporan \istilah{playtest}, dan presentasi kelompok. Komponen ini
+        mengukur \CPMK{2}.
+  \item \textbf{Ujian Tengah Semester} (minggu 10) atas \CPMK{1} dan
+        \CPMK{2}, berupa tes tulis konsep dan uji kode perbaikan kesalahan pada
+        program Pygame dalam batas waktu.
+  \item \textbf{Proyek akhir} (dikumpulkan pada minggu 15--16). Dinilai dari
+        berkas terpasang (\istilah{build}), kode sumber, laporan pengembangan,
+        presentasi, dan uji fungsional oleh dosen. Komponen ini mengukur
+        \CPMK{3} dan \CPMK{4}.
+  \item \textbf{Partisipasi dan kehadiran} (sepanjang semester), dinilai
+        melalui observasi kehadiran dan keaktifan pada praktikum, diskusi,
+        serta kegiatan \istilah{playtest}.
+\end{itemize}
+
+Bobot setiap komponen, matriks bobot terhadap CPMK, rubrik penilaian, dan
+ketentuan konversi nilainya diuraikan pada Lampiran~A.
+
+\subsection{Kriteria Ketuntasan dan Ambang Ketercapaian}
+
+Anda dinyatakan lulus mata kuliah ini apabila memenuhi tiga ketentuan
+sekaligus:
+\begin{enumerate}
+  \item memperoleh nilai akhir minimal \textbf{60} (huruf C);
+  \item memiliki tingkat kehadiran minimal \textbf{75\%} dari seluruh
+        pertemuan;
+  \item menyerahkan seluruh keluaran wajib berupa mini proyek AI dan proyek
+        akhir.
+\end{enumerate}
+Nilai akhir dikonversi menjadi huruf dengan rentang A untuk nilai 80 ke atas,
+B untuk 70--79, C untuk 60--69, D untuk 50--59, dan E untuk nilai di bawah 50.
+
+Selain kriteria untuk mahasiswa, terdapat pula ambang ketercapaian yang
+dipakai dosen untuk menilai keberhasilan penyelenggaraan mata kuliah, yaitu
+sekurang-kurangnya 75\% mahasiswa memperoleh nilai 70 atau lebih pada setiap
+CPMK. Ambang ini adalah alat pemantauan mutu, bukan syarat tambahan bagi
+nilai Anda. Apabila suatu CPMK belum mencapai ambang tersebut, dosen mencatat
+penyebabnya---apakah pada materi, metode, atau instrumen asesmennya---lalu
+menyesuaikan pelaksanaan pada semester berikutnya.
+
+\subsection{Beban Belajar Tiga Satuan Kredit Semester}
+
+Bobot \BobotSKS\ bukan sekadar penanda jumlah pertemuan. Mengacu pada
+ketentuan beban belajar, setiap satu satuan kredit semester setara dengan 50
+menit tatap muka, 60 menit belajar terstruktur, dan 60 menit belajar mandiri
+setiap minggu. Rinciannya diperlihatkan pada Tabel~\ref{tab:alokasi-buku}.
+
+\begin{table}[htbp]
+\centering
+\caption{Bentuk kegiatan dan alokasi waktu selama enam belas minggu}
+\label{tab:alokasi-buku}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.2cm} Y C{2.5cm} C{3.0cm}@{}}
+\toprule
+\headrow \textbf{Bentuk} & \textbf{Kegiatan} & \textbf{Per minggu} & \textbf{Total 16 minggu} \\
+\midrule
+Tatap muka (TM) &
+Kuliah interaktif, demonstrasi kode, dan praktikum terbimbing di
+laboratorium. &
+150 menit & 2.400 menit (40 jam) \\
+\addlinespace
+Belajar terstruktur (BT) &
+Tugas praktikum, latihan terarah, tugas membaca, dan pengerjaan proyek
+terjadwal. &
+180 menit & 2.880 menit (48 jam) \\
+\addlinespace
+Belajar mandiri (BM) &
+Menelusuri dokumentasi resmi, bereksperimen dengan kode, dan menyelesaikan
+proyek. &
+180 menit & 2.880 menit (48 jam) \\
+\midrule
+\textbf{Total} & & \textbf{510 menit} & \textbf{8.160 menit (136 jam)} \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Sumber: RPS mata kuliah \NamaMK.}
+\end{table}
+
+Angka tersebut menjelaskan satu hal yang sering diremehkan: waktu tatap muka
+hanya menempati sekitar tiga puluh persen dari seluruh beban belajar. Sisanya
+berada di tangan Anda, dalam bentuk mengerjakan praktikum dan mempelajari
+dokumentasi. Mata kuliah pemrograman tidak dapat dikuasai hanya dengan hadir
+dan menyimak; keterampilan menulis program terbentuk melalui latihan yang
+cukup banyak dan berulang.

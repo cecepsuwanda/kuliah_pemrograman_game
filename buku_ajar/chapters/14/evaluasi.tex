@@ -1,0 +1,93 @@
+% chapters/14/evaluasi.tex
+\bagian{Asesmen dan Instrumen Penilaian}
+\label{sec:asesmen-aset}
+
+\begin{asesmenbox}
+\textbf{Kedudukan asesmen bab ini.} Bab ini menuntaskan \SUBCPMK{4.1}, yaitu
+bab pertama pada \CPMK{4}. Ketiga indikatornya diperiksa melalui penilaian
+artefak \istilah{project} (Tugas Praktikum 11) dan soal konsep.
+
+\vspace{0.4em}
+Materi Bab~XIV termasuk bahan \textbf{Proyek Akhir} pada minggu kelima belas
+dan \textbf{Ujian Akhir Semester} pada minggu keenam belas.
+\end{asesmenbox}
+
+\subsection*{Instrumen 1: Rubrik Praktikum 11}
+
+\begin{table}[htbp]
+\centering
+\caption{Rubrik penilaian Praktikum 11 beserta indikator yang diukur}
+\label{tab:rubrik-praktikum-11}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.2cm} C{1.3cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{Kriteria} & \textbf{Bobot} & \textbf{Indikator} & \textbf{Deskripsi capaian} \\
+\midrule
+Impor dan pengaturan aset & 35\% & \ind{a} &
+Aset terimpor dengan pengaturan yang tepat dan seragam; ukuran gambar pada
+scene sesuai hitungan; sumber serta lisensi setiap aset tercatat. \\
+\addlinespace
+Animasi & 35\% & \ind{b} &
+\istilah{Animator} memuat keadaan diam dan berlari beserta transisinya, dan
+animasinya berganti dengan benar menurut gerak pemain. \\
+\addlinespace
+Antarmuka pengguna & 30\% & \ind{c} &
+\istilah{Canvas} menampilkan skor dan nyawa yang benar-benar berubah mengikuti
+keadaan permainan, dan keadaan permainannya tetap disimpan pada kode. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection*{Instrumen 2: Soal Konsep}
+
+Jawablah dengan singkat. Kunci jawaban beserta indikator yang diukur disajikan
+pada Tabel~\ref{tab:kunci-konsep-ch14}.
+
+\begin{enumerate}
+  \item Sebuah gambar berukuran 192 kali 192 piksel diimpor dengan
+        \istilah{Pixels Per Unit} bernilai 100. Hitunglah tingginya pada scene,
+        lalu hitunglah nilai yang diperlukan agar tingginya menjadi 2 satuan.
+  \item Jelaskan mengapa ukuran berkas gambar tidak boleh diubah di luar Unity.
+  \item Kode menetapkan nilai parameter animasi, tetapi animasinya tidak
+        berganti dan tidak ada pesan kesalahan. Sebutkan dua kemungkinan
+        penyebabnya.
+  \item Parameter jenis apa yang sebaiknya dipakai untuk lompatan, dan mengapa?
+  \item Jelaskan mengapa keadaan permainan disimpan pada kode, bukan pada
+        tampilan antarmukanya.
+\end{enumerate}
+
+\begin{table}[htbp]
+\centering
+\caption{Kunci soal konsep Bab XIV beserta indikator yang diukur}
+\label{tab:kunci-konsep-ch14}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{0.8cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{No} & \textbf{Indikator} & \textbf{Pokok jawaban} \\
+\midrule
+1 & \ind{a} &
+Tingginya $192 \div 100 = 1{,}92$ satuan. Agar tingginya 2 satuan, nilai yang
+diperlukan $192 \div 2 = 96$. \\
+\addlinespace
+2 & \ind{a} &
+Karena Unity akan mengolah ulang berkas itu, dan hasilnya untuk seluruh benda
+yang memakai berkas tersebut ikut berubah. Ukuran gambar sebaiknya diubah
+melalui \istilah{Pixels Per Unit}, agar perubahannya terkendali. \\
+\addlinespace
+3 & \ind{b} &
+Pertama, nama parameter pada kode berbeda dari nama pada jendela
+\istilah{Animator}, termasuk perbedaan besar-kecil huruf. Kedua, transisinya
+belum digambar, atau syaratnya tidak pernah terpenuhi. \\
+\addlinespace
+4 & \ind{b} &
+Pemicu, sebab lompatan adalah kejadian yang terjadi sekali dan tidak memiliki
+lama. Mesin mengembalikan nilai pemicu setelah dipakai, sehingga kode tidak
+perlu mengembalikannya sendiri. \\
+\addlinespace
+5 & \ind{c} &
+Agar keadaan permainannya tetap menjadi satu sumber kebenaran, dan tidak
+bergantung pada tampilannya. Apabila keadaan disimpan pada tampilan, keadaannya
+sulit disimpan, dipulihkan, atau diperiksa terpisah dari antarmukanya. \\
+\bottomrule
+\end{tabularx}}
+\end{table}

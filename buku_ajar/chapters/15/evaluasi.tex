@@ -1,0 +1,98 @@
+% chapters/15/evaluasi.tex
+\bagian{Asesmen dan Instrumen Penilaian}
+\label{sec:asesmen-audio}
+
+\begin{asesmenbox}
+\textbf{Kedudukan asesmen bab ini.} Bab ini menuntaskan \SUBCPMK{4.2}, yaitu
+bab kedua pada \CPMK{4}. Ketiga indikatornya diperiksa melalui penilaian
+artefak \istilah{project} (Tugas Praktikum 12) dan soal konsep.
+
+\vspace{0.4em}
+Materi Bab~XV termasuk bahan \textbf{Proyek Akhir} pada minggu kelima belas
+dan \textbf{Ujian Akhir Semester} pada minggu keenam belas.
+\end{asesmenbox}
+
+\subsection*{Instrumen 1: Rubrik Praktikum 12}
+
+\begin{table}[htbp]
+\centering
+\caption{Rubrik penilaian Praktikum 12 beserta indikator yang diukur}
+\label{tab:rubrik-praktikum-12}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.2cm} C{1.3cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{Kriteria} & \textbf{Bobot} & \textbf{Indikator} & \textbf{Deskripsi capaian} \\
+\midrule
+Peristiwa dan pemicu bunyi & 40\% & \ind{a} &
+Setiap peristiwa pada daftar memicu bunyi yang benar, pada saat yang tepat, dan
+bunyi yang berulang tidak berbunyi setiap bingkai. \\
+\addlinespace
+Pemilihan jenis bunyi & 25\% & \ind{b} &
+Musik latar dan efek suara dipisahkan dengan benar, baik pada sumber bunyinya
+maupun pada tingkat \istilah{AudioMixer}, dan alasannya dijelaskan. \\
+\addlinespace
+Waktu dan kekuatan bunyi & 25\% & \ind{c} &
+Tingkat kekuatan tersusun dan beralasan; efek suara terdengar jelas di atas
+musik latar; hasil keempat percobaan tercatat. \\
+\addlinespace
+Partikel dan catatan aset & 10\% & \ind{a}, \ind{c} &
+Sekurang-kurangnya satu partikel dipasang pada peristiwa yang tepat, dan daftar
+berkas bunyi memuat sumber serta lisensinya. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection*{Instrumen 2: Soal Konsep}
+
+Jawablah dengan singkat. Kunci jawaban beserta indikator yang diukur disajikan
+pada Tabel~\ref{tab:kunci-konsep-ch15}.
+
+\begin{enumerate}
+  \item Jelaskan perbedaan \code{AudioClip} dan \code{AudioSource}.
+  \item Sebuah \code{AudioSource} dipakai untuk musik dan efek suara sekaligus.
+        Gejala apa yang muncul?
+  \item Berapa besar perubahan kekuatan bunyi apabila \code{sfxVolume} dinaikkan
+        dari 0,25 menjadi 1,0? Nyatakan dalam desibel.
+  \item Musik bernilai $-6$ dB dan efek suara bernilai $-6$ dB. Mengapa bunyi
+        lompatan tetap terdengar samar, dan apa yang sebaiknya diubah?
+  \item Bunyi langkah dipanggil berulang dengan cepat dan terdengar seperti
+        mesin. Sebutkan dua cara memperbaikinya.
+\end{enumerate}
+
+\begin{table}[htbp]
+\centering
+\caption{Kunci soal konsep Bab XV beserta indikator yang diukur}
+\label{tab:kunci-konsep-ch15}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{0.8cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{No} & \textbf{Indikator} & \textbf{Pokok jawaban} \\
+\midrule
+1 & \ind{b} &
+\code{AudioClip} adalah berkas bunyinya, yaitu data yang tidak dapat berbunyi
+sendiri dan tidak memiliki letak. \code{AudioSource} adalah komponen pada
+\istilah{GameObject} yang memutar bunyi itu dan menentukan letaknya di dalam
+ruang. \\
+\addlinespace
+2 & \ind{b} &
+Setiap efek suara menghentikan musik yang sedang berjalan, sebab
+\code{Play} memakai satu sumber untuk satu bunyi pada satu waktu. Gejalanya:
+musik terputus-putus setiap kali pemain melompat atau mengambil benda. \\
+\addlinespace
+3 & \ind{a} &
+Dari 0,25 ke 1,0 berarti kekuatannya menjadi empat kali. Karena
+$20 \times \log_{10} 4 \approx 12$, perubahannya sekitar 12 dB. \\
+\addlinespace
+4 & \ind{c} &
+Sebab keduanya sama kuat, dan pada kekuatan yang sama telinga mendahulukan
+bunyi yang berjalan terus-menerus. Yang diubah adalah musiknya: diturunkan
+sekitar 10 dB agar bunyi lompatan memperoleh keunggulan yang cukup. Menaikkan
+efek suaranya justru berisiko membuat bunyinya pecah. \\
+\addlinespace
+5 & \ind{c} &
+Pertama, nada digeser sedikit dan berbeda-beda setiap kali dipanggil. Kedua,
+beberapa berkas bunyi langkah dipakai bergantian, sehingga pengulangannya tidak
+terdengar. \\
+\bottomrule
+\end{tabularx}}
+\end{table}

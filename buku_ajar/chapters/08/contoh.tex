@@ -1,0 +1,95 @@
+% chapters/08/contoh.tex
+\section{Dua Contoh Terapan}
+\label{sec:contoh-bab-8}
+
+\subsection{Contoh Pertama: Menghitung Arah dan Kecepatan secara Manual}
+
+\begin{contohbox}
+Sebuah NPC berada pada posisi $(200, 150)$ dan pemain berada pada posisi
+$(500, 450)$. Kecepatan NPC ditetapkan 150 piksel per detik.
+
+Vektor menuju pemain dihitung dari selisih kedua posisi:
+
+\[
+(500 - 200,\ 450 - 150) = (300,\ 300).
+\]
+
+Jaraknya adalah panjang vektor itu:
+
+\[
+d = \sqrt{300^2 + 300^2} = \sqrt{180000} \approx 424{,}3 \text{ piksel}.
+\]
+
+Arahnya diperoleh dengan menormalkan vektor tersebut, yaitu membagi setiap
+komponen dengan panjangnya:
+
+\[
+\left(\frac{300}{424{,}3},\ \frac{300}{424{,}3}\right) \approx (0{,}707,\ 0{,}707).
+\]
+
+Kecepatannya adalah arah itu dikalikan kecepatan yang ditetapkan:
+
+\[
+(0{,}707 \times 150,\ 0{,}707 \times 150) \approx (106{,}1,\ 106{,}1)
+\]
+
+dalam satuan piksel per detik. Panjang vektor kecepatan itu kembali menjadi
+150 piksel per detik, sesuai nilai yang ditetapkan.
+\end{contohbox}
+
+Apabila vektor jarak dipakai langsung sebagai kecepatan, NPC akan bergerak
+dengan kecepatan 424,3 piksel per detik, yaitu hampir tiga kali lebih cepat
+daripada yang ditetapkan. Itulah sebabnya penormalan diperlukan.
+
+\subsection{Contoh Kedua: Melacak Keputusan pada Empat Jarak}
+
+\begin{contohbox}
+Sebuah NPC memiliki jari-jari persepsi 240 piksel dan jarak henti 30 piksel.
+Tabel~\ref{tab:empat-jarak} memperlihatkan keputusannya pada empat jarak yang
+berbeda, beserta alasan masing-masing.
+\end{contohbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Keputusan NPC pada empat jarak terhadap pemain}
+\label{tab:empat-jarak}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{2.0cm} C{2.6cm} C{3.2cm} Y@{}}
+\toprule
+\headrow \textbf{Jarak} & \textbf{Keputusan} & \textbf{Kecepatan} & \textbf{Alasan} \\
+\midrule
+400 piksel & Berdiam & 0 &
+Jarak melebihi jari-jari persepsi 240 piksel, sehingga pemain tidak terlihat. \\
+\addlinespace
+150 piksel & Mengejar & 150 piksel/detik &
+Berada di dalam jangkauan persepsi dan di luar jarak henti. \\
+\addlinespace
+45 piksel & Mengejar & 150 piksel/detik &
+Masih di luar jarak henti, sehingga NPC tetap bergerak dengan kecepatan penuh. \\
+\addlinespace
+20 piksel & Berhenti & 0 &
+Sudah berada di dalam jarak henti 30 piksel, sehingga NPC berhenti agar tidak
+bergetar di atas pemain. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Perhatikan baris ketiga dan keempat. Pada jarak 45 piksel NPC masih bergerak
+dengan kecepatan penuh, dan pada jarak 20 piksel ia langsung berhenti. Cara itu
+dipilih karena sederhana, walaupun geraknya terasa sedikit mendadak.
+
+Apabila Anda menghendaki gerak yang lebih halus, kecepatannya dapat dikurangi
+secara berangsur ketika NPC mendekati pemain, misalnya dengan mengalikan
+kecepatan dengan perbandingan antara jarak dan jari-jari persepsi. Cara itu
+disebut \istilah{arrival} dan menghasilkan NPC yang melambat sebelum berhenti.
+Akan tetapi, cara itu menambah perhitungan dan menambah satu nilai yang harus
+diatur, sehingga untuk keperluan pembelajaran pada bab ini cara yang sederhana
+sudah mencukupi.
+
+\begin{catatabox}
+Keputusan NPC bergantung pada dua nilai yang Anda tetapkan,
+yaitu jari-jari persepsi dan jarak henti. Keduanya tidak berasal dari
+perhitungan mana pun, melainkan dari pilihan perancang. Mengubah keduanya
+mengubah rasa permainan tanpa mengubah satu baris pun pada perhitungan vektor.
+Itulah tanda bahwa perhitungan dan perancangan telah terpisah dengan baik.
+\end{catatabox}

@@ -1,0 +1,85 @@
+% chapters/09/section-06.tex
+\section{Yang Belum Ada pada Mesin Keadaan Ini}
+\label{sec:belum-ada-fsm}
+
+NPC pada bab ini sudah memiliki empat keadaan, tetapi masih belum dapat
+mengelilingi rintangan. Bagian ini menjelaskan batas kemampuannya dan apa yang
+ditambahkan pada bab berikutnya.
+
+\subsection{Keputusan tanpa Pengetahuan tentang Jalan}
+
+Mesin keadaan menjawab pertanyaan ``apa yang sebaiknya saya lakukan?'', bukan
+pertanyaan ``bagaimana cara menuju ke sana?''. NPC pada bab ini memutuskan
+untuk mengejar, dan pelaksanaannya hanya satu, yaitu bergerak lurus ke arah
+pemain.
+
+Akibatnya, kelemahan yang sudah Anda amati pada Bab~VIII masih ada. Empat
+keadaan tidak menolong NPC yang terhalang dinding: keadaan mengejar tetap
+menghasilkan gerak lurus ke arah pemain, sehingga NPC tetap menekan dinding
+selama pemain berada di baliknya. Yang bertambah hanyalah keragaman perilakunya,
+bukan keterangan tentang jalan.
+
+Pekerjaan itu menjadi bagian Bab~X. Di sana, keadaan mengejar tidak lagi
+menghasilkan gerak lurus, melainkan memanggil pencarian jalur untuk menentukan
+rute menuju pemain.
+
+\begin{catatabox}
+Perhatikan pemisahan tanggung jawab yang mulai terbentuk. Mesin keadaan
+menentukan \textbf{niat}, sedangkan pencarian jalur menentukan \textbf{rute}.
+Pemisahan itu persis seperti yang dijelaskan pada Bagian~2.5 sebagai lapisan
+keputusan dan lapisan navigasi. Pada Bab~X kedua lapisan itu akhirnya
+berhubungan.
+\end{catatabox}
+
+\subsection{Bentuk Mesin Keadaan yang Lebih Besar}
+
+Mesin keadaan pada bab ini cukup untuk permainan sederhana. Pada permainan yang
+lebih besar, dua bentuk pengembangan berikut lazim dipakai.
+
+\begin{itemize}
+  \item \textbf{Mesin keadaan bertingkat} (\istilah{hierarchical state
+        machine}). Sebuah keadaan dapat memuat mesin keadaan yang lebih kecil di
+        dalamnya. Misalnya, keadaan ``mengejar'' dapat memuat keadaan
+        ``menghindari rintangan'' dan ``mendekati pemain''. Cara itu mencegah
+        jumlah keadaan bertambah secara berlipat.
+  \item \textbf{Pohon perilaku} (\istilah{behaviour tree}). Perilaku disusun
+        sebagai pohon keputusan yang dibaca dari atas ke bawah, dan setiap
+        cabangnya menyatakan satu pertimbangan. Cara itu lebih mudah dibaca
+        ketika jumlah perilakunya banyak, dan banyak dipakai pada permainan
+        yang sesungguhnya. Contoh penerapannya dapat dilihat pada \mbox{[R26]}.
+\end{itemize}
+
+Kedua bentuk itu berada di luar cakupan mata kuliah ini. Yang perlu Anda ketahui
+adalah bahwa keduanya bertolak dari gagasan yang sama dengan mesin keadaan:
+memisahkan keadaan yang mungkin terjadi dari syarat perpindahannya.
+
+\subsection{Ringkasan Perkembangan}
+
+\begin{table}[htbp]
+\centering
+\caption{Bagian yang ditambahkan pada perilaku NPC pada bab-bab berikutnya}
+\label{tab:perkembangan-npc}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.6cm} L{5.0cm} Y@{}}
+\toprule
+\headrow \textbf{Bab} & \textbf{Yang ditambahkan} & \textbf{Akibatnya} \\
+\midrule
+Bab~X & Pencarian jalur A* pada peta berhalangan &
+Keadaan mengejar tidak lagi menghasilkan gerak lurus, melainkan rute yang
+menghindari rintangan. \\
+\addlinespace
+Bab~XI & Penggabungan mesin keadaan dan pencarian jalur &
+NPC mengejar dengan rute memutar, dan biaya perhitungannya diatur agar tetap
+ringan. \\
+\addlinespace
+Bab~XIII & Fisika mesin pada Unity &
+Sebagian perilaku dapat disusun memakai perkakas mesin, sedangkan logika
+keputusannya tetap Anda tulis. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Dengan gambaran tersebut, tampak bahwa bab ini melengkapi bagian pertama
+lapisan keputusan yang telah diperkenalkan pada Bab~VIII. Setelah bab ini, Anda
+memiliki seluruh perkakas untuk menyusun perilaku NPC yang beragam. Yang masih
+kurang hanyalah kemampuan NPC untuk mengetahui jalannya sendiri.

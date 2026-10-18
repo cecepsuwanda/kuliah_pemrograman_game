@@ -1,0 +1,279 @@
+% appendices/appendix-c-glosarium.tex
+\chapter{Glosarium}
+\label{app:glosarium}
+
+Glosarium ini memuat istilah yang dipakai pada seluruh buku, disusun menurut
+abjad istilah Indonesianya. Kolom kedua memuat padanan Inggrisnya, sebab
+sebagian besar dokumentasi dan pesan kesalahan yang akan Anda temui memakai
+padanan itu.
+
+\begin{longtable}{@{}L{3.9cm} L{3.6cm} L{7.2cm}@{}}
+\caption{Glosarium istilah Indonesia--Inggris}
+\label{tab:glosarium} \\
+\toprule
+\headrow \textbf{Istilah} & \textbf{Padanan Inggris} & \textbf{Keterangan singkat} \\
+\midrule
+\endfirsthead
+\toprule
+\headrow \textbf{Istilah} & \textbf{Padanan Inggris} & \textbf{Keterangan singkat} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+
+Algoritma pencarian jalur & \istilah{Pathfinding algorithm} &
+Algoritma yang mencari rangkaian petak dari satu titik ke titik lain, misalnya
+BFS, Dijkstra, dan A*. \\ \addlinespace
+
+Animasi & \istilah{Animation} &
+Rangkaian gambar yang diputar berurutan sehingga tampak bergerak. \\
+\addlinespace
+
+Antarmuka pengguna & \istilah{User interface} (UI) &
+Bagian layar yang bukan bagian dari dunia permainan, misalnya skor, nyawa, dan
+tombol. \\ \addlinespace
+
+Antrean prioritas & \istilah{Priority queue} &
+Struktur data yang mengeluarkan isinya menurut prioritas, bukan menurut urutan
+masuk. A* memakainya untuk memilih petak berikutnya. \\ \addlinespace
+
+Aset & \istilah{Asset} &
+Berkas yang dipakai permainan: gambar, bunyi, huruf, dan animasi. \\
+\addlinespace
+
+Batang (badan) & \istilah{Body} &
+Benda yang diperlakukan sebagai satu kesatuan gerak, dengan posisi, kecepatan,
+dan bentuk. \\ \addlinespace
+
+Batas benda & \istilah{Collider} &
+Bentuk yang dipakai mesin untuk memeriksa tabrakan, tidak selalu sama dengan
+bentuk yang terlihat pemain. \\ \addlinespace
+
+Bingkai & \istilah{Frame} &
+Satu kali gambar lengkap ditampilkan. Pada 60 bingkai per detik, satu bingkai
+berlangsung sekitar 16,7 milidetik. \\ \addlinespace
+
+Bunyi latar & \istilah{Background music} (BGM) &
+Bunyi panjang yang berjalan terus selama permainan, dan tidak dipanggil
+menurut kejadian. \\ \addlinespace
+
+Bug & \istilah{Bug} &
+Keadaan yang tidak seharusnya terjadi, dan dapat diulang dengan urutan
+tindakan tertentu. \\ \addlinespace
+
+Build & \istilah{Build} &
+Berkas permainan yang sudah dibungkus sehingga dapat dijalankan pada komputer
+lain. \\ \addlinespace
+
+Celah & \istilah{Gap} &
+Jarak kosong yang harus dilompati pemain di antara dua pijakan. \\
+\addlinespace
+
+Delta time & \istilah{Delta time} &
+Selisih waktu antara dua bingkai, dipakai agar gerak tidak bergantung pada
+kecepatan komputer. \\ \addlinespace
+
+Desibel & \istilah{Decibel} (dB) &
+Satuan kekuatan bunyi yang naik secara berlipat. Turun 6 dB berarti kekuatannya
+menjadi kira-kira separuh. \\ \addlinespace
+
+Deteksi tabrakan & \istilah{Collision detection} &
+Pemeriksaan apakah dua benda saling bersentuhan pada satu bingkai. \\
+\addlinespace
+
+Efek suara & \istilah{Sound effect} (SFX) &
+Bunyi pendek yang dipanggil menurut peristiwa, dan dapat berbunyi bersamaan
+dengan efek suara lain. \\ \addlinespace
+
+Gaya berat & \istilah{Gravity} &
+Percepatan tetap yang menarik benda ke bawah. Pada Bab~VI dipakai 1800 piksel
+per detik kuadrat. \\ \addlinespace
+
+Graf & \istilah{Graph} &
+Kumpulan simpul dan hubungan di antaranya. Peta yang diubah menjadi pijakan
+dan lompatan adalah sebuah graf. \\ \addlinespace
+
+Heuristik & \istilah{Heuristic} &
+Perkiraan jarak ke tujuan yang dipakai A* untuk mengarahkan pencarian. \\
+\addlinespace
+
+Hierarki & \istilah{Hierarchy} &
+Susunan induk dan anak pada \istilah{scene}, misalnya \istilah{Canvas} yang
+membawahi teks dan ikon. \\ \addlinespace
+
+Impor & \istilah{Import} &
+Memasukkan berkas aset ke dalam \istilah{project}, sehingga berkas itu diolah
+dan disimpan dalam bentuk yang siap dipakai. \\ \addlinespace
+
+Indikator & \istilah{Indicator} &
+Perilaku yang dapat diamati, yang dipakai untuk menyatakan bahwa sebuah
+Sub-CPMK telah dikuasai. \\ \addlinespace
+
+Jangkauan & \istilah{Reach} &
+Jarak terjauh yang dapat ditempuh pemain dalam satu lompatan, dihitung dari
+kecepatan lompatan dan gravitasi. \\ \addlinespace
+
+Kecerdasan buatan & \istilah{Artificial intelligence} (AI) &
+Pada buku ini, aturan yang menentukan perilaku NPC, bukan pembelajaran mesin. \\
+\addlinespace
+
+Kecepatan bingkai & \istilah{Frame rate} &
+Banyaknya bingkai yang ditampilkan dalam satu detik, dinyatakan dalam
+\istilah{fps}. \\ \addlinespace
+
+Keadaan & \istilah{State} &
+Keadaan yang ditempati sebuah benda atau sistem pada satu saat, misalnya diam,
+berlari, atau melompat. \\ \addlinespace
+
+Kendali pemain & \istilah{Player controller} &
+Skrip yang membaca masukan pemain dan mengubahnya menjadi gerak benda. \\
+\addlinespace
+
+Kode sumber & \istilah{Source code} &
+Berkas teks berisi program sebelum dijalankan atau dibangun. \\
+\addlinespace
+
+Komponen & \istilah{Component} &
+Bagian yang ditempelkan pada \istilah{GameObject} untuk memberi kemampuan,
+misalnya \istilah{Rigidbody} atau \istilah{Animator}. \\ \addlinespace
+
+Lembar \istilah{playtest} & \istilah{Playtest sheet} &
+Lembar yang dipakai penguji untuk mencatat waktu, tempat, dan keadaan yang
+tidak seharusnya terjadi. \\ \addlinespace
+
+Level & \istilah{Level} &
+Satu ruang permainan beserta seluruh isinya, dari titik awal sampai tujuan. \\
+\addlinespace
+
+Log \istilah{bug} & \istilah{Bug log} &
+Daftar temuan beserta urutan yang menyebabkannya, beratnya, dan status
+penanganannya. \\ \addlinespace
+
+Masukan & \istilah{Input} &
+Apa pun yang dikirim pemain ke program: tombol, tetikus, atau sentuhan. \\
+\addlinespace
+
+Mekanik & \istilah{Mechanic} &
+Aturan yang menentukan cara pemain memengaruhi permainan, misalnya melompat
+dan mengumpulkan benda. \\ \addlinespace
+
+Mesin keadaan & \istilah{State machine} (FSM) &
+Susunan keadaan beserta aturan perpindahan di antaranya. \\
+\addlinespace
+
+Mesin permainan & \istilah{Game engine} &
+Perangkat lunak yang mengurus tampilan, fisika, bunyi, dan aset, misalnya
+Unity. \\ \addlinespace
+
+Nada & \istilah{Pitch} &
+Tinggi rendahnya bunyi. Menggeser nada sedikit membuat bunyi yang berulang
+tidak terdengar seperti mesin. \\ \addlinespace
+
+NPC & \istilah{Non-player character} &
+Benda yang bertindak menurut aturan program, bukan menurut masukan pemain. \\
+\addlinespace
+
+Objek permainan & \istilah{GameObject} &
+Satuan dasar pada Unity: benda yang memiliki letak, dan memperoleh kemampuan
+melalui komponen. \\ \addlinespace
+
+Partikel & \istilah{Particle} &
+Gambar kecil yang muncul, bergerak, lalu menghilang, dipakai sebagai pasangan
+yang terlihat bagi bunyi. \\ \addlinespace
+
+Peristiwa & \istilah{Event} &
+Kejadian yang dibaca satu kali, bukan keadaan yang berlangsung, misalnya
+tombol ditekan atau benda disentuh. \\ \addlinespace
+
+Petak & \istilah{Tile} &
+Satuan kotak pada peta dua dimensi. Jangkauan lompatan pada buku ini dinyatakan
+dalam petak. \\ \addlinespace
+
+Pijakan & \istilah{Platform} &
+Petak kosong yang di bawahnya berupa dinding, sehingga pemain dapat berdiri di
+sana. \\ \addlinespace
+
+\istilah{Pixels Per Unit} & \istilah{Pixels per unit} &
+Banyaknya piksel gambar yang mewakili satu satuan pada \istilah{scene}.
+Menentukan ukuran gambar di dalam level. \\ \addlinespace
+
+\istilah{Playtest} & \istilah{Playtest} &
+Sesi ketika orang lain memainkan prototipe Anda, sementara Anda mengamati dan
+mencatat. \\ \addlinespace
+
+Portofolio & \istilah{Portfolio} &
+Kumpulan artefak pekerjaan beserta keterangannya, disusun sebagai bukti
+kemampuan. \\ \addlinespace
+
+Prototipe & \istilah{Prototype} &
+Versi awal yang sudah dapat dimainkan, dipakai untuk menguji rancangan sebelum
+dikerjakan sepenuhnya. \\ \addlinespace
+
+\istilah{Rigidbody} & \istilah{Rigid body} &
+Komponen Unity yang menyerahkan gerak benda kepada mesin fisika, sehingga
+gravitasi dan tabrakan dihitung oleh mesin. \\ \addlinespace
+
+Simulasi & \istilah{Simulation} &
+Menjalankan permainan tanpa pemain, berulang kali, untuk memperoleh gambaran
+tentang sebagian keadaannya. \\ \addlinespace
+
+Skrip & \istilah{Script} &
+Berkas berisi kode yang ditempelkan pada \istilah{GameObject} sebagai komponen
+pada Unity. \\ \addlinespace
+
+\istilah{Soft-lock} & \istilah{Soft-lock} &
+Keadaan ketika pemain tidak dapat melanjutkan dan tidak dapat kembali,
+walaupun programnya masih berjalan dan tidak mencetak kesalahan. \\
+\addlinespace
+
+\istilah{Spatial Blend} & \istilah{Spatial blend} &
+Pengaturan pada \code{AudioSource} yang menentukan seberapa besar letak bunyi
+berpengaruh: nol untuk musik latar, satu untuk bunyi di dalam level. \\
+\addlinespace
+
+\istilah{Sprite} & \istilah{Sprite} &
+Gambar dua dimensi yang ditempatkan di dalam \istilah{scene}. \\
+\addlinespace
+
+\istilah{Sprite sheet} & \istilah{Sprite sheet} &
+Satu berkas gambar yang memuat beberapa bingkai, dipotong menjadi bingkai
+terpisah. \\ \addlinespace
+
+Sub-CPMK & \istilah{Sub-learning outcome} &
+Turunan CPMK pada satu pokok bahasan, beserta indikator ketercapaiannya. \\
+\addlinespace
+
+Tabrakan & \istilah{Collision} &
+Persentuhan dua benda yang mengubah geraknya, berbeda dari
+\istilah{trigger} yang hanya mendeteksi sentuhan. \\ \addlinespace
+
+Tembus & \istilah{Tunneling} &
+Keadaan ketika benda berpindah melewati benda lain dalam satu langkah, karena
+langkahnya terlalu besar. \\ \addlinespace
+
+Tingkat (audio) & \istilah{Mixer group} &
+Kelompok pada \istilah{AudioMixer} yang mengatur kekuatan sekumpulan bunyi
+sekaligus. \\ \addlinespace
+
+Transform & \istilah{Transform} &
+Komponen yang menyimpan letak, rotasi, dan ukuran sebuah
+\istilah{GameObject}. \\ \addlinespace
+
+\istilah{Trigger} & \istilah{Trigger} &
+Bentuk batas benda yang mendeteksi sentuhan tanpa menghentikan gerak, dipakai
+untuk pintu, benda yang dapat diambil, dan daerah tujuan. \\
+\addlinespace
+
+Umpan balik & \istilah{Feedback} &
+Tanggapan yang diterima pemain atas tindakannya, melalui tampilan, bunyi, atau
+gerak. \\ \addlinespace
+
+Vektor & \istilah{Vector} &
+Besaran yang memiliki besar dan arah, dipakai untuk menyatakan posisi dan
+kecepatan. \\ \addlinespace
+
+Waktu bingkai & \istilah{Frame time} &
+Lama satu bingkai berlangsung. Kebalikan dari kecepatan bingkai. \\
+\addlinespace
+
+\end{longtable}

@@ -1,0 +1,36 @@
+% chapters/01/figures/alur-obe.tikz
+% Penyelarasan konstruktif: dari capaian lulusan sampai bukti belajar.
+\begin{tikzpicture}[
+  kotak/.style={
+    rectangle, rounded corners=2pt, draw=ubPrimary, thick, fill=ubAlt,
+    align=center, inner sep=5pt, minimum height=10mm, text width=32mm,
+    font=\footnotesize
+  },
+  sorot/.style={kotak, draw=ubAccent, fill=white},
+  bukti/.style={kotak, draw=ubGreen, fill=ubGreenBg},
+  panah/.style={-{Stealth[length=2.4mm]}, thick, draw=ubAccent},
+  kecil/.style={font=\scriptsize\itshape\color{ubPrimary}, align=center}
+]
+
+\node[kotak] (cpl) at (0,0) {\textbf{CPL03} dan \textbf{CPL04}\\[1pt]\scriptsize capaian pembelajaran lulusan};
+\node[kotak, below=10mm of cpl] (cpmk) {\textbf{CPMK1}--\textbf{CPMK4}\\[1pt]\scriptsize capaian pembelajaran mata kuliah};
+\node[kotak, below=10mm of cpmk] (sub) {\textbf{13 Sub-CPMK}\\[1pt]\scriptsize capaian pembelajaran tiap bab};
+
+\node[sorot] (materi) at (-46mm,-72mm) {\textbf{Materi}\\[1pt]\scriptsize bahan kajian pada bab};
+\node[sorot] (aktivitas) at (0,-72mm) {\textbf{Aktivitas}\\[1pt]\scriptsize praktikum dan proyek};
+\node[sorot] (asesmen) at (46mm,-72mm) {\textbf{Asesmen}\\[1pt]\scriptsize rubrik dan instrumen};
+
+\node[bukti] (bukti) at (0,-100mm) {\textbf{Bukti belajar}\\[1pt]\scriptsize kode, level, laporan, dan refleksi};
+
+\draw[panah] (cpl) -- (cpmk);
+\draw[panah] (cpmk) -- (sub);
+\draw[panah] (sub.south) -- ++(0,-6mm) -| (materi.north);
+\draw[panah] (sub.south) -- (aktivitas.north);
+\draw[panah] (sub.south) -- ++(0,-6mm) -| (asesmen.north);
+\draw[panah] (materi.south) -- ++(0,-6mm) -| (bukti.north);
+\draw[panah] (aktivitas) -- (bukti);
+\draw[panah] (asesmen.south) -- ++(0,-6mm) -| (bukti.north);
+
+\node[kecil, right=4mm of sub, text width=42mm, anchor=west]
+  {capaian ditetapkan lebih dahulu; materi, aktivitas, dan asesmen mengikutinya};
+\end{tikzpicture}

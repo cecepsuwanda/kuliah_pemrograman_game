@@ -1,0 +1,46 @@
+% chapters/05/figures/vektor-kecepatan.tikz
+% Posisi sebagai vektor, kecepatan sebagai vektor, dan perpindahan yang
+% dihasilkan selama satu selang waktu. Perpindahan digambar segaris dengan
+% kecepatan karena nilainya memang kecepatan dikalikan selang waktu.
+\begin{tikzpicture}[
+  panahposisi/.style={-{Stealth[length=2.4mm]}, very thick, draw=ubPrimary},
+  panahkecepatan/.style={-{Stealth[length=2.4mm]}, very thick, draw=ubAccent},
+  panahpindah/.style={-{Stealth[length=2.2mm]}, thick, draw=ubGreen, dashed},
+  kisi/.style={draw=ubLine!50, very thin},
+  label/.style={font=\scriptsize, align=left}
+]
+
+% Kisi latar sebagai gambaran koordinat layar.
+\foreach \x in {0,1,...,10} \draw[kisi] (\x,0) -- (\x,-4);
+\foreach \y in {0,-1,...,-4} \draw[kisi] (0,\y) -- (10,\y);
+
+% Sumbu koordinat layar: x ke kanan, y ke bawah.
+\draw[-{Stealth[length=2mm]}, thick, draw=ubLine] (0,0) -- (10.4,0)
+  node[anchor=north west, font=\scriptsize, ubLine] {$x$};
+\draw[-{Stealth[length=2mm]}, thick, draw=ubLine] (0,0) -- (0,-4.3)
+  node[anchor=north east, font=\scriptsize, ubLine] {$y$};
+
+% Titik-titik: posisi awal p, posisi sesudah satu selang waktu p', dan ujung
+% vektor kecepatan. Perpindahan p ke p' segaris dengan kecepatan p ke v.
+\coordinate (p) at (2,-2.6);
+\coordinate (pp) at (3.36,-2.04);
+\coordinate (v) at (5.4,-1.2);
+
+\draw[panahposisi] (0,0) -- (p);
+\fill[ubPrimary] (p) circle (1.8pt);
+\node[label, ubPrimary, anchor=south east] at (1.9,-2.75)
+  {posisi $p = (200;\ 130)$};
+
+\draw[panahpindah] (p) -- (pp);
+\fill[ubGreen] (pp) circle (1.6pt);
+
+\draw[panahkecepatan] (p) -- (v);
+\node[label, ubAccent, anchor=south west] at (4.2,-1.45)
+  {kecepatan $v$ dalam piksel per detik};
+
+\node[label, ubGreen, anchor=north west] at (2.35,-2.95)
+  {perpindahan $v \cdot \Delta t$};
+
+\node[label, ubGreen, anchor=west] at (3.5,-2.0) {$p'$};
+\draw[ubGreen, very thin] (pp) -- (3.5,-2.0);
+\end{tikzpicture}

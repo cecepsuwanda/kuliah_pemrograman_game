@@ -1,0 +1,86 @@
+% chapters/09/section-01.tex
+\section{Dari Dua Keadaan Menjadi Mesin Keadaan}
+\label{sec:dua-keadaan}
+
+NPC pada Bab~VIII hanya memiliki dua keadaan: mengejar dan berdiam. Bagian ini
+menjelaskan apa yang ditambahkan ketika jumlahnya bertambah.
+
+\subsection{Mesin Keadaan yang Paling Sederhana}
+
+Perhatikan variabel \code{self.chasing} pada Bab~VIII. Variabel itu bernilai
+benar atau salah, sehingga dengan sendirinya membagi seluruh perilaku NPC
+menjadi dua golongan: perilaku ketika mengejar, dan perilaku ketika tidak
+mengejar. Variabel itu sesungguhnya sudah merupakan mesin keadaan yang paling
+sederhana, yaitu mesin dengan dua keadaan.
+
+Yang belum ada hanyalah nama dan susunannya. Mesin keadaan yang sesungguhnya
+memiliki tiga unsur yang tidak tampak pada variabel bernilai benar-salah.
+
+\begin{enumerate}
+  \item \textbf{Keadaan yang lebih dari dua}, masing-masing dengan perilaku
+        yang berbeda. NPC yang berpatroli jelas berperilaku berbeda dari NPC
+        yang berdiam, walaupun keduanya bukan sedang mengejar.
+  \item \textbf{Syarat perpindahan yang tersendiri} untuk setiap pasangan
+        keadaan. NPC berpindah dari berpatroli ke mengejar karena sebab yang
+        berbeda dari sebab ia berpindah dari mengejar ke menyerang.
+  \item \textbf{Pekerjaan penyiapan ketika sebuah keadaan dimasuki}, misalnya
+        mengembalikan penghitung ke nol atau memilih titik patroli berikutnya.
+\end{enumerate}
+
+Bagian~2.5 telah menjelaskan gagasan mesin keadaan secara umum. Bagian ini dan
+bagian berikutnya menerapkannya menjadi program.
+
+\subsection{Empat Keadaan pada Bab Ini}
+
+NPC pada bab ini memiliki empat keadaan, sesuai urutan yang disebut pada
+RPS.
+
+\begin{description}
+  \item[berdiam] Berdiri tidak bergerak, sambil menghitung lama ia berdiam.
+        Setelah 1,5 detik, ia mulai berpatroli.
+  \item[berpatroli] Berpindah dari satu titik patroli ke titik berikutnya.
+        Apabila pemain memasuki jari-jari persepsi, ia beralih mengejar.
+  \item[mengejar] Bergerak menuju pemain dengan kecepatan tetap, sebagaimana
+        dijelaskan pada Bab~VIII. Apabila pemain sudah cukup dekat, ia
+        menyerang.
+  \item[menyerang] Berhenti dan menyerang secara berkala. Apabila pemain
+        menjauh melampaui jangkauan serang, ia kembali mengejar.
+\end{description}
+
+\subsection{Mengapa Tidak Cukup dengan Rangkaian Pemeriksaan}
+
+Pertanyaan yang wajar muncul: mengapa tidak menuliskan seluruh perilaku itu
+sebagai rangkaian pemeriksaan bersarang, tanpa memakai mesin keadaan sama
+sekali?
+
+\begin{kodekeluaran}
+if jarak <= radius:
+    if jarak <= jangkauan_serang:
+        # menyerang
+    else:
+        # mengejar
+else:
+    if sudah_lama_berdiam:
+        # berpatroli
+    else:
+        # berdiam
+\end{kodekeluaran}
+
+Cara itu memang berfungsi untuk empat keadaan. Akan tetapi, ia mengandung dua
+kelemahan yang akan terasa ketika perilakunya bertambah.
+
+\begin{itemize}
+  \item \textbf{Pekerjaan penyiapan menjadi sulit ditempatkan.} Menentukan
+        titik patroli berikutnya, atau mengembalikan pewaktu ke nol, harus
+        ditulis di dalam cabang yang bersangkutan. Ketika jumlah keadaan
+        bertambah, cabang-cabang itu menjadi panjang dan saling menyalin.
+  \item \textbf{Keputusan dan tindakan tercampur.} Pada cara di atas, syarat
+        perpindahan dan perilaku keadaan berada pada satu tempat. Akibatnya,
+        syarat perpindahan tidak dapat diperiksa tanpa menjalankan perilakunya.
+        Itulah yang membuat pengujian menjadi sulit, sebagaimana dibahas pada
+        Bagian~\ref{sec:menguji-keadaan}.
+\end{itemize}
+
+Mesin keadaan memisahkan keduanya. Syarat perpindahan dikumpulkan pada satu
+tempat, dan perilaku setiap keadaan dikumpulkan pada tempat lain. Pemisahan
+itulah yang menjadi pokok dua bagian berikutnya.

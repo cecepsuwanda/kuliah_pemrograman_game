@@ -1,0 +1,43 @@
+% chapters/16/figures/siklus-uji.tikz
+% Pengujian sebagai siklus: setiap perbaikan menuntut pengujian ulang.
+\begin{tikzpicture}[
+  tahap/.style={
+    rectangle, rounded corners=5pt, draw=ubPrimary, thick, fill=ubAlt,
+    align=center, text width=27mm, inner sep=4pt, minimum height=11mm,
+    font=\footnotesize
+  },
+  alat/.style={
+    rectangle, rounded corners=5pt, draw=ubAccent, thick, fill=white,
+    align=center, text width=27mm, inner sep=4pt, minimum height=11mm,
+    font=\footnotesize
+  },
+  panah/.style={-{Stealth[length=2.2mm]}, thick, draw=ubAccent},
+  kembali/.style={-{Stealth[length=2.2mm]}, thick, draw=ubPrimary, dashed},
+  catatan/.style={font=\scriptsize\itshape, align=left}
+]
+
+\node[tahap] (gdd)    at (0,0)     {\istilah{GDD}\\{\scriptsize\itshape rencana}};
+\node[alat]  (daftar) at (3.9,0)   {checklist\\fungsional};
+\node[alat]  (otomat) at (7.8,0)   {uji otomatis\\{\scriptsize\itshape tanpa pemain}};
+\node[alat]  (main)   at (11.7,0)  {playtest\\{\scriptsize\itshape dengan pemain}};
+
+\node[tahap] (log)    at (11.7,-2.0) {log \istilah{bug}};
+\node[tahap] (perbaiki) at (7.8,-2.0) {perbaikan};
+\node[tahap] (build)  at (3.9,-2.0) {build akhir};
+
+\draw[panah] (gdd) -- (daftar);
+\draw[panah] (daftar) -- (otomat);
+\draw[panah] (otomat) -- (main);
+\draw[panah] (main) -- (log);
+\draw[panah] (log) -- (perbaiki);
+\draw[panah] (perbaiki) -- (build);
+
+% Kembali ke awal: perbaikan selalu menuntut pengujian ulang.
+\draw[kembali] (perbaiki.north) .. controls (7.8,1.9) and (5.6,1.9) .. (daftar.north);
+
+\node[catatan, anchor=north west, text width=62mm] at (-1.6,-2.9)
+  {Perbaikan tidak mengakhiri pekerjaan, melainkan memulai putaran
+   berikutnya. Garis putus-putus menandai bahwa setiap perbaikan menuntut
+   pemeriksaan ulang, dan pemeriksaan ulang menuntut checklist yang
+   diperbarui.};
+\end{tikzpicture}

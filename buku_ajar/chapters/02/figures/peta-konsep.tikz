@@ -1,0 +1,40 @@
+% chapters/02/figures/peta-konsep.tikz
+% Peta konsep Bab II: setiap tema landasan teori dan bab yang menerapkannya.
+\begin{tikzpicture}[
+  konsep/.style={
+    rectangle, rounded corners=2pt, draw=ubPrimary, thick, fill=ubAlt,
+    align=left, text width=56mm, inner sep=4pt, minimum height=9mm,
+    font=\footnotesize
+  },
+  bab/.style={
+    rectangle, rounded corners=2pt, draw=ubAccent, thick, fill=white,
+    align=left, text width=42mm, inner sep=4pt, minimum height=9mm,
+    font=\footnotesize
+  },
+  panah/.style={-{Stealth[length=2.2mm]}, thick, draw=ubAccent}
+]
+
+\node[konsep] (k1) at (0,0)
+  {\textbf{2.1} Permainan sebagai sistem waktu nyata};
+\node[konsep] (k2) at (0,-1.35)
+  {\textbf{2.2} Model waktu: bingkai dan langkah simulasi};
+\node[konsep] (k3) at (0,-2.70)
+  {\textbf{2.3} Ruang, besaran, dan representasi keadaan};
+\node[konsep] (k4) at (0,-4.05)
+  {\textbf{2.4} Simulasi fisika diskret dan integrasi numerik};
+\node[konsep] (k5) at (0,-5.40)
+  {\textbf{2.5} Keputusan dan navigasi pada NPC};
+\node[konsep] (k6) at (0,-6.75)
+  {\textbf{2.6} Pustaka dan mesin: dua cara membangun};
+
+\node[bab] (b1) at (7.6,0)        {Bab III--IV};
+\node[bab] (b2) at (7.6,-1.35)    {Bab IV--VI};
+\node[bab] (b3) at (7.6,-2.70)    {Bab V, VII, XIII};
+\node[bab] (b4) at (7.6,-4.05)    {Bab VI, XIII};
+\node[bab] (b5) at (7.6,-5.40)    {Bab VIII--XI};
+\node[bab] (b6) at (7.6,-6.75)    {Bab XII--XVII};
+
+\foreach \i in {1,...,6} {
+  \draw[panah] (k\i) -- (b\i);
+}
+\end{tikzpicture}

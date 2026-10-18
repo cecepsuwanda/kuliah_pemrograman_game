@@ -1,0 +1,75 @@
+% chapters/16/contoh.tex
+\section{Dua Contoh Terapan}
+\label{sec:contoh-bab-16}
+
+\subsection{Contoh Pertama: Menghitung Jangkauan Lompatan}
+
+\begin{contohbox}
+Kelompok Anda menetapkan $v_0 = 620$ piksel per detik dan $g = 1700$ piksel
+per detik kuadrat pada levelnya. Petaknya berukuran 32 piksel. Berapa tinggi
+lompatan tertinggi dan jarak mendatar terjauh pada ketinggian yang sama?
+\end{contohbox}
+
+Tinggi lompatan tertinggi dihitung dari hukum gerak:
+
+\[
+h_{\text{maks}} = \frac{v_0^2}{2g} = \frac{620^2}{2 \times 1700}
+= \frac{384\,400}{3\,400} = 113{,}06 \text{ piksel},
+\]
+
+yaitu $113{,}06 \div 32 = 3{,}53$ petak. Lama di udara dari tanah sampai
+kembali ke tanah adalah $t = 2v_0 / g = 2 \times 620 \div 1700 = 0{,}729$
+detik. Dengan kecepatan jalan 300 piksel per detik, jarak mendatar terjauhnya
+
+\[
+x_{\text{maks}} = 300 \times 0{,}729 = 218{,}8 \text{ piksel},
+\]
+
+yaitu $218{,}8 \div 32 = 6{,}84$ petak.
+
+Angka itu memutuskan beberapa hal sekaligus. Celah selebar tujuh petak pada
+level Anda tidak dapat dilompati, sedangkan celah enam petak hanya menyisakan
+kelonggaran 0,84 petak, dan itu terlalu sempit untuk pemain baru. Rancangan
+yang aman adalah celah lima petak, dengan kelonggaran sekitar 1,8 petak.
+
+Kedua angka itu hanya bergantung pada tiga besaran:
+kecepatan lompatan, gravitasi, dan kecepatan jalan. Mengubah salah satunya
+mengubah seluruh jangkauan level, dan itulah sebabnya besarannya perlu
+ditetapkan lebih dahulu, sebagaimana dijelaskan pada Bab~VI.
+
+\subsection{Contoh Kedua: Menelusuri Temuan \istilah{Playtest} yang Tidak Dapat Diulang}
+
+\begin{contohbox}
+Catatan penguji pada lembar \istilah{playtest} berbunyi: ``bunyinya kadang
+tidak keluar, saya tidak tahu kapan.'' Anda mencoba mengulanginya selama
+sepuluh menit dan tidak berhasil. Apakah catatan itu tidak berguna?
+\end{contohbox}
+
+Catatan itu berguna, tetapi belum cukup untuk dikerjakan. Yang perlu dilakukan
+adalah mengubahnya menjadi catatan yang dapat diulang, dan caranya bukan
+menunggu sampai kejadiannya muncul lagi.
+
+\begin{langkah}
+  \item \textbf{Catat waktu dan tempatnya.} Bukalah kembali lembar
+        \istilah{playtest} itu, bagian waktu penyelesaian dan titik berhenti.
+        Keduanya sudah terisi, dan keduanya menyempitkan pencarian: kejadian
+        itu muncul pada menit kedua, ketika penguji sedang menuruni tangga.
+  \item \textbf{Sempitkan kemungkinannya.} Berdasarkan waktu dan tempatnya,
+        susun dugaan: bunyinya berkaitan dengan pendaratan, bukan dengan
+        lompatan. Buatlah daftar tindakan yang perlu dicoba, yaitu melompat
+        lalu mendarat, mendarat tanpa melompat, dan melompat berulang.
+  \item \textbf{Coba setiap dugaan secara terpisah.} Ternyata bunyinya hilang
+        ketika pemain melompat kurang dari setengah detik sesudah mendarat.
+        Dugaan itu terbukti, dan sekarang catatannya dapat diulang.
+  \item \textbf{Perbaiki, lalu periksa ulang.} Setelah bunyinya tidak lagi
+        saling memotong, jalankan kembali ketiga tindakan itu untuk memastikan
+        temuan itu benar-benar hilang.
+\end{langkah}
+
+Tiga hal dapat dipetik dari contoh itu. Pertama, catatan yang tampak tidak
+berguna biasanya memuat keterangan yang cukup untuk disempitkan, dan yang
+kurang hanyalah waktu dan tempatnya. Kedua, menyempitkan dugaan menjadi
+beberapa tindakan yang dapat dicoba jauh lebih cepat daripada mencoba
+mengulanginya secara acak. Ketiga, temuan itu baru boleh dipindahkan ke
+\istilah{log bug} setelah ada urutan tindakan yang dapat diulang, sebagaimana
+dibahas pada Bagian~\ref{sec:log-bug}.

@@ -1,0 +1,135 @@
+% chapters/07/section-01.tex
+\section{Kelas \istilah{Sprite} dan Wadah \istilah{Group}}
+\label{sec:kelas-sprite}
+
+Pada bab-bab sebelumnya, setiap benda disimpan pada beberapa variabel
+terpisah. Cara itu memadai untuk satu atau dua benda, tetapi tidak lagi ketika
+jumlahnya bertambah. Bagian ini memperkenalkan cara menyusun benda menjadi satu
+kesatuan.
+
+\subsection{Mengapa Benda Perlu Menjadi Satu Kesatuan}
+
+Perhatikan keadaan yang dihadapi pada akhir Bab~VI. Pemain disimpan pada empat
+variabel: posisi, kecepatan, \code{rect}, dan penanda menyentuh lantai. Bola
+disimpan pada tiga variabel yang serupa. Menambahkan benda ketiga berarti
+menambah tiga atau empat variabel lagi, beserta baris pembaruannya.
+
+Keadaan itu membawa tiga kesulitan. Pertama, jumlah variabel bertambah secepat
+jumlah benda. Kedua, mudah keliru memasangkan variabel benda yang satu dengan
+benda yang lain, karena semuanya bertipe sama. Ketiga, dan yang paling
+merepotkan, perintah yang berlaku untuk seluruh benda---misalnya memperbarui
+gerak atau menggambar---harus ditulis berulang untuk setiap benda.
+
+Pemrograman berorientasi objek menyelesaikan ketiga kesulitan itu dengan
+mengumpulkan data dan perilaku sebuah benda menjadi satu kesatuan yang disebut
+objek, dan menyediakan resep pembuatnya yang disebut kelas.
+
+\begin{catatabox}
+Apabila Anda belum pernah memakai kelas, tiga hal berikut cukup untuk memulai.
+\textbf{Pertama}, kelas adalah resep, sedangkan objek adalah hasilnya: satu
+kelas dapat menghasilkan banyak objek. \textbf{Kedua}, fungsi
+\code{__init__} dijalankan sekali ketika objek dibuat, dan di sanalah nilai
+awalnya disiapkan. \textbf{Ketiga}, kata \code{self} menunjuk objek yang sedang
+dikerjakan, sehingga \code{self.rect} berarti ``rect milik objek ini''.
+Penjelasan lebih jauh dapat Anda lihat pada buku rujukan \mbox{[R1]},
+\mbox{[R2]}.
+\end{catatabox}
+
+\subsection{Pola Kelas \istilah{Sprite} pada Pygame}
+
+Pygame menyediakan kelas dasar \code{pygame.sprite.Sprite} yang sudah memuat
+keperluan dasar sebuah benda permainan. Tugas Anda adalah menurunkannya dan
+mengisi dua hal: gambar benda dan persegi pembatasnya.
+
+\begin{kodekeluaran}
+class Item(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
+        self.image = pygame.Surface((18, 18))
+        self.image.fill(ITEM_COLOR)
+        self.rect = self.image.get_rect(center=(x, y))
+\end{kodekeluaran}
+
+Tiga baris di dalam \code{__init__} itu perlu dipahami satu per satu.
+
+\begin{itemize}
+  \item \code{super().__init__()} menjalankan penyiapan dari kelas dasar.
+        Baris itu wajib ada pada setiap kelas turunan \code{Sprite}; tanpa
+        itu, benda Anda tidak akan dikenali oleh perkakas Pygame.
+  \item \code{self.image} adalah permukaan tempat benda digambar. Namanya harus
+        tepat \code{image}, karena perkakas Pygame mencari nama itu.
+  \item \code{self.rect} adalah persegi pembatas benda. Namanya pun harus tepat
+        \code{rect}, dan nilainya harus berupa \code{Rect}, sebab seluruh
+        pemeriksaan tabrakan memakainya.
+\end{itemize}
+
+\begin{peringatanbox}
+Nama \code{image} dan \code{rect} bukan pilihan Anda, melainkan kesepakatan
+Pygame. Apabila keduanya diberi nama lain, program tetap berjalan tetapi
+perkakas penggambaran dan pemeriksaan tabrakan tidak menemukan benda Anda, dan
+gejalanya membingungkan: benda tidak tergambar, atau tidak pernah dianggap
+bertabrakan. Inilah salah satu dari sedikit tempat pada Python yang menuntut
+nama tertentu.
+\end{peringatanbox}
+
+\subsection{Wadah \istilah{Group}}
+
+Satu kelas menghasilkan banyak benda. Untuk mengurus sekumpulan benda itu,
+Pygame menyediakan wadah \code{pygame.sprite.Group}. Wadah menyimpan benda dan
+mengerjakan perintah untuk seluruh anggotanya sekaligus. Hubungan keduanya
+diperlihatkan pada Gambar~\ref{fig:sprite-group}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/sprite-group.tikz}
+\caption{Kelas menghasilkan benda, wadah mengurus sekumpulan benda}
+\label{fig:sprite-group}
+\end{figure}
+
+Tabel~\ref{tab:sprite-group} memuat anggota kedua kelas yang paling sering
+dipakai. Seluruhnya disediakan Pygame, sehingga tidak perlu ditulis sendiri
+\cite{pygame-sprite-mask}.
+
+\begin{table}[htbp]
+\centering
+\caption{Anggota \code{Sprite} dan \code{Group} yang paling sering dipakai}
+\label{tab:sprite-group}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.6cm} Y@{}}
+\toprule
+\headrow \textbf{Penulisan} & \textbf{Arti} \\
+\midrule
+\code{sprite.image}, \code{sprite.rect} &
+Gambar dan persegi pembatas benda. Kedua nama itu wajib dipakai. \\
+\addlinespace
+\code{sprite.update(dt, ...)} &
+Perilaku benda setiap bingkai. Isinya Anda tentukan sendiri; argumen tambahan
+diteruskan oleh wadah. \\
+\addlinespace
+\code{sprite.kill()} &
+Mengeluarkan benda dari seluruh wadah yang memuatnya. Berguna ketika benda
+diambil atau dihancurkan. \\
+\addlinespace
+\code{group.add(benda)} &
+Memasukkan benda ke dalam wadah. Satu benda boleh berada pada beberapa wadah
+sekaligus. \\
+\addlinespace
+\code{group.update(dt, ...)} &
+Memanggil \code{update} pada seluruh anggotanya, dengan argumen yang sama. \\
+\addlinespace
+\code{group.draw(surface)} &
+Menggambar seluruh anggotanya ke permukaan yang diberikan. \\
+\addlinespace
+\code{for benda in group:} &
+Menelusuri seluruh anggota wadah, sebagaimana menelusuri daftar biasa. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{tipsbox}
+Satu benda boleh berada pada beberapa wadah sekaligus. Cara
+itu dipakai pada program bab ini: seluruh bongkahan dikumpulkan di wadah
+\code{platforms}, dan apabila nanti perlu menggambar seluruh isi permainan
+dengan satu perintah, bongkahan yang sama dapat dimasukkan pula ke wadah
+\code{all_sprites}. Wadah hanyalah kumpulan rujukan, bukan salinan.
+\end{tipsbox}

@@ -1,0 +1,48 @@
+% chapters/15/figures/rantai-bunyi.tikz
+% Jalan bunyi dari peristiwa permainan sampai ke pendengar.
+\begin{tikzpicture}[
+  tahap/.style={
+    rectangle, rounded corners=5pt, draw=ubPrimary, thick, fill=ubAlt,
+    align=center, text width=24mm, inner sep=3.5pt, minimum height=11mm,
+    font=\footnotesize
+  },
+  sumber/.style={
+    rectangle, rounded corners=5pt, draw=ubAccent, thick, fill=white,
+    align=center, text width=24mm, inner sep=3.5pt, minimum height=11mm,
+    font=\footnotesize
+  },
+  panah/.style={-{Stealth[length=2.2mm]}, thick, draw=ubAccent},
+  catatan/.style={font=\scriptsize\itshape, align=left},
+  judul/.style={font=\footnotesize\bfseries, ubPrimary}
+]
+
+\node[judul, anchor=west] at (-1.35,3.55) {Lajur BGM (musik latar)};
+\node[judul, anchor=west] at (-1.35,-0.05) {Lajur SFX (efek suara)};
+
+% --- Lajur BGM ---
+\node[tahap]  (mulai) at (0,2.5)    {scene dimuat};
+\node[tahap]  (putar) at (3.2,2.5)  {\code{PutarMusik()}};
+\node[sumber] (srcA)  at (6.4,2.5)  {\code{AudioSource}\\{\scriptsize\itshape loop = true}};
+
+% --- Lajur SFX ---
+\node[tahap]  (kejadian) at (0,-1.0)   {peristiwa\\{\scriptsize\itshape lompat, ambil, terluka}};
+\node[tahap]  (pemicu)   at (3.2,-1.0) {\code{PemicuBunyi}};
+\node[sumber] (srcB)     at (6.4,-1.0) {\code{AudioSource}\\{\scriptsize\itshape PlayOneShot}};
+
+% --- Titik temu ---
+\node[sumber] (mix)    at (9.6,0.75) {\code{AudioMixer}\\{\scriptsize\itshape Musik dan Efek}};
+\node[tahap]  (keluar) at (12.8,0.75) {pengeras suara};
+
+\draw[panah] (mulai) -- (putar);
+\draw[panah] (putar) -- (srcA);
+\draw[panah] (srcA) -- (mix);
+\draw[panah] (kejadian) -- (pemicu);
+\draw[panah] (pemicu) -- (srcB);
+\draw[panah] (srcB) -- (mix);
+\draw[panah] (mix) -- (keluar);
+
+\node[catatan, anchor=north west, text width=64mm] at (-1.35,-2.0)
+  {Kedua lajur bertemu pada \istilah{AudioMixer}. Di sanalah perbandingan
+   kekuatan musik dengan efek suara diatur, tanpa perlu mengubah berkas
+   bunyinya.};
+\end{tikzpicture}

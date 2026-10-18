@@ -1,0 +1,174 @@
+% chapters/01/section-05.tex
+\section{Cara Menggunakan Buku dan Strategi Belajar}
+\label{sec:cara-belajar}
+
+Susunan bab dan makna setiap kotak informasi telah dijelaskan pada bagian
+\istilah{Petunjuk Penggunaan Buku} di awal buku ini. Bagian ini melengkapi
+penjelasan tersebut dengan hal yang lebih menentukan hasil belajar, yaitu
+kebiasaan kerja.
+
+\subsection{Kebiasaan Belajar yang Menentukan Hasil}
+
+Pengalaman mengampu mata kuliah pemrograman menunjukkan bahwa perbedaan hasil
+belajar lebih banyak ditentukan oleh kebiasaan kerja mingguan daripada oleh
+bakat awal. Lima kebiasaan berikut terbukti membedakan mahasiswa yang
+berkembang pesat dari yang tertinggal.
+
+\begin{table}[htbp]
+\centering
+\caption{Lima kebiasaan kerja dan cara melatihnya}
+\label{tab:kebiasaan}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.6cm} L{4.5cm} Y@{}}
+\toprule
+\headrow \textbf{Kebiasaan} & \textbf{Alasan} & \textbf{Cara melatihnya} \\
+\midrule
+Mengetik ulang kode, tidak menyalin &
+Jari dan mata mengenali pola yang tidak tertangkap ketika kode hanya dibaca
+sekilas. Menyalin juga menghilangkan kesempatan menemukan kesalahan sendiri. &
+Tutup daftar kode pada buku, tulis ulang dari ingatan, baru bandingkan. \\
+\addlinespace
+Mengubah satu nilai lalu mengamati akibatnya &
+Pemahaman tentang parameter terbentuk dari percobaan, bukan dari hafalan nilai
+yang disarankan. &
+Setiap kali sebuah angka muncul pada kode, ubah menjadi dua kali lipat atau
+separuhnya, lalu jelaskan apa yang berubah. \\
+\addlinespace
+Membaca pesan kesalahan sampai selesai &
+Pesan kesalahan Python menyebutkan jenis kesalahan, berkas, dan nomor baris;
+tiga informasi itu hampir selalu cukup untuk menemukan penyebabnya. &
+Biasakan membaca dari baris terakhir ke atas sebelum mencari bantuan. \\
+\addlinespace
+Mencatat kendala dan penyelesaiannya &
+Catatan ini menjadi bahan laporan pengembangan dan lembar refleksi pada akhir
+semester, sekaligus mencegah kesalahan yang sama terulang. &
+Sediakan satu berkas catatan per minggu: apa yang dicoba, apa yang gagal, apa
+yang akhirnya berhasil. \\
+\addlinespace
+Bekerja sedikit tetapi rutin &
+Keterampilan menulis program melemah jika ditinggalkan, dan satu blok materi
+bergantung pada blok sebelumnya. &
+Tetapkan waktu tetap di luar jadwal kuliah, misalnya tiga puluh menit setiap
+hari, alih-alih menumpuk pekerjaan pada akhir pekan. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection{Mengelola Hasil Kerja dengan Git}
+
+Seluruh tugas praktikum dikumpulkan melalui repositori Git pribadi. Git adalah
+perkakas pengendali versi yang mencatat riwayat perubahan berkas, sehingga
+perkembangan pekerjaan Anda dari minggu ke minggu dapat ditelusuri. Anda tidak
+dituntut menguasai Git secara mendalam; perintah berikut sudah mencukupi
+untuk keperluan mata kuliah ini.
+
+\begin{kodekeluaran}
+# sekali saja, di dalam folder proyek
+git init
+git add .
+git commit -m "struktur awal proyek"
+
+# setiap kali selesai mengerjakan praktikum
+git add .
+git commit -m "praktikum 02: game loop dan pembatasan FPS"
+\end{kodekeluaran}
+
+Beberapa anjuran praktis yang menghemat waktu Anda nanti.
+
+\begin{itemize}
+  \item \textbf{Pisahkan berkas menurut fungsinya.} Simpan kode pada folder
+        \code{code/}, catatan praktikum pada \code{catatan/}, dan aset pada
+        \code{aset/}. Struktur yang rapi dinilai pada rubrik kualitas kode
+        dan struktur proyek.
+  \item \textbf{Buat pesan \istilah{commit} yang menerangkan isinya.} Pesan
+        seperti \code{commit} tanpa keterangan tidak membantu siapa pun,
+        termasuk Anda sendiri tiga minggu kemudian.
+  \item \textbf{Lakukan \istilah{commit} sesering mungkin}, misalnya setiap
+        kali satu langkah praktikum selesai. Riwayat yang rinci memudahkan
+        Anda kembali ke keadaan terakhir yang berjalan baik ketika percobaan
+        berikutnya gagal.
+  \item \textbf{Jangan menyimpan berkas bantu.} Berkas keluaran seperti
+        \code{.__pycache__} atau berkas sementara editor sebaiknya
+        didaftarkan pada berkas \code{.gitignore}, bukan ikut dikumpulkan.
+\end{itemize}
+
+\subsection{Kesalahan yang Paling Sering Terjadi}
+
+\begin{peringatanbox}
+\begin{enumerate}
+  \item \textbf{Melompat ke \istilah{game engine} sebelum memahami mekanisme
+        dasarnya.} Akibatnya, ketika perilaku permainan tidak sesuai harapan,
+        Anda tidak memiliki cara untuk menelusuri penyebabnya. Ikuti urutan
+        blok materi sebagaimana disusun.
+  \item \textbf{Menyalin kode tanpa menjalankannya.} Kode yang belum pernah
+        dijalankan belum dapat disebut selesai. Jalankan, amati, dan pastikan
+        keluarannya sesuai dugaan Anda.
+  \item \textbf{Mengabaikan pengelolaan waktu.} Kesalahan yang paling sering
+        muncul pada Blok I bukan kesalahan sintaksis, melainkan gerak objek
+        yang cepat pada satu komputer dan lambat pada komputer lain karena
+        \istilah{delta time} tidak dipakai.
+  \item \textbf{Menumpuk seluruh kode dalam satu berkas panjang.} Kode yang
+        tidak dipecah menjadi fungsi sulit diperiksa dan sulit diperbaiki.
+        Biasakan memecah program begitu satu berkas melewati seratus baris.
+  \item \textbf{Baru membangun portofolio pada akhir semester.} Nilai
+        portofolio diambil dari sampel tugas mingguan. Pekerjaan yang tidak
+        pernah dikumpulkan tidak dapat dinilai, sebaik apa pun hasilnya.
+\end{enumerate}
+\end{peringatanbox}
+
+\subsection{Perlengkapan dan Sumber Belajar}
+
+\begin{table}[htbp]
+\centering
+\caption{Perlengkapan yang diperlukan selama satu semester}
+\label{tab:perlengkapan}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.4cm} L{3.6cm} Y@{}}
+\toprule
+\headrow \textbf{Perlengkapan} & \textbf{Diperlukan pada} & \textbf{Keterangan} \\
+\midrule
+Komputer (dapat memakai komputer laboratorium) &
+Bab III dan seterusnya &
+Pemasangan Unity pada Bab XII menuntut ruang penyimpanan dan memori yang lebih
+besar daripada Python; periksa spesifikasi minimum pada dokumentasi resmi. \\
+\addlinespace
+Python 3, Pygame, dan editor kode &
+Bab III &
+Seluruhnya bebas biaya. Langkah pemasangan diuraikan pada Bab III. \\
+\addlinespace
+Git dan akun repositori &
+Bab III dan seterusnya &
+Dipakai untuk mengumpulkan seluruh tugas praktikum. \\
+\addlinespace
+Akun Unity dan versi Unity LTS &
+Bab XII &
+Versi yang dipakai dicatat pada Bab XII agar seragam di seluruh kelas. \\
+\addlinespace
+Koneksi internet &
+Sepanjang semester &
+Diperlukan untuk mengunduh perkakas, membaca dokumentasi resmi, dan mengambil
+aset bebas pakai. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Mengenai sumber belajar, buku ini memakai dua kelompok rujukan. Kelompok
+pertama, \mbox{[R1]}--\mbox{[R14]}, adalah sumber utama yang sebaiknya Anda
+buka sendiri. Kelompok itu mencakup buku \istilah{Making Games with Python \&
+Pygame} dan \istilah{Invent Your Own Computer Games with Python} karya
+Al Sweigart \mbox{[R1]}, \mbox{[R2]}; dokumentasi resmi Pygame dan Unity
+\mbox{[R3]}, \mbox{[R4]}, \mbox{[R13]}, \mbox{[R14]}; serta bahan kuliah
+tentang \istilah{game loop}, integrasi numerik, mesin keadaan, dan pencarian
+jalur \mbox{[R5]}--\mbox{[R11]}. Kelompok kedua,
+\mbox{[R15]}--\mbox{[R35]}, adalah dokumen kurikulum, bahan ajar, dan studi
+kasus dari berbagai perguruan tinggi Indonesia yang menjadi bahan pembanding
+penyusunan buku ini.
+
+\begin{catatabox}
+Tautan pada Daftar Pustaka ditelusuri pada September 2026. Alamat laman dan
+isi dokumen daring dapat berubah; apabila sebuah tautan tidak lagi dapat
+dibuka, carilah judul dokumennya pada mesin pencari, atau tanyakan kepada
+dosen pengampu. Untuk dokumentasi pustaka, biasakan membuka halaman resmi
+Pygame \mbox{[R3]} dan Unity \mbox{[R13]}, \mbox{[R14]} karena keduanya
+diperbarui mengikuti versi terbaru.
+\end{catatabox}

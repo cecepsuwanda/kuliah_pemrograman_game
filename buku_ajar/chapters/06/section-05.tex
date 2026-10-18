@@ -1,0 +1,129 @@
+% chapters/06/section-05.tex
+\section{Program Fisika Lengkap}
+\label{sec:program-fisika}
+
+Bagian ini menyatukan ketiga unsur fisika menjadi satu program yang memuat dua
+benda dengan perilaku berbeda, sekaligus mengukur hasilnya untuk dibandingkan
+dengan perhitungan.
+
+\subsection{Kode Lengkap}
+
+\kodepython{python/ch06_fisika.py}{Gravitasi, lompatan, dan pantulan pada dua benda}{lst:ch06-fisika}
+
+\subsection{Dua Benda, Satu Hukum}
+
+Program tersebut memuat dua benda yang perilakunya berbeda, tetapi dihitung
+oleh fungsi yang sama.
+
+\begin{description}
+  \item[Pemain] digerakkan tombol mendatar, jatuh karena gravitasi, berhenti di
+        lantai karena koefisien restitusinya nol, dan dapat melompat ketika
+        menyentuh lantai. Benda ini memperlihatkan indikator \ind{a} dan
+        \ind{b}.
+  \item[Bola] bergerak sendiri, memantul di lantai dan di kedua dinding dengan
+        koefisien restitusi 0,8 sehingga pantulannya makin lama makin pendek.
+        Benda ini memperlihatkan indikator \ind{c}.
+\end{description}
+
+Perbedaan perilaku keduanya hanya berasal dari dua hal: siapa
+yang menentukan kecepatan mendatarnya, dan berapa nilai koefisien restitusinya.
+Seluruh perhitungan lainnya, yaitu gravitasi, lantai, dan dinding, sama persis.
+
+\subsection{Mengukur Tinggi Lompatan dan Membandingkannya dengan Hitungan}
+
+Program bab ini mencatat titik tertinggi yang dicapai pemain, lalu
+menampilkannya bersama tinggi yang seharusnya menurut Persamaan~\eqref{eq:tinggi-lompat}.
+Perbandingan keduanya pada beberapa laju bingkai diperlihatkan pada
+Tabel~\ref{tab:galat-euler}.
+
+\begin{table}[htbp]
+\centering
+\caption{Tinggi lompatan terukur dibandingkan hitungan, pada beberapa laju bingkai}
+\label{tab:galat-euler}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.8cm} C{2.6cm} C{2.9cm} Y@{}}
+\toprule
+\headrow \textbf{Batas laju} & \textbf{Tinggi terukur} & \textbf{Menurut perhitungan} & \textbf{Galat} \\
+\midrule
+30 FPS & 124,6 piksel & 124,7 piksel & 11,4 piksel (8,4\%) \\
+\addlinespace
+60 FPS & 130,3 piksel & 130,3 piksel & 5,8 piksel (4,3\%) \\
+\addlinespace
+120 FPS & 133,1 piksel & 133,2 piksel & 2,9 piksel (2,1\%) \\
+\addlinespace
+240 FPS & 134,5 piksel & 134,7 piksel & 1,5 piksel (1,1\%) \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Gravitasi 1800 piksel per detik kuadrat dan kecepatan lompatan 700
+piksel per detik, sehingga tinggi yang seharusnya adalah 136,1 piksel. Kolom
+ketiga dihitung dengan menjumlahkan perpindahan setiap bingkai.}
+\end{table}
+
+Tiga hal dapat dibaca dari tabel tersebut.
+
+\begin{enumerate}
+  \item \textbf{Hasil pengukuran sesuai dengan perhitungan.} Tinggi terukur
+        dan hasil perhitungan berbeda kurang dari 0,2 piksel pada setiap laju.
+        Kesesuaian itu menunjukkan bahwa simulasi berjalan sebagaimana
+        dimaksudkan, dan bahwa cara pengukurannya benar.
+  \item \textbf{Simulasi selalu lebih rendah daripada lintasan sebenarnya.}
+        Tinggi yang seharusnya adalah 136,1 piksel, sedangkan simulasi hanya
+        mencapai 124 sampai 135 piksel. Selisih itu adalah galat integrasi
+        Euler yang telah dijelaskan pada Bagian~2.4, bukan kesalahan penulisan
+        program.
+  \item \textbf{Galat menyusut separuh setiap panjang langkah diperkecil
+        separuh.} Perhatikan kolom terakhir: 11,4 lalu 5,8 lalu 2,9 lalu 1,5.
+        Pola itu sesuai dengan sifat ketelitian tingkat pertama yang disebutkan
+        pada Bagian~2.4.
+\end{enumerate}
+
+Pelajaran praktisnya penting bagi perancangan permainan. Pada 60 bingkai per
+detik, galat sebesar 4,3 persen tidak dapat dirasakan pemain, karena tingginya
+hanya berbeda enam piksel pada lompatan setinggi 136 piksel. Karena itu, kaidah
+Euler yang sederhana sudah memadai untuk sebagian besar permainan, dan
+perhitungan yang lebih rumit hanya diperlukan apabila hasil simulasi harus
+dapat diulang secara persis.
+
+\begin{catatabox}
+Lompatan pemain sebenarnya \textbf{tidak persis} setinggi yang
+dihitung dengan Persamaan~\eqref{eq:tinggi-lompat}. Apabila permainan Anda
+menuntut pemain mencapai bongkahan yang berada tepat di batas jangkauan
+lompatan, sediakan sedikit kelonggaran. Kebiasaan memberikan kelonggaran
+sepuluh sampai dua puluh persen merupakan kebiasaan yang lazim pada
+perancangan level.
+\end{catatabox}
+
+\subsection{Percobaan yang Disarankan}
+
+\begin{table}[htbp]
+\centering
+\caption{Percobaan pada program fisika}
+\label{tab:percobaan-ch06}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{5.6cm} Y@{}}
+\toprule
+\headrow \textbf{Yang diubah dan caranya} & \textbf{Yang sebaiknya Anda amati} \\
+\midrule
+Gravitasi, melalui pilihan \code{--gravity}. &
+Lompatan menjadi lebih tinggi dan lebih melayang ketika gravitasi diperkecil,
+walaupun kecepatan lompatannya tidak berubah. \\
+\addlinespace
+Kecepatan lompatan, melalui pilihan \code{--jump-speed}. &
+Tinggi lompatan berubah sebanding dengan kuadrat kecepatan, bukan sebanding
+langsung. Menaikkan kecepatan dua kali menaikkan tinggi empat kali. \\
+\addlinespace
+Koefisien restitusi bola, melalui pilihan \code{--restitution}. &
+Pada nilai 1, bola memantul selamanya dengan tinggi yang tetap. Pada nilai 0,
+bola berhenti seketika seperti pemain. \\
+\addlinespace
+Koefisien restitusi pemain, dengan mengubah \code{PLAYER_RESTITUTION}. &
+Pemain memantul setiap kali mendarat dan kendalinya terasa lepas. Kembalikan
+nilainya menjadi nol sesudah percobaan. \\
+\addlinespace
+Cara membaca lompatan, dengan mengganti \code{KEYDOWN} menjadi
+\code{key.get_pressed()}. &
+Menahan tombol lompatan membuat pemain melompat terus-menerus. Kembalikan
+sesudah percobaan. \\
+\bottomrule
+\end{tabularx}}
+\end{table}

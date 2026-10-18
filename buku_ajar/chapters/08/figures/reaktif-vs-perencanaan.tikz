@@ -1,0 +1,44 @@
+% chapters/08/figures/reaktif-vs-perencanaan.tikz
+% Dua cara menyusun keputusan NPC: reaktif yang hanya melihat arah pemain,
+% dan berbasis perencanaan yang memperhitungkan rintangan.
+\begin{tikzpicture}[
+  npc/.style={rectangle, draw=ubRed, thick, fill=ubRed!25, inner sep=4pt},
+  pemain/.style={rectangle, draw=ubPrimary, thick, fill=ubPrimary!25, inner sep=4pt},
+  dinding/.style={rectangle, draw=ubLine, thick, fill=ubGray},
+  panah/.style={-{Stealth[length=2.2mm]}, very thick, draw=ubRed},
+  panahjalan/.style={-{Stealth[length=2.2mm]}, very thick, draw=ubGreen},
+  judul/.style={font=\footnotesize\bfseries, ubPrimary, align=center},
+  label/.style={font=\scriptsize, align=center}
+]
+
+% ---------- Panel A: reaktif ----------
+\begin{scope}
+  \node[judul, anchor=south] at (2.4,2.35) {AI reaktif};
+  \draw[dinding] (2.3,0.5) rectangle (2.65,2.3);
+
+  \node[npc] (n1) at (0.8,1.4) {NPC};
+  \node[pemain] (p1) at (4.0,1.4) {P};
+
+  \draw[panah] (1.15,1.4) -- (2.2,1.4);
+  \node[label, ubRed, anchor=north, text width=44mm] at (2.4,0.2)
+    {bergerak lurus ke arah pemain, sehingga terus menabrak dinding dan tidak
+     pernah sampai};
+\end{scope}
+
+% ---------- Panel B: berbasis perencanaan ----------
+\begin{scope}[xshift=6.4cm]
+  \node[judul, anchor=south] at (2.4,2.35) {AI berbasis perencanaan};
+  \draw[dinding] (2.3,0.5) rectangle (2.65,2.3);
+
+  \node[npc] (n2) at (0.8,1.4) {NPC};
+  \node[pemain] (p2) at (4.0,1.4) {P};
+
+  \draw[panahjalan] (1.15,1.4) -- (1.5,1.4);
+  \draw[panahjalan] (1.5,1.4) -- (1.5,0.15) -- (3.5,0.15);
+  \draw[panahjalan] (3.5,0.15) -- (3.5,1.4) -- (3.68,1.4);
+
+  \node[label, ubGreen, anchor=north, text width=46mm] at (2.4,0.2)
+    {memperhitungkan rintangan lebih dahulu, sehingga menemukan jalan
+     memutar};
+\end{scope}
+\end{tikzpicture}

@@ -1,0 +1,93 @@
+% chapters/05/contoh.tex
+\section{Dua Contoh Terapan}
+\label{sec:contoh-bab-5}
+
+\subsection{Contoh Pertama: Menghitung Kecepatan Diagonal}
+
+\begin{contohbox}
+Seorang pemain menekan tombol kanan dan tombol bawah secara bersamaan.
+Program menyusun vektor arah bernilai $(1, 1)$ tanpa menormalkannya, lalu
+mengalikannya dengan kecepatan 200 piksel per detik.
+
+Panjang vektor arah tersebut adalah
+
+\[
+|(1, 1)| = \sqrt{1^2 + 1^2} = \sqrt{2} \approx 1{,}414 .
+\]
+
+Karena kecepatan adalah arah dikalikan besarnya, maka kecepatan yang
+sesungguhnya bekerja adalah
+
+\[
+200 \times 1{,}414 = 282{,}8 \text{ piksel per detik}.
+\]
+
+Objek bergerak 41 persen lebih cepat daripada ketika berjalan lurus, tanpa
+sepengetahuannya dan tanpa pesan kesalahan apa pun dari program.
+\end{contohbox}
+
+Apabila vektor arah dinormalkan lebih dahulu, panjangnya menjadi satu, dan
+kecepatannya kembali menjadi 200 piksel per detik untuk segala arah. Perbedaan
+keduanya diperlihatkan pada Gambar~\ref{fig:normalisasi-diagonal}.
+
+Kecepatan yang lebih besar itu membawa akibat yang lebih jauh
+daripada sekadar terasa cepat. Jangkauan lompatan, jarak yang ditempuh sebelum
+waktu habis, dan peluang menghindari musuh semuanya berubah ketika pemain
+menempuh arah diagonal. Pada permainan yang mengandalkan ketepatan, keunggulan
+41 persen itu cukup untuk membuat permainan tidak lagi seimbang. Karena itu,
+penormalan vektor arah bukan kerapian tambahan, melainkan bagian dari
+kebenaran perhitungan.
+
+\subsection{Contoh Kedua: Mengapa Posisi Tidak Boleh Berupa Bilangan Bulat}
+
+\begin{contohbox}
+Sebuah objek bergerak dengan kecepatan 20 piksel per detik pada laju 60
+bingkai per detik. Perpindahan setiap bingkainya adalah
+
+\[
+20 \div 60 = 0{,}333 \text{ piksel}.
+\]
+
+Misalkan posisi disimpan sebagai bilangan bulat. Pada setiap bingkai, program
+menambahkan 0,333 lalu memotongnya menjadi bilangan bulat. Hasilnya
+diperlihatkan pada Tabel~\ref{tab:posisi-bulat}.
+\end{contohbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Posisi objek pada setiap bingkai menurut cara penyimpanannya}
+\label{tab:posisi-bulat}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.6cm} C{3.4cm} Y@{}}
+\toprule
+\headrow \textbf{Bingkai} & \textbf{Posisi bila disimpan sebagai bilangan bulat} & \textbf{Posisi bila disimpan sebagai pecahan} \\
+\midrule
+1 & 0 & 0,333 \\
+2 & 0 & 0,667 \\
+3 & 0 & 1,000 \\
+4 & 0 & 1,333 \\
+5 & 0 & 1,667 \\
+6 & 0 & 2,000 \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Kecepatan 20 piksel per detik pada 60 bingkai per detik. Pada kolom
+kedua, nilai 0,333 terpotong menjadi 0 pada setiap bingkai sehingga nilainya
+tidak pernah terakumulasi; pada kolom ketiga, nilai itu tersimpan dan
+terakumulasi.}
+\end{table}
+
+Objek pada kolom kedua tidak akan bergerak sama sekali, berapa lama pun
+program dijalankan. Nilai pecahan yang seharusnya terakumulasi terpotong
+menjadi nol pada setiap bingkai, dan nilai yang terpotong itu hilang untuk
+selamanya.
+
+Gejala ini tidak muncul pada kecepatan tinggi. Pada kecepatan 200 piksel per
+detik, perpindahan setiap bingkainya 3,33 piksel sehingga pemotongan hanya
+memperlambat objek sedikit, dan kekeliruannya tidak terlihat. Kekeliruan
+semacam ini karena itu berbahaya: program tampak bekerja pada pengujian
+pertama, lalu gagal ketika Anda menurunkan kecepatan objek untuk keperluan
+permainan yang sesungguhnya.
+
+Kesimpulannya, simpanlah posisi sebagai pecahan dan gunakan \code{Rect} hanya
+untuk menggambar serta memeriksa tabrakan. Pembagian tugas itu akan Anda pakai
+terus sampai Bab~XVI.

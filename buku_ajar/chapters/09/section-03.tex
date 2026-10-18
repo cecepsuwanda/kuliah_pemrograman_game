@@ -1,0 +1,116 @@
+% chapters/09/section-03.tex
+\section{Menerapkan Mesin Keadaan di Dalam Kode}
+\label{sec:menerapkan-fsm}
+
+Diagram pada bagian sebelumnya diterjemahkan menjadi kode. Susunan yang dipakai
+pada bab ini memisahkan tiga pekerjaan yang berbeda, dan pemisahan itulah yang
+menjadi inti bagian ini.
+
+\subsection{Tiga Pekerjaan yang Dipisahkan}
+
+\begin{enumerate}
+  \item \textbf{Menentukan keadaan berikutnya.} Dikerjakan oleh fungsi
+        \code{decide}, yang membaca keadaan sekarang, jarak terhadap pemain,
+        dan ketiga pewaktu, lalu mengembalikan nama keadaan berikutnya. Fungsi
+        ini tidak mengubah apa pun.
+  \item \textbf{Menyiapkan keadaan yang baru dimasuki.} Dikerjakan oleh fungsi
+        \code{enter_state}, yang mengembalikan penghitung keadaan sebelumnya ke
+        nol dan mencatat perpindahan itu pada catatan keadaan.
+  \item \textbf{Menjalankan perilaku keadaan yang aktif.} Dikerjakan oleh fungsi
+        \code{act}, yang mengubah kecepatan NPC menurut keadaan yang sedang
+        aktif.
+\end{enumerate}
+
+Fungsi \code{decide} tidak mengubah apa pun; ia hanya membaca
+dan mengembalikan jawaban. Sifat itu disengaja, dan manfaatnya akan terasa pada
+Bagian~\ref{sec:menguji-keadaan}: keputusan dapat diperiksa dengan memanggil
+fungsi itu berulang kali tanpa menjalankan permainannya.
+
+\subsection{Syarat Perpindahan Ditulis pada Satu Tempat}
+
+Seluruh syarat pada Tabel~\ref{tab:tujuh-perpindahan} dikumpulkan di dalam
+fungsi \code{decide}, disusun menurut keadaan yang sedang aktif.
+
+\begin{kodekeluaran}
+def decide(self, delta_seconds):
+    self.attack_timer = max(0.0, self.attack_timer - delta_seconds)
+
+    if self.state == IDLE_STATE:
+        self.idle_timer += delta_seconds
+        if self.distance <= self.radius:
+            return CHASE_STATE
+        if self.idle_timer >= IDLE_SECONDS:
+            return PATROL_STATE
+        return IDLE_STATE
+    # ... keadaan berikutnya ...
+\end{kodekeluaran}
+
+Tiga hal perlu diperhatikan pada susunan itu.
+
+\begin{enumerate}
+  \item \textbf{Setiap keadaan diperiksa secara terpisah}, sehingga syarat
+        perpindahannya mudah dicari. Menambahkan keadaan baru berarti
+        menambahkan satu blok, bukan menyunting blok yang sudah ada.
+  \item \textbf{Urutan pemeriksaan menentukan hasil} ketika dua syarat benar
+        bersamaan. Pada keadaan berdiam, syarat ``pemain terlihat'' diperiksa
+        lebih dahulu daripada syarat ``sudah cukup lama berdiam''. Pilihan itu
+        disengaja: NPC yang melihat pemain harus segera mengejar, walaupun ia
+        baru saja mulai berdiam.
+  \item \textbf{Ketiga pewaktu dijalankan di tempat yang berbeda menurut
+        jenisnya.} Pewaktu jeda serangan dijalankan pada awal fungsi, sebab ia
+        berjalan tanpa memandang keadaan. Pewaktu berdiam dijalankan pada blok
+        keadaan berdiam, dan pewaktu tenggang pada blok keadaan mengejar.
+\end{enumerate}
+
+\subsection{Pekerjaan Penyiapan ketika Masuk Keadaan}
+
+Perpindahan keadaan bukan sekadar mengganti nama. Setiap keadaan memiliki
+pekerjaan penyiapan sendiri, dan pekerjaan itu dikerjakan sekali saja pada saat
+keadaan dimasuki.
+
+\begin{kodekeluaran}
+def enter_state(self, state):
+    self.state = state
+    if state == IDLE_STATE:
+        self.idle_timer = 0.0
+    elif state == PATROL_STATE:
+        self.waypoints_visited = 0
+    elif state == CHASE_STATE:
+        self.lost_timer = 0.0
+    self.transitions.append((self.frames, state))
+\end{kodekeluaran}
+
+Perhatikan tiga hal yang dikerjakan ketika keadaan dimasuki. Pertama, keadaan
+ditetapkan. Kedua, penghitung yang berkaitan dengan keadaan itu dikembalikan ke
+nol; tanpa itu, pewaktu dari kunjungan sebelumnya masih tersisa dan perpindahan
+berikutnya terjadi terlalu cepat. Ketiga, perpindahan dicatat, dan pencatatan
+itulah yang dipakai untuk pengujian pada bagian berikutnya.
+
+\begin{catatabox}
+Perhatikan baris terakhir pada fungsi \code{enter_state}. Mencatat perpindahan
+keadaan di dalam program bukan sekadar keperluan pengujian; catatan yang sama
+juga berguna ketika program dijalankan sungguhan, misalnya untuk menyimpan
+riwayat perilaku NPC demi keperluan penelusuran kesalahan. Kebiasaan mencatat
+keadaan bukan hal yang asing pada perangkat lunak: ia dipakai pada peladen,
+pengendali perangkat, dan mesin permainan.
+\end{catatabox}
+
+\subsection{Penghalang pada Batas Jangkauan Serang}
+
+Satu hal yang diwarisi dari Bab~VIII adalah penghalang pada batas. Perhatikan
+syarat perpindahan dari keadaan menyerang: pemain harus keluar dari jangkauan
+serang \textbf{dikalikan 1,2}, bukan jangkauan serang itu sendiri.
+
+\begin{kodekeluaran}
+if self.state == ATTACK_STATE:
+    if self.distance > self.attack_range * 1.2:
+        return CHASE_STATE
+    return ATTACK_STATE
+\end{kodekeluaran}
+
+Tanpa penghalang itu, kedua syarat perpindahan pada pasangan keadaan mengejar
+dan menyerang akan benar pada saat yang sama ketika jaraknya tepat sama dengan
+jangkauan serang. Akibatnya NPC berganti keadaan pada setiap bingkai, dan
+gejalanya terlihat sebagai NPC yang berkedip dan tersendat di tepi jangkauan.
+Cara yang sama telah dipakai pada Bab~VIII untuk batas persepsi, dan alasan
+keperluannya pun sama.

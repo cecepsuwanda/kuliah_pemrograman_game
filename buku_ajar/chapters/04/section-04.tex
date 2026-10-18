@@ -1,0 +1,98 @@
+% chapters/04/section-04.tex
+\section{Siklus Lengkap}
+\label{sec:siklus-lengkap}
+
+Bagian ini menyatukan seluruh unsur yang telah dibahas menjadi program siklus
+permainan yang lengkap. Susunan keempat unsurnya diperlihatkan pada
+Gambar~\ref{fig:siklus-dengan-clock}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/siklus-dengan-pengendali-waktu.tikz}
+\caption{Siklus lengkap: tiga tahap pekerjaan dan pengendali waktu}
+\label{fig:siklus-dengan-clock}
+\end{figure}
+
+\subsection{Kode Lengkap}
+
+\kodepython{python/ch04_game_loop.py}{Siklus permainan lengkap beserta pengendali waktu}{lst:ch04-game-loop}
+
+\subsection{Menemukan Ketiga Tahap di Dalam Kode}
+
+Ketiga tahap siklus sengaja diberi keterangan pada kode di atas agar mudah
+ditemukan. Perhatikan susunannya.
+
+\begin{description}
+  \item[Tahap 1: membaca masukan] Terdapat pada perulangan \code{for event in
+        pygame.event.get()}. Perulangan itu mengosongkan antrean peristiwa dan
+        menangani setiap peristiwa yang ada: menutup jendela, menekan ESC,
+        mengubah batas laju dengan tombol panah, atau mengembalikan penghitung
+        bingkai dengan tombol spasi.
+  \item[Tahap 2: memperbarui keadaan] Terdapat pada pemanggilan
+        \code{update_state}, penambahan penghitung bingkai, pembacaan laju
+        terukur, dan pembaruan judul jendela. Pada bab ini keadaan yang
+        diperbarui masih berupa penghitung bingkai; mulai Bab~V keadaan yang
+        diperbarui mencakup posisi dan kecepatan objek.
+  \item[Tahap 3: menayangkan] Terdapat pada pemanggilan \code{draw_window}
+        dan \code{pygame.display.flip()}. Fungsi \code{draw_window} mengisi
+        latar, menempelkan seluruh teks, dan menggambar batang penanda.
+  \item[Pengendali waktu] Terletak di akhir putaran, yaitu pada
+        \code{clock.tick(fps_limit)}. Perintah itu menahan sisa waktu satu
+        bingkai apabila pekerjaan sudah selesai lebih cepat, dan mengembalikan
+        selang waktu yang benar-benar berlangsung.
+\end{description}
+
+\subsection{Tiga Kebiasaan yang Perlu Dibangun}
+
+Program tersebut memuat tiga kebiasaan yang berlaku pada seluruh bab
+berikutnya.
+
+\textbf{Pertama, gambar seluruh jendela dari awal setiap bingkai.} Perhatikan
+bahwa \code{draw_window} selalu diawali \code{screen.fill()}, yang menimpa
+seluruh isi jendela dengan satu warna. Apabila langkah itu dihilangkan,
+gambar dari bingkai sebelumnya tetap tertinggal dan objek yang bergerak
+meninggalkan jejak di sepanjang lintasannya. Cara berpikir yang harus
+dibangun adalah: setiap bingkai dimulai dari halaman kosong.
+
+\textbf{Kedua, simpan keadaan di luar perulangan.}
+\code{frame_count}, \code{fps_limit}, dan \code{start_ticks} dibuat sebelum
+perulangan dimulai. Ketiganya harus hidup dari satu bingkai ke bingkai
+berikutnya. Apabila \code{frame_count = 0} dipindahkan ke dalam perulangan,
+penghitung itu kembali ke nol setiap bingkai dan tidak pernah bertambah.
+
+\textbf{Ketiga, ubah keadaan hanya pada tahap pembaruan.}
+Penambahan \code{frame_count} hanya terjadi pada tahap kedua, bukan di dalam
+fungsi penggambaran. Memisahkan ``mengubah keadaan'' dari ``menggambar
+keadaan'' membuat program lebih mudah diperiksa: fungsi penggambaran tidak
+mengubah apa pun, sehingga dapat dipanggil berapa kali pun tanpa
+mempengaruhi jalannya permainan.
+
+\begin{peringatanbox}
+Kesalahan yang paling sering terjadi pada tahap ini adalah menaruh
+perubahan keadaan di dalam tahap penayangan. Misalnya, menambahkan
+penghitung bingkai di dalam fungsi penggambaran. Akibatnya penghitung itu
+bertambah setiap kali gambar disusun, bukan setiap bingkai, dan jumlahnya
+berbeda-beda menurut berapa kali fungsi tersebut dipanggil. Jaga batas
+antara kedua tahap itu dengan disiplin.
+\end{peringatanbox}
+
+\subsection{Mengamati Program Bekerja}
+
+Ketika program dijalankan, tiga hal dapat Anda amati untuk memastikan siklus
+bekerja sebagaimana mestinya.
+
+\begin{itemize}
+  \item \textbf{Judul jendela berubah setiap bingkai}, menampilkan laju
+        terukur pada saat itu. Judul yang tidak berubah menandakan siklus
+        tidak berjalan.
+  \item \textbf{Batang penanda bertambah panjang} lalu kembali ke nol setelah
+        mencapai tepi kanan. Batang itu memperlihatkan bahwa tahap pembaruan
+        dan penayangan benar-benar dijalankan berulang kali.
+  \item \textbf{Laju terukur mendekati batas yang diminta}, misalnya 59,8
+        ketika batasnya 60. Selisih kecil itu wajar, sebab pengukuran
+        dilakukan atas waktu yang sesungguhnya berjalan.
+\end{itemize}
+
+Tekan tombol panah atas dan bawah untuk mengubah batas laju, lalu amati
+perubahan angka pada judul jendela. Percobaan sederhana tersebut memperlihatkan
+hubungan antara batas yang diminta dan laju yang tercapai.

@@ -1,0 +1,54 @@
+% chapters/05/latihan.tex
+\bagian{Latihan dan Refleksi}
+
+\begin{enumerate}
+  \item Sebutkan tiga manfaat menyimpan posisi objek sebagai
+        \code{pygame.Vector2} dibandingkan menyimpannya pada dua variabel
+        terpisah.
+
+  \item Jelaskan mengapa menekan tombol atas dinyatakan sebagai pengurangan
+        nilai pada komponen tegak vektor arah.
+
+  \item Seorang pemain menekan tombol kanan dan tombol atas secara bersamaan.
+        Hitunglah panjang vektor arah yang terbentuk, lalu jelaskan apa yang
+        terjadi pada kecepatan objek apabila vektor itu tidak dinormalkan.
+
+  \item Jelaskan perbedaan \code{normalize()} dan \code{normalize_ip()}.
+        Kesalahan seperti apa yang timbul apabila keduanya tertukar?
+
+  \item Sebuah objek bergerak dengan kecepatan 150 piksel per detik pada laju
+        50 bingkai per detik. Hitunglah perpindahan objek pada setiap bingkai,
+        lalu jelaskan mengapa nilai itu harus disimpan sebagai pecahan.
+
+  \item Jelaskan perbedaan \code{round()} dan \code{int()} ketika dipakai
+        untuk menyelaraskan posisi bernilai 312,9 dengan \code{Rect}. Manakah
+        yang sebaiknya dipakai, dan mengapa?
+
+  \item Perhatikan potongan kode berikut, lalu tentukan kesalahannya dan
+        perbaikannya.
+\begin{kodekeluaran}
+position = pygame.Vector2(200, 130)
+velocity = pygame.Vector2(100, 0)
+
+while running:
+    position = position + velocity * delta_seconds
+    delta_seconds = clock.tick(60) / 1000.0
+\end{kodekeluaran}
+
+  \item Pada program gerak, jendela menampilkan kecepatan terukur yang sama
+        pada laju bingkai 30 dan 60. Jelaskan mengapa jarak tempuh pada kedua
+        pengukuran itu tidak sama persis, padahal kecepatannya sama.
+\end{enumerate}
+
+\begin{refleksibox}
+\begin{enumerate}
+  \item Pada langkah kelima praktikum, berapa kecepatan diagonal yang Anda
+        ukur sebelum penormalan dikembalikan? Apakah hasilnya sesuai dengan
+        perhitungan pada Bagian~\ref{sec:contoh-bab-5}?
+  \item Ketika Anda menghapus pemanggilan \code{normalize()}, apakah perubahan
+        kecepatan itu terlihat oleh mata tanpa pengukuran? Mengapa demikian?
+  \item Objek pada bab ini bergerak secara langsung: kecepatan penuh begitu
+        tombol ditekan. Menurut Anda, pada jenis permainan seperti apa cara
+        itu terasa kurang wajar?
+\end{enumerate}
+\end{refleksibox}

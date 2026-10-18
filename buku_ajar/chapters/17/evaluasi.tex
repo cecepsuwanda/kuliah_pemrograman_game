@@ -1,0 +1,141 @@
+% chapters/17/evaluasi.tex
+\bagian{Asesmen dan Instrumen Penilaian}
+\label{sec:asesmen-akhir}
+
+\begin{asesmenbox}
+\textbf{Kedudukan asesmen bab ini.} Bab ini tidak menuntaskan Sub-CPMK baru.
+Ia menjadi penutup rangkaian, dan asesmennya berupa \textbf{Ujian Akhir
+Semester} pada minggu keenam belas, beserta penilaian \textbf{laporan
+pengembangan} dan \textbf{lembar refleksi} yang menemaninya.
+
+\vspace{0.4em}
+UAS mengukur \CPMK{3} dan \CPMK{4}, sesuai penilaian pada RPS. Rubrik lengkap
+Proyek Akhir disajikan pada Lampiran~A.
+\end{asesmenbox}
+
+\subsection*{Instrumen 1: Kisi-kisi Ujian Akhir Semester}
+
+\begin{table}[htbp]
+\centering
+\caption{Kisi-kisi Ujian Akhir Semester beserta CPMK yang diukur}
+\label{tab:kisi-uas}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.7cm} L{4.4cm} C{1.8cm} Y@{}}
+\toprule
+\headrow \textbf{CPMK} & \textbf{Pokok yang diujikan} & \textbf{Bobot} & \textbf{Bentuk soal} \\
+\midrule
+\CPMK{1} & \istilah{Game loop} dan \istilah{delta time}; gerak dan vektor;
+fisika sederhana; tabrakan &
+20\% & Menjelaskan, menghitung, dan memperbaiki potongan kode Pygame. \\
+\addlinespace
+\CPMK{2} & Perilaku pengejar; mesin keadaan; A* dan heuristiknya &
+20\% & Menelusuri keadaan, memilih heuristik, memperbaiki kasus tepi. \\
+\addlinespace
+\CPMK{3} & \istilah{GameObject} dan komponen; \istilah{Rigidbody} dan
+\istilah{Collider}; siklus hidup \code{MonoBehaviour} &
+30\% & Menganalisis gejala fisika, dan menentukan letak kesalahannya. \\
+\addlinespace
+\CPMK{4} & Impor aset; \istilah{Animator}; antarmuka; bunyi; pengujian
+prototipe &
+30\% & Menganalisis masalah integrasi, dan menyusun rencana perbaikan. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Separuh bobot UAS berada pada \CPMK{3} dan \CPMK{4}, sebab
+UAS adalah satu-satunya instrumen tulis yang mengukur keduanya. Praktikum
+mengukur keduanya juga, tetapi melalui artefak, sehingga kemampuan
+menjelaskan alasannya tidak terukur di sana.
+
+\subsection*{Instrumen 2: Rubrik Laporan Pengembangan}
+
+\begin{table}[htbp]
+\centering
+\caption{Rubrik penilaian laporan pengembangan dan refleksi}
+\label{tab:rubrik-laporan}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.4cm} C{1.3cm} L{3.0cm} Y@{}}
+\toprule
+\headrow \textbf{Kriteria} & \textbf{Bobot} & \textbf{Bukti yang diperiksa} & \textbf{Deskripsi capaian} \\
+\midrule
+Kelengkapan dokumen & 20\% & Daftar isi dan lampiran &
+Memuat ringkasan desain, daftar aset, lembar \istilah{playtest}, dan
+\istilah{log bug} beserta status penanganannya. \\
+\addlinespace
+Kejelasan laporan perbaikan & 30\% & Bagian perbaikan &
+Setiap perbaikan disertai keadaan sebelum dan sesudah, beserta buktinya. \\
+\addlinespace
+Kesesuaian GDD dan \istilah{build} & 20\% & Tabel kesesuaian &
+Perbedaan antara GDD dan \istilah{build} dicantumkan dengan jujur, beserta
+alasannya. \\
+\addlinespace
+Refleksi pemilihan teknologi & 30\% & Lembar refleksi &
+Setiap pernyataan memuat keadaan konkret, tindakan, dan hasil; ketiga tinjauan
+pada RPS dijawab secara terpisah. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection*{Instrumen 3: Soal Uraian}
+
+Jawablah dengan singkat dan berdasarkan bukti. Kunci jawaban beserta CPMK yang
+diukur disajikan pada Tabel~\ref{tab:kunci-uraian-ch17}.
+
+\begin{enumerate}
+  \item Sebuah CPMK memiliki bobot 25 persen, dan CPL yang menaunginya
+        memperoleh 57 persen. Jelaskan bagaimana kedua angka itu dihitung.
+  \item Mengapa penguasaan setiap bab belum tentu menghasilkan permainan yang
+        dapat dimainkan? Berikan satu contoh dari pengalaman Anda.
+  \item Pemain tersangkut di sudut dinding pada level Unity. Jelaskan lapisan
+        yang perlu diperiksa, berurutan dari bawah.
+  \item Sebuah kelompok melaporkan bahwa seluruh kriteria rubrik terpenuhi,
+        tetapi penguji menemukan \istilah{soft-lock}. Kriteria mana yang
+        seharusnya menangkapnya, dan mengapa lolos?
+  \item Tuliskan satu rencana belajar lanjutan beserta langkah pertama yang
+        dapat dimulai dalam sebulan.
+\end{enumerate}
+
+\begin{table}[htbp]
+\centering
+\caption{Kunci soal uraian Bab XVII beserta CPMK yang diukur}
+\label{tab:kunci-uraian-ch17}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{0.8cm} C{1.7cm} Y@{}}
+\toprule
+\headrow \textbf{No} & \textbf{CPMK} & \textbf{Pokok jawaban} \\
+\midrule
+1 & \CPMK{3}, \CPMK{4} &
+Bobot CPMK diperoleh dengan menjumlahkan sumbangan setiap komponen kepadanya
+pada Tabel~\ref{tab:matriks-bobot}; bobot CPL diperoleh dengan menjumlahkan
+bobot CPMK penyusunnya, yaitu $25 + 32 = 57$ persen untuk \CPL{03}. \\
+\addlinespace
+2 & \CPMK{3}, \CPMK{4} &
+Sebab setiap bab melatih satu kemampuan pada keadaan yang sudah disiapkan,
+sedangkan permainan yang utuh menuntut kemampuan menggabungkan. Contoh yang
+dapat diterima: skor tidak bertambah karena tanda bendanya salah, walaupun
+antarmuka dan skripnya benar. \\
+\addlinespace
+3 & \CPMK{3} &
+Tabrakan dan bentuk batas benda terlebih dahulu, lalu cara geraknya dijalankan
+pada \code{FixedUpdate}, lalu penggunaan \istilah{delta time}. Penelusuran
+bergerak ke bawah sebab lapisan atas bergantung pada lapisan bawah. \\
+\addlinespace
+4 & \CPMK{4} &
+Kriteria ``fungsionalitas mekanik inti dan level'', yang mensyaratkan level
+dapat dimainkan dari awal sampai selesai tanpa penghambat. Ia lolos karena
+rubrik dinilai dari satu kali penyelesaian, sedangkan \istilah{soft-lock} hanya
+dialami pemain yang berada di tempat yang salah. \\
+\addlinespace
+5 & \CPMK{4} &
+Jawaban dinilai dari kekonkretan: satu atau dua kompetensi yang nyata, beserta
+satu langkah pertama yang dapat diperiksa waktunya. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Soal nomor empat sengaja dipakai sebagai penutup. Ia menuntut Anda menilai
+rubriknya sendiri, dan itulah tingkat tertinggi pada ranah C5 yang dinilai
+pada mata kuliah ini: bukan sekadar memakai alat penilaian, melainkan
+mengetahui batas kemampuannya.
+\end{catatabox}

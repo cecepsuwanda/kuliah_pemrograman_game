@@ -1,0 +1,95 @@
+% chapters/12/evaluasi.tex
+\bagian{Asesmen dan Instrumen Penilaian}
+\label{sec:asesmen-unity}
+
+\begin{asesmenbox}
+\textbf{Kedudukan asesmen bab ini.} Bab ini menuntaskan \SUBCPMK{3.1}, yaitu
+bab pertama pada \CPMK{3}. Ketiga indikatornya diperiksa melalui penilaian
+artefak \istilah{project} (Tugas Praktikum 09) dan soal konsep yang menuntut
+perbandingan dengan blok Python.
+
+\vspace{0.4em}
+Materi Bab~XII sampai Bab~XVI termasuk bahan \textbf{Proyek Akhir} dan
+\textbf{Ujian Akhir Semester} pada minggu kelima belas dan keenam belas.
+\end{asesmenbox}
+
+\subsection*{Instrumen 1: Rubrik Praktikum 09}
+
+\begin{table}[htbp]
+\centering
+\caption{Rubrik penilaian Praktikum 09 beserta indikator yang diukur}
+\label{tab:rubrik-praktikum-09}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.2cm} C{1.3cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{Kriteria} & \textbf{Bobot} & \textbf{Indikator} & \textbf{Deskripsi capaian} \\
+\midrule
+Penguasaan antarmuka & 30\% & \ind{a} &
+Keempat panel utama beserta kegunaannya dijelaskan dengan tepat; scene dapat
+disunting melalui panel \istilah{Scene} dan \istilah{Inspector}. \\
+\addlinespace
+Penyusunan dan penyimpanan scene & 35\% & \ind{b} &
+Scene tersimpan memuat kamera, pencahayaan, dan sekurang-kurangnya tiga objek
+primitif, beserta skrip C\# yang berjalan ketika scene dijalankan. \\
+\addlinespace
+Padanan konsep dan kerapian project & 35\% & \ind{c} &
+Tabel padanan disusun sendiri dan tepat isinya; struktur folder project rapi,
+dan berkas \code{.gitignore} mendaftarkan folder yang seharusnya tidak
+disimpan. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection*{Instrumen 2: Soal Konsep}
+
+Jawablah dengan singkat. Kunci jawaban beserta indikator yang diukur disajikan
+pada Tabel~\ref{tab:kunci-konsep-ch12}.
+
+\begin{enumerate}
+  \item Sebutkan empat panel utama Unity beserta kegunaan masing-masing.
+  \item Jelaskan mengapa sebuah berkas \istilah{scene} tidak tampak pada
+        \istilah{Hierarchy}.
+  \item Jelaskan gagasan penyusunan benda pada Unity, lalu bandingkan dengan
+        cara menyusun benda pada Pygame.
+  \item Kapan fungsi \code{Update} dan \code{FixedUpdate} dipanggil, dan apa
+        perbedaan keperluan keduanya?
+  \item Sebutkan tiga konsep dari blok Python yang tetap sama persis pada
+        Unity, beserta padanannya.
+\end{enumerate}
+
+\begin{table}[htbp]
+\centering
+\caption{Kunci soal konsep Bab XII beserta indikator yang diukur}
+\label{tab:kunci-konsep-ch12}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{0.8cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{No} & \textbf{Indikator} & \textbf{Pokok jawaban} \\
+\midrule
+1 & \ind{a} &
+\istilah{Hierarchy} memuat benda yang ada di dalam scene; \istilah{Scene}
+menampilkan susunan ruangnya; \istilah{Inspector} menampilkan komponen benda
+yang dipilih; \istilah{Project window} memuat seluruh berkas project. \\
+\addlinespace
+2 & \ind{a} &
+Karena \istilah{Hierarchy} hanya memuat isi scene yang sedang dibuka,
+sedangkan berkas scene adalah berkas yang berada pada \istilah{Project window}. \\
+\addlinespace
+3 & \ind{b} &
+Benda pada Unity adalah wadah yang diisi komponen, sehingga kemampuannya
+ditentukan oleh komponen yang menempel. Benda pada Pygame adalah objek dari
+kelas yang ditulis sendiri, sehingga kemampuannya ditentukan oleh kelasnya. \\
+\addlinespace
+4 & \ind{b} &
+\code{Update} dipanggil setiap bingkai untuk masukan dan hal yang mengikuti
+lama bingkai; \code{FixedUpdate} dipanggil dengan selang tetap untuk
+perhitungan fisika. Pemisahan itu sama dengan pembedaan langkah berubah dan
+langkah tetap pada Bagian~2.2. \\
+\addlinespace
+5 & \ind{c} &
+Antara lain: kecepatan dalam satuan per detik dikalikan selang waktu
+(\code{delta_seconds} dan \code{Time.deltaTime}); arah dinormalkan sebelum
+dikalikan kecepatan; dan deteksi tabrakan berbeda dari penyelesaiannya. \\
+\bottomrule
+\end{tabularx}}
+\end{table}

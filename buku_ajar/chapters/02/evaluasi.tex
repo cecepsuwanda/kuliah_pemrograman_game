@@ -1,0 +1,98 @@
+% chapters/02/evaluasi.tex
+\bagian{Asesmen dan Instrumen Penilaian}
+
+\begin{asesmenbox}
+\textbf{Kedudukan asesmen bab ini.} Bab~II juga tidak memiliki Sub-CPMK
+tersendiri karena berperan sebagai landasan teori bagi seluruh bab berikutnya.
+Asesmennya bersifat \textbf{formatif} dan tidak diberi bobot pada nilai akhir.
+Instrumen di bawah ini dirancang untuk menemukan salah pengertian
+(\istilah{miskonsepsi}) yang apabila dibiarkan akan menyulitkan Anda pada
+praktikum Bab~III dan seterusnya. Jawablah tanpa membuka bab terlebih dahulu,
+lalu periksa jawaban Anda dengan kunci yang tersedia.
+\end{asesmenbox}
+
+\subsection*{Instrumen: Pemeriksaan Salah Pengertian}
+
+Tentukan benar atau salah setiap pernyataan berikut, lalu tuliskan alasan
+singkat atas pilihan Anda.
+
+\begin{enumerate}
+  \item Memperbanyak jumlah bingkai per detik selalu membuat permainan menjadi
+        lebih baik.
+  \item Kecepatan objek sebaiknya dinyatakan dalam satuan per bingkai agar
+        perhitungannya lebih sederhana.
+  \item Pada koordinat layar, menambahkan nilai pada koordinat tegak berarti
+        objek bergerak ke bawah.
+  \item Kaidah Euler menghasilkan lintasan yang sama persis dengan lintasan
+        yang sebenarnya.
+  \item Memperkecil panjang langkah memperkecil galat kaidah Euler.
+  \item Pada mesin keadaan, NPC diperbolehkan berada pada dua keadaan
+        sekaligus.
+  \item Dua objek yang persegi pembatasnya beririsan pasti gambar keduanya
+        bersinggungan.
+  \item Pada mesin permainan, alur program utama tetap ditulis sendiri oleh
+        pembuat permainan.
+  \item Menyimpan satu informasi keadaan yang sama di dua tempat berbeda
+        memudahkan pemeliharaan program.
+  \item Pemahaman tentang cara kerja siklus permainan tidak lagi diperlukan
+        setelah beralih memakai mesin permainan.
+\end{enumerate}
+
+\begin{table}[htbp]
+\centering
+\caption{Kunci dan penjelasan pemeriksaan salah pengertian}
+\label{tab:kunci-miskonsepsi}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{0.8cm} C{1.2cm} Y@{}}
+\toprule
+\headrow \textbf{No} & \textbf{Kunci} & \textbf{Penjelasan} \\
+\midrule
+1 & Salah &
+Laju bingkai yang lebih tinggi menuntut anggaran waktu yang lebih ketat dan
+memakan daya lebih besar. Yang menentukan mutu bukan angka bingkai, melainkan
+konsistensi perilaku permainan. \\
+\addlinespace
+2 & Salah &
+Kecepatan dalam satuan per bingkai membuat gerak bergantung pada kecepatan
+komputer, sehingga permainan menjadi tidak adil dan tidak dapat diramalkan. \\
+\addlinespace
+3 & Benar &
+Koordinat layar ber titik asal di kiri-atas dengan sumbu tegak menuju ke bawah,
+sehingga penambahan nilai berarti perpindahan ke bawah. \\
+\addlinespace
+4 & Salah &
+Kaidah Euler adalah hampiran. Selisihnya menyusut ketika panjang langkah
+diperkecil, tetapi tidak pernah menjadi nol. \\
+\addlinespace
+5 & Benar &
+Galat kaidah Euler berbanding lurus dengan panjang langkah. \\
+\addlinespace
+6 & Salah &
+Batasan ``tepat satu keadaan pada satu waktu'' justru menjadi kekuatan
+pendekatan ini karena menghapus kebutuhan memikirkan kombinasi keadaan. \\
+\addlinespace
+7 & Salah &
+Persegi pembatas hanyalah pendekatan. Dua objek berlubang dapat terdeteksi
+bersentuhan walaupun gambarnya tidak bersinggungan. \\
+\addlinespace
+8 & Salah &
+Mesin memiliki alur programnya sendiri dan memanggil kode Anda pada tahap yang
+telah ditentukan. \\
+\addlinespace
+9 & Salah &
+Dua salinan informasi yang sama cenderung saling bertentangan pada suatu saat.
+Keadaan sebaiknya dinyatakan terpusat dan sejelas mungkin. \\
+\addlinespace
+10 & Salah &
+Mesin menyembunyikan sebab akibat, sehingga pemahaman tentang mekanisme dasar
+justru menjadi bekal untuk mengenali kapan pengaturan bawaan perlu diubah. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Apabila Anda menjawab salah pada butir nomor 2, 4, atau 5, bacalah kembali
+Bagian~\ref{sec:model-waktu} dan Bagian~\ref{sec:simulasi-diskret} sebelum
+memulai Bab~III. Ketiga butir itu menyangkut hal yang paling sering menjadi
+sumber kesalahan pada praktikum Blok~I.
+\end{catatabox}

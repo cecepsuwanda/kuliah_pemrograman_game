@@ -1,0 +1,98 @@
+% chapters/09/section-05.tex
+\section{Program Mesin Keadaan Lengkap}
+\label{sec:program-fsm}
+
+Bagian ini menyatukan seluruh unsur menjadi program NPC bermesin keadaan yang
+dapat dimainkan dan dapat diuji.
+
+\subsection{Kode Lengkap}
+
+\kodepython{python/ch09_fsm.py}{NPC dengan mesin keadaan empat keadaan}{lst:ch09-fsm}
+
+\subsection{Membedah Susunan Mesin Keadaannya}
+
+Seluruh perilaku NPC terletak pada kelas \code{Npc}, dan tersusun sebagai
+berikut.
+
+\begin{description}
+  \item[\code{decide}] Membaca keadaan sekarang, jarak terhadap pemain, dan
+        ketiga pewaktu, lalu mengembalikan nama keadaan berikutnya. Fungsi ini
+        tidak mengubah keadaan apa pun.
+  \item[\code{enter_state}] Menetapkan keadaan baru, mengembalikan penghitung
+        keadaan itu ke nol, dan mencatat perpindahannya.
+  \item[\code{act}] Menjalankan perilaku keadaan yang sedang aktif, yaitu
+        mengubah kecepatan NPC.
+  \item[\code{update}] Menyatukan ketiganya: menghitung jarak, meminta
+        keputusan, menyiapkan keadaan baru apabila berpindah, lalu bertindak.
+\end{description}
+
+Fungsi \code{update} hanya berisi empat langkah dan tidak memuat satu
+pun syarat perpindahan. Seluruh syarat itu berada di dalam \code{decide}.
+Susunan itulah yang membuat keputusan dapat diperiksa terpisah dari
+perilakunya.
+
+\subsection{Keluaran Pengujian}
+
+Ketika program dijalankan dengan skenario pengujian, terminal menampilkan
+catatan perpindahan beserta hasil pemeriksaannya.
+
+\begin{kodekeluaran}
+Bingkai dijalankan : 900
+Serangan dilakukan : 5
+Catatan perpindahan keadaan (bingkai, keadaan):
+        0  berdiam
+       91  berpatroli
+      151  mengejar
+      217  menyerang
+      421  mengejar
+      482  berdiam
+      571  berpatroli
+Hasil pemeriksaan  : seluruh perpindahan sah
+Hasil skenario     : SESUAI dengan urutan yang diharapkan
+\end{kodekeluaran}
+
+Ketujuh perpindahan pada Tabel~\ref{tab:tujuh-perpindahan} terjadi seluruhnya,
+dalam urutan yang dapat diperkirakan, dan seluruhnya sah menurut tabel
+perpindahan. Empat keadaan yang diperlihatkan pada
+Gambar~\ref{fig:diagram-keadaan} telah diuji satu per satu.
+
+\subsection{Percobaan yang Disarankan}
+
+\begin{table}[htbp]
+\centering
+\caption{Percobaan pada program mesin keadaan}
+\label{tab:percobaan-ch09}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{5.6cm} Y@{}}
+\toprule
+\headrow \textbf{Yang diubah dan caranya} & \textbf{Yang sebaiknya Anda amati} \\
+\midrule
+Pewaktu jeda serangan \code{ATTACK_COOLDOWN}, misalnya menjadi 0,2 detik. &
+Jumlah serangan pada catatan bertambah, sedangkan urutan keadaannya tidak
+berubah. Hitunglah jumlah yang seharusnya dan bandingkan dengan catatan. \\
+\addlinespace
+Pewaktu tenggang \code{GIVE_UP_SECONDS}, misalnya menjadi 3 detik. &
+NPC mengejar lebih lama sebelum menyerah. Pemain harus berdiri
+lebih jauh agar NPC benar-benar kehilangan jejak. \\
+\addlinespace
+Pewaktu berdiam \code{IDLE_SECONDS}, misalnya menjadi nol. &
+Keadaan berdiam tidak lagi berlangsung lama; NPC langsung berpatroli sesudah
+menyerah. \\
+\addlinespace
+Penghalang jangkauan serang, dengan menghapus perkalian 1,2. &
+NPC berkedip dan tersendat pada tepi jangkauan serang, sebab kedua syarat
+perpindahan benar bersamaan. \\
+\addlinespace
+Sebuah syarat perpindahan, dengan menambahkan perpindahan yang tidak ada pada
+diagram, misalnya dari menyerang langsung ke berpatroli. &
+Pemeriksaan keabsahan pada terminal melaporkan perpindahan yang tidak sah. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{peringatanbox}
+Percobaan terakhir adalah yang paling penting untuk dicoba. Menambahkan satu
+perpindahan yang tidak ada pada diagram akan langsung ditangkap oleh
+pemeriksaan keabsahan. Itulah manfaat menuliskan diagram terlebih dahulu:
+diagram menjadi ukuran kebenaran program, bukan sekadar catatan.
+\end{peringatanbox}

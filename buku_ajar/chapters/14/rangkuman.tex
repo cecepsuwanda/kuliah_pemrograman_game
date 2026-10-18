@@ -1,0 +1,37 @@
+% chapters/14/rangkuman.tex
+\bagian{Rangkuman}
+
+\begin{rangkumanbox}
+\begin{itemize}
+  \item Aset diolah ketika diimpor, bukan ketika program dijalankan. Hasil
+        pengolahannya disimpan, sehingga mengubah \istilah{importer setting}
+        mengubah seluruh benda yang memakai aset itu sekaligus.
+  \item Empat pengaturan impor yang paling berpengaruh pada aset dua dimensi:
+        \istilah{Sprite Mode}, \istilah{Pixels Per Unit}, \istilah{Filter Mode},
+        dan \istilah{Compression}.
+  \item \istilah{Pixels Per Unit} mengaitkan ukuran gambar dengan ukuran level.
+        Nilainya sebaiknya sama untuk seluruh aset, agar ukurannya dapat
+        dibandingkan.
+  \item Ukuran berkas gambar tidak boleh diubah di luar Unity, sebab
+        perubahannya akan menjalar ke seluruh benda yang memakainya.
+  \item Komponen \istilah{Animator} adalah mesin keadaan yang mengurus animasi.
+        Keadaannya berupa \istilah{animation clip}, dan transisinya diatur
+        melalui parameter.
+  \item Tiga jenis parameter: angka pecahan, nilai benar atau salah, dan
+        pemicu. Pemicu dipakai untuk kejadian yang terjadi sekali, sebab
+        mesin mengembalikan nilainya sendiri.
+  \item Nama parameter harus sama persis dengan yang ada pada jendela
+        \istilah{Animator}; kesamaannya tidak diperiksa oleh penyunting, dan
+        kesalahan penamaannya tidak menimbulkan pesan apa pun.
+  \item Antarmuka pengguna ditempatkan pada \istilah{Canvas}, sehingga
+        susunannya tetap sama pada setiap ukuran layar. Antarmuka hanya
+        menampilkan keadaan, sedangkan keadaannya tetap disimpan pada kode.
+  \item Penggantian aset dilakukan menurut urutan: pastikan mekaniknya selesai,
+        impor seluruh aset, ganti benda satu per satu, lalu periksa bentuk
+        batasnya. Bentuk batas tidak berubah otomatis bersama gambarnya.
+  \item Aset buatan orang lain hanya boleh dipakai menurut lisensinya, dan
+        sumbernya perlu dicatat sejak diimpor.
+  \item Bab ini melengkapi bagian visual dari \CPMK{4}. Yang tersisa adalah
+        penyajian bunyi pada Bab~XV, dan pengujian menyeluruh pada Bab~XVI.
+\end{itemize}
+\end{rangkumanbox}

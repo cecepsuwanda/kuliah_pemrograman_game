@@ -1,0 +1,110 @@
+% chapters/06/section-02.tex
+\section{Gravitasi dan Batas Lantai}
+\label{sec:gravitasi-lantai}
+
+Benda yang jatuh perlu berhenti di suatu tempat. Bagian ini membahas lantai
+sebagai batas, dan persoalan yang muncul ketika benda menyentuhnya.
+
+\subsection{Lantai sebagai Batas Bawah}
+
+Lantai dinyatakan sebagai satu nilai tetap: jarak tepi atas lantai dari tepi
+atas jendela. Pada program bab ini, lantai diletakkan enam puluh piksel di
+atas tepi bawah jendela, menyisakan ruang untuk menampilkan keterangan.
+
+Setiap bingkai, sesudah posisi diperbarui, program memeriksa apakah benda
+sudah menyentuh atau melewati lantai.
+
+\begin{kodekeluaran}
+if position.y + half >= floor_y:
+    position.y = floor_y - half        # dikembalikan ke permukaan lantai
+    if velocity.y > 0:                 # sedang bergerak ke bawah
+        velocity.y = -velocity.y * restitution
+        if abs(velocity.y) < MIN_BOUNCE_SPEED:
+            velocity.y = 0.0           # pantulan dihentikan
+    hit_floor = True
+\end{kodekeluaran}
+
+Tiga hal perlu diperhatikan pada potongan kode tersebut.
+
+\begin{enumerate}
+  \item \textbf{Pemeriksaan memakai tanda ketidaksamaan, bukan kesamaan.}
+        Menuliskan \code{if position.y + half == floor_y} akan gagal begitu
+        benda bergerak cukup cepat, karena pada satu bingkai posisinya masih di
+        atas lantai dan pada bingkai berikutnya sudah jauh di bawahnya. Benda
+        itu akan menembus lantai tanpa pernah terdeteksi. Inilah gejala
+        \istilah{tunneling} yang telah disebut pada Bagian~2.4, dan
+        penanganannya secara lengkap dibahas pada Bab~VII.
+  \item \textbf{Posisi dikembalikan ke permukaan lantai} sebelum kecepatan
+        diubah. Tanpa langkah itu, benda akan terbenam sebagian ke dalam
+        lantai dan lambat laun masuk lebih dalam.
+  \item \textbf{Kecepatan ke bawah dinolkan atau dibalik}, bergantung pada
+        koefisien restitusi. Bagian berikutnya membahas pilihan itu.
+\end{enumerate}
+
+\subsection{Mengapa Pemain Tidak Boleh Memantul}
+
+Pada program bab ini, pemain dan bola memakai fungsi pembaruan yang sama,
+tetapi satu nilai argumennya berbeda. Perhatikan akibatnya.
+
+\begin{table}[htbp]
+\centering
+\caption{Akibat koefisien restitusi pada perilaku benda yang mendarat}
+\label{tab:restitusi-benda}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{2.4cm} C{1.6cm} L{4.2cm} Y@{}}
+\toprule
+\headrow \textbf{Benda} & \textbf{Restitusi} & \textbf{Perilaku saat mendarat} & \textbf{Alasan} \\
+\midrule
+Pemain & $0{,}0$ &
+Berhenti seketika, kecepatan tegaknya menjadi nol. &
+Kendali pemain menuntut ketepatan. Pemain yang memantul setelah mendarat tidak
+dapat mengarahkan geraknya, dan permainan terasa tidak dapat diandalkan. \\
+\addlinespace
+Bola & $0{,}8$ &
+Memantul kembali dengan kecepatan 80 persen dari kecepatan datangnya. &
+Pantulan adalah perilaku yang memang dikehendaki, dan kehilangan kecepatan
+membuat benda akhirnya berhenti dengan sendirinya. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Tidak ada kode tambahan untuk membedakan keduanya. Satu
+parameter sudah cukup. Inilah manfaat menuliskan hukum fisika sebagai fungsi
+yang menerima nilai sebagai argumen, sebagaimana disebutkan pada
+Bagian~\ref{sec:percepatan}.
+
+\begin{peringatanbox}
+Kesalahan yang sering terjadi pada tahap ini adalah memberikan koefisien
+restitusi kepada pemain ``supaya terlihat hidup''. Akibatnya pemain memantul
+beberapa kali setiap kali mendarat, dan kendalinya terasa lepas. Apabila Anda
+menghendaki kesan hidup pada gerak pemain, tambahkan percepatan dan
+perlambatan pada gerak mendatarnya, bukan pantulan pada gerak tegaknya.
+\end{peringatanbox}
+
+\subsection{Mengenali Benda yang Menyentuh Lantai}
+
+Lompatan pada bagian berikutnya hanya boleh dilakukan ketika benda berada di
+tanah. Karena itu, keadaan itu perlu dikenali dengan pasti.
+
+Cara yang dipakai pada program bab ini adalah memeriksa dua syarat sekaligus:
+badan benda bersandar pada permukaan lantai, dan kecepatan tegaknya tidak lagi
+mengarah ke bawah.
+
+\begin{kodekeluaran}
+on_ground = (position.y + half >= floor_y - 0.5 and velocity.y >= 0)
+\end{kodekeluaran}
+
+Toleransi setengah piksel diberikan karena posisi benda berupa bilangan
+pecahan. Tanpa toleransi itu, benda yang mendarat pada ketinggian 459,7
+sementara lantai berada pada 460,0 akan dianggap belum menyentuh lantai, dan
+lompatan tidak dapat dilakukan walaupun benda itu tampak sudah berdiri di
+atasnya.
+
+\begin{catatabox}
+Pada benda yang jatuh dari ketinggian besar, kecepatannya dapat tumbuh
+melampaui batas yang masuk akal dan membuat benda menembus lantai dalam satu
+bingkai. Cara penanganan yang sederhana adalah membatasi kecepatan jatuh pada
+nilai tertentu, misalnya 1200 piksel per detik, sebelum posisi diperbarui.
+Nilai batas itu disebut kecepatan akhir (\istilah{terminal velocity}) dan
+banyak dipakai pada permainan.
+\end{catatabox}

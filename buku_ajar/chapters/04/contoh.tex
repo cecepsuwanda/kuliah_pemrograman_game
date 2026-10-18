@@ -1,0 +1,104 @@
+% chapters/04/contoh.tex
+\section{Dua Contoh Terapan}
+\label{sec:contoh-bab-4}
+
+\subsection{Contoh Pertama: Anggaran Waktu Satu Bingkai}
+
+\begin{contohbox}
+Sebuah program dijalankan dengan batas laju 60 bingkai per detik. Jatah waktu
+untuk satu bingkai adalah
+
+\[
+\frac{1000\ \text{milidetik}}{60} = 16{,}7\ \text{milidetik}.
+\]
+
+Misalkan pekerjaan program terbagi sebagai berikut: membaca masukan 0,5
+milidetik, memperbarui keadaan 5 milidetik, dan menggambar 25 milidetik.
+Jumlahnya 30,5 milidetik, jauh melebihi jatah 16,7 milidetik.
+
+Karena jatahnya sudah terlampaui, \code{clock.tick()} tidak menahan apa pun.
+Siklus berjalan secepat kemampuan program, yaitu satu bingkai setiap 30,5
+milidetik, atau sekitar 32,8 bingkai per detik. Batas 60 yang diminta tidak
+pernah tercapai.
+\end{contohbox}
+
+Tabel~\ref{tab:anggaran-bingkai} memperlihatkan akibatnya pada tiga nilai
+batas laju, dengan pekerjaan yang sama beratnya.
+
+\begin{table}[htbp]
+\centering
+\caption{Laju tercapai pada tiga batas laju dengan pekerjaan 30,5 milidetik per bingkai}
+\label{tab:anggaran-bingkai}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{2.0cm} C{2.8cm} C{2.8cm} Y@{}}
+\toprule
+\headrow \textbf{Batas laju} & \textbf{Jatah per bingkai} & \textbf{Laju tercapai} & \textbf{Keterangan} \\
+\midrule
+30 & 33,3 milidetik & 30,0 FPS & Pekerjaan masih muat, sisa 2,8 milidetik ditahan. \\
+\addlinespace
+60 & 16,7 milidetik & 32,8 FPS & Jatah terlampaui; batas tidak dapat dipenuhi. \\
+\addlinespace
+120 & 8,3 milidetik & 32,8 FPS & Menaikkan batas tidak mengubah apa pun. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Contoh ini memuat satu pelajaran yang penting: \textbf{menaikkan batas laju
+tidak mempercepat program yang pekerjaannya memang berat}. Pada batas 60 dan
+120, laju yang tercapai sama, yaitu 32,8 bingkai per detik, karena yang
+menentukan adalah lama pekerjaannya, bukan batas yang diminta.
+
+Apabila Anda menginginkan laju yang lebih tinggi, yang perlu dikurangi adalah
+pekerjaan satu bingkai, bukan batasnya. Pada contoh di atas, tahap
+penayangan memakan 25 dari 30,5 milidetik. Mengurangi pekerjaan penayangan,
+misalnya dengan menggambar lebih sedikit objek atau memakai gambar yang lebih
+kecil, memberi perbaikan yang jauh lebih besar daripada menaikkan batas.
+
+\subsection{Contoh Kedua: Membaca Gejala dan Menentukan Penyebabnya}
+
+Gejala yang tampak di layar jarang menyebutkan penyebabnya secara langsung.
+Tabel~\ref{tab:gejala-siklus} memuat gejala yang paling sering muncul pada
+siklus permainan beserta cara memeriksanya.
+
+\begin{table}[htbp]
+\centering
+\caption{Gejala pada siklus permainan, penyebab, dan cara memeriksanya}
+\label{tab:gejala-siklus}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.8cm} L{4.6cm} Y@{}}
+\toprule
+\headrow \textbf{Gejala} & \textbf{Kemungkinan penyebab} & \textbf{Cara memeriksa} \\
+\midrule
+Jendela tidak menanggapi dan judulnya tidak berubah &
+\code{pygame.event.get()} tidak dipanggil setiap bingkai, atau siklus berhenti
+karena kesalahan yang tidak terlihat. &
+Periksa pesan kesalahan pada terminal, lalu pastikan pemanggilan
+\code{event.get()} berada di dalam perulangan. \\
+\addlinespace
+Objek meninggalkan jejak di layar &
+Layar tidak diisi ulang pada awal tahap penayangan. &
+Pastikan \code{screen.fill()} dijalankan sebelum menggambar apa pun pada
+setiap bingkai. \\
+\addlinespace
+Penghitung bingkai selalu bernilai satu &
+Variabel keadaan dibuat di dalam perulangan sehingga nilainya kembali ke awal
+setiap bingkai. &
+Pindahkan pembuatan variabel keadaan ke luar perulangan. \\
+\addlinespace
+Judul jendela menampilkan laju yang jauh di bawah batas &
+Pekerjaan satu bingkai terlalu berat untuk jatah waktunya. &
+Ukur dengan program pengukuran, lalu kurangi pekerjaan pada tahap yang paling
+banyak memakan waktu. \\
+\addlinespace
+Prosesor bekerja penuh terus-menerus &
+\code{clock.tick()} dipanggil tanpa argumen batas laju. &
+Berikan batas laju, misalnya \code{clock.tick(60)}. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Keempat gejala pertama tidak menimbulkan pesan kesalahan.
+Program tetap berjalan, dan tidak ada satu pun aturan bahasa yang dilanggar.
+Karena itu, kemampuan membaca gejala menjadi penting: kesalahan seperti ini
+hanya dapat ditemukan dengan mengamati perilaku program, bukan dengan
+menunggu pesan galat.

@@ -1,0 +1,153 @@
+% chapters/16/section-06.tex
+\section{Presentasi Demo, Kesesuaian GDD, dan Refleksi Teknologi}
+\label{sec:presentasi-refleksi}
+
+\subsection{Demo Lima sampai Sepuluh Menit}
+
+Demo lima sampai sepuluh menit pada minggu kelima belas, dan uji fungsional
+oleh dosen pada minggu keenam belas, merupakan bentuk penilaian yang lazim
+pada mata kuliah pengembangan permainan \cite{unima-rps-game}. Waktu sependek
+itu menuntut pilihan, dan pilihan yang paling sering salah adalah menceritakan
+seluruh proses pembuatan. Yang perlu diperlihatkan bukan perjalanan Anda,
+melainkan hasilnya.
+
+Susunan yang dapat dipakai diperlihatkan pada Tabel~\ref{tab:susunan-demo}.
+
+\begin{table}[htbp]
+\centering
+\caption{Susunan presentasi demo lima sampai sepuluh menit}
+\label{tab:susunan-demo}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.7cm} L{3.2cm} Y@{}}
+\toprule
+\headrow \textbf{Waktu} & \textbf{Bagian} & \textbf{Isi} \\
+\midrule
+1 menit & Pembukaan & Nama permainan, jenisnya, dan satu kalimat tentang apa
+yang pemain lakukan di dalamnya. \\
+\addlinespace
+4--6 menit & Demo langsung & Permainan dijalankan dari awal sampai tujuan, atau
+sampai bagian yang paling Anda banggakan. Tidak ada penjelasan bertele-tele di
+tengah demo. \\
+\addlinespace
+1--2 menit & Temuan pengujian & Satu atau dua temuan terpenting dari
+\istilah{playtest} antar kelompok, beserta perbaikan yang Anda lakukan. \\
+\addlinespace
+1 menit & Penutup & Kekurangan yang Anda ketahui, dan satu hal yang akan Anda
+kerjakan apabila waktunya bertambah. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Bagian temuan pengujian adalah bagian yang paling membedakan. Memperlihatkan
+bahwa Anda menemukan masalah pada karya Anda sendiri, dan memperbaikinya,
+menunjukkan penguasaan yang lebih tinggi daripada memperlihatkan permainan yang
+tampak tanpa cacat.
+
+\begin{tipsbox}
+Siapkan demo cadangan. Rekam permainan Anda sebagai video pendek, dan bawa
+salinan \istilah{build} pada dua tempat. Kegagalan teknis pada saat presentasi
+adalah hal yang biasa, dan cara menghadapinya dinilai.
+\end{tipsbox}
+
+\subsection{Kesesuaian GDD dengan \istilah{Build}}
+
+GDD Anda ditulis pada awal perkuliahan, ketika sebagian besar hal belum
+diketahui. Sekarang \istilah{build} Anda sudah ada, dan perbedaan antara
+keduanya hampir pasti ada. Perbedaan itu tidak selalu salah; yang salah adalah
+perbedaan yang tidak Anda sadari.
+
+Tiga keadaan yang mungkin Anda temui diperlihatkan pada
+Tabel~\ref{tab:gdd-build}.
+
+\begin{table}[htbp]
+\centering
+\caption{Tiga keadaan kesesuaian antara GDD dan \istilah{build}}
+\label{tab:gdd-build}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.6cm} Y Y@{}}
+\toprule
+\headrow \textbf{Keadaan} & \textbf{Artinya} & \textbf{Tindakan} \\
+\midrule
+Sesuai & Yang dijanjikan GDD benar-benar ada di dalam \istilah{build}. &
+Tidak ada yang perlu dikerjakan; cantumkan sebagai bukti pada laporan. \\
+\addlinespace
+GDD diperbarui & Rancangannya berubah ketika dikerjakan, dan perubahan itu
+disengaja. &
+Perbarui GDD, dan tuliskan alasan perubahannya. Yang dinilai adalah kesadaran
+Anda atas perubahan itu. \\
+\addlinespace
+Belum dikerjakan & Yang dijanjikan GDD belum ada, dan tidak akan ada. &
+Cantumkan sebagai kekurangan yang diketahui. Jangan menghapusnya dari GDD agar
+laporannya tampak lengkap. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Baris ketiga adalah yang paling penting untuk dihindari. Menghapus janji dari
+GDD agar hasilnya tampak sesuai adalah bentuk ketidakjujuran akademik, dan
+sekaligus menghapus bukti bahwa Anda mampu menilai karya sendiri.
+
+\subsection{Refleksi Pemilihan Teknologi}
+
+Bagian terakhir dari laporan Anda adalah refleksi atas pilihan teknologinya.
+Sepanjang mata kuliah ini Anda memakai dua perkakas yang berbeda: Python
+beserta Pygame pada Bab~III sampai Bab~XI, dan Unity beserta C\# pada Bab~XII
+sampai Bab~XVI. Refleksi itu bukan penilaian mana yang lebih baik, melainkan
+keterangan tentang mana yang cocok untuk keperluan apa \cite{rokania-unity}.
+
+Tiga pertanyaan berikut menuntun refleksi Anda, dan jawabannya sebaiknya
+disertai contoh dari pekerjaan Anda sendiri, bukan dari buku ini.
+
+\begin{enumerate}
+  \item \textbf{Pada bagian mana Pygame mempercepat pekerjaan Anda?} Jawaban
+        yang umum adalah pada bagian yang perhitungannya perlu Anda kuasai
+        sendiri, dan pada permainan yang aturannya sederhana.
+  \item \textbf{Pada bagian mana Unity mempercepat pekerjaan Anda?} Jawaban
+        yang umum adalah pada penyusunan level, pengaturan fisika, animasi, dan
+        bunyi, sebab pekerjaan itu diurus mesin.
+  \item \textbf{Bagian mana yang paling Anda kuasai sekarang, dan bagian mana
+        yang masih perlu Anda pelajari?} Jawaban atas pertanyaan ini menjadi
+        rencana belajar Anda sesudah mata kuliah ini berakhir.
+\end{enumerate}
+
+\begin{catatabox}
+Refleksi yang jujur akan memuat hal yang tidak Anda kuasai. Menyebutkannya
+bukan pengakuan kelemahan, melainkan bukti bahwa Anda mampu menilai kemampuan
+sendiri dengan tepat. Itulah bagian tertinggi pada ranah C5 yang dinilai pada
+\SUBCPMK{4.3}: menilai berdasarkan bukti, bukan berdasarkan kesan.
+\end{catatabox}
+
+\subsection{Penutup Rangkaian Materi}
+
+Bab ini menutup Materi 14, dan dengannya seluruh Sub-CPMK 4.1 sampai 4.3 pada
+\CPMK{4} sudah Anda tuntaskan. Perjalanan Anda sepanjang mata kuliah ini adalah
+sebagai berikut.
+
+\begin{table}[htbp]
+\centering
+\caption{Rangkaian capaian dari Bab III sampai Bab XVI}
+\label{tab:rangkaian-capaian}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.4cm} L{4.6cm} Y@{}}
+\toprule
+\headrow \textbf{Bab} & \textbf{Yang Anda bangun} & \textbf{Perkakas} \\
+\midrule
+Bab~III--XI & Lingkungan, \istilah{game loop}, gerak, fisika, tabrakan, AI
+pengejar, mesin keadaan, pencarian jalur, mini proyek &
+Python dan Pygame \\
+\addlinespace
+Bab~XII--XIII & Proyek Unity, level, fisika, kendali pemain &
+Unity dan C\# \\
+\addlinespace
+Bab~XIV--XV & Aset visual, animasi, antarmuka, bunyi, partikel &
+Unity dan C\# \\
+\addlinespace
+Bab~XVI & Pengujian, perbaikan, dan presentasi &
+\istilah{Checklist}, \istilah{playtest}, dan pemeriksaan otomatis \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Yang tersisa hanyalah Bab~XVII, yaitu menilai kembali seluruh capaian Anda
+terhadap CPL dan CPMK mata kuliah ini, dan menyusun rencana belajar
+selanjutnya.

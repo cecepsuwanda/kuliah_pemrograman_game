@@ -1,0 +1,123 @@
+% chapters/02/section-02.tex
+\section{Model Waktu: Bingkai dan Langkah Simulasi}
+\label{sec:model-waktu}
+
+Bagian ini membahas persoalan yang paling sering merugikan pemula dan yang
+paling jarang disadari: pengelolaan waktu. Hampir semua keluhan bahwa sebuah
+permainan ``terasa aneh'' pada satu komputer tetapi tidak pada komputer lain
+berpangkal pada bagian ini.
+
+\subsection{Mengapa Waktu Menjadi Persoalan}
+
+Komputer menjalankan perintah jauh lebih cepat daripada yang dapat diamati
+manusia. Sebuah komputer dapat menyelesaikan puluhan juta operasi dalam satu
+detik, sedangkan mata manusia mulai melihat urutan gambar sebagai gerak yang
+mulus pada sekitar dua puluh sampai enam puluh gambar per detik. Karena itu
+program permainan tidak berjalan secepat mungkin; ia berjalan menurut irama
+yang ditentukan.
+
+Irama tersebut tidak dapat diandalkan untuk mengukur waktu. Program yang
+memindahkan objek sejauh lima piksel pada setiap pengulangan akan
+menghasilkan gerak yang berbeda-beda, bergantung pada berapa kali pengulangan
+tersebut selesai dalam satu detik. Pada komputer yang cepat pengulangannya
+lebih sering, sehingga objek bergerak lebih jauh. Akibatnya, permainan menjadi
+lebih sulit pada komputer yang lebih cepat, dan kecepatan permainan menjadi
+tidak dapat diramalkan.
+
+\subsection{Bingkai dan Laju Bingkai}
+
+Satu putaran lengkap siklus permainan disebut satu bingkai (\istilah{frame}),
+dan banyaknya bingkai yang diselesaikan dalam satu detik disebut laju bingkai
+(\istilah{frame rate}), dinyatakan dalam satuan bingkai per detik
+(\istilah{frames per second}, FPS). Laju bingkai bukan sekadar angka
+kecepatan; ia adalah anggaran waktu: pada 60 FPS, seluruh pekerjaan satu
+bingkai harus selesai dalam sekitar 16,7 milidetik.
+
+Anggaran tersebut menuntut sikap yang berbeda dalam menulis program.
+Menambah satu perhitungan berat pada tahap simulasi berarti mengurangi jatah
+waktu tahap lain. Ketika anggaran terlampaui, laju bingkai turun, dan
+penurunan itu langsung terasa oleh pemain. Karena itu program permainan lazim
+membatasi laju bingkainya pada nilai tertentu, misalnya 60 FPS, agar
+pemakaian daya tidak berlebihan tanpa manfaat yang sepadan
+\cite{sweigart-mg,pygame-docs}.
+
+\subsection{Selang Waktu sebagai Jembatan}
+
+Penyelesaian persoalan di atas terletak pada satu gagasan sederhana: jangan
+menyatakan gerak dalam satuan per bingkai, melainkan dalam satuan per detik.
+Apabila kecepatan objek dinyatakan sebagai 200 piksel per detik, maka jarak
+yang harus ditempuh pada satu bingkai bergantung pada lama bingkai itu
+berlangsung. Besaran lama satu bingkai inilah yang disebut selang waktu
+(\istilah{delta time}) dan lazim dilambangkan $\Delta t$.
+
+Hubungan ketiga besaran tersebut dapat dituliskan sebagai
+
+\begin{equation}
+\label{eq:gerak-dt}
+\text{perpindahan} = \text{kecepatan} \times \Delta t .
+\end{equation}
+
+Apabila satu bingkai berlangsung 16,7 milidetik, perpindahannya sekitar 3,3
+piksel; apabila bingkai berikutnya berlangsung dua kali lebih lama, yaitu 33,3
+milidetik, perpindahannya menjadi 6,7 piksel. Dengan cara ini, objek menempuh
+jarak yang sama dalam satu detik, terlepas dari berapa banyak bingkai yang
+dihasilkan komputer \cite{fiedler-timestep}.
+
+\subsection{Langkah Tetap dan Langkah Berubah}
+
+Sampai di sini, panjang langkah simulasi mengikuti lama bingkai yang
+sebenarnya. Cara ini disebut langkah berubah (\istilah{variable timestep}) dan
+paling mudah diterapkan. Kelemahannya, panjang langkah yang selalu berubah
+membuat hasil simulasi sulit diulang secara persis dan membuat perhitungan
+fisika kurang stabil ketika komputer sesekali melambat.
+
+Alternatifnya adalah langkah tetap (\istilah{fixed timestep}). Simulasi selalu
+maju dengan panjang langkah yang sama, misalnya 1/60 detik, sedangkan selisih
+waktu nyata yang belum terpakai ditabung pada sebuah penampung
+(\istilah{accumulator}). Apabila penampung telah mencapai satu panjang
+langkah, simulasi dimajukan satu langkah dan penampung dikurangi. Jika
+komputer melambat, simulasi dapat dimajukan beberapa langkah sekaligus;
+apabila komputer terlalu cepat, simulasi menunggu sampai waktu nyatanya tiba.
+Perbandingan kedua cara ini diperlihatkan pada Gambar~\ref{fig:waktu-bingkai}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/waktu-bingkai.tikz}
+\caption{Perbandingan langkah berubah dan langkah tetap pada garis waktu}
+\label{fig:waktu-bingkai}
+\end{figure}
+
+Pilihan di antara keduanya bergantung pada kebutuhan. Permainan yang
+mengandalkan ketepatan fisika dan hasil yang dapat diulang, misalnya permainan
+yang menyimpan dan memutar kembali rekaman gerak, lebih cocok memakai langkah
+tetap. Permainan sederhana yang hanya memerlukan gerak halus cukup memakai
+langkah berubah. Yang perlu Anda hindari bukan salah satu pilihan itu,
+melainkan ketiadaan pilihan: menulis gerak tanpa memperhitungkan waktu sama
+sekali.
+
+\begin{catatabox}
+Mesin permainan seperti Unity menawarkan kedua cara tersebut sekaligus.
+Perhitungan yang berkaitan dengan tampilan dijalankan pada tahap yang
+mengikuti lama bingkai, sedangkan perhitungan fisika dijalankan pada tahap
+dengan langkah tetap. Kedua tahap itu akan Anda temui pada Bab~XIII sebagai
+\code{Update} dan \code{FixedUpdate}.
+\end{catatabox}
+
+\subsection{Akibat pada Perilaku Permainan}
+
+Keputusan tentang model waktu bukan urusan teknis semata; ia memengaruhi
+pengalaman bermain. Tiga akibat berikut pantas diperhatikan sejak awal.
+
+\begin{enumerate}
+  \item \textbf{Keadilan permainan.} Apabila gerak bergantung pada laju
+        bingkai, pemain dengan komputer lebih cepat memperoleh keuntungan yang
+        tidak dirancang.
+  \item \textbf{Kemudahan pengujian.} Langkah tetap membuat simulasi berjalan
+        sama pada setiap percobaan. Kesamaan itu memudahkan Anda memastikan
+        apakah sebuah perubahan kode memperbaiki atau justru merusak perilaku
+        permainan.
+  \item \textbf{Kestabilan perhitungan.} Langkah yang terlalu panjang membuat
+        perhitungan fisika dapat melampaui batas dan menghasilkan perilaku yang
+        tidak diinginkan, misalnya objek menembus dinding. Persoalan ini
+        dibahas pada Bagian~\ref{sec:simulasi-diskret}.
+\end{enumerate}

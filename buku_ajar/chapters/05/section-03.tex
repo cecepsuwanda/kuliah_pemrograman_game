@@ -1,0 +1,106 @@
+% chapters/05/section-03.tex
+\section{Gerak Berbasis Selang Waktu}
+\label{sec:gerak-selang-waktu}
+
+Inilah bagian inti bab ini: menghubungkan kecepatan yang telah disusun pada
+bagian sebelumnya dengan waktu yang telah diukur pada Bab~IV.
+
+\subsection{Perpindahan Selama Satu Bingkai}
+
+Perpindahan objek selama satu bingkai dihitung dari kecepatan dan selang
+waktu. Selang waktu yang dipakai adalah yang benar-benar
+berlangsung, yaitu nilai yang dikembalikan \code{clock.tick()}.
+
+\begin{kodekeluaran}
+velocity = direction.normalize() * speed
+position = position + velocity * delta_seconds
+\end{kodekeluaran}
+
+Baris kedua itulah yang membuat kecepatan objek tidak bergantung pada laju
+bingkai. Kecepatan dinyatakan dalam piksel per detik, selang waktu dinyatakan
+dalam detik, sehingga hasil kalinya adalah piksel. Apabila selang waktunya
+dua kali lebih panjang, perpindahannya dua kali lebih jauh, dan jarak yang
+ditempuh dalam satu detik tetap sama.
+
+Perhatikan urutan perhitungannya. Kecepatan dihitung lebih dahulu, baru
+posisi diperbarui. Urutan itu sama dengan kaidah Euler yang telah dijelaskan
+pada Bagian~2.4: memperbarui besaran turunan lebih dahulu, baru besaran yang
+diturunkan darinya.
+
+\subsection{Membuktikan Kecepatan Tetap melalui Pengukuran}
+
+Pernyataan bahwa kecepatan objek tetap sama pada setiap laju bingkai sebaiknya
+dibuktikan, bukan hanya dipercaya. Program pada bab ini menyediakan alat
+pembuktiannya: setiap bingkai, program mencatat perubahan posisi yang
+sesungguhnya, lalu membagi jumlah jarak dengan lama objek benar-benar
+bergerak.
+
+Cara itu penting. Apabila jaraknya dihitung dari kecepatan yang ditetapkan,
+hasilnya pasti sama dengan kecepatan itu sendiri, dan pengukurannya tidak
+membuktikan apa pun. Yang diukur di sini adalah perubahan posisi yang nyata.
+
+Tabel~\ref{tab:pengukuran-kecepatan} memuat hasil pengukuran pada satu
+komputer contoh, dengan kecepatan yang ditetapkan 200 piksel per detik dan
+objek bergerak ke kanan.
+
+\begin{table}[htbp]
+\centering
+\caption{Hasil pengukuran kecepatan pada tiga laju bingkai}
+\label{tab:pengukuran-kecepatan}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.8cm} C{1.5cm} C{2.6cm} C{2.4cm} Y@{}}
+\toprule
+\headrow \textbf{Batas laju} & \textbf{Bingkai} & \textbf{Waktu berjalan} & \textbf{Jarak tempuh} & \textbf{Kecepatan terukur} \\
+\midrule
+30 FPS & 18 & 0,61 detik & 115,4 piksel & 200,0 piksel/detik \\
+60 FPS & 36 & 0,60 detik & 116,8 piksel & 200,0 piksel/detik \\
+120 FPS & 72 & 0,62 detik & 122,4 piksel & 200,0 piksel/detik \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Pengukuran penulis pada kecepatan 200 piksel per detik, arah lurus,
+tanpa jendela. Angka pada komputer Anda akan berbeda; yang perlu Anda
+perhatikan adalah kolom terakhir.}
+\end{table}
+
+Kolom terakhir menunjukkan hal yang penting: kecepatan terukur sama persis
+pada ketiga laju bingkai. Pada 30 bingkai per detik objek berpindah lebih jauh
+setiap bingkainya, sedangkan pada 120 bingkai per detik perpindahannya lebih
+pendek, tetapi jarak yang ditempuh dalam satu detik sama. Inilah bukti bahwa
+gerak tidak lagi bergantung pada laju bingkai.
+
+\begin{catatabox}
+Perhatikan kolom jarak tempuh: nilainya berbeda-beda (115,4 sampai 122,4
+piksel) walaupun kecepatannya sama. Selisih itu bukan kesalahan.
+\code{clock.tick()} hanya menjamin laju tidak \textbf{melampaui} batas, bukan
+bahwa setiap bingkai berlangsung tepat sepanjang jatahnya; waktu berjalan pada
+tabel di atas memang berbeda-beda. Tambahan pula, selang waktu bingkai
+pertama bernilai nol sehingga bingkai itu belum menghasilkan perpindahan.
+Yang harus sama adalah \textbf{kecepatan}, bukan jarak tempuh selama selang
+waktu yang diukur secara kasar.
+\end{catatabox}
+
+\subsection{Mengapa Cara Ini Perlu Diuji Sendiri}
+
+Mahasiswa yang telah membaca bab ini sampai di sini sering menganggap
+pembuktian tersebut berlebihan, karena ``jelas kecepatannya sama''. Anggapan
+itu berbahaya:
+
+\begin{itemize}
+  \item Apabila \code{delta_seconds} lupa dipakai sebagai pengali, program
+        tetap berjalan dan tidak menimbulkan pesan kesalahan apa pun. Yang
+        terlihat hanyalah gerak yang berbeda-beda menurut komputer. Tanpa
+        pengukuran, kekeliruan itu dapat bertahan sampai akhir semester.
+  \item Apabila \code{delta_seconds} dikalikan dua kali, misalnya karena
+        kecepatan sudah dinyatakan dalam satuan per bingkai, objek tetap
+        bergerak dan hanya terasa terlalu cepat. Gejala itu mudah disalahkan
+        kepada nilai kecepatan yang dipilih.
+  \item Apabila penormalan vektor arah terlupa, gerak diagonal tetap tampak
+        wajar pada permainan sederhana. Kekeliruannya baru terasa ketika
+        pemain menyadari bahwa berlari diagonal lebih cepat daripada berlari
+        lurus, dan pemain berpengalaman akan segera menyadarinya.
+\end{itemize}
+
+Karena itu, biasakan menjalankan program gerak pada dua laju bingkai yang
+berbeda setiap kali selesai menulisnya, misalnya 30 dan 60. Apabila kecepatan
+objek terasa berbeda, ada yang keliru pada perhitungan perpindahannya. Cara
+yang sama akan Anda pakai terus pada bab-bab berikutnya \cite{fiedler-timestep}.

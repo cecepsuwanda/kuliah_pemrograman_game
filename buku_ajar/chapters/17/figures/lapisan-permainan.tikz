@@ -1,0 +1,34 @@
+% chapters/17/figures\lapisan-permainan.tikz
+% Lapisan-lapisan yang menyusun satu permainan yang selesai, beserta bab
+% tempat setiap lapisan dibangun.
+\begin{tikzpicture}[
+  lapisan/.style={
+    rectangle, rounded corners=4pt, draw=ubPrimary, thick, fill=ubAlt,
+    align=center, text width=96mm, inner sep=4pt, minimum height=8mm,
+    font=\footnotesize
+  },
+  dasar/.style={
+    rectangle, rounded corners=4pt, draw=ubAccent, thick, fill=white,
+    align=center, text width=96mm, inner sep=4pt, minimum height=8mm,
+    font=\footnotesize
+  },
+  sisi/.style={font=\scriptsize\bfseries, ubPrimary, align=left}
+]
+
+% Ditulis dari bawah ke atas: lapisan yang paling dahulu dibangun berada
+% di bawah, sebab lapisan di atasnya bergantung padanya.
+\node[dasar]  (l1) at (5.0,0.0)  {\textbf{Bab IV} --- \istilah{Game loop}, masukan, dan \istilah{delta time}};
+\node[dasar]  (l2) at (5.0,0.95) {\textbf{Bab V} --- Gerak objek dan vektor};
+\node[dasar]  (l3) at (5.0,1.9)  {\textbf{Bab VI} --- Fisika sederhana: gravitasi dan lompatan};
+\node[dasar]  (l4) at (5.0,2.85) {\textbf{Bab VII} --- \istilah{Sprite}, kelompok, dan tabrakan};
+\node[lapisan](l5) at (5.0,3.8)  {\textbf{Bab VIII--XI} --- Perilaku NPC, mesin keadaan, dan pencarian jalur};
+\node[lapisan](l6) at (5.0,4.75) {\textbf{Bab XII--XIII} --- Level Unity, fisika mesin, dan kendali pemain};
+\node[lapisan](l7) at (5.0,5.7)  {\textbf{Bab XIV} --- Aset visual, animasi, dan antarmuka};
+\node[lapisan](l8) at (5.0,6.65) {\textbf{Bab XV} --- Bunyi dan umpan balik interaksi};
+\node[lapisan](l9) at (5.0,7.6)  {\textbf{Bab XVI} --- Pengujian, perbaikan, dan penyajian};
+
+\node[sisi, anchor=east] at (-1.4,1.42) {Dasar};
+\node[sisi, anchor=east] at (-1.4,3.8)  {Kecerdasan};
+\node[sisi, anchor=east] at (-1.4,5.7)  {Penyajian};
+\node[sisi, anchor=east] at (-1.4,7.6)  {Penilaian};
+\end{tikzpicture}

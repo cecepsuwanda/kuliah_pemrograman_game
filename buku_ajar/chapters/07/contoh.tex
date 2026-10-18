@@ -1,0 +1,104 @@
+% chapters/07/contoh.tex
+\section{Dua Contoh Analisis}
+\label{sec:contoh-bab-7}
+
+\subsection{Contoh Pertama: Menghitung Benda yang Menembus Bongkahan}
+
+\begin{contohbox}
+Sebuah benda bergerak dengan kecepatan 900 piksel per detik pada laju 30
+bingkai per detik. Perpindahannya pada setiap bingkai adalah
+
+\[
+900 \div 30 = 30 \text{ piksel}.
+\]
+
+Bongkahan yang dilaluinya tebalnya 20 piksel. Perhatikan apa yang terjadi pada
+kedua bingkai yang berurutan.
+\end{contohbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Posisi benda terhadap bongkahan setebal 20 piksel pada dua bingkai berurutan}
+\label{tab:tunneling}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.6cm} C{3.4cm} C{3.6cm} Y@{}}
+\toprule
+\headrow \textbf{Bingkai} & \textbf{Sisi kanan benda} & \textbf{Kedudukan terhadap bongkahan} & \textbf{Hasil pemeriksaan} \\
+\midrule
+Sebelum & 415 piksel & 15 piksel sebelum tepi bongkahan pada 430 & Tidak beririsan. \\
+\addlinespace
+Berikutnya & 445 piksel & 15 piksel sesudah tepi jauh bongkahan pada 450 & Tidak beririsan. \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Bongkahan menempati 430 sampai 450 piksel. Pada kedua bingkai yang
+diperiksa, benda berada di luar bongkahan sehingga tidak pernah terdeteksi
+bersentuhan.}
+\end{table}
+
+Benda itu tidak pernah beririsan dengan bongkahan pada saat pemeriksaan
+dilakukan, walaupun lintasannya jelas melintasi bongkahan. Perpindahan 30
+piksel pada satu bingkai lebih panjang daripada tebal bongkahan 20 piksel,
+sehingga benda ``melompati'' bongkahan itu.
+
+Tiga cara perbaikan berikut dapat dipilih, dan ketiganya sah.
+
+\begin{enumerate}
+  \item \textbf{Memperkecil panjang langkah.} Membatasi selang waktu maksimum
+        yang boleh dipakai pada satu bingkai, misalnya pada 1/60 detik.
+        Perpindahan pada contoh di atas turun menjadi 15 piksel, dan bongkahan
+        setebal 20 piksel kembali terdeteksi.
+  \item \textbf{Membagi perpindahan menjadi beberapa langkah kecil.} Satu
+        bingkai yang panjang dipecah menjadi beberapa langkah yang
+        masing-masing pendek. Cara ini lebih tepat daripada cara pertama,
+        tetapi memakan lebih banyak perhitungan.
+  \item \textbf{Mempertebal bongkahan.} Cara paling sederhana, dan cukup
+        untuk permainan yang kecepatannya terbatas. Bongkahan setebal 40
+        piksel tidak lagi dapat dilalui benda pada contoh di atas.
+\end{enumerate}
+
+\subsection{Contoh Kedua: Analisis Tabrakan pada Sisi yang Salah}
+
+\begin{contohbox}
+Seorang pemain berjalan ke kanan dan menabrak sisi kiri sebuah bongkahan.
+Pemain berukuran 30 kali 42 piksel, dan bongkahan menempati 430 sampai 550
+piksel mendatar serta 310 sampai 330 piksel tegak.
+
+Pada bingkai yang diperiksa, \code{rect} pemain bernilai (404, 300, 30, 42),
+sehingga menempati 404 sampai 434 piksel mendatar dan 300 sampai 342 piksel
+tegak. Kedua persegi beririsan, sebab mendatarnya bertumpang tindih pada 430
+sampai 434, dan tegaknya pada 310 sampai 330.
+\end{contohbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Akibat urutan pemeriksaan terhadap letak pemain}
+\label{tab:sumbu-salah}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.4cm} C{2.6cm} C{2.6cm} Y@{}}
+\toprule
+\headrow \textbf{Cara pemeriksaan} & \textbf{Sisi yang diselesaikan} & \textbf{Titik tengah pemain} & \textbf{Akibat yang terlihat} \\
+\midrule
+Kedua sumbu sekaligus, sumbu tegak didahulukan &
+Atas bongkahan & 321 menjadi 289 piksel &
+Pemain terangkat 32 piksel ke atas bongkahan, walaupun datang dari samping. \\
+\addlinespace
+Sumbu mendatar lebih dahulu &
+Sisi kiri bongkahan & 415 menjadi 415 piksel &
+Pemain berhenti tepat di sisi bongkahan, sebagaimana mestinya. \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Posisi mendatar titik tengah pemain semula 415 piksel, dan posisi
+tegaknya 321 piksel.}
+\end{table}
+
+Pada baris pertama, program memilih penyelesaian pada sumbu
+tegak karena kecepatan tegak pemain bernilai positif: pemain memang sedang
+jatuh. Pilihan itu masuk akal bagi program, tetapi salah bagi pemain yang
+datang dari samping.
+
+Gejala inilah yang paling sering dikeluhkan pemula sebagai ``pemain tiba-tiba
+terbang ke atas bongkahan''. Sekali diketahui penyebabnya, perbaikannya
+sederhana: periksa sumbu mendatar lebih dahulu, selesaikan sampai tuntas, baru
+periksa sumbu tegak. Dengan urutan itu, pada saat sumbu tegak diperiksa, pemain
+sudah tidak lagi bertumpang tindih dengan bongkahan, sehingga penyelesaian pada
+sumbu tegak hanya terjadi ketika pemain memang datang dari atas.

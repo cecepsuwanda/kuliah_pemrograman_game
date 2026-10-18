@@ -1,0 +1,43 @@
+% chapters/10/rangkuman.tex
+\bagian{Rangkuman}
+
+\begin{rangkumanbox}
+\begin{itemize}
+  \item Peta berpetak diubah menjadi graf dengan tiga aturan: setiap petak
+        kosong menjadi simpul, setiap pasangan petak bersebelahan menjadi sisi,
+        dan biaya setiap sisi bernilai satu.
+  \item Peta disimpan sebagai rangkaian baris huruf agar mudah disunting dan
+        mudah diperiksa dengan mata. Program memeriksa panjang baris serta
+        keberadaan titik awal dan titik tujuan sebelum peta dipakai.
+  \item Pencarian melebar (BFS) memeriksa simpul menurut banyaknya langkah,
+        sehingga tidak memadai apabila biaya sisinya berbeda-beda.
+  \item Algoritma Dijkstra memeriksa simpul menurut biaya sejauh ini, sehingga
+        jalur yang dihasilkan dijamin termurah.
+  \item Algoritma A* menambahkan perkiraan sisa jarak ke tujuan pada biaya
+        sejauh ini, yaitu $f = g + h$, sehingga pencariannya terarah. Dijkstra
+        adalah A* dengan $h$ bernilai nol.
+  \item Tepi pencarian berupa antrean prioritas dari modul \code{heapq}.
+        Sebuah petak dapat masuk antrean lebih dari sekali, dan isi yang sudah
+        usang dibuang dengan memeriksa biaya terkini.
+  \item Heuristik harus tidak pernah melebihkan jarak agar jalur yang
+        dihasilkan tetap terpendek. Jarak Manhattan dan Euclidean memenuhi
+        syarat itu untuk gerak empat arah, tetapi jarak Manhattan tidak
+        memenuhinya untuk gerak delapan arah.
+  \item Pengukuran pada peta bab ini: Manhattan memeriksa 274 petak, Euclidean
+        353 petak, dan Dijkstra 437 petak, sedangkan biaya jalurnya sama pada
+        ketiganya, yaitu 50. Heuristik mempengaruhi kinerja pencarian, bukan
+        mutu hasilnya.
+  \item Jalur direkonstruksi dengan menelusuri tabel asal dari titik tujuan
+        mundur ke titik awal, lalu membalik urutannya. Keadaan tujuan yang tidak
+        dapat dicapai harus ditangani.
+  \item Jalur yang dihasilkan diperiksa keabsahannya: tidak kosong, dimulai
+        dari titik awal, berakhir di titik tujuan, bersambung, dan tidak
+        melewati dinding.
+  \item Visualisasi pencarian memperlihatkan petak yang telah diperiksa, petak
+        yang menunggu diperiksa, petak yang sedang diperiksa, dan jalur yang
+        ditemukan.
+  \item Pencarian jalur pada bab ini belum terhubung dengan NPC. Penghubungan
+        keduanya, beserta pengaturan kapan pencarian diulang, merupakan pokok
+        Bab~XI.
+\end{itemize}
+\end{rangkumanbox}

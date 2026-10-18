@@ -1,0 +1,81 @@
+% chapters/13/section-03.tex
+\section{Kontrol Pemain}
+\label{sec:kontrol-pemain}
+
+\subsection{Kode Lengkap}
+
+\kodecsharp{unity/ch13_kontrol_pemain.cs}{Kontrol pemain platformer 2D berbasis Rigidbody2D}{lst:ch13-pemain}
+
+\subsection{Mengapa Dua Fungsi, bukan Satu}
+
+Skrip itu memuat dua fungsi: \code{Update} dan
+\code{FixedUpdate}. Pembagian pekerjaan di antara keduanya bukan pilihan gaya
+penulisan, melainkan keharusan yang lahir dari sifat keduanya.
+
+\begin{itemize}
+  \item \textbf{\code{Update} dijalankan sekali setiap bingkai}, dengan selang
+        waktu yang berubah-ubah. Fungsi ini dipakai untuk membaca masukan,
+        sebab masukan pemain berkaitan dengan bingkai yang dilihatnya, dan
+        dapat berubah beberapa kali dalam satu bingkai fisika.
+  \item \textbf{\code{FixedUpdate} dijalankan dengan selang waktu tetap},
+        mengikuti pengaturan \istilah{fixed timestep} pada mesin. Fungsi ini
+        dipakai untuk menggerakkan \istilah{Rigidbody} dan untuk memeriksa
+        tanah, sebab keduanya berkaitan dengan perhitungan fisika.
+\end{itemize}
+
+Pembagian itu persis sama dengan pembedaan langkah berubah dan langkah tetap
+yang telah Anda pelajari pada Bagian~2.2. Yang berbeda hanyalah cara
+mewujudkannya: pada Pygame Anda menuliskannya sendiri, sedangkan pada Unity
+mesin menyediakan dua fungsi yang terpisah.
+
+\begin{peringatanbox}
+Memindahkan \istilah{Rigidbody} melalui \code{transform.position} pada
+\code{Update}---sebagaimana biasa dilakukan pada blok Python---akan
+mengakibatkan benda menembus dinding dan bergetar. Mesin menghitung fisika pada
+\code{FixedUpdate}, sehingga perubahan letak yang dilakukan di luarnya tidak
+diperhitungkan. Gerakkanlah \istilah{Rigidbody} melalui komponennya, dan
+kerjakanlah pada \code{FixedUpdate}.
+\end{peringatanbox}
+
+\subsection{Pemeriksaan Tanah}
+
+Perhatikan cara memeriksa apakah pemain sedang menyentuh tanah pada skrip di
+atas. Pemeriksaannya memakai \code{Physics2D.OverlapCircle}, yaitu memeriksa
+apakah ada benda lain pada sebuah lingkaran kecil di bawah kaki pemain.
+
+Cara itu dipilih alih-alih membandingkan posisi dengan letak lantai, sebab
+lantainya tidak harus berupa satu bidang datar. Lingkaran kecil itu bekerja
+sama baiknya pada lantai mendatar, lantai bertingkat, maupun bongkahan miring.
+
+Perhatikan pula bahwa lingkaran itu digambar pada tampilan \istilah{Scene}
+melalui fungsi \code{OnDrawGizmosSelected}. Kebiasaan menggambar daerah
+pemeriksaan semacam itu sangat berguna: tanpa gambarnya, sulit diketahui apakah
+lingkaran pemeriksaannya terlalu kecil, terlalu besar, atau salah letak.
+
+\subsection{Membaca Masukan dan Gerak}
+
+Perhatikan tiga hal pada cara masukan dan gerak diperlakukan.
+
+\begin{enumerate}
+  \item \textbf{Masukan dibaca pada \code{Update} dan disimpan pada peubah},
+        lalu dipakai pada \code{FixedUpdate}. Cara itu mencegah masukan yang
+        terlewat, yaitu penekanan tombol yang terjadi di antara dua langkah
+        fisika.
+  \item \textbf{Lompatan dibaca sebagai peristiwa} melalui
+        \code{Input.GetButtonDown}, bukan sebagai keadaan tombol. Alasannya
+        sama dengan yang dijelaskan pada Bagian~6.3: menahan tombol tidak boleh
+        menghasilkan lompatan berulang.
+  \item \textbf{Kecepatan tegak dipertahankan ketika gerak mendatar diubah.}
+        Baris gerak mendatar hanya mengganti komponen
+        mendatarnya, sedangkan komponen tegaknya dibiarkan. Menggantinya
+        seluruhnya akan menghapus pengaruh gravitasi.
+\end{enumerate}
+
+\begin{tipsbox}
+Perhatikan baris \code{[RequireComponent(typeof(Rigidbody2D))]} pada awal
+skrip. Baris itu memberitahu Unity bahwa skrip tersebut menuntut keberadaan
+\istilah{Rigidbody2D}, sehingga komponennya ditambahkan secara otomatis
+apabila belum ada. Kebiasaan semacam itu mencegah kesalahan yang paling sering
+terjadi pada tahap ini, yaitu skrip yang menempel pada benda tanpa
+\istilah{Rigidbody}.
+\end{tipsbox}

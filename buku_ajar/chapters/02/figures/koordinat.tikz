@@ -1,0 +1,33 @@
+% chapters/02/figures/koordinat.tikz
+% Dua sistem koordinat: koordinat layar (asal kiri-atas, sumbu y ke bawah)
+% dan koordinat kartesius (asal kiri-bawah, sumbu y ke atas).
+\begin{tikzpicture}[font=\scriptsize]
+  % --- Koordinat layar: asal di pojok kiri-atas, y menurun ---
+  \draw[ubPrimary, thick, fill=ubAlt] (0,0) rectangle (4.6,3.2);
+  \draw[-{Stealth[length=2mm]}, ubAccent, thick] (0,3.2) -- (1.4,3.2)
+    node[anchor=south west] {$x$};
+  \draw[-{Stealth[length=2mm]}, ubAccent, thick] (0,3.2) -- (0,1.8)
+    node[anchor=east] {$y$};
+  \fill[ubRed] (0,3.2) circle (1.6pt);
+  \node[anchor=north west, ubRed, inner sep=3pt] at (0.14,3.08) {asal $(0,0)$};
+  \node[anchor=north, ubPrimary, font=\footnotesize\bfseries] at (2.3,-0.25)
+    {koordinat layar};
+  \node[anchor=north, font=\scriptsize\itshape, text width=48mm] at (2.3,-0.7)
+    {titik asal di kiri-atas; $y$ bertambah ke bawah};
+
+  % --- Koordinat kartesius: asal di kiri-bawah, y menaik ---
+  \begin{scope}[xshift=7.6cm]
+    \draw[ubPrimary, thick, fill=ubAlt] (0,0) rectangle (4.6,3.2);
+    \draw[-{Stealth[length=2mm]}, ubAccent, thick] (1.2,0.7) -- (2.6,0.7)
+      node[anchor=west] {$x$};
+    \draw[-{Stealth[length=2mm]}, ubAccent, thick] (1.2,0.7) -- (1.2,2.1)
+      node[anchor=south] {$y$};
+    \fill[ubRed] (1.2,0.7) circle (1.6pt);
+    \node[anchor=north west, ubRed, inner sep=3pt] at (1.34,0.62)
+      {asal $(0,0)$};
+    \node[anchor=north, ubPrimary, font=\footnotesize\bfseries] at (2.3,-0.25)
+      {koordinat kartesius};
+    \node[anchor=north, font=\scriptsize\itshape, text width=48mm] at (2.3,-0.7)
+      {titik asal di kiri-bawah; $y$ bertambah ke atas};
+  \end{scope}
+\end{tikzpicture}

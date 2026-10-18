@@ -1,0 +1,96 @@
+% chapters/11/section-01.tex
+\section{Menghubungkan Dua Lapisan}
+\label{sec:hubung-lapisan}
+
+Bab~IX menghasilkan keputusan, dan Bab~X menghasilkan rute. Bagian ini
+menghubungkan keduanya menjadi satu NPC yang utuh.
+
+\subsection{Niat dan Rute}
+
+Perhatikan apa yang dihasilkan masing-masing lapisan.
+
+\begin{itemize}
+  \item \textbf{Mesin keadaan pada Bab~IX} menghasilkan \textbf{niat}, yaitu
+        jawaban atas pertanyaan ``apa yang sebaiknya saya lakukan?''. Jawabannya
+        berupa keadaan, misalnya mengejar.
+  \item \textbf{Pencarian jalur pada Bab~X} menghasilkan \textbf{rute}, yaitu
+        jawaban atas pertanyaan ``bagaimana cara menuju ke sana?''. Jawabannya
+        berupa rangkaian petak.
+\end{itemize}
+
+Pada Bab~IX, niat ``mengejar'' dilaksanakan dengan bergerak lurus ke arah
+pemain. Pada bab ini, niat yang sama dilaksanakan dengan memanggil pencarian
+jalur terlebih dahulu. Perubahan itu hanya menuntut satu tambahan pada fungsi
+tindakan, sedangkan mesin keadaannya tidak berubah sama sekali.
+
+\begin{kodekeluaran}
+if self.state == "mengejar":
+    self.selang_tersisa -= delta_seconds
+    if self.selang_tersisa <= 0.0 or not self.jalur:
+        self.hitung_jalur(petak_dari_piksel(pemain.position))
+        self.selang_tersisa = self.selang
+    self.ikuti_jalur(delta_seconds, CHASE_SPEED, dinding)
+\end{kodekeluaran}
+
+Susunan itu diperlihatkan pada Gambar~\ref{fig:arsitektur-integrasi}. Perhatikan
+empat kotak pada gambar tersebut: mesin keadaan, pencarian jalur, simpanan
+jalur, dan pengikut jalur. Keempatnya bekerja berurutan, dan masing-masing
+memiliki tanggung jawab yang jelas.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/arsitektur-integrasi.tikz}
+\caption{Hubungan mesin keadaan dan pencarian jalur di dalam satu NPC}
+\label{fig:arsitektur-integrasi}
+\end{figure}
+
+\subsection{Kode Lengkap}
+
+\kodepython{python/ch11_mini_proyek.py}{Mini proyek AI: mesin keadaan yang memanggil pencarian jalur}{lst:ch11-mini-proyek}
+
+\subsection{Pencarian yang Tidak Dijalankan Setiap Bingkai}
+
+Perhatikan syarat pada potongan kode di atas. Pencarian jalur dijalankan
+apabila salah satu dari dua hal terjadi.
+
+\begin{enumerate}
+  \item \textbf{Selang waktu tertentu telah berlalu} sejak pencarian terakhir.
+        Selang itu disebut selang hitung ulang, dan nilainya menjadi pokok
+        Bagian~\ref{sec:batas-kinerja}.
+  \item \textbf{Jalurnya sudah habis} karena seluruh petaknya telah dilalui.
+        Keadaan itu terjadi ketika NPC telah sampai di tempat tujuan dan
+        pemain belum berpindah, sehingga pencarian ulang menuntut perhitungan
+        yang singkat saja.
+\end{enumerate}
+
+Syarat kedua itu mudah terlupakan, dan akibatnya NPC berhenti bergerak
+walaupun pemainnya masih terlihat: jalurnya sudah habis dilalui, tetapi
+pencarian ulang belum waktunya dijalankan.
+
+\subsection{Menyimpan Hasil Pencarian}
+
+Hasil pencarian disimpan pada dua tempat di dalam NPC, yaitu rangkaian
+petaknya dan pewaktu selang hitung ulang.
+
+\begin{kodekeluaran}
+def hitung_jalur(self, tujuan_petak):
+    hasil = pencarian.cari_jalur(pencarian.PETA, self.petak_sekarang(),
+                                 tujuan_petak, "manhattan")
+    self.jalur = hasil["jalur"][1:]     # petak pertama adalah petak sendiri
+    self.statistik["hitung_ulang"] += 1
+    self.statistik["petak_diperiksa"] += len(hasil["diperiksa"])
+\end{kodekeluaran}
+
+Perhatikan dua hal. Pertama, petak pertama pada hasil pencarian dibuang, sebab
+petak itu adalah petak tempat NPC berada sekarang; menyimpannya membuat NPC
+berusaha mencapai petaknya sendiri. Kedua, kedua penghitung statistik ditambah
+di sini, dan itulah bahan penilaian pada Bagian~\ref{sec:menilai-mutu}.
+
+\begin{catatabox}
+Perhatikan baris \code{import ch10_astar as pencarian} pada awal program ini.
+Pencarian jalur tidak ditulis ulang, melainkan dipakai dari berkas bab
+sebelumnya. Kebiasaan memakai kembali kode yang sudah ada---bukan menyalinnya---
+merupakan kebiasaan yang penting: perbaikan pada pencarian jalur cukup
+dilakukan di satu tempat, dan seluruh pengguna pencarian itu ikut memperoleh
+perbaikannya.
+\end{catatabox}

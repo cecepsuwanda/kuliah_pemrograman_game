@@ -1,0 +1,87 @@
+% chapters/06/section-01.tex
+\section{Percepatan sebagai Perubahan Kecepatan}
+\label{sec:percepatan}
+
+Pada bab sebelumnya, kecepatan benda berubah hanya karena tombol ditekan atau
+dilepas. Bab ini membahas perubahan kecepatan yang terjadi dengan sendirinya,
+yaitu karena adanya percepatan.
+
+\subsection{Tingkat Kedua pada Pembaruan Keadaan}
+
+Bagian~2.4 telah menjelaskan bahwa posisi, kecepatan, dan percepatan tersusun
+bertingkat: percepatan mengubah kecepatan, dan kecepatan mengubah posisi.
+Penerapannya pada tahap pembaruan hanya menambah satu baris dibandingkan
+Bab~V.
+
+\begin{kodekeluaran}
+velocity.y += gravity * delta_seconds      # percepatan mengubah kecepatan
+position = position + velocity * delta_seconds   # kecepatan mengubah posisi
+\end{kodekeluaran}
+
+Baris pertama adalah yang baru. Kecepatan tegak bertambah
+setiap bingkai, dan penambahannya sebanding dengan selang waktu. Sesudah
+beberapa bingkai, kecepatannya menjadi besar, dan perpindahan pada baris kedua
+ikut membesar. Itulah sebabnya benda yang jatuh bergerak makin cepat.
+
+Perhatikan pula bahwa kedua baris itu dikerjakan berurutan, dan baris kedua
+memakai kecepatan yang baru saja diperbarui pada baris pertama. Urutan itu
+bukan pilihan gaya penulisan, melainkan kaidah Euler semi-implisit yang telah
+dibahas pada Bagian~2.4 dan dipakai kembali pada Bagian~5.3. Apabila urutannya
+dibalik, benda akan tampak jatuh lebih cepat daripada seharusnya, dan
+kesalahan itu menumpuk ke satu arah sehingga tidak lagi terlihat sebagai
+kesalahan kecil.
+
+\subsection{Arah Gravitasi pada Koordinat Layar}
+
+Pada koordinat layar, sumbu tegak menuju ke bawah. Karena itu, percepatan
+gravitasi yang menarik benda ke bawah dinyatakan sebagai nilai
+\textbf{positif}.
+
+\begin{kodekeluaran}
+if position.y + half >= floor_y:      # menyentuh lantai
+    position.y = floor_y - half       # diletakkan tepat di atas lantai
+\end{kodekeluaran}
+
+Kebalikan dari baris lompatan, yang bernilai negatif karena mengarah ke atas.
+Kedua tanda itu mudah tertukar, dan gejalanya khas: benda yang seharusnya
+jatuh justru melayang ke atas, atau lompatan yang seharusnya ke atas justru
+menekan benda ke lantai.
+
+\begin{catatabox}
+Nilai percepatan gravitasi pada permainan diukur dalam piksel per detik
+kuadrat, bukan meter per detik kuadrat. Nilai yang sering dipakai pada
+permainan dua dimensi berkisar antara 1000 dan 2500 piksel per detik kuadrat.
+Pilihan nilainya bergantung pada skala permainan dan pada kecepatan lompatan,
+sebagaimana diuraikan pada Bagian~\ref{sec:lompatan}.
+\end{catatabox}
+
+\subsection{Satu Fungsi untuk Semua Benda}
+
+Hukum fisika yang bekerja pada seluruh benda adalah sama.
+Yang berbeda hanyalah nilai-nilai yang diberikan, misalnya koefisien
+restitusi. Karena itu, pembaruan gerak dapat ditulis sebagai satu fungsi yang
+dapat dipakai berulang.
+
+\begin{kodekeluaran}
+def update_body(position, velocity, delta_seconds, half, floor_y, width,
+                gravity, restitution):
+    velocity.y += gravity * delta_seconds
+    position = position + velocity * delta_seconds
+    # ... pemeriksaan lantai dan dinding ...
+    return position, velocity, hit_floor, hit_wall
+\end{kodekeluaran}
+
+Cara itu membawa dua manfaat. Pertama, program menjadi lebih pendek: benda
+kedua tidak menuntut penyalinan seluruh perhitungan. Kedua, dan ini yang lebih
+penting, seluruh benda dijamin mengikuti hukum yang sama. Apabila kelak Anda
+menemukan kesalahan pada perhitungan gravitasi, perbaikannya cukup dilakukan
+di satu tempat.
+
+\begin{tipsbox}
+Nilai gravitasi dan koefisien restitusi diberikan sebagai
+argumen fungsi, bukan ditulis langsung di dalamnya. Kebiasaan semacam itu
+memudahkan percobaan: untuk membandingkan dua nilai gravitasi, Anda cukup
+memanggil fungsi yang sama dua kali dengan argumen berbeda. Cara berpikir ini
+juga akan memudahkan Anda ketika beralih ke Unity pada Bab~XIII, tempat nilai
+semacam itu diatur melalui komponen, bukan melalui kode.
+\end{tipsbox}

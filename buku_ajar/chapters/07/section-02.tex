@@ -1,0 +1,101 @@
+% chapters/07/section-02.tex
+\section{Deteksi Tabrakan dengan Persegi Pembatas}
+\label{sec:deteksi-tabrakan}
+
+Bagian~2.3 telah menjelaskan gagasan persegi pembatas. Bagian ini memakai
+gagasan itu melalui perkakas yang telah disediakan Pygame.
+
+\subsection{Memeriksa Dua Persegi}
+
+Pemeriksaan paling dasar adalah memeriksa dua persegi pembatas. Perintahnya
+tersedia pada setiap \code{Rect}, sehingga tidak perlu dihitung sendiri.
+
+\begin{kodekeluaran}
+if player.rect.colliderect(platform.rect):
+    # kedua persegi bersinggungan
+\end{kodekeluaran}
+
+Perintah \code{colliderect} mengembalikan nilai benar apabila kedua persegi
+beririsan, dan salah apabila tidak. Dua persegi yang hanya
+bersentuhan pada tepinya---misalnya sisi kanan yang satu tepat menyentuh sisi
+kiri yang lain---dinilai \textbf{tidak} beririsan. Sifat itu berguna, sebab
+benda yang sudah ditempelkan pada tepi bongkahan tidak akan dianggap
+bertabrakan lagi pada bingkai berikutnya.
+
+\subsection{Memeriksa Benda terhadap Wadah}
+
+Ketika yang diperiksa adalah satu benda terhadap sekumpulan benda, Pygame
+menyediakan perintah yang langsung menelusuri seluruh anggota wadah.
+
+\begin{kodekeluaran}
+hit_items = pygame.sprite.spritecollide(player, items, True)
+\end{kodekeluaran}
+
+Perintah itu mengembalikan daftar benda yang bersentuhan dengan pemain.
+Argumen ketiga menentukan apakah benda yang bersentuhan langsung dikeluarkan
+dari wadahnya. Nilai benar dipakai untuk kepingan yang diambil, sebab kepingan
+yang telah diambil tidak diperlukan lagi. Nilai salah dipakai untuk rintangan,
+sebab rintangan tetap ada di tempatnya setelah tersentuh.
+
+Perhatikan nama variabel \code{hit_items} yang berbentuk daftar. Karena
+hasilnya daftar, jumlah kepingan yang terambil dalam satu bingkai dapat
+diketahui dengan \code{len()}. Cara itu lebih tepat daripada menambahkan satu
+pada setiap pemeriksaan, sebab dalam satu bingkai pemain dapat menyentuh lebih
+dari satu kepingan.
+
+\subsection{Memeriksa Dua Wadah}
+
+Apabila yang diperiksa adalah dua kumpulan benda, tersedia perintah ketiga.
+
+\begin{kodekeluaran}
+bertabrakan = pygame.sprite.groupcollide(bullets, enemies, True, True)
+\end{kodekeluaran}
+
+Perintah itu memeriksa setiap anggota wadah pertama terhadap setiap anggota
+wadah kedua, dan mengembalikan kamus yang memetakan benda dari wadah pertama
+ke daftar benda dari wadah kedua yang bersentuhan dengannya. Kedua argumen
+penghapusan berlaku terpisah untuk masing-masing wadah.
+
+Tabel~\ref{tab:perintah-tabrakan} merangkum ketiga perintah itu beserta
+keperluannya.
+
+\begin{table}[htbp]
+\centering
+\caption{Tiga perintah pemeriksaan tabrakan dan keperluannya}
+\label{tab:perintah-tabrakan}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{5.0cm} L{3.2cm} Y@{}}
+\toprule
+\headrow \textbf{Perintah} & \textbf{Yang diperiksa} & \textbf{Dipakai ketika} \\
+\midrule
+\code{rect.colliderect(other)} & Satu persegi terhadap satu persegi &
+Pemeriksaan diselesaikan sendiri, misalnya ketika menyelesaikan tabrakan sumbu
+demi sumbu pada Bagian~\ref{sec:per-sumbu}. \\
+\addlinespace
+\code{spritecollide(benda, wadah, dokill)} &
+Satu benda terhadap sekumpulan benda &
+Pemain terhadap kepingan, rintangan, atau musuh. Perintah yang paling sering
+dipakai. \\
+\addlinespace
+\code{groupcollide(wadah1, wadah2, kill1, kill2)} &
+Sekumpulan benda terhadap sekumpulan benda &
+Dua kumpulan yang keduanya banyak, misalnya peluru terhadap musuh. Hasilnya
+kamus, bukan daftar. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection{Antara Mendeteksi dan Menyelesaikan}
+
+Satu hal yang perlu ditegaskan sebelum melangkah lebih jauh: \textbf{mendeteksi
+tabrakan dan menyelesaikannya adalah dua pekerjaan yang berbeda}. Seluruh
+perintah pada bagian ini hanya menjawab pertanyaan ``apakah kedua benda
+bersentuhan?''. Pertanyaan berikutnya---``dari sisi mana tabrakan terjadi, dan
+apa yang harus dilakukan?''---belum terjawab.
+
+Jawaban atas pertanyaan kedua itulah inti bab ini. Kedua
+pertanyaan itu berbeda sifatnya: yang pertama dapat dijawab oleh pustaka,
+sedangkan yang kedua bergantung pada aturan permainan Anda. Pada permainan
+yang satu, menyentuh kepingan berarti skor bertambah; pada permainan yang lain,
+menyentuh benda yang sama berarti kehilangan nyawa. Pustaka tidak dapat
+mengetahuinya.

@@ -1,0 +1,138 @@
+% =========================================================
+%  sections/05-materi.tex
+%  Bagian 5 — Materi Pembelajaran (Bahan Kajian)
+% =========================================================
+
+\section{Materi Pembelajaran (Bahan Kajian)}
+
+Materi pembelajaran disusun agar mahasiswa lebih dahulu menguasai algoritma
+permainan pada Python/Pygame (Materi 1--9), kemudian menerapkan solusi
+\istilah{computing} tersebut pada \istilah{game engine} Unity (Materi 10--14).
+Urutan ini memastikan mahasiswa memahami mekanisme internal permainan sebelum
+menggunakan fitur bawaan \istilah{engine}.
+
+\begin{table}[htbp]
+\centering
+\caption{Struktur blok materi dan CPMK yang dituju}
+\label{tab:blok-materi}
+\begin{tabularx}{\textwidth}{@{}C{2.6cm} C{3.2cm} L{4.2cm} Y@{}}
+\toprule
+\headrow \textbf{Blok} & \textbf{Materi} & \textbf{CPMK} & \textbf{Fokus Kompetensi} \\
+\midrule
+Blok I  & Materi 1--5 & \CPMK{1} & \istilah{Game loop}, manajemen waktu, vektor, fisika sederhana, dan \istilah{collision} \\
+Blok II & Materi 6--9 & \CPMK{2} & AI NPC: perilaku \istilah{chase}, FSM, \istilah{pathfinding} A*, dan integrasinya \\
+Blok III & Materi 10--11 & \CPMK{3} & Penguasaan Unity dan pembangunan level yang dapat dimainkan \\
+Blok IV & Materi 12--14 & \CPMK{4} & Integrasi aset visual/audio, UI, dan evaluasi prototipe \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{landscape}
+{\setlength{\tabcolsep}{3pt}\footnotesize%
+\begin{longtable}{@{}L{1.3cm} L{4.4cm} L{11.5cm} L{2.1cm} L{1.7cm} L{2.6cm}@{}}
+\caption{Rincian empat belas materi pembelajaran}
+\label{tab:rincian-materi}\\
+\toprule
+\headrow \textbf{Materi} & \textbf{Pokok Bahasan} & \textbf{Sub-Pokok Bahasan} & \textbf{Sub-CPMK} & \textbf{CPMK} & \textbf{Teknologi} \\
+\midrule
+\endfirsthead
+\toprule
+\headrow \textbf{Materi} & \textbf{Pokok Bahasan} & \textbf{Sub-Pokok Bahasan} & \textbf{Sub-CPMK} & \textbf{CPMK} & \textbf{Teknologi} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{6}{r}{\footnotesize\itshape bersambung ke halaman berikutnya} \\
+\endfoot
+\bottomrule
+\endlastfoot
+
+1 & Pengantar Pemrograman Game dan Persiapan Python/Pygame &
+Ruang lingkup mata kuliah dan kontrak belajar; \istilah{game} sebagai simulasi interaktif \istilah{real-time}; peran algoritma dan bahasa pemrograman; instalasi Python 3, Pygame, dan editor; struktur folder proyek dan pengelolaan versi dengan Git. &
+menuju 1.1 & Fondasi \CPMK{1}--\CPMK{4} & Python/Pygame \\
+\addlinespace
+
+2 & \istilah{Game Loop}, \istilah{Event Handling}, dan \istilah{Clock} &
+Siklus input $\rightarrow$ \istilah{update} $\rightarrow$ \istilah{render}; \code{pygame.event.get} dan \istilah{event} \code{QUIT}; \code{pygame.time.Clock}; pembatasan FPS; perbedaan \istilah{fixed} dan \istilah{variable timestep} (konsep). &
+1.1 & \CPMK{1} & Python/Pygame \\
+\addlinespace
+
+3 & Gerak Objek, \code{Vector2}, Input, dan \istilah{Delta Time} &
+\code{pygame.Vector2}; posisi dan kecepatan; \code{pygame.key.get\_pressed}; \code{dt = clock.tick(FPS) / 1000}; sinkronisasi posisi \istilah{float} dengan \code{rect} bilangan bulat. &
+1.2 & \CPMK{1} & Python/Pygame \\
+\addlinespace
+
+4 & Fisika Sederhana: Gravitasi, Lompatan, dan Pantulan &
+Percepatan gravitasi; \istilah{jump impulse}; pantulan dinding dan lantai; integrasi Euler sederhana; batas lantai. &
+1.3 & \CPMK{1} & Python/Pygame \\
+\addlinespace
+
+5 & \istilah{Sprite}, \istilah{Group}, dan \istilah{Collision Detection} &
+\code{Sprite} dan \code{Group}; \code{spritecollide} dan \code{groupcollide}; AABB dengan \code{Rect}; pengantar \istilah{pixel-perfect} dengan \code{mask}; resolusi \istilah{collision} sumbu demi sumbu. &
+1.4 & \CPMK{1} & Python/Pygame \\
+\addlinespace
+
+6 & Pengantar AI NPC dan Perilaku \istilah{Chase} &
+Persepsi jarak dan arah; normalisasi vektor menuju pemain; batasan kecepatan; perbedaan AI reaktif dan AI berbasis perencanaan. &
+2.1 & \CPMK{2} & Python/Pygame \\
+\addlinespace
+
+7 & \istilah{Finite State Machine} untuk NPC &
+\istilah{State}, \istilah{event}, \istilah{transition}; diagram idle--patrol--chase--attack/flee; implementasi sebagai kelas/fungsi Python; kondisi jarak dan \istilah{cooldown}. &
+2.2 & \CPMK{2} & Python/Pygame \\
+\addlinespace
+
+8 & \istilah{Pathfinding} Grid: dari BFS/Dijkstra ke A* &
+Representasi grid dan graf; biaya $g$, heuristik $h$, dan $f = g + h$; jarak Manhattan dan Euclidean; antrean prioritas \code{heapq}; rekonstruksi jalur. &
+2.3 & \CPMK{2} & Python/Pygame \\
+\addlinespace
+
+9 & Integrasi FSM dan A* (Mini Proyek AI) &
+FSM memanggil A* pada \istilah{state chase}; \istilah{repath} berkala; batasan performa; skenario uji (labirin dan rintangan dinamis sederhana). &
+2.4 & \CPMK{2} & Python/Pygame \\
+\addlinespace
+
+10 & Pengenalan Unity: \istilah{Project}, \istilah{Scene}, dan \istilah{GameObject} &
+Unity Hub dan Editor; \istilah{Hierarchy}, \istilah{Inspector}, \istilah{Project window}; \istilah{scene}; \istilah{GameObject} dan komponen; perbandingan konsep dengan Pygame. &
+3.1 & \CPMK{3} & Unity \\
+\addlinespace
+
+11 & Membangun Level, \istilah{Physics}, dan Kontrol Pemain &
+\istilah{Tilemap} dan \istilah{greyboxing}; \istilah{Collider2D/3D}; \istilah{Rigidbody}; \istilah{script} gerak pada \code{Update}/\code{FixedUpdate}; \istilah{trigger volume}; desain jalur pemain. &
+3.2 & \CPMK{3} & Unity \\
+\addlinespace
+
+12 & Impor Aset Visual, Animasi, dan UI Dasar &
+\istilah{Pipeline} impor Unity; \istilah{sprite sheet} dan \istilah{Animator}; \istilah{Canvas} UI (skor dan nyawa); penggantian \istilah{placeholder greybox} dengan aset sesungguhnya. &
+4.1 & \CPMK{4} & Unity \\
+\addlinespace
+
+13 & Integrasi Audio dan \istilah{Trigger} Interaksi &
+\code{AudioClip} dan \code{AudioSource}; BGM dan SFX; \istilah{trigger} pada \istilah{pickup}, tabrakan, serta kondisi menang/kalah; partikel sederhana (opsional). &
+4.2 & \CPMK{4} & Unity \\
+\addlinespace
+
+14 & Evaluasi Prototipe, \istilah{Playtesting}, dan Presentasi &
+\istilah{Checklist} fungsional; \istilah{playtest} antar kelompok; \istilah{log bug}; kesesuaian GDD dengan \istilah{build}; presentasi demo; refleksi pilihan Python dan Unity. &
+4.3 & \CPMK{4} & Unity (+ refleksi Pygame) \\
+
+\end{longtable}}
+\tabsource{Sumber: disusun dari pemetaan CPL--CPMK--Sub-CPMK mata kuliah \NamaMK.}
+\end{landscape}
+
+\subsection{Peta Sebaran Materi terhadap CPMK}
+
+\begin{table}[htbp]
+\centering
+\caption{Rekapitulasi sebaran materi pada setiap CPMK}
+\label{tab:sebaran-materi}
+\begin{tabularx}{\textwidth}{@{}C{2.3cm} C{3.0cm} L{5.4cm} Y@{}}
+\toprule
+\headrow \textbf{CPMK} & \textbf{Materi} & \textbf{Jumlah Pertemuan} & \textbf{Keluaran (\istilah{output}) Mahasiswa} \\
+\midrule
+\CPMK{1} & 1--5   & 5 pertemuan & Prototipe permainan 2D sederhana berbasis Pygame \\
+\CPMK{2} & 6--9   & 4 pertemuan & Mini proyek AI: NPC dengan FSM dan A* beserta laporan \istilah{playtest} \\
+\CPMK{3} & 10--11 & 2 pertemuan & Level Unity yang dapat dimainkan (\istilah{playable}) \\
+\CPMK{4} & 12--14 & 3 pertemuan & Prototipe Unity lengkap dengan aset visual, audio, dan UI \\
+\bottomrule
+\end{tabularx}
+\end{table}

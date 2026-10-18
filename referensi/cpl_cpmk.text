@@ -1,0 +1,19 @@
+Nama Matakuliah : PENGANTAR PEMROGRAMAN GAME
+
+Capaian pembelajaran lulusan (CPL) :
+- CPL03 : Kemampuan merancang dan menganalisis algoritma untuk menyelesaikan permasalahan 
+  organisasi secara optimal, serta memilih dan menerapkannya pada bahasa 
+  pemrograman tertentu 
+
+- CPL04 : Kemampuan mendesain, mengimplementasi dan mengevaluasi solusi berbasis computing 
+  yang memenuhi kebutuhan-kebutuhan computing pada sebuah disiplin program
+
+
+Capaian pembelajaran matakuliah (CPMK) :
+- CPMK1 : Merancang "Game Loop" dan logika fisika sederhana.
+
+- CPMK2 : Menerapkan algoritma kecerdasan buatan (AI) dasar untuk NPC.
+
+- CPMK3 : Menggunakan Game Engine (misal: Unity/Godot) untuk membangun level.
+
+- CPMK4 : Mengintegrasikan aset audio dan visual ke dalam interaksi game.

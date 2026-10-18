@@ -1,0 +1,34 @@
+% chapters/13/figures/hierarki-level.tikz
+% Susunan benda pada sebuah level dan komponen yang menempel padanya.
+\begin{tikzpicture}[
+  benda/.style={
+    rectangle, rounded corners=1pt, draw=ubPrimary, thick, fill=ubAlt,
+    inner sep=3.5pt, font=\ttfamily\footnotesize, text=ubPrimary
+  },
+  komponen/.style={
+    rectangle, rounded corners=1pt, draw=ubLine, fill=white,
+    inner sep=3pt, font=\scriptsize, align=center
+  },
+  level 1/.style={sibling distance=32mm, level distance=10mm},
+  level 2/.style={sibling distance=30mm, level distance=10mm},
+  edge from parent/.style={draw=ubAccent, thick},
+  catatan/.style={font=\scriptsize, align=left}
+]
+
+\node[benda] {Level}
+  child { node[benda] {Lantai}
+    child { node[komponen] {Tilemap + Tilemap Collider 2D} } }
+  child { node[benda] {Pemain}
+    child { node[komponen] {Rigidbody2D + Capsule Collider 2D\\+ KontrolPemain} } }
+  child { node[benda] {Kamera}
+    child { node[komponen] {Kamera Mengikuti} } }
+  child { node[benda] {Daerah Trigger}
+    child { node[komponen] {Box Collider 2D (Is Trigger)\\+ TriggerPintu} } };
+
+\node[catatan, anchor=north west, text width=120mm] at (-5.0,-3.4)
+  {Setiap benda disusun dari komponen. Perhatikan bahwa benda yang diam seperti
+   lantai hanya memerlukan \istilah{Collider}, sedangkan benda yang bergerak
+   seperti pemain memerlukan \istilah{Collider} beserta
+   \istilah{Rigidbody}. Perbedaan itulah yang menentukan benda mana yang
+   dihitung fisika.};
+\end{tikzpicture}

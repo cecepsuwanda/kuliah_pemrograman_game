@@ -1,0 +1,73 @@
+% chapters/04/praktikum.tex
+\begin{praktikumbox}
+Praktikum ini mengikuti Tugas Praktikum 02 pada RPS: membuat siklus permainan
+yang lengkap, membatasinya pada 60 bingkai per detik, menampilkan laju bingkai
+pada judul jendela, lalu mengubah batas tersebut dan mencatat pengaruhnya
+terhadap beban prosesor. Isilah lembar kerja pada
+Tabel~\ref{tab:lembar-praktikum-02}.
+
+\begin{langkah}
+  \item \textbf{Jalankan siklus lengkap.} Ketik ulang
+        \code{ch04_game_loop.py} dari Daftar~\ref{lst:ch04-game-loop} ke dalam
+        folder \code{code}. Jalankan program, lalu amati tiga hal: judul
+        jendela, batang penanda di bagian bawah, dan nilai laju terukur.
+
+  \item \textbf{Ubah batas laju dari dalam program.} Tekan tombol panah atas
+        dan bawah beberapa kali. Catat laju terukur pada setiap nilai batas.
+        Judul jendela berubah seketika.
+
+  \item \textbf{Bandingkan batas laju dengan pengukuran.} Jalankan
+        \code{ch04_ukur_laju.py} dari Daftar~\ref{lst:ch04-ukur-laju} tanpa
+        argumen. Catat seluruh baris tabel yang dihasilkan.
+
+  \item \textbf{Amati pengaruhnya pada prosesor.} Buka pengelola tugas pada
+        sistem operasi Anda (misalnya \istilah{Task Manager} pada Windows).
+        Jalankan program siklus dengan batas 60, lalu dengan pilihan
+        \code{--fps 0} yang berarti tanpa pembatasan. Amati pemakaian prosesor
+        pada kedua keadaan dan catat perbedaannya.
+
+  \item \textbf{Tambahkan satu penanda keadaan.} Tambahkan satu baris teks pada
+        jendela yang menampilkan jumlah bingkai yang telah dijalankan sejak
+        penekanan spasi terakhir. Uji apakah penanda itu benar-benar kembali ke
+        nol ketika spasi ditekan.
+
+  \item \textbf{Tulis catatan praktikum} pada folder \code{catatan} yang
+        memuat hasil pengukuran Anda dan kesimpulan mengenai batas laju yang
+        Anda pilih.
+
+  \item \textbf{Simpan pekerjaan} ke repositori Git dengan pesan penyimpanan
+        yang menerangkan isinya.
+\end{langkah}
+\end{praktikumbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Lembar kerja Praktikum 02}
+\label{tab:lembar-praktikum-02}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.6cm} L{5.0cm} Y@{}}
+\toprule
+\headrow \textbf{Langkah} & \textbf{Hasil yang dicatat} & \textbf{Catatan Anda} \\
+\midrule
+1 & Laju terukur pada batas laju bawaan & \\[1.2em]
+\addlinespace
+2 & Laju terukur pada tiga nilai batas yang berbeda & \\[2.4em]
+\addlinespace
+3 & Baris tabel hasil pengukuran beserta pemakaian prosesornya & \\[2.4em]
+\addlinespace
+4 & Perbandingan pemakaian prosesor pada batas 60 dan tanpa batas & \\[2.4em]
+\addlinespace
+5 & Jumlah bingkai yang tercatat sebelum dan sesudah spasi ditekan & \\[1.2em]
+\addlinespace
+6 & Batas laju yang Anda pilih beserta alasannya & \\[2.0em]
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Pemakaian prosesor yang tampak pada pengelola tugas akan berbeda dari angka
+pada Tabel~\ref{tab:hasil-pengukuran-laju}, karena pengukuran di buku
+dilakukan tanpa jendela sedangkan program Anda menampilkan jendela
+sungguhan. Yang perlu Anda bandingkan adalah perbandingan antara keadaan
+berbatas dan tanpa batas, bukan angka mutlaknya.
+\end{catatabox}

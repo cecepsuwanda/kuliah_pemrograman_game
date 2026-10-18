@@ -1,0 +1,37 @@
+% chapters/05/rangkuman.tex
+\bagian{Rangkuman}
+
+\begin{rangkumanbox}
+\begin{itemize}
+  \item \code{pygame.Vector2} menyatukan dua komponen posisi atau kecepatan
+        menjadi satu nilai, sehingga penjumlahan dan perkalian dengan satu
+        angka bekerja per komponen secara otomatis.
+  \item Pada koordinat layar, sumbu tegak menuju ke bawah, sehingga gerak ke
+        atas dinyatakan sebagai pengurangan nilai tegak.
+  \item Keadaan tombol dibaca dengan \code{pygame.key.get_pressed()}, yang
+        menghasilkan gerak berlangsung terus selama tombol ditahan; peristiwa
+        \code{KEYDOWN} hanya terjadi sekali dan tidak memadai untuk keperluan
+        itu.
+  \item Vektor arah dinormalkan menjadi panjang satu sebelum dikalikan
+        kecepatan. Tanpa langkah itu, gerak diagonal menjadi akar dua kali
+        lebih cepat, yaitu 41 persen.
+  \item \code{normalize()} mengembalikan vektor baru, sedangkan
+        \code{normalize_ip()} mengubah vektor asalnya.
+  \item Perpindahan dihitung sebagai kecepatan dikalikan selang waktu:
+        \code{position = position + velocity * delta_seconds}. Inilah yang
+        membuat kecepatan objek tidak bergantung pada laju bingkai.
+  \item Urutan perhitungannya mengikuti kaidah Euler: kecepatan diperbarui
+        lebih dahulu, baru posisi.
+  \item Pembuktian melalui pengukuran memperlihatkan kecepatan terukur
+        sebesar 200,0 piksel per detik pada laju 30, 60, dan 120 bingkai per
+        detik.
+  \item Jarak tempuh pada selang waktu yang sama dapat berbeda sedikit, karena
+        \code{clock.tick()} hanya menjamin laju tidak melampaui batas, bukan
+        bahwa setiap bingkai berlangsung tepat sepanjang jatahnya.
+  \item Posisi yang sebenarnya disimpan sebagai pecahan, sedangkan
+        \code{Rect} dipakai untuk menggambar dan memeriksa tabrakan. Menyimpan
+        posisi sebagai bilangan bulat membuat objek tidak bergerak sama sekali
+        pada kecepatan rendah, karena nilai pecahannya terpotong setiap
+        bingkai.
+\end{itemize}
+\end{rangkumanbox}

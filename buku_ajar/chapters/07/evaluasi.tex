@@ -1,0 +1,102 @@
+% chapters/07/evaluasi.tex
+\bagian{Asesmen dan Instrumen Penilaian}
+\label{sec:asesmen-tabrakan}
+
+\begin{asesmenbox}
+\textbf{Kedudukan asesmen bab ini.} Bab ini menuntaskan \SUBCPMK{1.4} sekaligus
+menutup \CPMK{1}. Ketiga indikatornya diperiksa melalui penilaian artefak
+program (Tugas Praktikum 05) dan soal konsep yang menuntut analisis.
+
+\vspace{0.4em}
+Materi Bab~VII termasuk bahan \textbf{Ujian Tengah Semester} pada minggu
+kesepuluh, bersama Bab~III sampai Bab~XI untuk \CPMK{1} dan \CPMK{2}.
+\end{asesmenbox}
+
+\subsection*{Instrumen 1: Rubrik Praktikum 05}
+
+\begin{table}[htbp]
+\centering
+\caption{Rubrik penilaian Praktikum 05 beserta indikator yang diukur}
+\label{tab:rubrik-praktikum-05}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.2cm} C{1.3cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{Kriteria} & \textbf{Bobot} & \textbf{Indikator} & \textbf{Deskripsi capaian} \\
+\midrule
+Penyelesaian tabrakan per sumbu & 35\% & \ind{b} &
+Pemain dapat mendarat di atas bongkahan dan terhalang oleh sisinya; penghitung
+tumpang tindih bernilai nol pada seluruh laju bingkai yang diuji. \\
+\addlinespace
+Struktur kelas dan wadah & 30\% & \ind{a} &
+Benda disusun sebagai kelas turunan \code{Sprite}, dikelola dengan
+\code{Group}, dan perintah pemeriksaan tabrakan dipilih sesuai keperluan. \\
+\addlinespace
+Analisis kesalahan tabrakan & 35\% & \ind{c} &
+Catatan praktikum memuat ketiga gejala hasil percobaan perusakan, penyebabnya,
+dan perbaikan yang dilakukan, disertai penjelasan pada kecepatan tinggi. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection*{Instrumen 2: Soal Analisis}
+
+Soal berikut menuntut analisis, bukan sekadar ingatan. Kunci jawaban beserta
+indikator yang diukur disajikan pada Tabel~\ref{tab:kunci-konsep-ch07}.
+
+\begin{enumerate}
+  \item Sebuah benda bergerak 1200 piksel per detik pada laju 60 bingkai per
+        detik, dan bongkahan yang dilaluinya tebalnya 15 piksel. Jelaskan apa
+        yang terjadi, sertakan perhitungannya, dan sebutkan dua cara
+        perbaikan.
+  \item Seorang pemain berjalan ke kanan dan menabrak sisi kiri bongkahan,
+        tetapi tiba-tiba muncul di atas bongkahan itu. Jelaskan penyebabnya
+        dan bagaimana Anda menemukannya.
+  \item Pemain bergetar halus ketika berdiri di atas bongkahan. Jelaskan
+        penyebabnya dan perbaikannya.
+  \item Sebuah permainan memuat benda berbentuk huruf melengkung. Metode
+        pemeriksaan tabrakan apa yang Anda pilih, dan mengapa?
+  \item Jelaskan bagaimana Anda memastikan bahwa penanganan tabrakan pada
+        program Anda memang benar, tanpa harus memainkannya berulang kali.
+\end{enumerate}
+
+\begin{table}[htbp]
+\centering
+\caption{Kunci soal analisis Bab VII beserta indikator yang diukur}
+\label{tab:kunci-konsep-ch07}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{0.8cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{No} & \textbf{Indikator} & \textbf{Pokok jawaban} \\
+\midrule
+1 & \ind{c} &
+Perpindahan setiap bingkai $1200 \div 60 = 20$ piksel, lebih panjang daripada
+tebal bongkahan 15 piksel, sehingga benda melompati bongkahan tanpa pernah
+beririsan pada saat pemeriksaan. Perbaikan: batasi panjang langkah, bagi
+perpindahan menjadi beberapa langkah, atau tebalkan bongkahan. \\
+\addlinespace
+2 & \ind{c} &
+Kedua sumbu diperiksa sekaligus sehingga program selalu menyelesaikan pada
+sumbu tegak, sebab kecepatan tegaknya bernilai positif. Penelusuran dilakukan
+dengan menampilkan nilai \code{rect} sebelum dan sesudah pembaruan pada
+bingkai yang bermasalah, lalu memeriksa sumbu yang diperbaiki. \\
+\addlinespace
+3 & \ind{b} &
+Kecepatan tegak tidak dinolkan ketika tabrakan diselesaikan, sehingga benda
+terus tertekan ke dalam bongkahan dan posisinya diperbaiki pada setiap
+bingkai. Perbaikan: nolkan kecepatan pada sumbu yang diselesaikan. \\
+\addlinespace
+4 & \ind{a} &
+Persegi pembatas tidak memadai karena bentuknya jauh lebih kecil daripada
+persegi pembatasnya, sehingga sering terjadi tabrakan palsu. Metode yang
+tepat adalah \istilah{mask}, dengan persegi pembatas dipakai lebih dahulu
+sebagai penyaring agar \istilah{mask} hanya dijalankan pada benda yang
+berdekatan. \\
+\addlinespace
+5 & \ind{c} &
+Dengan menambahkan pemeriksa mandiri di dalam program, misalnya penghitung
+bongkahan yang bertumpang tindih dengan pemain, lalu menjalankan program
+tanpa sentuhan manusia pada beberapa laju bingkai dan memastikan nilainya
+selalu nol. \\
+\bottomrule
+\end{tabularx}}
+\end{table}

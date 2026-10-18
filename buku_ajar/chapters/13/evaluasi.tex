@@ -1,0 +1,101 @@
+% chapters/13/evaluasi.tex
+\bagian{Asesmen dan Instrumen Penilaian}
+\label{sec:asesmen-level}
+
+\begin{asesmenbox}
+\textbf{Kedudukan asesmen bab ini.} Bab ini menuntaskan \SUBCPMK{3.2} dan
+menutup \CPMK{3}. Ketiga indikatornya diperiksa melalui penilaian level
+(Tugas Praktikum 10) dan soal analisis.
+
+\vspace{0.4em}
+Level yang dihasilkan pada bab ini menjadi bagian dari \textbf{Proyek Akhir}
+yang dikumpulkan pada minggu kelima belas dan keenam belas.
+\end{asesmenbox}
+
+\subsection*{Instrumen 1: Rubrik Praktikum 10}
+
+\begin{table}[htbp]
+\centering
+\caption{Rubrik penilaian Praktikum 10 beserta indikator yang diukur}
+\label{tab:rubrik-praktikum-10}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.2cm} C{1.3cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{Kriteria} & \textbf{Bobot} & \textbf{Indikator} & \textbf{Deskripsi capaian} \\
+\midrule
+Penyusunan level & 30\% & \ind{a} &
+Level tersusun dari lantai, sekurang-kurangnya tiga bongkahan, dan dua dinding;
+seluruh celahnya terjangkau menurut ukuran yang ditetapkan. \\
+\addlinespace
+Fisika dan kontrol pemain & 40\% & \ind{b} &
+Pemain berjalan, melompat, mendarat, dan terhalang dengan benar;
+\istilah{Collider} dan \istilah{Rigidbody} terkonfigurasi tepat; daerah
+\istilah{trigger} memanggil fungsinya. \\
+\addlinespace
+Analisis masalah fisika & 30\% & \ind{c} &
+Catatan praktikum memuat masalah fisika yang ditemui, gejala, penyebab, dan
+perbaikan yang dilakukan, serta hasil percobaan menimbulkan masalah dengan
+sengaja. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection*{Instrumen 2: Soal Analisis}
+
+Jawablah dengan singkat. Kunci jawaban beserta indikator yang diukur disajikan
+pada Tabel~\ref{tab:kunci-konsep-ch13}.
+
+\begin{enumerate}
+  \item Jelaskan mengapa benda diam tidak perlu diberi \istilah{Rigidbody},
+        dan apa akibatnya apabila tetap diberikan.
+  \item Sebuah benda bergerak 30 satuan per detik dan lantainya tebal 0,1
+        satuan pada langkah fisika 0,02 detik. Tentukan apakah benda itu dapat
+        menembus lantai, beserta perhitungannya.
+  \item Pemain bergetar ketika berjalan. Sebutkan dua penyebab yang mungkin
+        beserta cara memeriksanya.
+  \item Sebutkan tiga syarat agar fungsi \istilah{trigger} dipanggil, dan
+        jelaskan gejala yang muncul apabila salah satunya tidak dipenuhi.
+  \item Mengapa kamera dipindahkan pada \code{LateUpdate}, bukan pada
+        \code{Update}?
+\end{enumerate}
+
+\begin{table}[htbp]
+\centering
+\caption{Kunci soal analisis Bab XIII beserta indikator yang diukur}
+\label{tab:kunci-konsep-ch13}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{0.8cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{No} & \textbf{Indikator} & \textbf{Pokok jawaban} \\
+\midrule
+1 & \ind{b} &
+Karena benda diam tidak bergerak, sehingga tidak ada yang perlu dihitung.
+Apabila tetap diberi \istilah{Rigidbody}, mesin menghitungnya tanpa manfaat,
+dan benda itu dapat terdorong secara tidak sengaja oleh benda lain. \\
+\addlinespace
+2 & \ind{c} &
+Perpindahan pada satu langkah fisika adalah $30 \times 0{,}02 = 0{,}6$
+satuan, yaitu lebih tebal daripada lantainya, sehingga benda dapat menembusnya.
+Perbaikan: ubah \istilah{Collision Detection} menjadi \istilah{Continuous},
+atau tebalkan lantainya. \\
+\addlinespace
+3 & \ind{c} &
+Pertama, benda digerakkan melalui \code{transform.position} pada
+\code{Update}, sehingga letaknya berubah di antara dua langkah fisika.
+Kedua, \istilah{Interpolate} belum diaktifkan pada benda yang diikuti kamera.
+Pemeriksaannya dengan melihat fungsi tempat benda digerakkan, dan dengan
+memeriksa pengaturan \istilah{Rigidbody} pada \istilah{Inspector}. \\
+\addlinespace
+4 & \ind{b} &
+\istilah{Is Trigger} harus ditandai, sekurang-kurangnya satu benda harus
+memiliki \istilah{Rigidbody}, dan \istilah{layer} keduanya harus saling
+diperiksa. Apabila salah satunya tidak dipenuhi, fungsinya tidak pernah
+dipanggil sama sekali, tanpa pesan kesalahan apa pun. \\
+\addlinespace
+5 & \ind{c} &
+Karena kamera harus dipindahkan menurut letak pemain yang sudah diperbarui
+pada bingkai itu. \code{LateUpdate} dipanggil setelah seluruh \code{Update} dan
+\code{FixedUpdate} selesai, sehingga letaknya sudah pasti. \\
+\bottomrule
+\end{tabularx}}
+\end{table}

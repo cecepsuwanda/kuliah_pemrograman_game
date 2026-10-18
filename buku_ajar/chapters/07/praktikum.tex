@@ -1,0 +1,83 @@
+% chapters/07/praktikum.tex
+\begin{praktikumbox}
+Praktikum ini mengikuti Tugas Praktikum 05 pada RPS: pemain mengumpulkan
+kepingan dan menghindari rintangan, dengan skor yang bertambah setiap kali
+kepingan tersentuh. Praktikum ini sekaligus menutup Blok~I.
+
+\begin{langkah}
+  \item \textbf{Mainkan programnya.} Ketik ulang \code{ch07_tabrakan.py} dari
+        Daftar~\ref{lst:ch07-tabrakan} ke dalam folder \code{code}. Jalankan,
+        lalu mainkan sampai seluruh kepingan terkumpul. Pemain dapat berdiri
+        di atas bongkahan dan terhalang oleh sisinya.
+
+  \item \textbf{Periksa penanganan tabrakan secara otomatis.} Jalankan program
+        dengan masukan otomatis pada tiga nilai laju bingkai, lalu catat
+        jumlah bingkai bertumpang tindih pada masing-masing.
+\begin{kodekeluaran}
+python ch07_tabrakan.py --frames 300 --auto-run --fps 30
+python ch07_tabrakan.py --frames 300 --auto-run --fps 60
+python ch07_tabrakan.py --frames 300 --auto-run --fps 120
+\end{kodekeluaran}
+
+  \item \textbf{Rusak dengan sengaja, lalu amati.} Satukan kedua sumbu pada
+        fungsi \code{update} pemain: pindahkan posisi pada kedua sumbu
+        sekaligus, lalu periksa tabrakan sekali saja. Jalankan dan mainkan.
+        Catat gejala yang Anda amati, khususnya ketika pemain menabrak sisi
+        bongkahan.
+
+  \item \textbf{Rusak dengan cara kedua.} Kembalikan program ke keadaan semula,
+        lalu hapus penolan kecepatan tegak sesudah mendarat. Jalankan, lalu
+        perhatikan perilaku pemain ketika berdiri di atas bongkahan.
+
+  \item \textbf{Perbaiki kembali, lalu uji kecepatan tinggi.} Kembalikan
+        program ke keadaan semula, lalu ubah \code{MOVE_SPEED} menjadi 1500.
+        Periksa apakah penghitung tumpang tindih masih bernilai nol. Apabila
+        tidak, jelaskan mengapa demikian dengan merujuk
+        Bagian~\ref{sec:contoh-bab-7}.
+
+  \item \textbf{Tambahkan satu bongkahan dan dua kepingan} pada tempat yang
+        menuntut pemain melompat terlebih dahulu. Pastikan keduanya dapat
+        dijangkau.
+
+  \item \textbf{Tulis catatan praktikum} yang memuat ketiga gejala yang Anda
+        amati pada langkah ketiga dan keempat, beserta perbaikan yang
+        dilakukan. Catatan ini menjadi bukti indikator \ind{c}.
+
+  \item \textbf{Simpan pekerjaan} ke repositori Git dengan pesan penyimpanan
+        yang menerangkan isinya.
+\end{langkah}
+\end{praktikumbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Lembar kerja Praktikum 05}
+\label{tab:lembar-praktikum-05}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.8cm} C{3.0cm} C{3.0cm} Y@{}}
+\toprule
+\headrow \textbf{Batas laju} & \textbf{Bingkai bertumpang tindih} & \textbf{Kepingan terkumpul} & \textbf{Catatan} \\
+\midrule
+30 FPS & & & \\[1.2em]
+\addlinespace
+60 FPS & & & \\[1.2em]
+\addlinespace
+120 FPS & & & \\[1.2em]
+\addlinespace
+\multicolumn{4}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Gejala ketika kedua sumbu disatukan: \dotfill} \\[1.4em]
+\addlinespace
+\multicolumn{4}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Gejala ketika penolan kecepatan tegak dihapus: \dotfill} \\[1.4em]
+\addlinespace
+\multicolumn{4}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Hasil pada kecepatan 1500 piksel per detik: \dotfill} \\[1.4em]
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Langkah ketiga dan keempat sengaja meminta Anda merusak program yang sudah
+benar. Kebiasaan mengamati gejala dari kesalahan yang dibuat dengan sengaja
+akan sangat berguna ketika kesalahan serupa muncul tanpa sengaja pada proyek
+akhir nanti: Anda akan mengenali gejalanya lebih cepat karena pernah melihatnya.
+\end{catatabox}

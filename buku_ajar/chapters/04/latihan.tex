@@ -1,0 +1,56 @@
+% chapters/04/latihan.tex
+\bagian{Latihan dan Refleksi}
+
+\begin{enumerate}
+  \item Sebutkan ketiga tahap siklus permainan beserta pekerjaan pada
+        masing-masing tahap, lalu jelaskan mengapa penayangan dikerjakan
+        paling akhir.
+
+  \item Jelaskan perbedaan \code{pygame.event.wait()} dan
+        \code{pygame.event.get()}. Mengapa hanya salah satunya yang dapat
+        dipakai di dalam siklus permainan?
+
+  \item Apa yang terjadi apabila \code{pygame.event.get()} tidak dipanggil
+        selama beberapa detik? Jelaskan akibatnya bagi pemain dan bagi sistem
+        operasi.
+
+  \item Sebutkan dua pekerjaan yang dilakukan \code{clock.tick()} sekaligus,
+        dan jelaskan mengapa perintah itu diletakkan pada akhir putaran
+        siklus, bukan pada awalnya.
+
+  \item Sebuah program dijalankan dengan batas 90 bingkai per detik, tetapi
+        laju terukurnya hanya 45 bingkai per detik. Hitunglah lama pekerjaan
+        satu bingkai, lalu sebutkan dua langkah yang dapat memperbaiki
+        keadaannya.
+
+  \item Perhatikan potongan kode berikut, lalu tentukan kesalahannya dan
+        perbaikannya.
+\begin{kodekeluaran}
+while running:
+    frame_count = 0
+    frame_count += 1
+    screen.fill((24, 32, 52))
+\end{kodekeluaran}
+
+  \item Jelaskan perbedaan langkah tetap (\istilah{fixed timestep}) dan langkah
+        berubah (\istilah{variable timestep}), lalu tentukan golongan mana yang
+        dipakai oleh siklus pada bab ini beserta alasannya.
+
+  \item Perhatikan Tabel~\ref{tab:hasil-pengukuran-laju}. Jelaskan mengapa
+        pemakaian prosesor pada batas 120 hanya sedikit lebih besar daripada
+        pada batas 30, sedangkan pemakaian pada baris tanpa batas jauh lebih
+        besar.
+\end{enumerate}
+
+\begin{refleksibox}
+\begin{enumerate}
+  \item Pada langkah keempat praktikum, berapa perbandingan pemakaian prosesor
+        antara program berbatas dan program tanpa batas pada komputer Anda?
+        Apakah hasilnya mengejutkan?
+  \item Adakah gejala pada Tabel~\ref{tab:gejala-siklus} yang Anda alami
+        sendiri saat mengerjakan praktikum? Bagaimana Anda menemukan
+        penyebabnya?
+  \item Setelah menulis siklus sendiri, apakah pemahaman Anda tentang permainan
+        berubah? Bagian mana yang paling berbeda dari dugaan awal Anda?
+\end{enumerate}
+\end{refleksibox}

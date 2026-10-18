@@ -1,0 +1,138 @@
+% chapters/07/section-06.tex
+\section{Menganalisis Tabrakan yang Salah}
+\label{sec:analisis-tabrakan}
+
+Penanganan tabrakan yang salah hampir selalu berjalan tanpa pesan kesalahan.
+Program tetap berjalan, gambar tetap muncul, dan hanya perilakunya yang janggal.
+Bagian ini melatih cara menemukan dan memperbaikinya, sesuai indikator \ind{c}
+pada bab ini.
+
+\subsection{Cara Menelusuri}
+
+Empat langkah berikut berlaku umum untuk seluruh kesalahan yang tidak
+menimbulkan pesan kesalahan, bukan hanya untuk tabrakan.
+
+\begin{langkah}
+  \item \textbf{Dapatkan gejala yang dapat diulang.} Tentukan langkah pasti yang
+        memunculkan gejala itu: dari posisi mana, bergerak ke arah mana, dengan
+        kecepatan berapa. Gejala yang tidak dapat diulang tidak dapat
+        diperbaiki.
+  \item \textbf{Persempit wilayahnya.} Tentukan bagian program yang terlibat.
+        Apabila gejala hanya muncul ketika menyentuh bongkahan, maka
+        pemeriksaan bongkahanlah yang perlu diperiksa lebih dahulu.
+  \item \textbf{Pasang alat ukur.} Tampilkan nilai yang Anda duga menjadi
+        penyebabnya: posisi sebelum dan sesudah pembaruan, nilai \code{rect},
+        dan kecepatan pada kedua sumbu. Pada program bab ini, penghitung
+        tumpang tindih memainkan peran itu.
+  \item \textbf{Ubah satu hal pada satu waktu.} Ubah dugaan penyebabnya, jalankan
+        kembali, dan bandingkan. Mengubah dua hal sekaligus membuat Anda tidak
+        tahu mana yang berpengaruh.
+\end{langkah}
+
+\subsection{Tiga Gejala yang Paling Sering}
+
+Tabel~\ref{tab:gejala-tabrakan} memuat tiga gejala yang paling sering muncul
+beserta penyebab dan perbaikannya.
+
+\begin{table}[htbp]
+\centering
+\caption{Gejala tabrakan yang salah, penyebab, dan perbaikannya}
+\label{tab:gejala-tabrakan}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.4cm} L{4.2cm} Y@{}}
+\toprule
+\headrow \textbf{Gejala} & \textbf{Penyebab} & \textbf{Perbaikan} \\
+\midrule
+Benda menembus bongkahan yang tipis, terutama ketika bergerak cepat &
+Pada satu bingkai, perpindahan benda melampaui tebal bongkahan, sehingga
+keduanya tidak pernah beririsan pada saat pemeriksaan. Gejala ini disebut
+\istilah{tunneling}. &
+Batasi panjang langkah, bagi perpindahan menjadi beberapa langkah kecil, atau
+tebalkan bongkahan. Perhitungannya ada pada
+Bagian~\ref{sec:contoh-bab-7}. \\
+\addlinespace
+Benda yang menabrak sisi bongkahan tiba-tiba terangkat ke atasnya &
+Kedua sumbu diperiksa sekaligus, sehingga program tidak mengetahui sisi mana
+yang ditabrak dan selalu memilih penyelesaian pada sumbu tegak. &
+Pisahkan pemeriksaan menjadi dua tahap seperti pada
+Bagian~\ref{sec:per-sumbu}. \\
+\addlinespace
+Benda bergetar halus di permukaan bongkahan &
+Kecepatan tegak tidak dinolkan ketika tabrakan diselesaikan, sehingga benda
+terus tertekan ke dalam bongkahan dan posisinya diperbaiki setiap bingkai. &
+Nolkan kecepatan pada sumbu yang diselesaikan. \\
+\addlinespace
+Benda dinilai bersentuhan padahal gambarnya masih berjarak &
+Benda berbentuk miring atau berlubang, sehingga persegi pembatasnya jauh lebih
+besar daripada gambarnya. &
+Pakai \istilah{mask} sesuai pertimbangan pada
+Tabel~\ref{tab:pilihan-metode}. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection{Kebiasaan yang Mencegahnya}
+
+Empat kebiasaan berikut mencegah sebagian besar kesalahan di atas muncul sejak
+awal.
+
+\begin{itemize}
+  \item \textbf{Selesaikan satu sumbu sampai tuntas sebelum menyentuh sumbu
+        berikutnya.} Ini kebiasaan yang paling banyak mencegah kesalahan.
+  \item \textbf{Tampilkan keadaan yang Anda curigai pada layar atau terminal.}
+        Angka yang terlihat akan menjawab pertanyaan yang tidak dapat dijawab
+        oleh gambar.
+  \item \textbf{Sediakan pemeriksa mandiri di dalam program}, sebagaimana
+        penghitung tumpang tindih pada bab ini. Pemeriksa itu menjawab
+        pertanyaan ``apakah keadaan yang terlarang sedang terjadi?'' pada
+        setiap bingkai, bukan hanya ketika Anda memperhatikannya.
+  \item \textbf{Jalankan program pada beberapa kecepatan.} Kesalahan
+        \istilah{tunneling} dan kesalahan pembulatan hanya muncul pada
+        kecepatan tertentu, sehingga pengujian pada satu kecepatan saja tidak
+        mencukupi.
+\end{itemize}
+
+\begin{catatabox}
+Ketiga gejala pada Tabel~\ref{tab:gejala-tabrakan} memiliki
+satu sifat yang sama: semuanya merupakan akibat dari pilihan cara, bukan dari
+kesalahan penulisan. Tidak ada satu pun yang dapat ditemukan oleh pemeriksa
+sintaksis. Karena itu, kemampuan menganalisis seperti pada bagian ini merupakan
+kemampuan yang membedakan program yang ``berjalan'' dari program yang
+``benar''.
+\end{catatabox}
+
+\subsection{Mengakhiri Blok I}
+
+Bab ini menutup \CPMK{1}, yaitu kemampuan merancang \istilah{game loop} dan
+logika fisika sederhana. Dengan demikian, seluruh perkakas Blok~I telah
+lengkap.
+
+\begin{table}[htbp]
+\centering
+\caption{Perkakas Blok I yang telah lengkap beserta bab yang membahasnya}
+\label{tab:perkakas-blok-1}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.6cm} L{3.0cm} Y@{}}
+\toprule
+\headrow \textbf{Perkakas} & \textbf{Dibahas pada} & \textbf{Kegunaan} \\
+\midrule
+Lingkungan kerja dan repositori & Bab~III &
+Menjalankan program dan menyimpan riwayat pekerjaan. \\
+\addlinespace
+Siklus permainan dan pengendalian waktu & Bab~IV &
+Menjalankan permainan terus-menerus dengan laju yang terkendali. \\
+\addlinespace
+Vektor, masukan, dan gerak berbasis waktu & Bab~V &
+Menggerakkan benda dengan kecepatan yang sama pada setiap komputer. \\
+\addlinespace
+Gravitasi, lompatan, dan pantulan & Bab~VI &
+Memberi benda sifat jatuh, melompat, dan memantul. \\
+\addlinespace
+Kelas \code{Sprite}, wadah \code{Group}, dan tabrakan & Bab~VII &
+Mengelola banyak benda sekaligus dan menangani persentuhannya. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Bab~VIII sampai Bab~XI akan memakai seluruh perkakas itu untuk keperluan baru:
+membuat benda yang mengambil keputusan sendiri.

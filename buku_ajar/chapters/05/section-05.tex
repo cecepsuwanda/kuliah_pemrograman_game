@@ -1,0 +1,94 @@
+% chapters/05/section-05.tex
+\section{Program Gerak Lengkap}
+\label{sec:siklus-gerak}
+
+Bagian ini menyatukan seluruh unsur menjadi program yang menggerakkan objek
+dengan kecepatan tetap, sekaligus mengukur kecepatan itu untuk membuktikan
+bahwa nilainya tidak bergantung pada laju bingkai.
+
+\subsection{Kode Lengkap}
+
+\kodepython{python/ch05_gerak.py}{Gerak objek dengan vektor dan selang waktu}{lst:ch05-gerak}
+
+\subsection{Membedah Bagian-Bagiannya}
+
+\textbf{Fungsi \code{read_direction} memegang tahap masukan.} Fungsi itu
+mengembalikan vektor arah berdasarkan tombol yang sedang ditahan. Perhatikan
+bahwa vektor yang dikembalikan belum dinormalkan; penormalan dilakukan di
+tempat lain agar fungsi ini tetap sederhana dan hanya menangani masukan.
+
+\textbf{Fungsi \code{update_position} memegang tahap pembaruan.} Di dalamnya
+terdapat tiga pekerjaan: menormalkan arah dan mengalikannya dengan kecepatan,
+memperbarui posisi dengan perpindahan selama satu selang waktu, lalu membatasi
+posisi agar objek tidak keluar dari jendela. Ketiganya berkaitan erat sehingga
+diletakkan pada satu tempat.
+
+\textbf{Penyelarasan \code{Rect} dilakukan di antara pembaruan dan
+penayangan.} Dua baris berikut menjadi tempat terjadinya penyelarasan itu.
+
+\begin{kodekeluaran}
+previous_position = position.copy()
+position, velocity = update_position(...)
+step = position - previous_position
+player_rect.center = (round(position.x), round(position.y))
+\end{kodekeluaran}
+
+Salinan posisi disimpan lebih dahulu agar perpindahan yang sesungguhnya dapat
+dihitung sesudahnya. Perpindahan itulah yang diukur untuk membuktikan
+kecepatan tetap, sebagaimana diuraikan pada Bagian~\ref{sec:gerak-selang-waktu}.
+
+\textbf{Penayangan memperlihatkan kedua nilai sekaligus.}
+Jendela menampilkan posisi pecahan dan posisi bulat secara berdampingan.
+
+\begin{kodekeluaran}
+Posisi (pecahan)   : ( 312.47,  240.00)
+Rect (bulat)       : ( 312,     240)
+\end{kodekeluaran}
+
+Penampakan keduanya disengaja. Dengan mengamati kedua baris itu selama objek
+bergerak, Anda dapat melihat bahwa nilai pecahan berubah secara halus
+sedangkan nilai bulat melompat satu piksel setiap kali. Itulah wujud
+penyelarasan yang dijelaskan pada Bagian~\ref{sec:selaras-rect}.
+
+\subsection{Percobaan yang Disarankan}
+
+\begin{table}[htbp]
+\centering
+\caption{Percobaan pada program gerak}
+\label{tab:percobaan-ch05}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{5.6cm} Y@{}}
+\toprule
+\headrow \textbf{Yang diubah dan caranya} & \textbf{Yang sebaiknya Anda amati} \\
+\midrule
+Laju bingkai, melalui pilihan \code{--fps}. &
+Kecepatan terukur tetap sama, sedangkan jumlah perpindahan setiap bingkai
+berubah. Bandingkan nilai \code{delta_seconds} pada judul jendela. \\
+\addlinespace
+Kecepatan, melalui pilihan \code{--speed}. &
+Kecepatan terukur berubah sebanding. Pada kecepatan sangat rendah, misalnya
+5 piksel per detik, gerak objek menjadi tersendat karena pembulatan. \\
+\addlinespace
+Arah diagonal, dengan menekan dua tombol arah sekaligus. &
+Kecepatan terukur tetap sama dengan gerak lurus. Inilah bukti bahwa penormalan
+vektor arah bekerja. \\
+\addlinespace
+Baris penormalan, dengan menghapus pemanggilan \code{normalize()}. &
+Kecepatan terukur pada arah diagonal naik menjadi sekitar 283 piksel per detik.
+Kembalikan baris itu sesudah percobaan. \\
+\addlinespace
+Pembulatan, dengan mengganti \code{round()} menjadi \code{int()}. &
+Selisih letak objek tidak terlihat pada pandangan sekilas, tetapi baris
+\istilah{Rect} pada jendela memperlihatkan nilainya berbeda hampir satu
+piksel. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{peringatanbox}
+Setelah selesai bereksperimen, kembalikan program Anda ke keadaan semula.
+Kebiasaan menyimpan keadaan percobaan pada repositori membuat riwayat
+pekerjaan Anda tetap utuh, dan memudahkan Anda membandingkan perilaku program
+sebelum dan sesudah percobaan. Inilah salah satu manfaat Git yang akan terasa
+ketika pekerjaan Anda bertambah besar.
+\end{peringatanbox}

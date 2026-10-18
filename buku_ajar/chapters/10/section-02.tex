@@ -1,0 +1,103 @@
+% chapters/10/section-02.tex
+\section{Dari BFS ke Dijkstra ke A*}
+\label{sec:bfs-dijkstra-astar}
+
+Judul bab ini menyebut tiga algoritma. Bagian ini menjelaskan mengapa yang
+pertama tidak memadai, apa yang ditambahkan yang kedua, dan apa yang
+diringankan oleh yang ketiga.
+
+\subsection{Pencarian Melebar: Benar tetapi Tidak Menghiraukan Biaya}
+
+Pencarian melebar (\istilah{breadth-first search}, BFS) memeriksa simpul
+seturut jaraknya dari titik awal: mula-mula seluruh tetangga titik awal, lalu
+tetangga dari tetangga, dan seterusnya. Cara itu menjamin jalur terpendek
+apabila seluruh sisi berbiaya sama.
+
+Kelemahannya muncul ketika biaya sisi tidak sama. Apabila melintasi pasir
+memerlukan biaya dua kali lipat melintasi jalan biasa, BFS tidak
+mengetahuinya, sebab ia hanya menghitung banyaknya langkah. Jalur dengan
+langkah paling sedikit belum tentu jalur termurah.
+
+\subsection{Dijkstra: Memeriksa Menurut Biaya}
+
+Algoritma Dijkstra memperbaiki hal itu dengan memeriksa simpul menurut
+\textbf{biaya sejauh ini} dari titik awal, bukan menurut banyaknya langkah.
+Simpul dengan biaya terkecil selalu diperiksa lebih dahulu, sehingga jalur
+yang ditemukan dijamin termurah, berapa pun biaya setiap sisinya.
+
+Biaya sejauh ini dilambangkan $g$. Pada bab ini seluruh sisi berbiaya satu,
+sehingga $g$ juga menyatakan banyaknya langkah dari titik awal.
+
+\subsection{A*: Menambahkan Perkiraan ke Tujuan}
+
+Dijkstra menyebar ke segala arah secara merata, sebab ia tidak mengetahui di
+mana tujuannya berada. Akibatnya banyak simpul yang sebenarnya tidak mungkin
+menuju tujuan ikut diperiksa.
+
+Algoritma A* memperbaiki hal itu dengan menambahkan \textbf{perkiraan sisa
+jarak} ke tujuan, dilambangkan $h$, pada biaya sejauh ini. Jumlah keduanya
+dilambangkan $f$ dan dipakai sebagai urutan pemeriksaan.
+
+\begin{equation}
+\label{eq:f-gh}
+f = g + h .
+\end{equation}
+
+Simpul yang memiliki $f$ terkecil diperiksa lebih dahulu. Karena $h$
+menambahkan perkiraan sisa jarak, simpul yang menuju ke arah tujuan memperoleh
+$f$ yang lebih kecil daripada simpul yang menjauh, sehingga diperiksa lebih
+dahulu. Pencarian menjadi terarah.
+
+\begin{catatabox}
+Dijkstra sesungguhnya adalah A* dengan $h$ bernilai nol.
+Karena itu, keduanya dapat ditulis sebagai satu program dengan satu pilihan,
+dan itulah yang dilakukan pada bab ini. Pilihan heuristik bernama
+\code{tanpa} berarti $h = 0$, yaitu Dijkstra.
+\end{catatabox}
+
+\subsection{Antrean Prioritas}
+
+Agar simpul dengan $f$ terkecil selalu diperiksa lebih dahulu, tepi pencarian
+harus berupa antrean prioritas. Python menyediakannya pada modul
+\code{heapq}.
+
+\begin{kodekeluaran}
+import heapq
+
+tepi = [(heuristik(awal, tujuan), 0, awal)]
+while tepi:
+    _, biaya_sekarang, sekarang = heapq.heappop(tepi)
+    for tetangga_petak in tetangga(lebar, tinggi, dinding, sekarang):
+        biaya_baru = biaya_sekarang + 1
+        if tetangga_petak not in biaya or biaya_baru < biaya[tetangga_petak]:
+            biaya[tetangga_petak] = biaya_baru
+            perkiraan = biaya_baru + heuristik(tetangga_petak, tujuan)
+            heapq.heappush(tepi, (perkiraan, biaya_baru, tetangga_petak))
+            asal[tetangga_petak] = sekarang
+\end{kodekeluaran}
+
+Perhatikan tiga hal pada potongan kode itu.
+
+\begin{enumerate}
+  \item \textbf{Petak terdepan selalu yang paling menjanjikan.}
+        \texttt{heappop} mengeluarkan isi antrean dengan prioritas terkecil,
+        yaitu petak dengan nilai $f$ terkecil.
+  \item \textbf{Sebuah petak dapat masuk antrean lebih dari sekali.} Petak itu
+        dimasukkan kembali setiap kali ditemukan jalur yang lebih murah
+        menuju ke sana. Cara itu lebih sederhana daripada memperbarui isi
+        antrean, dan hasilnya tetap benar.
+  \item \textbf{Biaya yang sudah usang dilewati.} Pemeriksaan
+        \code{biaya_sekarang > biaya.get(sekarang, 0)} membuang isi antrean
+        yang tertinggal dari pencarian sebelumnya. Tanpa pemeriksaan itu,
+        petak yang sama dapat diperiksa lebih dari sekali.
+\end{enumerate}
+
+\begin{tipsbox}
+Isi antrean prioritas berupa rangkap tiga, yaitu
+\code{(perkiraan, biaya_baru, tetangga_petak)}. Angka biaya diletakkan di
+tengah dengan sengaja: apabila dua petak memiliki perkiraan yang sama, Python
+membandingkan unsur berikutnya. Tanpa angka pembanding itu, Python akan
+membandingkan petaknya, yaitu pasangan angka, dan itu berhasil juga---tetapi
+urutan pemeriksaan menjadi tidak menentu sehingga dua kali menjalankan
+program dapat menghasilkan jumlah pemeriksaan yang sedikit berbeda.
+\end{tipsbox}

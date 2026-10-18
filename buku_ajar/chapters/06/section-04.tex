@@ -1,0 +1,123 @@
+% chapters/06/section-04.tex
+\section{Pantulan dengan Koefisien Restitusi}
+\label{sec:pantulan}
+
+Benda yang menyentuh lantai tidak selalu harus berhenti. Bagian ini membahas
+pantulan, yaitu pembalikan arah gerak yang disertai pengurangan kecepatan.
+
+\subsection{Pembalikan Arah dan Pengurangan Kecepatan}
+
+Pantulan terjadi dalam dua langkah: arah gerak dibalik, lalu besarnya
+dikurangi. Keduanya dilakukan sekaligus dengan satu perhitungan.
+
+\begin{kodekeluaran}
+velocity.y = -velocity.y * restitution
+\end{kodekeluaran}
+
+Perhatikan tanda negatif dan pengalinya. Tanda negatif membalik arah, sedangkan
+pengali \code{restitution} mengurangi besarnya kecepatan. Nilai pengali itu
+terletak antara nol dan satu, dengan makna sebagai berikut.
+
+\begin{itemize}
+  \item \textbf{Nilai 0} berarti tidak ada pantulan sama sekali: benda
+        berhenti seketika. Nilai ini dipakai untuk pemain, sebagaimana
+        dijelaskan pada Bagian~\ref{sec:gravitasi-lantai}.
+  \item \textbf{Nilai 1} berarti pantulan sempurna: kecepatan tidak
+        berkurang, dan benda memantul selamanya. Nilai ini jarang dipakai
+        karena membuat permainan tidak pernah tenang.
+  \item \textbf{Nilai antara 0 dan 1}, misalnya 0,8, berarti benda kehilangan
+        sebagian kecepatannya setiap pantulan sehingga akhirnya berhenti.
+\end{itemize}
+
+\subsection{Tinggi Pantulan Menyusut Sebesar Kuadrat Koefisien}
+
+Kecepatan setelah pantulan adalah $e$ kali kecepatan sebelumnya. Tinggi yang
+dapat dicapai sebanding dengan \textbf{kuadrat} kecepatan, sehingga tinggi
+setelah pantulan tinggal $e^2$ kali tinggi sebelumnya. Untuk $e = 0{,}8$,
+faktornya adalah $0{,}64$: setiap pantulan menyisakan 64 persen tinggi
+sebelumnya. Susutan itu diperlihatkan pada Gambar~\ref{fig:pantulan}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/pantulan.tikz}
+\caption{Tinggi pantulan yang menyusut dengan koefisien restitusi 0,8}
+\label{fig:pantulan}
+\end{figure}
+
+Kuadrat itulah sebabnya pantulan terasa cepat mereda walaupun kecepatannya
+hanya berkurang dua puluh persen setiap kali. Pada pantulan ketiga, tinggi yang
+dicapai hanya tinggal seperempat tinggi semula.
+
+\subsection{Urutan Penanganan yang Benar}
+
+Satu hal yang mudah terlewat adalah urutan pekerjaan ketika benda menyentuh
+lantai. Posisi harus dikembalikan ke permukaan lantai \textbf{lebih dahulu},
+baru kecepatan diubah.
+
+\begin{kodekeluaran}
+if position.y + half >= floor_y:
+    position.y = floor_y - half                   # 1. perbaiki posisi
+    if velocity.y > 0:
+        velocity.y = -velocity.y * restitution    # 2. balik kecepatan
+\end{kodekeluaran}
+
+Apabila urutannya dibalik, benda membalik arahnya sementara posisinya masih
+terbenam di dalam lantai. Pada bingkai berikutnya, benda bergerak ke atas dari
+posisi yang salah itu, dan sebagian kecepatannya terpakai untuk keluar dari
+lantai. Gejalanya halus tetapi khas: tinggi pantulan menyusut lebih cepat
+daripada yang seharusnya, dan pada benda yang cepat, benda dapat tersangkut di
+dalam lantai.
+
+Perhatikan juga syarat \code{if velocity.y > 0}. Syarat itu memastikan
+pantulan hanya dilakukan oleh benda yang sedang bergerak ke bawah. Tanpa syarat
+itu, benda yang baru saja memantul dan sedang bergerak ke atas akan dibalik
+arahnya lagi pada bingkai berikutnya, sehingga benda terperangkap di lantai.
+
+\subsection{Pantulan pada Dinding}
+
+Pantulan pada dinding bekerja dengan cara yang sama, hanya sumbunya yang
+berbeda: yang dibalik adalah komponen mendatar.
+
+\begin{kodekeluaran}
+if position.x - half < 0:
+    position.x = half
+    velocity.x = abs(velocity.x) * restitution
+elif position.x + half > width:
+    position.x = width - half
+    velocity.x = -abs(velocity.x) * restitution
+\end{kodekeluaran}
+
+Perhatikan pemakaian \code{abs()} untuk menentukan arah sesudah pantulan.
+Dinding kiri selalu mengarahkan benda ke kanan, dan dinding kanan selalu
+mengarahkannya ke kiri, terlepas dari arah datangnya. Memakai tanda negatif
+sederhana tidak cukup, karena benda yang sudah bergerak menjauhi dinding akan
+dibalik kembali ke arah dinding dan terperangkap di sana.
+
+\subsection{Menghentikan Pantulan yang Terlalu Kecil}
+
+Benda yang memantul dengan koefisien restitusi akan terus memantul, walaupun
+tingginya makin lama makin kecil. Pada akhirnya pantulan itu terlalu pendek
+untuk terlihat, tetapi perhitungannya tetap berjalan dan membuat benda
+bergetar di permukaan lantai, suatu gejala yang disebut \istilah{jitter}.
+
+Penanganannya sederhana: hentikan pantulan apabila kecepatannya sudah di bawah
+nilai tertentu.
+
+\begin{kodekeluaran}
+velocity.y = -velocity.y * restitution
+if abs(velocity.y) < MIN_BOUNCE_SPEED:
+    velocity.y = 0.0
+\end{kodekeluaran}
+
+Nilai batas pada program bab ini adalah 60 piksel per detik. Nilai itu dipilih
+karena pantulan dengan kecepatan lebih kecil daripada itu hanya mengangkat
+benda setinggi satu piksel, sehingga tidak terlihat tetapi tetap memakan
+perhitungan.
+
+\begin{tipsbox}
+Cara yang sama dipakai untuk pemain, yang koefisien
+restitusinya nol. Pada pemain, kecepatan tegaknya langsung menjadi nol tanpa
+memerlukan pemeriksaan batas, sebab hasil perkalian dengan nol memang bernilai
+nol. Satu baris kode itu melayani dua keperluan sekaligus, dan itulah manfaat
+menuliskan hukum fisika secara umum.
+\end{tipsbox}

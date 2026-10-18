@@ -1,0 +1,80 @@
+% chapters/13/praktikum.tex
+\begin{praktikumbox}
+Praktikum ini mengikuti Tugas Praktikum 10 pada RPS: membuat level sederhana
+yang memuat lantai, rintangan, dan pemain yang bergerak serta bertabrakan
+dengan lingkungannya.
+
+\begin{langkah}
+  \item \textbf{Susun levelnya secara \istilah{greyboxing}.} Buat lantai dari
+        \istilah{Tilemap} atau dari balok, lalu tambahkan sekurang-kurangnya
+        tiga bongkahan pada ketinggian yang berbeda dan dua dinding.
+
+  \item \textbf{Tetapkan ukurannya lebih dahulu.} Tentukan tinggi lompatan
+        pemain, lebar celah yang dapat dilewati, dan tinggi bongkahan. Susun
+        levelnya agar seluruh celahnya terjangkau, dengan menyisakan kelonggaran
+        sekitar sepuluh sampai dua puluh persen.
+
+  \item \textbf{Tambahkan pemain.} Buat sebuah benda dengan
+        \istilah{Rigidbody2D}, \istilah{Capsule Collider 2D}, dan skrip
+        \code{KontrolPemain} dari Daftar~\ref{lst:ch13-pemain}. Atur
+        \istilah{Constraints} agar putarannya terkunci.
+
+  \item \textbf{Atur pemeriksaan tanahnya.} Buat sebuah benda kosong sebagai
+        penanda di bawah kaki pemain, lalu hubungkan pada peubah
+        \code{groundCheck}. Tentukan \istilah{layer} tanah, lalu pastikan
+        lingkaran pemeriksaannya tampak pada panel \istilah{Scene} dan letaknya
+        tepat.
+
+  \item \textbf{Jalankan dan mainkan.} Pastikan pemain dapat berjalan,
+        melompat, mendarat di atas bongkahan, dan terhalang oleh dinding.
+        Apabila ada yang tidak sesuai, telusurilah menurut urutan pada
+        Bagian~\ref{sec:masalah-fisika}, dan catat hasilnya.
+
+  \item \textbf{Tambahkan daerah trigger.} Buat sebuah daerah pada ujung level,
+        tandai \istilah{Collider}-nya sebagai \istilah{Is Trigger}, lalu
+        tempelkan skrip \code{TriggerPintu} dari Daftar~\ref{lst:ch13-trigger}.
+        Periksa pesan yang muncul pada panel \istilah{Console}.
+
+  \item \textbf{Tambahkan kamera yang mengikuti.} Tulis skrip kamera seperti
+        pada Bagian~\ref{sec:kamera-rasa}, lalu atur kelambatannya. Amati
+        perbedaan rasa gerak pada dua nilai kelambatan yang berbeda.
+
+  \item \textbf{Tulis catatan praktikum} yang memuat ukuran yang Anda tetapkan,
+        tangkapan layar levelnya, catatan masalah fisika yang Anda temui beserta
+        perbaikannya, dan nilai pengaturan yang Anda pilih.
+
+  \item \textbf{Simpan pekerjaan} ke repositori Git dengan pesan penyimpanan
+        yang menerangkan isinya.
+\end{langkah}
+\end{praktikumbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Lembar kerja Praktikum 10}
+\label{tab:lembar-praktikum-10}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.4cm} Y@{}}
+\toprule
+\headrow \textbf{Butir yang dicatat} & \textbf{Keterangan} \\
+\midrule
+Tinggi lompatan, lebar celah, dan tinggi bongkahan & \\[1.2em]
+\addlinespace
+Masalah fisika yang ditemui beserta gejalanya & \\[2.4em]
+\addlinespace
+Penyebab dan perbaikan yang dilakukan & \\[2.4em]
+\addlinespace
+Nilai kelambatan kamera yang dipilih beserta alasannya & \\[1.2em]
+\addlinespace
+Pesan yang muncul pada panel \istilah{Console} ketika memasuki daerah trigger & \\[1.2em]
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Langkah kelima adalah langkah yang paling berharga bagi indikator \ind{c}.
+Apabila level Anda berjalan mulus sejak percobaan pertama, tambahkan dengan
+sengaja salah satu masalah dari Tabel~\ref{tab:masalah-fisika}---misalnya ubah
+\istilah{Collision Detection} menjadi \istilah{Discrete}---lalu amati gejalanya
+dan perbaiki kembali. Kebiasaan menimbulkan masalah dengan sengaja akan
+memudahkan Anda mengenali masalah yang sama pada proyek akhir nanti.
+\end{catatabox}

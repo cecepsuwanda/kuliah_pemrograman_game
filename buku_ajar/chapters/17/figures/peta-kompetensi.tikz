@@ -1,0 +1,46 @@
+% chapters/17/figures/peta-kompetensi.tikz
+% Peta capaian: dari CPL, turun ke CPMK, lalu ke kelompok bab yang
+% menuntaskannya. Hanya keterkaitan utamanya yang digambar; setiap CPMK
+% juga didukung oleh CPL yang lain.
+\begin{tikzpicture}[
+  cpl/.style={
+    rectangle, rounded corners=5pt, draw=ubPrimary, thick, fill=ubPrimary,
+    text=white, align=center, text width=30mm, inner sep=4pt,
+    minimum height=11mm, font=\footnotesize\bfseries
+  },
+  cpmk/.style={
+    rectangle, rounded corners=5pt, draw=ubPrimary, thick, fill=ubAlt,
+    align=center, text width=28mm, inner sep=4pt, minimum height=11mm,
+    font=\footnotesize
+  },
+  bab/.style={
+    rectangle, rounded corners=5pt, draw=ubAccent, thick, fill=white,
+    align=center, text width=28mm, inner sep=4pt, minimum height=9mm,
+    font=\footnotesize
+  },
+  panah/.style={-{Stealth[length=2.2mm]}, thick, draw=ubAccent},
+  bobot/.style={font=\scriptsize, ubPrimary}
+]
+
+\node[cpl] (cpl3) at (1.8,2.6) {\CPL{03}\\{\scriptsize\itshape 57\%}};
+\node[cpl] (cpl4) at (8.4,2.6) {\CPL{04}\\{\scriptsize\itshape 43\%}};
+
+\node[cpmk] (c1) at (0,1.0) {\CPMK{1}\\{\scriptsize\itshape 25\%}};
+\node[cpmk] (c2) at (3.6,1.0) {\CPMK{2}\\{\scriptsize\itshape 32\%}};
+\node[cpmk] (c3) at (6.6,1.0) {\CPMK{3}\\{\scriptsize\itshape 22\%}};
+\node[cpmk] (c4) at (10.2,1.0) {\CPMK{4}\\{\scriptsize\itshape 21\%}};
+
+\node[bab] (b1) at (0,-0.7) {Bab III--VII\\{\scriptsize\itshape Sub-CPMK 1.1--1.4}};
+\node[bab] (b2) at (3.6,-0.7) {Bab VIII--XI\\{\scriptsize\itshape Sub-CPMK 2.1--2.4}};
+\node[bab] (b3) at (6.6,-0.7) {Bab XII--XIII\\{\scriptsize\itshape Sub-CPMK 3.1--3.2}};
+\node[bab] (b4) at (10.2,-0.7) {Bab XIV--XVI\\{\scriptsize\itshape Sub-CPMK 4.1--4.3}};
+
+\draw[panah] (cpl3) -- (c1);
+\draw[panah] (cpl3) -- (c2);
+\draw[panah] (cpl4) -- (c3);
+\draw[panah] (cpl4) -- (c4);
+\draw[panah] (c1) -- (b1);
+\draw[panah] (c2) -- (b2);
+\draw[panah] (c3) -- (b3);
+\draw[panah] (c4) -- (b4);
+\end{tikzpicture}

@@ -1,0 +1,102 @@
+% =========================================================
+%  config/environments.tex
+%  Lingkungan (environment) khusus buku ajar berbasis OBE.
+%  Setiap kotak dipakai konsisten pada seluruh bab sehingga
+%  pembaca mengenali fungsi tiap bagian.
+% =========================================================
+
+\tcbuselibrary{breakable,skins,theorems}
+
+% --- Gaya dasar kotak buku ------------------------------
+\tcbset{
+  bookbox/.style={
+    breakable,
+    sharp corners,
+    boxrule=0.7pt,
+    left=7pt, right=7pt, top=5pt, bottom=5pt,
+    fonttitle=\bfseries\small,
+    coltitle=white,
+    titlerule=0.4pt,
+    toptitle=2pt, bottomtitle=2pt,
+    before skip=9pt, after skip=9pt,
+    before upper={\setlength{\parskip}{0.35em}}
+  }
+}
+
+% --- Tujuan pembelajaran bab ----------------------------
+\newtcolorbox{tujuanbox}[1][]{%
+  bookbox, colframe=ubPrimary, colback=ubAlt,
+  title={Tujuan Pembelajaran}, #1}
+
+% --- Sub-CPMK yang dicapai bab --------------------------
+\newtcolorbox{subcpmkbox}[1][]{%
+  bookbox, colframe=ubAccent, colback=ubAlt,
+  title={Sub-CPMK Bab Ini}, #1}
+
+% --- Contoh dan ilustrasi -------------------------------
+\newtcolorbox{contohbox}[1][]{%
+  bookbox, colframe=ubGreen, colback=ubGreenBg,
+  title={Contoh}, #1}
+
+% --- Catatan penjelas -----------------------------------
+\newtcolorbox{catatabox}[1][]{%
+  bookbox, colframe=ubLine, colback=ubGray, coltitle=ubPrimary,
+  title={Catatan}, #1}
+
+% --- Kesalahan yang sering terjadi ----------------------
+\newtcolorbox{peringatanbox}[1][]{%
+  bookbox, colframe=ubRed, colback=ubRedBg,
+  title={Perhatian}, #1}
+
+% --- Tip praktik ----------------------------------------
+\newtcolorbox{tipsbox}[1][]{%
+  bookbox, colframe=ubWarn, colback=ubWarnBg,
+  title={Tip Praktik}, #1}
+
+% --- Lembar praktikum -----------------------------------
+\newtcolorbox{praktikumbox}[1][]{%
+  bookbox, colframe=ubPrimary, colback=white,
+  title={Praktikum}, #1}
+
+% --- Aktivitas belajar yang direkomendasikan ------------
+\newtcolorbox{aktivitasbox}[1][]{%
+  bookbox, colframe=ubAccent, colback=white,
+  title={Aktivitas Pembelajaran yang Direkomendasikan}, #1}
+
+% --- Asesmen dan instrumen penilaian --------------------
+\newtcolorbox{asesmenbox}[1][]{%
+  bookbox, colframe=ubAccent, colback=white,
+  title={Asesmen dan Instrumen Penilaian}, #1}
+
+% --- Checklist pencapaian kompetensi --------------------
+\newtcolorbox{checklistbox}[1][]{%
+  bookbox, colframe=ubGreen, colback=white,
+  title={Checklist Pencapaian Kompetensi}, #1}
+
+% --- Refleksi mahasiswa ---------------------------------
+\newtcolorbox{refleksibox}[1][]{%
+  bookbox, colframe=ubWarn, colback=white,
+  title={Refleksi}, #1}
+
+% --- Rangkuman bab --------------------------------------
+\newtcolorbox{rangkumanbox}[1][]{%
+  bookbox, colframe=ubPrimary, colback=ubAlt,
+  title={Rangkuman}, #1}
+
+% --- Teorema matematis (amsthm) -------------------------
+\theoremstyle{definition}
+\newtheorem{definisi}{Definisi}[chapter]
+\newtheorem{contoh}{Contoh}[chapter]
+\newtheorem{prosedur}{Prosedur}[chapter]
+
+\theoremstyle{plain}
+\newtheorem{teorema}{Teorema}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+
+% --- Pemanggil judul bagian tanpa nomor ----------------
+% \bagian{Tujuan Pembelajaran}
+\newcommand{\bagian}[1]{%
+  \needspace{3\baselineskip}%
+  \section*{#1}%
+  \addcontentsline{toc}{section}{#1}%
+}

@@ -1,0 +1,105 @@
+% chapters/07/section-04.tex
+\section{Kapan Persegi Pembatas Tidak Cukup}
+\label{sec:mask}
+
+Persegi pembatas dipilih karena murah dihitung dan cukup untuk sebagian besar
+keperluan. Bagian ini membahas keterbatasannya, cara mengatasinya, dan kapan
+cara itu memang diperlukan.
+
+\subsection{Keterbatasan Persegi Pembatas}
+
+Persegi pembatas selalu lebih besar daripada gambarnya, kecuali untuk benda
+yang bentuknya memang persegi. Pada benda yang miring atau berlubang,
+selisihnya dapat cukup besar sehingga dua benda dinilai bersentuhan padahal
+gambarnya masih berjarak. Keadaan itu diperlihatkan pada
+Gambar~\ref{fig:aabb-mask}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/aabb-mask.tikz}
+\caption{Persegi pembatas beririsan walaupun gambarnya tidak bersinggungan}
+\label{fig:aabb-mask}
+\end{figure}
+
+Gejala yang muncul pada permainan mudah dikenali: pemain merasa ``kena'' oleh
+sesuatu yang sebenarnya belum menyentuhnya. Pada permainan yang mengandalkan
+ketepatan, misalnya permainan yang mengharuskan pemain melewati celah sempit,
+selisih beberapa piksel itu menentukan berhasil atau gagalnya percobaan.
+
+\subsection{Pemeriksaan dengan \istilah{Mask}}
+
+Pygame menyediakan cara yang lebih cermat melalui \code{pygame.mask}. Sebuah
+\istilah{mask} adalah gambaran hitam-putih yang menyatakan titik mana saja
+pada sebuah permukaan yang benar-benar terisi.
+
+\begin{kodekeluaran}
+mask_pemain = pygame.mask.from_surface(player.image)
+mask_bongkah = pygame.mask.from_surface(platform.image)
+
+if mask_pemain.overlap(mask_bongkah, (dx, dy)):
+    # ada titik yang benar-benar bertumpang tindih
+\end{kodekeluaran}
+
+Perhatikan argumen kedua pada \code{overlap}: nilainya adalah selisih letak
+kedua benda, bukan letak salah satunya. Nilai itu diperoleh dari selisih
+kedua \code{rect}, dan kesalahan menentukan nilai tersebut merupakan sumber
+kekeliruan yang paling sering terjadi pada pemakaian \istilah{mask}.
+
+Mask juga dapat dibuat sekali saja, yaitu ketika benda dibuat, lalu disimpan
+pada benda itu. Membuat mask berulang kali setiap bingkai membuang waktu,
+sebab pembuatannya menuntut pemeriksaan seluruh titik gambar.
+
+\subsection{Memilih Metode yang Tepat}
+
+Pilihan antara persegi pembatas dan \istilah{mask} adalah pertukaran antara
+kecepatan perhitungan dan ketelitian. Tabel~\ref{tab:pilihan-metode}
+merangkum pertimbangannya.
+
+\begin{table}[htbp]
+\centering
+\caption{Pertimbangan memilih metode pemeriksaan tabrakan}
+\label{tab:pilihan-metode}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.6cm} L{4.6cm} Y@{}}
+\toprule
+\headrow \textbf{Keadaan} & \textbf{Metode yang dianjurkan} & \textbf{Alasan} \\
+\midrule
+Benda berbentuk persegi atau hampir persegi &
+Persegi pembatas &
+Selisih dengan bentuk sebenarnya kecil, sedangkan perhitungannya paling
+murah. \\
+\addlinespace
+Benda banyak dan bergerak cepat &
+Persegi pembatas, dilengkapi penyelesaian per sumbu &
+Ketelitian beberapa piksel tidak terasa pada benda yang bergerak cepat,
+sedangkan \istilah{mask} memperberat setiap bingkai. \\
+\addlinespace
+Benda miring, berlubang, atau bergerigi &
+\istilah{Mask} &
+Persegi pembatasnya jauh lebih besar daripada gambar, sehingga tabrakan
+palsu sering terjadi. \\
+\addlinespace
+Permainan yang menuntut ketepatan tinggi &
+\istilah{Mask}, setelah pemeriksaan persegi pembatas &
+Persegi pembatas dipakai lebih dahulu untuk menyaring, lalu \istilah{mask}
+memeriksa hanya pada benda yang hampir bersentuhan. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{tipsbox}
+Baris terakhir pada tabel tersebut memuat cara yang paling sering dipakai pada
+permainan sungguhan: kedua metode digabungkan. Persegi pembatas diperiksa
+lebih dahulu karena murah; hanya apabila hasilnya beririsan, \istilah{mask}
+diperiksa. Dengan cara itu, \istilah{mask} yang mahal hanya dijalankan pada
+beberapa benda yang memang berdekatan, bukan pada seluruh benda setiap
+bingkai.
+\end{tipsbox}
+
+\begin{catatabox}
+Pada program bab ini, seluruh benda berbentuk persegi sehingga pemeriksaan
+persegi pembatas sudah memadai. Pilihan itu diambil secara sadar, sesuai
+indikator \ind{a} pada bab ini: memilih metode yang \textbf{tepat}, bukan yang
+paling canggih. Menambahkan \istilah{mask} pada program ini hanya akan
+memperberat perhitungan tanpa mengubah hasilnya.
+\end{catatabox}

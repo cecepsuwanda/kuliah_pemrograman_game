@@ -1,0 +1,41 @@
+% chapters/11/rangkuman.tex
+\bagian{Rangkuman}
+
+\begin{rangkumanbox}
+\begin{itemize}
+  \item Mesin keadaan menghasilkan niat, sedangkan pencarian jalur menghasilkan
+        rute. Menghubungkan keduanya hanya menuntut satu tambahan pada keadaan
+        mengejar, sedangkan mesin keadaannya tidak berubah.
+  \item Hasil pencarian disimpan pada NPC dan dipakai berkali-kali. Pencarian
+        diulang menurut selang waktu tertentu, atau ketika jalurnya sudah habis
+        dilalui.
+  \item Pengikut jalur bergerak menuju titik tengah petak berikutnya, memakai
+        perulangan \code{while} dan toleransi jarak. Tanpa keduanya, NPC
+        meninggalkan petak yang dilampauinya atau berhenti selamanya.
+  \item Selama selang hitung ulang, jalurnya menjadi usang karena pemain
+        berpindah. Itulah harga yang dibayar atas penghematan perhitungan.
+  \item Beban pencarian jalur berlipat menurut banyaknya NPC, seringnya
+        pencarian diulang, dan mahalnya satu kali pencarian.
+  \item Menghitung ulang setiap bingkai sangat boros: pada pengukuran bab ini
+        tiga kali lipat pekerjaan hanya menghasilkan perbaikan satu piksel.
+        Sepertiga pekerjaan sudah cukup.
+  \item Selang yang terlalu panjang mulai merugikan, sebab NPC tertinggal
+        mengikuti jalur yang menuju tempat pemain berada sebelumnya. Titik
+        keseimbangannya berada pada sekitar 0,30 detik.
+  \item Apabila seluruh NPC menghitung ulang pada bingkai yang sama, laju
+        bingkai menjadi naik turun. Sebarkan waktu perhitungannya dengan
+        memberikan awal yang berbeda kepada setiap NPC.
+  \item Mutu perilaku dinilai dari tiga segi: kelancaran, daya tanggap, dan
+        beban komputasi. Ketiganya saling bertentangan, sehingga titik
+        keseimbangannya harus dicari dengan mengukur.
+  \item Skenario uji yang berguna dapat diulang, memicu perilaku yang hendak
+        dinilai, memuat ukuran yang dapat dibandingkan, dan mewakili keadaan
+        pemakaian yang sesungguhnya.
+  \item Perbaikan yang baik berdasarkan pengukuran, terarah pada penyebabnya,
+        dan disertai cara mengukur keberhasilannya.
+  \item Bab ini menutup \CPMK{2} sekaligus menutup seluruh blok Python. Seluruh
+        perkakas yang telah dibangun tetap berlaku pada Blok~III dan Blok~IV;
+        yang berubah hanyalah letak tanggung jawabnya, dari kode Anda kepada
+        mesin permainan.
+\end{itemize}
+\end{rangkumanbox}

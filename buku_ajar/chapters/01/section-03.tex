@@ -1,0 +1,152 @@
+% chapters/01/section-03.tex
+\section{Peta Jalan Belajar}
+\label{sec:peta-jalan}
+
+Bab ini menutup orientasi dengan memperlihatkan seluruh perjalanan yang akan
+Anda tempuh: apa yang dipelajari pada tiap tahap, mengapa urutannya demikian,
+dan apa yang seharusnya sudah Anda miliki pada akhir setiap tahap.
+
+\subsection{Empat Blok Materi}
+
+Materi mata kuliah ini dikelompokkan menjadi empat blok, sebagaimana
+diperlihatkan pada Gambar~\ref{fig:peta-jalan}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/peta-jalan.tikz}
+\caption{Peta jalan belajar: empat blok materi dari Python/Pygame ke Unity}
+\label{fig:peta-jalan}
+\end{figure}
+
+Blok I dan Blok II dikerjakan dengan Python dan Pygame, sedangkan Blok III dan
+Blok IV dikerjakan dengan Unity. Perbedaan mendasar antara kedua tahap bukan
+terletak pada bahasanya---Pygame memakai Python dan Unity memakai C\#---melainkan
+pada siapa yang menulis mekanisme permainannya. Pada dua blok pertama, Anda
+menulisnya sendiri. Pada dua blok berikutnya, \istilah{engine} yang
+menyediakannya dan Anda mengarahkannya.
+
+\begin{table}[htbp]
+\centering
+\caption{Rincian empat blok materi, capaian, dan perkakasnya}
+\label{tab:blok-materi-buku}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.6cm} C{2.3cm} C{1.6cm} L{4.3cm} Y@{}}
+\toprule
+\headrow \textbf{Blok} & \textbf{Materi} & \textbf{CPMK} & \textbf{Pokok bahasan} & \textbf{Perkakas} \\
+\midrule
+Blok I & Materi 1--5 & \CPMK{1} &
+\istilah{Game loop} dan manajemen waktu; gerak berbasis \istilah{delta time};
+fisika sederhana; deteksi dan penanganan tabrakan. &
+Python 3, Pygame, editor kode, Git. \\
+\addlinespace
+Blok II & Materi 6--9 & \CPMK{2} &
+Perilaku mengejar; mesin keadaan (\istilah{FSM}); pencarian jalur A*;
+penggabungan keduanya. &
+Python 3, Pygame, modul \code{heapq}; lembar \istilah{playtest}. \\
+\addlinespace
+Blok III & Materi 10--11 & \CPMK{3} &
+Antarmuka dan konsep kerja Unity; penyusunan level; fisika \istilah{engine};
+kontrol pemain. &
+Unity (versi LTS), editor Unity, akun Unity. \\
+\addlinespace
+Blok IV & Materi 12--14 & \CPMK{4} &
+Impor dan konfigurasi aset visual; animasi; antarmuka pengguna; integrasi
+audio; pengujian prototipe dan presentasi. &
+Unity, aset visual dan audio bebas pakai, lembar \istilah{playtest}. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection{Mengapa Python dan Pygame Didahulukan}
+
+Pertanyaan yang wajar muncul: jika Unity menyediakan hampir semua yang
+dibutuhkan, mengapa tidak langsung memakainya? Ada empat alasan yang
+mendasarinya, dan keempatnya bertumpu pada satu prinsip yang sama, yaitu
+memahami sistem sebelum memanfaatkannya.
+
+\begin{enumerate}
+  \item \textbf{Mekanisme permainan menjadi terlihat.} Pada \istilah{engine},
+        \istilah{game loop}, integrasi fisika, dan deteksi tabrakan sudah
+        tertanam dan tidak tampak. Ketika program berperilaku aneh, sulit
+        menentukan apakah penyebabnya ada pada kode Anda, pada konfigurasi,
+        atau pada cara \istilah{engine} bekerja. Dengan menulis sendiri
+        ketiga mekanisme tersebut pada Bab~IV sampai Bab~VII, Anda memiliki
+        gambaran yang jelas tentang apa yang sebenarnya terjadi.
+  \item \textbf{Algoritma AI dipahami secara algoritmik.} Unity menyediakan
+        pencarian jalur siap pakai melalui \istilah{AI Navigation}. Memanggil
+        perkakas itu tidak menuntut pemahaman tentang biaya simpul, heuristik,
+        atau sifat kelengkapan pencarian. Pada Bab~X Anda akan menulis A*
+        sendiri sehingga pengaruh pilihan heuristik terhadap hasil dan
+        kinerja pencarian menjadi kasat mata \cite{santos-pathfinding}.
+  \item \textbf{Kesalahan lebih mudah dilacak.} Tidak ada lapisan abstraksi
+        antara kode Anda dan perilaku program. Pesan kesalahan Python menunjuk
+        baris yang tepat, dan seluruh keadaan program berada dalam kendali
+        Anda. Kemampuan melacak kesalahan ini terbentuk lebih cepat ketika
+        jumlah lapisan yang terlibat sedikit.
+  \item \textbf{Biaya dan kelayakan perkakas.} Python, Pygame, dan editornya
+        dapat dipasang tanpa biaya lisensi dan berjalan pada komputer
+        sederhana. Tahap pertama mata kuliah karena itu tidak bergantung pada
+        ketersediaan perangkat berspesifikasi tinggi \cite{sweigart-invent}.
+\end{enumerate}
+
+Konsekuensi lanjutannya bermanfaat pada Blok III dan Blok IV. Ketika Anda
+menggunakan \istilah{engine}, Anda mengetahui pekerjaan apa yang sedang
+diambil alih olehnya, kapan perlu mengubah pengaturannya, dan kapan perlu
+menulis kode sendiri. Pengetahuan itu pula yang menjadi bahan refleksi pada
+Bab~XVII ketika Anda membandingkan pengalaman bekerja dengan kedua
+pendekatan.
+
+\subsection{Alur Enam Belas Minggu}
+
+Perjalanan satu semester terbagi menjadi tiga tahap. Tahap pertama menempati
+minggu pertama sampai minggu kesembilan dan menuntaskan seluruh materi
+Python/Pygame, yaitu Materi 1--9 pada RPS. Tahap kedua adalah asesmen tengah
+semester pada minggu kesepuluh. Tahap ketiga menempati minggu kesebelas sampai
+minggu keenam belas dan menuntaskan materi Unity, yaitu Materi 10--14, beserta
+presentasi dan ujian akhir.
+
+Rincian pokok bahasan setiap bab beserta Sub-CPMK dan minggu pelaksanaannya
+tidak diulang di sini karena telah disajikan pada tabel peta bab di bagian
+\istilah{Capaian Pembelajaran dan Peta Kompetensi} di awal buku ini. Jadwal
+tugas dan asesmen pada tiap tahap diuraikan pada
+Bagian~\ref{sec:kurikulum-obe}.
+
+\subsection{Artefak yang Terkumpul pada Akhir Semester}
+
+Setiap blok menghasilkan artefak yang berbeda. Menyadari hal ini sejak awal
+membantu Anda bekerja secara berkelanjutan, karena nilai portofolio ditentukan
+oleh kesinambungan pekerjaan mingguan, bukan oleh usaha menjelang ujian.
+
+\begin{table}[htbp]
+\centering
+\caption{Artefak setiap blok dan waktu pengumpulannya}
+\label{tab:artefak}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.5cm} L{4.8cm} C{2.4cm} Y@{}}
+\toprule
+\headrow \textbf{Blok} & \textbf{Artefak} & \textbf{Dikumpulkan} & \textbf{Dinilai dengan} \\
+\midrule
+Blok I & Prototipe permainan 2D berbasis Pygame: jendela dan
+\istilah{game loop}, karakter yang bergerak, gravitasi dan lompatan, serta
+pengumpulan item dengan sistem skor. &
+Minggu 1--5 & Rubrik portofolio praktikum dan butir Kuis 1. \\
+\addlinespace
+Blok II & Mini proyek AI: satu atau lebih NPC dengan mesin keadaan dan
+pencarian jalur A* pada peta berhalangan, disertai laporan \istilah{playtest}
+dan presentasi. &
+Minggu 9 & Rubrik mini proyek AI. \\
+\addlinespace
+Blok III & Level Unity yang dapat dimainkan: lantai dan rintangan, kontrol
+pemain, dan fisika yang berjalan benar. &
+Minggu 11--12 & Penilaian level dan rubrik proyek akhir. \\
+\addlinespace
+Blok IV & Prototipe Unity lengkap: aset visual dan animasi, antarmuka pengguna,
+audio yang terhubung pada peristiwa permainan, laporan pengembangan, serta
+demo. &
+Minggu 15--16 & Rubrik proyek akhir dan uji fungsional. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Bobot setiap komponen penilaian dan rubrik lengkapnya diuraikan pada
+Lampiran~A.

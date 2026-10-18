@@ -1,0 +1,21 @@
+% chapters/04/figures/siklus-game-loop.tikz
+% Diagram siklus input -> update -> render untuk Bab IV.
+% Dipanggil dari section-*.tex dengan \input{figures/siklus-game-loop.tikz}
+\begin{tikzpicture}[
+  node distance=20mm,
+  tahap/.style={
+    rectangle, rounded corners=2pt, draw=ubPrimary, thick, fill=ubAlt,
+    text width=27mm, align=center, minimum height=12mm
+  },
+  panah/.style={-{Stealth[length=2.6mm]}, thick, draw=ubAccent}
+]
+\node[tahap] (input) {\small\bfseries Input\\[1pt]\footnotesize baca peristiwa};
+\node[tahap, right=of input] (update) {\small\bfseries Update\\[1pt]\footnotesize perbarui keadaan};
+\node[tahap, right=of update] (render) {\small\bfseries Render\\[1pt]\footnotesize gambar layar};
+
+\draw[panah] (input) -- (update);
+\draw[panah] (update) -- (render);
+\draw[panah] (render.south) -- ++(0,-7mm) -| (input.south);
+\node[below=11mm of update, font=\footnotesize\itshape, text=ubPrimary]
+  {diulang terus-menerus selama permainan berjalan};
+\end{tikzpicture}

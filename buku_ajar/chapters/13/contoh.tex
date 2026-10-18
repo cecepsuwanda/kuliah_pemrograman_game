@@ -1,0 +1,98 @@
+% chapters/13/contoh.tex
+\section{Dua Contoh Analisis}
+\label{sec:contoh-bab-13}
+
+\subsection{Contoh Pertama: Membaca Tangkapan Layar Level}
+
+\begin{contohbox}
+Perhatikan kembali Gambar~\ref{fig:editor-fisika}. Tangkapan layar itu
+memperlihatkan sebuah level yang sedang disusun, dengan bentuk batas benda
+ditampilkan oleh panel \istilah{Physics Debug}.
+\end{contohbox}
+
+Tabel~\ref{tab:baca-level} memuat pembacaan bagian-bagian tangkapan layar itu.
+
+\begin{table}[htbp]
+\centering
+\caption{Pembacaan bagian-bagian tangkapan layar level}
+\label{tab:baca-level}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.2cm} Y@{}}
+\toprule
+\headrow \textbf{Yang tampak} & \textbf{Keterangan} \\
+\midrule
+Balok abu-abu tanpa tekstur, tangga, dan bongkahan &
+Level yang disusun secara \istilah{greyboxing}. Belum ada aset yang dipasang,
+sebab yang diuji masih mekaniknya. \\
+\addlinespace
+Kotak berwarna kuning dengan garis tepi jingga &
+Bentuk batas sebuah benda, yaitu \istilah{Collider}, yang ditampilkan oleh
+\istilah{Physics Debug}. Bentuknya sederhana, yaitu berupa
+kotak, walaupun gambarnya lebih rumit. \\
+\addlinespace
+Tanda panah berwarna pada benda itu &
+\istilah{Gizmo}, yaitu tanda untuk memindahkan dan memutar benda pada panel
+\istilah{Scene}. Warnanya menunjukkan sumbu: merah untuk mendatar, hijau untuk
+tegak. \\
+\addlinespace
+Panel kecil bertulisan \istilah{Physics Debug} pada sudut kanan bawah &
+Panel pengaturan tampilan fisika, dengan pilihan \istilah{Collision Geometry}
+dan \istilah{Mouse Select}. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Penyusunan level dan penampilan bentuk batasnya dapat
+dikerjakan bersamaan. Kebiasaan menampilkan bentuk batas sejak awal menyusun
+level akan menghemat banyak waktu, sebab masalah fisika dapat ditemukan
+sebelum levelnya menjadi panjang.
+
+\subsection{Contoh Kedua: Menelusuri Tiga Gejala sampai Penyebabnya}
+
+\begin{contohbox}
+Seorang mahasiswa melaporkan tiga gejala pada levelnya: pemain bergetar ketika
+berjalan, pemain kadang menembus lantai ketika jatuh dari tempat tinggi, dan
+sebuah bongkahan tidak dapat dipijak sama sekali. Ketiganya ditelusuri menurut
+urutan pada Bagian~\ref{sec:masalah-fisika}.
+\end{contohbox}
+
+Hasil penelusurannya diperlihatkan pada Tabel~\ref{tab:telusur-fisika}.
+
+\begin{table}[htbp]
+\centering
+\caption{Hasil penelusuran tiga gejala fisika}
+\label{tab:telusur-fisika}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{2.6cm} L{3.4cm} L{3.2cm} Y@{}}
+\toprule
+\headrow \textbf{Gejala} & \textbf{Hasil pemeriksaan} & \textbf{Penyebab} & \textbf{Perbaikan} \\
+\midrule
+Pemain bergetar ketika berjalan &
+Skrip menggerakkan \code{transform.position} pada \code{Update}. &
+Perubahan letak terjadi di antara dua langkah fisika, sehingga kamera
+menampilkan letak yang berbeda dari letak yang dihitung fisika. &
+Gerakkan melalui \istilah{Rigidbody} pada \code{FixedUpdate}, dan aktifkan
+\istilah{Interpolate}. \\
+\addlinespace
+Pemain menembus lantai ketika jatuh dari tempat tinggi &
+Kecepatan jatuh mencapai 40 satuan per detik, sedangkan tebal lantai 0,2
+satuan. &
+Pada satu langkah fisika, perpindahannya sekitar 0,67 satuan, yaitu lebih tebal
+daripada lantainya. &
+Ubah \istilah{Collision Detection} menjadi \istilah{Continuous}, atau
+tebalkan lantainya. \\
+\addlinespace
+Bongkahan tidak dapat dipijak &
+Bongkahan tidak memiliki \istilah{Collider}, sebab hanya diberi komponen
+gambar. &
+Tanpa \istilah{Collider}, benda tidak memiliki bentuk batas, sehingga mesin
+tidak memeriksanya sama sekali. &
+Tambahkan \istilah{Box Collider 2D} pada bongkahan itu. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Dua dari ketiga gejala itu bukan kesalahan kode, melainkan kesalahan
+pengaturan. Perbandingan itu penting untuk diperhatikan: pada blok Python,
+seluruh masalah berada pada kode Anda, sedangkan pada Unity, pengaturan
+komponen justru menjadi tempat pertama yang perlu diperiksa.

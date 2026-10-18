@@ -1,0 +1,83 @@
+% chapters/14/praktikum.tex
+\begin{praktikumbox}
+Praktikum ini mengikuti Tugas Praktikum 11 pada RPS: mengimpor aset, membuat
+animasi diam dan berlari, menampilkan skor pada antarmuka, dan membandingkan
+scene sebelum dan sesudah penggantian aset.
+
+\begin{langkah}
+  \item \textbf{Impor asetnya.} Unduh sekurang-kurangnya satu aset pemain yang
+        memuat animasi diam dan berlari, beserta aset untuk latar dan
+        rintangan. Catat sumber dan lisensi setiap aset sejak awal.
+
+  \item \textbf{Atur pengaturan impornya.} Atur \istilah{Pixels Per Unit} pada
+        seluruh aset agar nilainya sama, lalu tentukan tinggi pemain yang
+        dikehendaki dan hitunglah nilai yang diperlukan.
+
+  \item \textbf{Potong \istilah{sprite sheet}-nya.} Apabila asetnya berupa
+        \istilah{sprite sheet}, potonglah menjadi bingkai-bingkai menurut ukuran
+        yang seragam.
+
+  \item \textbf{Susun \istilah{Animator}.} Buat keadaan diam dan berlari,
+        tambahkan parameter kecepatan dan keadaan menyentuh tanah, lalu
+        gambarlah transisinya.
+
+  \item \textbf{Tempelkan skrip animasinya.} Ketik ulang
+        \code{ch14_kontrol_animasi.cs} dari Daftar~\ref{lst:ch14-animasi}, lalu
+        hubungkan rujukan \istilah{Animator} dan \istilah{Rigidbody} pada
+        \istilah{Inspector}. Jalankan scene-nya dan pastikan animasinya
+        berganti menurut gerak pemain.
+
+  \item \textbf{Susun antarmuka pengguna.} Buat \istilah{Canvas} berisi teks
+        skor dan teks nyawa, lalu tempelkan skrip
+        \code{ch14_tampilan_hud.cs} dari Daftar~\ref{lst:14}. Hubungkan
+        rujukan teksnya, lalu uji dengan menambahkan perintah pemanggil
+        \code{TambahSkor} ketika pemain mengambil benda.
+
+  \item \textbf{Bandingkan sebelum dan sesudah.} Simpan tangkapan layar scene
+        sebelum dan sesudah penggantian aset, lalu periksa apakah mekaniknya
+        berubah. Perbaiki bentuk batas benda apabila ukurannya berubah.
+
+  \item \textbf{Tulis catatan praktikum} yang memuat daftar aset beserta
+        sumber dan lisensinya, pengaturan impor yang dipakai, tangkapan layar
+        sebelum dan sesudah, serta masalah yang ditemui dan cara
+        mengatasinya.
+
+  \item \textbf{Simpan pekerjaan} ke repositori Git dengan pesan penyimpanan
+        yang menerangkan isinya.
+\end{langkah}
+\end{praktikumbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Lembar kerja Praktikum 11}
+\label{tab:lembar-praktikum-11}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.2cm} C{2.2cm} Y@{}}
+\toprule
+\headrow \textbf{Nama aset} & \textbf{Lisensi} & \textbf{Sumber dan keperluan atribusi} \\
+\midrule
+& & \\[1.6em]
+\midrule
+& & \\[1.6em]
+\midrule
+& & \\[1.6em]
+\midrule
+\addlinespace
+\multicolumn{3}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Nilai \istilah{Pixels Per Unit} yang dipakai: \dotfill} \\[1.4em]
+\addlinespace
+\multicolumn{3}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Perubahan mekanik yang timbul sesudah penggantian aset: \dotfill} \\[1.4em]
+\addlinespace
+\multicolumn{3}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Masalah yang ditemui dan cara mengatasinya: \dotfill} \\[1.8em]
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Langkah ketujuh adalah langkah yang paling penting bagi indikator \ind{a}.
+Mengganti aset memang mudah, tetapi memastikan bahwa mekaniknya tidak berubah
+menuntut pemeriksaan yang sengaja. Bandingkanlah kedua tangkapan layar itu
+dengan saksama.
+\end{catatabox}

@@ -1,0 +1,98 @@
+% chapters/16/praktikum.tex
+\begin{praktikumbox}
+Praktikum ini adalah bagian pengujian dari \textbf{Proyek Akhir} pada RPS:
+menyusun \istilah{checklist} fungsional, menjalankan pemeriksaan otomatis,
+melaksanakan \istilah{playtest} antar kelompok, mencatat temuan, memperbaiki,
+lalu menyajikan demo lima sampai sepuluh menit.
+
+\begin{langkah}
+  \item \textbf{Tuliskan \istilah{checklist} fungsionalnya.} Bacalah kembali
+        GDD kelompok Anda, lalu turunkan dua puluh sampai tiga puluh butir
+        menurut tiga kelompok pada Bagian~\ref{sec:checklist-fungsional}.
+        Isilah bentuk pada Tabel~\ref{tab:checklist-kosong}.
+
+  \item \textbf{Jalankan pemeriksaan otomatis.} Salin peta level Anda ke dalam
+        \code{ch16_uji_mandiri.py} dengan bentuk yang sama seperti peta bawaan,
+        lalu jalankan:
+        \code{python -I ch16_uji_mandiri.py --peta namapeta}. Perbaiki setiap
+        tempat yang dilaporkan terjebak atau hanya dapat menurun.
+
+  \item \textbf{Siapkan \istilah{build}.} Bungkus permainan Anda menjadi berkas
+        yang dapat dijalankan, lalu ujilah pada komputer lain, bukan pada
+        komputer tempat Anda mengembangkannya.
+
+  \item \textbf{Susun lembar \istilah{playtest}.} Isilah bentuk pada
+        Tabel~\ref{tab:lembar-playtest}, dan tulislah bagian mana yang paling
+        Anda ragukan sebagai tujuan sesi.
+
+  \item \textbf{Laksanakan \istilah{playtest} antar kelompok}
+        sekurang-kurangnya dengan dua penguji yang belum pernah melihat karya
+        Anda. Ikuti tujuh langkah pada Bagian~\ref{sec:lembar-playtest}, dan
+        jangan memberi petunjuk selama sesi berlangsung.
+
+  \item \textbf{Pindahkan temuannya ke \istilah{log bug}} menurut
+        Tabel~\ref{tab:log-bug}, dan timbang beratnya menurut
+        Tabel~\ref{tab:berat-temuan}. Catatan yang belum dapat diulang jangan
+        dipindahkan dahulu; sempitkan dugaan seperti pada
+        Bagian~\ref{sec:contoh-bab-16}.
+
+  \item \textbf{Perbaiki temuan berat satu per satu}, dan jalankan kembali
+        \istilah{checklist} fungsional sesudah setiap perbaikan. Catat hasil
+        setiap putaran pada kolom putaran.
+
+  \item \textbf{Periksa kesesuaian GDD dengan \istilah{build}} menurut
+        Tabel~\ref{tab:gdd-build}, dan perbarui GDD untuk setiap perubahan
+        rancangan yang disengaja.
+
+  \item \textbf{Susun laporan perbaikan} yang memuat keadaan sebelum dan
+        sesudah setiap perbaikan, beserta buktinya.
+
+  \item \textbf{Sajikan demo lima sampai sepuluh menit} menurut susunan pada
+        Tabel~\ref{tab:susunan-demo}, dan serahkan \istilah{build},
+        \istilah{project source}, lembar \istilah{playtest}, serta
+        \istilah{log bug}.
+
+  \item \textbf{Tulis refleksi pemilihan teknologi} dengan menjawab ketiga
+        pertanyaan pada Bagian~\ref{sec:presentasi-refleksi}, disertai contoh
+        dari pekerjaan kelompok Anda sendiri.
+\end{langkah}
+\end{praktikumbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Lembar kerja pengujian prototipe}
+\label{tab:lembar-praktikum-16}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.0cm} Y@{}}
+\toprule
+\headrow \textbf{Bagian} & \textbf{Isi} \\
+\midrule
+Banyak butir \istilah{checklist} & \\[1.3em]
+\midrule
+Butir yang lulus pada putaran 1 & \\[1.3em]
+\midrule
+Butir yang lulus pada putaran 2 & \\[1.3em]
+\midrule
+Temuan berat & \\[1.6em]
+\midrule
+Temuan sedang dan ringan & \\[1.6em]
+\midrule
+\addlinespace
+\multicolumn{2}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Banyak penguji pada sesi \istilah{playtest}: \dotfill} \\[1.4em]
+\addlinespace
+\multicolumn{2}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Perbedaan antara GDD dan \istilah{build} yang Anda temukan: \dotfill} \\[1.4em]
+\addlinespace
+\multicolumn{2}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Perbaikan terpenting yang Anda lakukan, dan buktinya: \dotfill} \\[1.8em]
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Langkah kelima adalah langkah yang paling menentukan bagi indikator \ind{a} dan
+\ind{b}. Pengujian yang dilakukan dengan saksama akan menghasilkan temuan yang
+tidak dapat Anda temukan sendiri, sedangkan pengujian yang disertai petunjuk
+akan menghasilkan catatan yang menyenangkan tetapi tidak berguna.
+\end{catatabox}

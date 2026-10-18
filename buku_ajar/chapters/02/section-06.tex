@@ -1,0 +1,133 @@
+% chapters/02/section-06.tex
+\section{Pustaka dan Mesin: Dua Cara Membangun Permainan}
+\label{sec:pustaka-mesin}
+
+Bab ini ditutup dengan pembahasan tentang perbedaan paling menentukan pada
+mata kuliah ini: perbedaan antara membangun permainan di atas sebuah pustaka
+dan membangunnya di dalam sebuah mesin. Perbedaan itulah yang membagi buku ini
+menjadi Blok~I--II dan Blok~III--IV.
+
+\subsection{Perbedaan Mendasar}
+
+Sebuah \textbf{pustaka} (\istilah{library}) adalah kumpulan fungsi dan jenis
+data yang dapat Anda panggil kapan saja sesuai kebutuhan. Alur program berada
+di tangan Anda; pustaka menunggu sampai dipanggil. Ketika Anda menulis
+\code{pygame.image.load} untuk memuat gambar, Anda sedang memakai pustaka
+\cite{pygame-docs}.
+
+Sebuah \textbf{mesin} (\istilah{engine}) bekerja dengan cara yang berlawanan.
+Mesin memiliki alur programnya sendiri, dan kode Anda dipanggil pada
+saat-saat yang telah ditentukan. Anda tidak menulis siklus utama permainan;
+mesin sudah menjalankannya, dan Anda mengisi bagian pembaruan serta
+penayangan. Unity bekerja dengan cara ini, sehingga kode yang Anda tulis
+diletakkan di dalam kelas yang dipanggil mesin pada tahap tertentu
+\cite{unity-leveldesign,unity-learn}.
+
+Cara kerja mesin semacam itu kadang dirumuskan secara ringkas sebagai
+``jangan panggil kami, kami yang akan memanggil Anda''. Rumusan tersebut
+menangkap inti perbedaannya: kendali atas alur program berpindah dari kode Anda
+ke mesin.
+
+\subsection{Pekerjaan yang Diambil Alih Mesin}
+
+Mesin permainan bukan sekadar pustaka yang lebih besar. Ia mengambil alih
+sejumlah pekerjaan yang pada Blok~I--II Anda kerjakan sendiri.
+
+\begin{itemize}
+  \item \textbf{Siklus utama permainan}, termasuk pemisahan tahap pembaruan
+        berkala dan tahap fisika berlangkah tetap.
+  \item \textbf{Penayangan}, termasuk penyusunan urutan gambar, penanganan
+        kedalaman, dan penyesuaian terhadap ukuran jendela.
+  \item \textbf{Perhitungan fisika}, meliputi gravitasi, tumbukan, gesekan, dan
+        tanggapan atas tabrakan.
+  \item \textbf{Penyuntingan visual}, sehingga level, posisi, dan ukuran objek
+        dapat diatur tanpa menulis kode.
+  \item \textbf{Pengelolaan aset}, mencakup impor berkas gambar dan bunyi
+        beserta pengaturan penggunaannya.
+  \item \textbf{Pemutaran animasi dan bunyi}, termasuk peralihan antar-animasi
+        dan pencampuran beberapa sumber bunyi.
+  \item \textbf{Penyiapan berkas terpasang} untuk berbagai sistem operasi.
+\end{itemize}
+
+\subsection{Konsekuensi bagi Cara Belajar dan Bekerja}
+
+Pengambilalihan tersebut menghasilkan pertukaran yang perlu Anda sadari.
+
+\begin{description}
+  \item[Yang diperoleh] Kecepatan pengembangan. Pekerjaan yang pada Blok~I
+        menuntut puluhan baris kode dapat dilakukan dalam beberapa menit
+        melalui penyuntingan visual. Perhatian dapat dipusatkan pada desain
+        level dan pengalaman bermain.
+  \item[Yang dikorbankan] Kejelasan sebab akibat. Ketika perilaku permainan
+        tidak sesuai harapan, penyebabnya dapat berada pada kode Anda, pada
+        pengaturan komponen, atau pada cara mesin bekerja. Membedakan
+        ketiganya menuntut pemahaman tentang apa yang sebenarnya dikerjakan
+        mesin \cite{unity-leveldesign}.
+  \item[Kurva belajar] Mesin menuntut pemahaman tentang cara kerjanya sebelum
+        dapat dimanfaatkan sepenuhnya, dan banyak hal harus dipelajari lebih
+        dahulu sebelum hasil pertama terlihat.
+\end{description}
+
+Di sinilah letak alasan buku ini memakai kedua pendekatan. Pekerjaan pada
+Blok~I--II membekali Anda dengan pengetahuan tentang apa yang terjadi di balik
+layar: bagaimana waktu dikelola, bagaimana gerak dihitung, dan bagaimana
+keputusan NPC disusun. Pengetahuan itu tidak menjadi sia-sia ketika Anda
+berpindah ke mesin, melainkan berubah menjadi kemampuan mengenali kapan
+pengaturan bawaan sudah memadai dan kapan Anda perlu menulis kode sendiri.
+Perbandingan pengalaman bekerja dengan kedua pendekatan akan menjadi bahan
+refleksi pada Bab~XVII.
+
+\subsection{Padanan Konsep}
+
+Meskipun berbeda cara kerjanya, kedua dunia itu memecahkan persoalan yang
+sama. Tabel~\ref{tab:padanan-konsep} memperlihatkan padanan konsepnya. Tabel
+ini berguna sebagai jembatan ketika Anda berpindah dari Blok~II ke Blok~III:
+konsep yang telah Anda pahami tetap sama, hanya alat dan letak tanggung
+jawabnya yang berubah.
+
+\begin{table}[htbp]
+\centering
+\caption{Padanan konsep antara Python/Pygame dan Unity}
+\label{tab:padanan-konsep}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.5cm} Y Y@{}}
+\toprule
+\headrow \textbf{Konsep} & \textbf{Python dan Pygame} & \textbf{Unity} \\
+\midrule
+Siklus utama & Perulangan yang Anda tulis sendiri (Bab~IV) &
+Dijalankan mesin; Anda mengisi tahap pembaruan dan penayangan (Bab~XIII). \\
+\addlinespace
+Objek permainan & Objek Python atau kelas turunan \code{Sprite} (Bab~VII) &
+\istilah{GameObject} beserta komponen yang menempel padanya (Bab~XII). \\
+\addlinespace
+Pembaruan waktu & Selang waktu diukur sendiri, lalu dipakai sebagai pengali
+(Bab~V) & Disediakan mesin melalui \code{Time.deltaTime} (Bab~XIII). \\
+\addlinespace
+Gerak dan sifat fisik & Dihitung sendiri dengan vektor dan kaidah Euler
+(Bab~V--VI) & Komponen \istilah{Rigidbody} yang perhitungannya dilakukan mesin
+(Bab~XIII). \\
+\addlinespace
+Bentuk batas dan tabrakan & \code{Rect} dan \istilah{mask} (Bab~VII) &
+\istilah{Collider2D} atau \istilah{Collider3D} (Bab~XIII). \\
+\addlinespace
+Level dan peta & Data peta di dalam kode atau berkas tersendiri (Bab~IX--X) &
+\istilah{Scene} beserta \istilah{Tilemap} dan \istilah{Prefab}
+(Bab~XII--XIII). \\
+\addlinespace
+Aset gambar & Dimuat saat program dijalankan (Bab~VII) &
+Diimpor lebih dahulu, dengan pengaturan impor yang dapat disesuaikan
+(Bab~XIV). \\
+\addlinespace
+Bunyi & Pemutar bunyi di dalam kode (Bab~XV) &
+Komponen \istilah{AudioSource} beserta \istilah{AudioClip} (Bab~XV). \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Kolom \istilah{Konsep} pada tabel tersebut seluruhnya telah
+Anda kenal dari bab ini. Yang berubah hanyalah perkakas yang menyediakannya.
+Karena itu, apabila pada Blok~III Anda merasa menghadapi dunia yang sama
+sekali baru, kembalilah ke bab ini: sebagian besar persoalannya sama, hanya
+cara menyelesaikannya yang lebih singkat.
+\end{catatabox}

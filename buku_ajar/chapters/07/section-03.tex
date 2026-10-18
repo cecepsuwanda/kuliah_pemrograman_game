@@ -1,0 +1,128 @@
+% chapters/07/section-03.tex
+\section{Menyelesaikan Tabrakan Sumbu demi Sumbu}
+\label{sec:per-sumbu}
+
+Inilah bagian inti bab ini. Penyelesaian tabrakan sumbu demi sumbu adalah cara
+yang membuat benda dapat mendarat di atas bongkahan sekaligus terhalang oleh
+sisinya.
+
+\subsection{Persoalannya}
+
+Bayangkan pemain bergerak ke kanan sementara bongkahan berada tepat di
+hadapannya. Apabila pemeriksaan dilakukan terhadap seluruh perpindahan
+sekaligus, program hanya mengetahui bahwa kedua persegi beririsan. Program
+tidak mengetahui dari sisi mana pemain datang: apakah dari kiri sehingga
+seharusnya dihalangi, atau dari atas sehingga seharusnya mendarat.
+
+Akibatnya muncul dua kesalahan yang khas. Apabila program selalu meletakkan
+pemain di atas bongkahan, pemain yang menabrak sisi bongkahan akan tiba-tiba
+terangkat ke atasnya. Apabila program selalu menghalangi pemain pada sisinya,
+pemain yang jatuh di atas bongkahan akan tertahan di udaranya.
+
+\subsection{Cara Menyelesaikannya}
+
+Penyelesaiannya adalah memisahkan perpindahan menjadi dua tahap yang terpisah,
+masing-masing dengan pemeriksaan sendiri. Urutannya diperlihatkan pada
+Gambar~\ref{fig:tabrakan-per-sumbu}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/tabrakan-per-sumbu.tikz}
+\caption{Penyelesaian tabrakan sumbu demi sumbu}
+\label{fig:tabrakan-per-sumbu}
+\end{figure}
+
+\begin{langkah}
+  \item Pindahkan benda pada \textbf{sumbu mendatar} saja, lalu periksa
+        tabrakan. Apabila terjadi, sisi tabrakan dapat dipastikan dari arah
+        gerak: bergerak ke kanan berarti menabrak dari kiri, dan sebaliknya.
+        Perbaiki posisinya pada sumbu itu saja.
+  \item Setelah sumbu mendatar selesai dan tidak ada lagi tumpang tindih,
+        pindahkan benda pada \textbf{sumbu tegak}. Periksa kembali, dan
+        perbaiki pada sumbu tegak.
+\end{langkah}
+
+Kuncinya ada pada urutan: perpindahan pada satu sumbu diselesaikan seluruhnya
+sebelum sumbu berikutnya disentuh. Dengan begitu, pada setiap pemeriksaan hanya
+ada satu sumbu yang perlu dipertimbangkan, dan sisi tabrakan menjadi jelas.
+
+\subsection{Penerapannya pada Kode}
+
+\begin{kodekeluaran}
+# --- Sumbu mendatar ---
+self.position.x += self.velocity.x * delta_seconds
+self.rect.centerx = round(self.position.x)
+
+for platform in platforms:
+    if self.rect.colliderect(platform.rect):
+        if self.velocity.x > 0:
+            self.rect.right = platform.rect.left      # menabrak dari kiri
+        elif self.velocity.x < 0:
+            self.rect.left = platform.rect.right      # menabrak dari kanan
+        self.position.x = self.rect.centerx
+\end{kodekeluaran}
+
+Perbaikan posisi dilakukan pada \code{rect}, lalu nilainya
+disalin kembali ke \code{position}. Posisi tetap menjadi sumber kebenaran yang
+berupa pecahan, sedangkan \code{rect} menjadi alat untuk memeriksa dan
+memperbaiki. Itulah pembagian tugas yang telah Anda pelajari pada
+Bagian~5.4, kini dipakai dari arah sebaliknya.
+
+\begin{kodekeluaran}
+# --- Sumbu tegak ---
+self.velocity.y += GRAVITY * delta_seconds
+self.position.y += self.velocity.y * delta_seconds
+self.rect.centery = round(self.position.y)
+
+self.on_ground = False
+for platform in platforms:
+    if self.rect.colliderect(platform.rect):
+        if self.velocity.y > 0:
+            self.rect.bottom = platform.rect.top      # mendarat di atas
+            self.velocity.y = 0.0
+            self.on_ground = True
+        elif self.velocity.y < 0:
+            self.rect.top = platform.rect.bottom      # membentur langit-langit
+            self.velocity.y = 0.0
+        self.position.y = self.rect.centery
+\end{kodekeluaran}
+
+Tiga hal perlu diperhatikan pada bagian tegak.
+
+\begin{enumerate}
+  \item \textbf{Kecepatan tegak dinolkan ketika tabrakan diselesaikan.} Tanpa
+        itu, benda akan terus tertekan ke dalam bongkahan pada bingkai
+        berikutnya, dan posisinya diperbaiki berulang kali pada setiap bingkai.
+        Program tetap tampak benar, tetapi benda bergetar halus di permukaan.
+  \item \textbf{Penanda \code{on_ground} diatur di sini}, bukan dihitung
+        terpisah. Cara itu lebih tepat daripada membandingkan posisi dengan
+        permukaan bongkahan, sebab penandanya dihasilkan oleh pemeriksaan yang
+        sesungguhnya.
+  \item \textbf{Gravitasi ditambahkan sebelum gerak tegak.}
+        Urutan itu tetap mengikuti kaidah Euler semi-implisit pada
+        Bagian~2.4, dengan pemeriksaan tabrakan disisipkan sesudah perpindahan.
+\end{enumerate}
+
+\subsection{Memeriksa Kebenaran Penanganan secara Otomatis}
+
+Penanganan tabrakan yang salah jarang menimbulkan pesan kesalahan. Karena itu,
+buku ini menganjurkan satu kebiasaan yang sederhana tetapi sangat berguna:
+\textbf{periksa sendiri kebenarannya di dalam program}, lalu tampilkan
+hasilnya.
+
+\begin{kodekeluaran}
+def count_overlaps(player, platforms):
+    return sum(1 for platform in platforms
+               if player.rect.colliderect(platform.rect))
+\end{kodekeluaran}
+
+Fungsi itu menghitung berapa bongkahan yang badannya bertumpang tindih dengan
+pemain. Nilainya seharusnya selalu nol: sesudah penyelesaian tabrakan, pemain
+tidak boleh berada di dalam bongkahan mana pun. Apabila nilainya bukan nol pada
+suatu bingkai, penanganan tabrakan Anda belum benar.
+
+Kebiasaan semacam itu berguna jauh di luar bab ini. Sebuah program yang
+memeriksa keadaan dirinya sendiri dan melaporkan penyimpangan akan menemukan
+kesalahan lebih cepat daripada program yang hanya menampilkan gambar di layar.
+Pada program bab ini, penghitung itu ditampilkan pada terminal setiap kali
+program berakhir.

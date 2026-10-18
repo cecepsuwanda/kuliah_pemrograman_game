@@ -1,0 +1,175 @@
+% =========================================================
+%  sections/04-sub-cpmk.tex
+%  Bagian 4 — Sub-CPMK dan Indikator Pencapaian
+% =========================================================
+
+\section{Sub-CPMK dan Indikator Pencapaian}
+
+Sub-CPMK merupakan penjabaran setiap CPMK menjadi kemampuan yang lebih
+spesifik, terukur, dan dapat diuji. Setiap Sub-CPMK dilengkapi ranah taksonomi
+Bloom, CPMK induk, dan CPL yang didukung. Indikator pencapaian dirumuskan
+sebagai perilaku yang dapat diamati pada pekerjaan mahasiswa (unjuk kerja,
+kode program, atau laporan).
+
+\newcommand{\ind}[1]{\textbf{(#1)}}
+
+\subsection{Sub-CPMK Turunan \CPMK{1} --- \istilah{Game Loop} dan Fisika Sederhana}
+
+\begin{table}[htbp]
+\centering
+\caption{Sub-CPMK dan indikator pencapaian untuk \CPMK{1}}
+\label{tab:subcpmk1}
+\begin{tabularx}{\textwidth}{@{}L{1.5cm} L{3.9cm} Y L{1.5cm} L{2.4cm}@{}}
+\toprule
+\headrow \textbf{Kode} & \textbf{Rumusan Sub-CPMK} & \textbf{Indikator Pencapaian} & \textbf{Bloom} & \textbf{CPL} \\
+\midrule
+1.1 &
+Menjelaskan struktur \istilah{game loop} (input, \istilah{update}, \istilah{render}) dan peran manajemen waktu dalam permainan. &
+\ind{a} menjelaskan urutan tahapan input--\istilah{update}--\istilah{render} dengan benar;
+\ind{b} mengidentifikasi peran \code{pygame.time.Clock} dan pembatasan FPS;
+\ind{c} membedakan \istilah{fixed timestep} dan \istilah{variable timestep} secara konseptual. &
+C2 & \CPL{03} \\
+\addlinespace
+1.2 &
+Merancang dan mengimplementasikan gerak objek berbasis \istilah{delta time} dan vektor pada Pygame. &
+\ind{a} menulis kode gerak menggunakan \code{pygame.Vector2} dan \istilah{delta time};
+\ind{b} menunjukkan kecepatan objek tetap konsisten pada 30 FPS dan 60 FPS;
+\ind{c} menyinkronkan posisi bertipe \istilah{float} dengan \code{Rect} bertipe bilangan bulat. &
+C3 & \CPL{03} \\
+\addlinespace
+1.3 &
+Menerapkan logika fisika sederhana (gravitasi, lompatan, pantulan) dalam simulasi 2D. &
+\ind{a} menerapkan integrasi Euler untuk memperbarui kecepatan dan posisi;
+\ind{b} mengimplementasikan lompatan yang hanya aktif ketika objek berada di tanah;
+\ind{c} menghasilkan pantulan dengan koefisien restitusi sederhana. &
+C3 & \CPL{03} \\
+\addlinespace
+1.4 &
+Mendeteksi dan menangani \istilah{collision} menggunakan \code{Rect} dan/atau \istilah{mask} pada \istilah{sprite}. &
+\ind{a} memilih metode \istilah{collision} yang tepat sesuai kebutuhan;
+\ind{b} menyelesaikan tabrakan per sumbu sehingga objek tidak menembus dinding;
+\ind{c} menganalisis dan memperbaiki kasus tabrakan yang salah (tumpang tindih atau lolos deteksi). &
+C4 & \CPL{03}, \CPL{04} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Sub-CPMK Turunan \CPMK{2} --- AI Dasar untuk NPC}
+
+\begin{table}[htbp]
+\centering
+\caption{Sub-CPMK dan indikator pencapaian untuk \CPMK{2}}
+\label{tab:subcpmk2}
+\begin{tabularx}{\textwidth}{@{}L{1.5cm} L{3.9cm} Y L{1.5cm} L{2.4cm}@{}}
+\toprule
+\headrow \textbf{Kode} & \textbf{Rumusan Sub-CPMK} & \textbf{Indikator Pencapaian} & \textbf{Bloom} & \textbf{CPL} \\
+\midrule
+2.1 &
+Merancang perilaku NPC sederhana (misalnya \istilah{chase}) berdasarkan posisi pemain. &
+\ind{a} menghitung vektor arah NPC menuju pemain dan menormalisasinya;
+\ind{b} membatasi besar kecepatan agar gerak NPC konsisten;
+\ind{c} menjelaskan perbedaan AI reaktif dan AI berbasis perencanaan. &
+C3 & \CPL{03} \\
+\addlinespace
+2.2 &
+Mengimplementasikan \istilah{Finite State Machine} (idle, patrol, chase, attack/flee) untuk NPC. &
+\ind{a} menggambar diagram \istilah{state}--transisi NPC;
+\ind{b} mengimplementasikan transisi berbasis jarak dan \istilah{cooldown};
+\ind{c} menguji setiap \istilah{state} dan transisinya secara terpisah. &
+C3 & \CPL{03} \\
+\addlinespace
+2.3 &
+Menerapkan \istilah{pathfinding} berbasis grid dengan algoritma A*. &
+\ind{a} membangun representasi grid/graf berbiaya dari peta berhalangan;
+\ind{b} menganalisis pengaruh heuristik terhadap optimalitas dan kinerja pencarian;
+\ind{c} merekonstruksi dan memvisualisasikan jalur hasil A*. &
+C4 & \CPL{03} \\
+\addlinespace
+2.4 &
+Mengevaluasi perilaku NPC hasil kombinasi FSM dan A* terhadap skenario permainan. &
+\ind{a} menyusun skenario uji dan mencatat hasil pengamatan;
+\ind{b} menilai kualitas perilaku NPC (kelancaran, daya tanggap, beban komputasi);
+\ind{c} merumuskan perbaikan berdasarkan hasil evaluasi. &
+C5 & \CPL{03}, \CPL{04} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Sub-CPMK Turunan \CPMK{3} --- \istilah{Game Engine} dan Pembangunan Level}
+
+\begin{table}[htbp]
+\centering
+\caption{Sub-CPMK dan indikator pencapaian untuk \CPMK{3}}
+\label{tab:subcpmk3}
+\begin{tabularx}{\textwidth}{@{}L{1.5cm} L{3.9cm} Y L{1.5cm} L{2.4cm}@{}}
+\toprule
+\headrow \textbf{Kode} & \textbf{Rumusan Sub-CPMK} & \textbf{Indikator Pencapaian} & \textbf{Bloom} & \textbf{CPL} \\
+\midrule
+3.1 &
+Menavigasi antarmuka Unity dan menyusun \istilah{project}, \istilah{scene}, serta \istilah{GameObject} dasar. &
+\ind{a} mengoperasikan \istilah{Hierarchy}, \istilah{Inspector}, \istilah{Project window}, dan \istilah{Scene};
+\ind{b} membuat dan menyimpan \istilah{scene} berisi kamera serta objek primitif;
+\ind{c} menjelaskan padanan konsep Unity dengan konsep Pygame yang telah dipelajari. &
+C3 & \CPL{04} \\
+\addlinespace
+3.2 &
+Membangun level 2D/3D sederhana dengan \istilah{collider}, \istilah{Rigidbody}, dan kontrol pemain. &
+\ind{a} menyusun level menggunakan \istilah{tilemap}/\istilah{greyboxing};
+\ind{b} mengonfigurasi \istilah{Collider} dan \istilah{Rigidbody} sesuai kebutuhan mekanik;
+\ind{c} menganalisis dan memperbaiki masalah fisika (\istilah{jitter}, objek menembus \istilah{collider}, jatuh tanpa henti). &
+C4 & \CPL{04} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Sub-CPMK Turunan \CPMK{4} --- Integrasi Aset Audio dan Visual}
+
+\begin{table}[htbp]
+\centering
+\caption{Sub-CPMK dan indikator pencapaian untuk \CPMK{4}}
+\label{tab:subcpmk4}
+\begin{tabularx}{\textwidth}{@{}L{1.5cm} L{3.9cm} Y L{1.5cm} L{2.4cm}@{}}
+\toprule
+\headrow \textbf{Kode} & \textbf{Rumusan Sub-CPMK} & \textbf{Indikator Pencapaian} & \textbf{Bloom} & \textbf{CPL} \\
+\midrule
+4.1 &
+Mengimpor dan mengonfigurasi aset visual (\istilah{sprite}/model, animasi, UI) ke dalam \istilah{scene}. &
+\ind{a} mengimpor aset dan mengatur \istilah{importer setting} dengan tepat;
+\ind{b} menyiapkan \istilah{Animator} beserta transisi animasi (misalnya idle dan run);
+\ind{c} menampilkan elemen UI (skor, nyawa) yang berfungsi pada \istilah{scene}. &
+C3 & \CPL{04} \\
+\addlinespace
+4.2 &
+Mengintegrasikan aset audio dan memicu interaksi audio-visual berdasarkan peristiwa \istilah{game}. &
+\ind{a} menghubungkan \code{AudioSource} dengan peristiwa \istilah{gameplay};
+\ind{b} membedakan penggunaan BGM dan SFX secara tepat;
+\ind{c} menyesuaikan \istilah{timing} dan level volume agar umpan balik terasa tepat. &
+C4 & \CPL{04} \\
+\addlinespace
+4.3 &
+Mengevaluasi prototipe \istilah{game} melalui \istilah{playtesting} dan memperbaiki integrasi level serta aset. &
+\ind{a} menyusun \istilah{checklist} fungsional dan lembar \istilah{playtest};
+\ind{b} mengidentifikasi \istilah{bug} dan masalah integrasi dari hasil \istilah{playtest};
+\ind{c} menyajikan laporan perbaikan dan refleksi pemilihan teknologi. &
+C5 & \CPL{04} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Matriks Sub-CPMK terhadap CPMK}
+
+\begin{table}[htbp]
+\centering
+\caption{Matriks keterkaitan Sub-CPMK dengan CPMK}
+\label{tab:matriks-subcpmk}
+\begin{tabularx}{\textwidth}{@{}L{3.6cm}@{\extracolsep{\fill}}C{2.6cm} C{2.6cm} C{2.6cm} C{2.6cm}@{}}
+\toprule
+\headrow \textbf{Sub-CPMK} & \textbf{\CPMK{1}} & \textbf{\CPMK{2}} & \textbf{\CPMK{3}} & \textbf{\CPMK{4}} \\
+\midrule
+1.1--1.4 & \textbf{X} & & & \\
+2.1--2.4 & & \textbf{X} & & \\
+3.1--3.2 & & & \textbf{X} & \\
+4.1--4.3 & & & & \textbf{X} \\
+\bottomrule
+\end{tabularx}
+\end{table}

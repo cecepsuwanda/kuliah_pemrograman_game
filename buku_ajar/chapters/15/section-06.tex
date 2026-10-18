@@ -1,0 +1,109 @@
+% chapters/15/section-06.tex
+\section{Dari Pygame ke Unity, dan Hak Pakai Bunyi}
+\label{sec:dari-pygame}
+
+\subsection{Bandingkan dengan Cara yang Sudah Anda Pakai}
+
+Pada Bab~III sampai Bab~XI Anda memakai Pygame, dan bunyi di sana diurus dua
+modul: \code{pygame.mixer.Sound} untuk efek suara dan \code{pygame.mixer.music}
+untuk musik latar \cite{sweigart-invent}. Pemisahan itu bukan kebetulan, melainkan
+kebutuhan yang sama yang Anda temui kembali pada Unity. Perbandingannya
+diperlihatkan pada Tabel~\ref{tab:banding-bunyi}. Awalan \code{pygame.} pada
+kolom kedua ditinggalkan agar tabelnya muat.
+
+\begin{table}[htbp]
+\centering
+\caption{Pengurusan bunyi pada Pygame dan pada Unity}
+\label{tab:banding-bunyi}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.5cm} L{4.4cm} Y@{}}
+\toprule
+\headrow \textbf{Keperluan} & \textbf{Pygame} & \textbf{Unity} \\
+\midrule
+Memuat berkas bunyi & \code{mixer.Sound("a.wav")} &
+Diimpor seperti gambar, lalu diseret ke peubah \code{AudioClip} pada
+\istilah{Inspector}. \\
+\addlinespace
+Memainkan efek suara & \code{bunyi.play()} &
+\code{sfxSource.PlayOneShot(klip)}. \\
+\addlinespace
+Memainkan musik berulang & \code{mixer.music.load()} lalu
+\code{mixer.music.play(-1)} &
+\code{musicSource.loop = true} lalu \code{musicSource.Play()}. \\
+\addlinespace
+Menghentikan musik & \code{mixer.music.stop()} &
+\code{musicSource.Stop()}. \\
+\addlinespace
+Mengatur kekuatan & \code{bunyi.set_volume(0.5)} &
+Nilai pada \istilah{AudioSource}, atau tingkat pada \istilah{AudioMixer}. \\
+\addlinespace
+Melemahkan menurut jarak & Harus dihitung sendiri dari jarak pemain &
+Diurus mesin melalui \istilah{Spatial Blend} dan \istilah{Min Distance}. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Perhatikan baris terakhir. Di Pygame, melemahkan bunyi menurut jarak menuntut
+Anda menghitung jaraknya sendiri, lalu memanggil \code{set_volume} setiap
+bingkai. Di Unity, pekerjaan itu diurus mesin, dan Anda hanya perlu menggeser
+satu nilai. Itulah pola yang berulang sepanjang Bab~XII sampai bab ini: Unity
+memindahkan pekerjaan yang berulang ke pengaturan, sehingga Anda dapat
+memusatkan perhatian pada hal yang khas bagi permainan Anda.
+
+Satu pelajaran dari Pygame tetap berlaku, dan sayangnya sering dilupakan.
+Sediakan jalan bagi pemain untuk mematikan bunyinya. Pada Pygame, caranya
+memelihara satu peubah yang dibalik setiap kali tombol ditekan. Pada Unity,
+caranya serupa: satu peubah yang memutuskan apakah musik dan efek suara
+dipanggil \cite{stmikjayakarta-pygame}. Pemain yang bermain di tempat ramai,
+atau yang sedang tidak ingin terdengar, akan berterima kasih untuk pilihan itu.
+
+\subsection{Hak Pakai Berkas Bunyi}
+
+Aturan yang dibahas pada Bab~XIV berlaku sama untuk bunyi, dan akibatnya justru
+lebih berat. Berkas musik lebih mudah dikenali daripada gambar, penuntutan hak
+ciptanya lebih lazim, dan satu potongan musik yang dipakai tanpa izin dapat
+membatalkan seluruh proyek yang sedang Anda kerjakan.
+
+\begin{itemize}
+  \item \textbf{Cari tempat yang menyatakan lisensinya dengan jelas.} Situs
+        yang menyediakan musik bebas biasanya mencantumkan jenis lisensinya
+        pada setiap berkas.
+  \item \textbf{Catat sejak mengunduh}, bukan sejak lupa. Catat nama berkas,
+        sumbernya, jenis lisensinya, dan apakah penciptanya menuntut namanya
+        dicantumkan.
+  \item \textbf{Pisahkan musik untuk keperluan belajar dari musik untuk
+        keperluan yang lebih luas.} Sebagian lisensi mengizinkan pemakaian
+        untuk belajar, tetapi tidak mengizinkan pemakaian dalam karya yang
+        dijual. Periksa hal itu sebelum Anda menyebarkan permainannya.
+\end{itemize}
+
+\begin{tipsbox}
+Bunyi juga dapat dibuat sendiri, dan untuk keperluan mata kuliah ini cara itu
+sering lebih cepat daripada mencari. Sebuah bunyi lompat dapat dibuat dari satu
+bunyi pendek yang nadanya dinaikkan sedikit. Buku ini sendiri memakai kebiasaan
+mencatat sumber: setiap gambar yang bukan karya penulis diberi keterangan
+sumbernya di bawah gambarnya, misalnya pada
+Gambar~\ref{fig:petunjuk-visual-dan-bunyi}.
+\end{tipsbox}
+
+\subsection{Ringkasan Perkembangan}
+
+\begin{table}[htbp]
+\centering
+\caption{Bagian yang ditambahkan pada bunyi dan umpan balik pada bab berikutnya}
+\label{tab:perkembangan-bunyi}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.6cm} L{5.0cm} Y@{}}
+\toprule
+\headrow \textbf{Bab} & \textbf{Yang ditambahkan} & \textbf{Akibatnya} \\
+\midrule
+Bab~XVI & Pengujian prototipe dan presentasi &
+Bunyi dan partikel yang telah dipasang diuji oleh pemain lain; ketidakcocokan
+waktu dan kekuatan yang tidak terlihat penulisnya akan muncul di sana. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Dengan bab ini, seluruh bagian yang terlihat dan terdengar dari level Anda
+sudah lengkap. Yang tersisa bukan menambahkan bagian baru, melainkan menguji
+apa yang sudah ada, dan itulah isi Bab~XVI.

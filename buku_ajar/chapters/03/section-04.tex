@@ -1,0 +1,126 @@
+% chapters/03/section-04.tex
+\section{Struktur Folder Proyek dan Pengelolaan Versi}
+\label{sec:struktur-git}
+
+Sebelum menulis program, tempat bekerja perlu disiapkan. Bagian ini menjelaskan
+struktur folder yang dipakai sepanjang semester dan cara menyimpan pekerjaan
+dengan Git.
+
+\subsection{Struktur Folder Proyek}
+
+Struktur folder yang dipakai diperlihatkan pada Gambar~\ref{fig:struktur-proyek}.
+Susunannya sengaja dibuat sederhana, karena yang penting bukan kerumitannya,
+melainkan pemisahan berkas menurut fungsinya.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/struktur-proyek.tikz}
+\caption{Struktur folder proyek yang dipakai sepanjang semester}
+\label{fig:struktur-proyek}
+\end{figure}
+
+Tiga folder utama memiliki tugas masing-masing.
+
+\begin{description}
+  \item[\code{code}] Berisi seluruh berkas program, satu berkas untuk setiap
+        latihan atau praktikum. Pemisahan ini memudahkan Anda kembali ke
+        program tertentu ketika diperlukan.
+  \item[\code{catatan}] Berisi catatan praktikum: apa yang dikerjakan, kendala
+        yang muncul, dan cara penyelesaiannya. Catatan inilah yang menjadi
+        bahan laporan pada proyek akhir nanti.
+  \item[\code{aset}] Berisi berkas gambar dan bunyi yang dipakai program.
+        Folder ini baru terisi mulai Bab~VII, ketika program mulai memuat
+        gambar.
+\end{description}
+
+Dua berkas tambahan melengkapinya. Berkas \code{README.md} menerangkan isi
+repositori, dan berkas \code{.gitignore} menentukan berkas mana yang tidak
+perlu ikut disimpan.
+
+Perhatikan penamaan folder dan berkas: seluruhnya huruf kecil, memakai garis
+bawah sebagai pengganti spasi, dan tanpa karakter khusus. Kebiasaan itu
+menghindari masalah ketika proyek dibuka pada sistem operasi lain atau
+dijalankan melalui terminal, tempat spasi pada nama berkas harus ditulis
+dengan cara khusus.
+
+\subsection{Berkas \code{.gitignore}}
+
+Tidak semua berkas perlu disimpan. Ketika program Python dijalankan, Python
+membuat folder \code{__pycache__} berisi salinan sementara yang mempercepat
+pemuatan berikutnya. Berkas itu dapat dibuat ulang kapan saja dan berbeda pada
+setiap komputer, sehingga menyimpannya hanya membuat repositori membengkak.
+
+Buatlah berkas bernama \code{.gitignore} pada folder teratas proyek dan isi
+dengan baris berikut.
+
+\begin{kodekeluaran}
+__pycache__/
+*.pyc
+.venv/
+.vscode/
+\end{kodekeluaran}
+
+Baris pertama mengabaikan folder salinan sementara Python. Baris kedua
+mengabaikan berkas terjemahan kode. Baris ketiga mengabaikan folder lingkungan
+virtual, dan baris keempat mengabaikan pengaturan editor yang bersifat
+pribadi.
+
+\subsection{Memulai Repositori Git}
+
+Git bekerja dengan tiga tempat penyimpanan yang perlu Anda bedakan sejak awal.
+
+\begin{enumerate}
+  \item \textbf{Folder kerja} (\istilah{working directory}), yaitu berkas yang
+        sedang Anda sunting.
+  \item \textbf{Daftar siap simpan} (\istilah{staging area}), yaitu berkas
+        yang sudah ditandai untuk ikut disimpan pada penyimpanan berikutnya.
+  \item \textbf{Riwayat} (\istilah{repository}), yaitu kumpulan penyimpanan
+        yang telah tercatat dan tidak berubah lagi.
+\end{enumerate}
+
+Alur kerjanya berpindah dari folder kerja ke daftar siap simpan, lalu ke
+riwayat. Perintah untuk itu dijalankan berurutan sebagai berikut.
+
+\begin{kodekeluaran}
+cd proyek-pygame          (masuk ke folder proyek)
+git init                  (sekali saja: memulai repositori)
+git status                (memeriksa keadaan berkas)
+
+git add .                 (menandai seluruh perubahan)
+git commit -m "praktikum 01: jendela pertama dan struktur proyek"
+git log --oneline         (melihat riwayat penyimpanan)
+\end{kodekeluaran}
+
+Perintah \code{git add} tidak menyimpan apa pun ke riwayat; ia hanya
+memindahkan perubahan ke daftar siap simpan. Penyimpanan sebenarnya terjadi
+pada perintah \code{git commit}. Pemisahan dua langkah ini bermanfaat ketika
+Anda mengubah banyak berkas sekaligus: Anda dapat memilih hanya berkas yang
+berkaitan dengan satu pekerjaan, sehingga riwayatnya tetap mudah dibaca.
+
+\begin{tipsbox}
+Beberapa anjuran yang terbukti menghemat waktu:
+\begin{itemize}
+  \item Simpanlah sesering mungkin, misalnya setiap kali satu langkah
+        praktikum selesai. Riwayat yang rinci memudahkan Anda kembali ke
+        keadaan terakhir yang berjalan baik.
+  \item Tulis pesan penyimpanan yang menerangkan isinya, bukan sekadar
+        ``update'' atau ``perbaikan''. Sebutkan apa yang dikerjakan.
+  \item Periksa hasil dengan \code{git status} sebelum dan sesudah menyimpan,
+        terutama pada minggu-minggu pertama, agar Anda mengetahui berkas mana
+        yang sudah tercatat.
+  \item Apabila sebuah percobaan gagal dan Anda ingin kembali, jangan menghapus
+        berkas secara manual. Simpan keadaan gagal itu, lalu perbaiki; riwayat
+        yang jujur justru berguna sebagai catatan belajar.
+\end{itemize}
+\end{tipsbox}
+
+\subsection{Repositori sebagai Bukti Portofolio}
+
+Sepuluh persen dari nilai mata kuliah ini berasal dari penilaian artefak kode
+mingguan, dan dosen menilai enam sampel secara acak. Konsekuensinya, yang
+dinilai bukan hanya program terakhir pada minggu kelima belas, melainkan
+kesinambungan pekerjaan Anda.
+
+Repositori yang tertata rapi juga membantu Anda sendiri. Ketika pada Bab~X
+Anda perlu mengingat kembali bagaimana gerak objek dihitung pada Bab~V,
+riwayat pekerjaan Anda adalah tempat pertama yang sebaiknya dibuka.

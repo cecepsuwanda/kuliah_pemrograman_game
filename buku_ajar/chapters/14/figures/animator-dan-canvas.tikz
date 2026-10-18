@@ -1,0 +1,50 @@
+% chapters/14/figures/animator-dan-canvas.tikz
+% Susunan dua hal yang dibahas pada bab ini: mesin keadaan animasi, dan
+% antarmuka pengguna beserta susunan bendanya.
+\begin{tikzpicture}[
+  keadaan/.style={
+    rectangle, rounded corners=8pt, draw=ubPrimary, thick, fill=ubAlt,
+    align=center, text width=18mm, inner sep=4pt, minimum height=10mm,
+    font=\footnotesize
+  },
+  panah/.style={-{Stealth[length=2.2mm]}, thick, draw=ubAccent},
+  label/.style={font=\scriptsize, align=center},
+  judul/.style={font=\footnotesize\bfseries, ubPrimary, align=center}
+]
+
+% ---------- Panel A: mesin keadaan animasi ----------
+\begin{scope}
+  \node[judul, anchor=south] at (2.5,1.5) {mesin keadaan animasi};
+
+  \node[keadaan] (diam) at (0,0) {diam\\(idle)};
+  \node[keadaan] (lari) at (5.0,0) {berlari\\(run)};
+  \node[keadaan] (lompat) at (2.5,-2.0) {melompat\\(jump)};
+
+  \draw[panah] (diam) -- node[label, above, yshift=2pt]
+    {kecepatan $>$ 0,1} (lari);
+  \draw[panah] (lari) to[bend left=20] node[label, above, yshift=1pt]
+    {kecepatan $\approx$ 0} (diam);
+  \draw[panah] (lari) -- node[label, right, xshift=3pt]
+    {tanah = salah} (lompat);
+  \draw[panah] (lompat) -- node[label, left, xshift=-3pt]
+    {tanah = benar} (diam);
+\end{scope}
+
+% ---------- Panel B: susunan antarmuka ----------
+\begin{scope}[xshift=9.4cm]
+  \node[judul, anchor=south] at (2.0,1.5) {susunan antarmuka pengguna};
+
+  \node[keadaan, text width=30mm] (canvas) at (2.0,0.6) {Canvas};
+  \node[keadaan, text width=16mm] (skor) at (0.3,-1.0) {Teks Skor};
+  \node[keadaan, text width=16mm] (nyawa) at (2.0,-1.0) {Teks Nyawa};
+  \node[keadaan, text width=16mm] (ikon) at (3.7,-1.0) {Ikon Nyawa};
+
+  \draw[panah] (canvas) -- (skor);
+  \draw[panah] (canvas) -- (nyawa);
+  \draw[panah] (canvas) -- (ikon);
+
+  \node[label, anchor=north, text width=50mm] at (2.0,-1.7)
+    {Seluruh elemen antarmuka ditempatkan di bawah satu \istilah{Canvas},
+     sehingga susunannya tetap sama pada setiap ukuran layar.};
+\end{scope}
+\end{tikzpicture}

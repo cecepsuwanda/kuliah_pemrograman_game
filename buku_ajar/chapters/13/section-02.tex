@@ -1,0 +1,108 @@
+% chapters/13/section-02.tex
+\section{Collider dan Rigidbody}
+\label{sec:collider-rigidbody}
+
+Dua komponen inilah yang menentukan fisika sebuah level. Bagian ini menjelaskan
+pilihan yang tersedia pada keduanya, sesuai indikator \ind{b}.
+
+\subsection{Bentuk Batas Benda}
+
+Komponen \istilah{Collider} menentukan bentuk batas benda untuk keperluan
+tabrakan. Bentuk yang tersedia bergantung pada pandangan yang dipakai, dan
+yang paling sering dipakai pada permainan dua dimensi adalah
+\istilah{Box Collider 2D}, \istilah{Circle Collider 2D}, dan
+\istilah{Capsule Collider 2D}.
+
+Tiga hal perlu diperhatikan pada pemakaiannya.
+
+\begin{enumerate}
+  \item \textbf{Bentuk batas tidak harus sama dengan gambarnya.} Sebuah
+        karakter bergambar rumit cukup diberi satu \istilah{Capsule Collider}
+        yang melingkupinya. Cara itu jauh lebih murah, dan hasilnya sering kali
+        justru lebih baik, sebab tabrakan pada sudut-sudut tajam gambar sering
+        terasa mengganggu pemain.
+  \item \textbf{Benda yang diam cukup memerlukan \istilah{Collider}}, tanpa
+        \istilah{Rigidbody}. Lantai, dinding, dan bongkahan tidak bergerak,
+        sehingga tidak perlu dihitung fisika.
+  \item \textbf{Benda yang bergerak memerlukan keduanya.} Tanpa
+        \istilah{Rigidbody}, benda yang diberi \istilah{Collider} tetap diam
+        walaupun ditabrak, sebab mesin tidak menganggapnya sebagai benda yang
+        mengikuti fisika.
+\end{enumerate}
+
+\subsection{Trigger: Batas yang Tidak Menghalangi}
+
+Sebuah \istilah{Collider} dapat ditandai sebagai \istilah{trigger}, yaitu
+batas yang \textbf{tidak menghalangi} gerak benda, melainkan hanya melaporkan
+bahwa ada benda lain yang memasukinya.
+
+Perbedaan keduanya perlu dipahami dengan tepat.
+
+\begin{itemize}
+  \item \textbf{\istilah{Collider} biasa} menghalangi gerak, dan tabrakannya
+        diselesaikan oleh mesin. Dipakai untuk lantai, dinding, dan rintangan.
+  \item \textbf{\istilah{Trigger}} tidak menghalangi apa pun, dan hanya
+        memanggil fungsi tertentu pada kode Anda. Dipakai untuk daerah yang
+        menandai sesuatu: pintu yang membuka, posisi pemeriksaan
+        (\istilah{checkpoint}), atau daerah yang mengakhiri permainan.
+\end{itemize}
+
+\subsection{Tiga Tipe Rigidbody}
+
+Komponen \istilah{Rigidbody} menentukan bagaimana sebuah benda mengikuti
+fisika. Tiga tipe yang tersedia diperlihatkan pada
+Tabel~\ref{tab:tipe-rigidbody}.
+
+\begin{table}[htbp]
+\centering
+\caption{Tiga tipe Rigidbody dan keperluannya}
+\label{tab:tipe-rigidbody}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{2.6cm} L{3.6cm} Y@{}}
+\toprule
+\headrow \textbf{Tipe} & \textbf{Perilaku} & \textbf{Dipakai untuk} \\
+\midrule
+\istilah{Dynamic} & Bergerak menurut fisika: gravitasi, tumbukan, dan gaya
+bekerja padanya. &
+Pemain, benda yang dapat didorong, dan peluru. Inilah tipe yang paling sering
+dipakai. \\
+\addlinespace
+\istilah{Kinematic} & Bergerak karena kode Anda, tetapi tetap dapat menabrak
+benda lain. Tidak terpengaruh gravitasi. &
+Benda yang geraknya Anda tentukan sendiri, misalnya pintu yang membuka atau
+\istilah{platform} yang bergerak. \\
+\addlinespace
+\istilah{Static} & Tidak bergerak sama sekali, dan tidak memerlukan
+\istilah{Rigidbody}. &
+Lantai, dinding, dan seluruh benda diam. Benda bertipe ini paling murah
+dihitung. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Benda \istilah{static} tidak perlu diberi
+\istilah{Rigidbody} sama sekali. Memberikannya justru merugikan, sebab mesin
+akan menghitungnya tanpa manfaat. Kebiasaan yang benar: berikan
+\istilah{Rigidbody} hanya kepada benda yang memang bergerak.
+\end{catatabox}
+
+\subsection{Pengaturan yang Sering Diubah}
+
+Beberapa pengaturan pada \istilah{Rigidbody} perlu Anda kenal sejak awal.
+
+\begin{itemize}
+  \item \textbf{\istilah{Gravity Scale}.} Pengali percepatan gravitasi bagi
+        benda itu. Nilai yang lebih besar membuat benda jatuh lebih cepat.
+        Inilah padanan nilai gravitasi yang Anda tetapkan sendiri pada Bab~VI.
+  \item \textbf{\istilah{Collision Detection}.} Cara mesin memeriksa tabrakan.
+        Nilai \istilah{Discrete} adalah bawaannya dan paling murah, sedangkan
+        \istilah{Continuous} diperlukan bagi benda yang bergerak cepat, agar
+        tidak menembus benda lain.
+  \item \textbf{\istilah{Interpolate}.} Menghaluskan gerak benda di antara dua
+        langkah fisika. Nilainya perlu diaktifkan pada benda yang diikuti
+        kamera, sebagaimana dijelaskan pada Bagian~\ref{sec:masalah-fisika}.
+  \item \textbf{\istilah{Constraints}.} Membatasi gerak atau putaran pada
+        sumbu tertentu. Permainan dua dimensi biasanya membekukan putaran dan
+        gerak pada sumbu tegak lurus bidang.
+\end{itemize}

@@ -1,0 +1,36 @@
+% chapters/05/sub-cpmk.tex
+\begin{subcpmkbox}
+Bab ini menuntaskan \SUBCPMK{1.2} secara utuh. Ketiga indikatornya diperiksa,
+dan buktinya berupa program yang menggerakkan objek dengan kecepatan tetap
+terlepas dari laju bingkainya.
+
+\vspace{0.5em}
+\textbf{\SUBCPMK{1.2} Merancang dan mengimplementasikan gerak objek berbasis
+\istilah{delta time} dan vektor pada Pygame} --- ranah C3, \CPMK{1},
+\CPL{03}.
+
+\vspace{0.5em}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.9cm} L{4.0cm} L{2.5cm} Y@{}}
+\toprule
+\headrow \textbf{Indikator} & \textbf{Rumusan} & \textbf{Dibahas pada} & \textbf{Bukti} \\
+\midrule
+\ind{a} & Menulis kode gerak menggunakan \code{pygame.Vector2} dan
+\istilah{delta time} &
+Bagian~\ref{sec:posisi-vektor} sampai Bagian~\ref{sec:siklus-gerak} &
+Program \code{ch05_gerak.py} pada repositori, beserta penjelasan baris
+perhitungan perpindahannya. \\
+\addlinespace
+\ind{b} & Menunjukkan kecepatan objek tetap konsisten pada 30 FPS dan 60 FPS &
+Bagian~\ref{sec:gerak-selang-waktu} &
+Tabel pengukuran pada lembar kerja praktikum: jarak tempuh dan kecepatan
+terukur pada tiga laju bingkai. \\
+\addlinespace
+\ind{c} & Menyinkronkan posisi bertipe \istilah{float} dengan \code{Rect}
+bertipe bilangan bulat &
+Bagian~\ref{sec:selaras-rect} &
+Potongan kode penyelarasan posisi beserta penjelasan mengapa posisi tidak boleh
+disimpan sebagai bilangan bulat. \\
+\bottomrule
+\end{tabularx}}
+\end{subcpmkbox}

@@ -1,0 +1,90 @@
+% chapters/06/section-06.tex
+\section{Yang Belum Ada pada Fisika Ini}
+\label{sec:belum-ada-fisika}
+
+Benda-benda pada bab ini sudah jatuh, melompat, dan memantul, tetapi masih
+terlalu sederhana untuk sebuah permainan yang utuh. Bagian penutup ini
+menjelaskan batas kemampuannya.
+
+\subsection{Tabrakan yang Baru Diketahui Sebagian}
+
+Program pada bab ini hanya mengenal dua jenis batas: lantai sebagai satu garis
+mendatar, dan kedua dinding sebagai dua garis tegak. Pemeriksaannya pun
+dilakukan dengan membandingkan satu nilai, bukan dengan memeriksa bentuk.
+
+Permainan yang sesungguhnya memiliki rintangan di tengah ruang permainan,
+benda yang bertumpuk, dan benda yang bergerak saling mendekat. Pemeriksaan
+semacam itu menuntut cara yang lebih umum: membandingkan persegi pembatas dua
+benda, menentukan dari sisi mana tabrakan terjadi, lalu menyelesaikannya per
+sumbu. Seluruhnya dibahas pada Bab~VII.
+
+Pekerjaan pada bab ini bukan pekerjaan yang sia-sia. Urutan penanganan yang
+sudah Anda pelajari, yaitu perbaiki posisi lebih dahulu baru ubah kecepatan,
+tetap berlaku pada pemeriksaan tabrakan yang lebih umum. Begitu pula kebiasaan
+memeriksa dengan tanda ketidaksamaan, bukan kesamaan.
+
+\subsection{Sifat Benda yang Belum Dimodelkan}
+
+Tiga sifat berikut belum ada pada model ini, dan masing-masing menuntut
+tambahan tersendiri.
+
+\begin{itemize}
+  \item \textbf{Gesekan} (\istilah{friction}). Benda yang bergeser di atas
+        lantai seharusnya melambat dan akhirnya berhenti. Pada model ini
+        kecepatan mendatarnya hanya berubah karena tombol, sehingga pemain
+        dapat meluncur selamanya.
+  \item \textbf{Hambatan udara.} Benda yang jatuh sangat lama seharusnya
+        mencapai kecepatan akhir dan tidak lagi bertambah cepat. Pada model
+        ini kecepatannya bertambah tanpa batas, dan itulah sebabnya penambahan
+        batas kecepatan diperlukan untuk mencegah benda menembus lantai.
+  \item \textbf{Permukaan yang miring dan bertingkat.} Lantai pada model ini
+        hanya berupa satu garis mendatar. Permukaan miring menuntut
+        perhitungan arah normal, sedangkan permukaan bertingkat biasanya
+        diselesaikan dengan membagi perpindahan menjadi beberapa langkah
+        kecil.
+\end{itemize}
+
+\subsection{Perhitungan yang Diserahkan kepada Mesin}
+
+Seperti halnya seluruh Blok~I, bab ini memperlihatkan apa yang sesungguhnya
+dikerjakan oleh mesin permainan. Pada Unity nanti, gravitasi, pantulan, dan
+tabrakan dihitung oleh \istilah{engine} dengan cara yang jauh lebih cermat,
+termasuk gesekan, kecepatan akhir, dan pemisahan per sumbu.
+
+Yang tidak berubah adalah cara berpikirnya: benda memiliki posisi dan
+kecepatan, percepatan mengubah kecepatan, kecepatan mengubah posisi, dan
+tabrakan menyelesaikan posisi lebih dahulu sebelum mengubah kecepatan.
+Pengetahuan itu yang membuat Anda dapat memilih pengaturan yang tepat pada
+mesin, dan mengenali gejala ketika pengaturannya kurang sesuai.
+
+\subsection{Ringkasan Perkembangan}
+
+\begin{table}[htbp]
+\centering
+\caption{Bagian yang ditambahkan pada fisika ini pada bab-bab berikutnya}
+\label{tab:perkembangan-fisika}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.6cm} L{5.0cm} Y@{}}
+\toprule
+\headrow \textbf{Bab} & \textbf{Yang ditambahkan} & \textbf{Akibatnya} \\
+\midrule
+Bab~VII & Deteksi tabrakan antar-objek, \code{Sprite} dan \code{Group} &
+Benda dapat bertabrakan dengan rintangan dan dengan benda lain, bukan hanya
+dengan tepi jendela. \\
+\addlinespace
+Bab~VIII--XI & Pengendalian NPC &
+Kecepatan tidak lagi berasal dari tombol atau bernilai tetap, melainkan dari
+keputusan yang diambil program sendiri. \\
+\addlinespace
+Bab~XIII & Fisika mesin pada Unity &
+Perhitungan percepatan, tabrakan, dan gesekan diserahkan kepada mesin,
+sedangkan kode Anda mengatur pengaturan dan menanggapi peristiwanya. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Dengan gambaran tersebut, tampak bahwa bab ini melengkapi tingkat kedua pada
+tahap pembaruan. Sesudah bab ini, kerangka perhitungan geraknya lengkap:
+percepatan mengubah kecepatan, kecepatan mengubah posisi, dan tabrakan
+menyelesaikan keduanya. Bab-bab berikutnya tidak menambah tingkat baru,
+melainkan memakai kerangka itu untuk keperluan yang berbeda.

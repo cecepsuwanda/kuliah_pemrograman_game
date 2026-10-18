@@ -1,0 +1,28 @@
+Tugas :
+  Buat silabus atau RPS OBE untuk matakuliah Pengantar Pemrograman Game
+  dalam format Latex
+
+Output :
+  Tulis silabus ke folder C:\Matakuliah\kuliah_pemrograman_game\rps
+
+Struktur Silabus : 
+  Ikuti struktur C:\Matakuliah\kuliah_pemrograman_game\struktur_silabus_OBE.text
+
+identitas matakuliah :
+   Nama Program Studi : Teknik Informatika
+   Nama Fakultas : Teknologi Informasi
+   Nama Perguruan Tinggi : Universitas Bale Bandung
+   Nama Mata Kuliah : Pengantar Pemrograman Game
+   Kode Mata Kuliah : MWCA009 
+   Semester : Ganjil
+   Dosen Pengampu : Cecep Suwanda, S.Si., M.Kom.
+
+referensi :
+  1. C:\Matakuliah\kuliah_pemrograman_game\referensi\cpl_cpmk_subcpmk_materi.md
+  2. C:\Matakuliah\kuliah_pemrograman_game\referensi\referensi_cpl_cpmk.md
+  3. C:\Matakuliah\kuliah_pemrograman_game\referensi\referensi_rps_indonesia.md
+  boleh menggunakan internet untuk menelusuri link yang terdapat pada nomor 1,2 dan 3 di atas.
+    
+   
+
+  

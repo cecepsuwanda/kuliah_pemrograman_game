@@ -1,0 +1,33 @@
+% chapters/03/figures/struktur-proyek.tikz
+% Struktur folder proyek yang dipakai sepanjang semester.
+% Pohon digambar mendatar agar nama berkas yang panjang tetap muat.
+\begin{tikzpicture}[
+  dir/.style={
+    rectangle, rounded corners=1pt, draw=ubPrimary, thick, fill=ubAlt,
+    inner sep=3.5pt, font=\ttfamily\footnotesize, text=ubPrimary
+  },
+  berkas/.style={
+    rectangle, rounded corners=1pt, draw=ubLine, fill=white,
+    inner sep=3.5pt, font=\ttfamily\footnotesize
+  },
+  grow'=right,
+  level 1/.style={sibling distance=9mm, level distance=40mm},
+  level 2/.style={sibling distance=7mm, level distance=40mm},
+  edge from parent/.style={draw=ubAccent, thick}
+]
+
+\node[dir, anchor=west] (akar) at (-6.2,0) {proyek-pygame}
+  child { node[dir] {code}
+    child { node[berkas] {ch03\_jendela.py} }
+    child { node[berkas] {ch05\_gerak.py} } }
+  child { node[dir] {catatan}
+    child { node[berkas] {praktikum-01.md} } }
+  child { node[dir] {aset} }
+  child { node[berkas] {.gitignore} }
+  child { node[berkas] {README.md} };
+
+\node[font=\scriptsize\itshape, ubPrimary, align=center, text width=112mm]
+  at (0,-3.3)
+  {Nama folder dan berkas ditulis dengan huruf kecil dan garis bawah, tanpa
+   spasi, agar aman dipakai pada semua sistem operasi.};
+\end{tikzpicture}

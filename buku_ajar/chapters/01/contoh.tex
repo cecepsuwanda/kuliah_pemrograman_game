@@ -1,0 +1,88 @@
+% chapters/01/contoh.tex
+\section{Contoh Membaca Satu Bab Inti}
+\label{sec:contoh-bab}
+
+Sebelum menutup bab ini, ada baiknya Anda melihat bagaimana sebuah bab inti
+dirancang, agar Anda dapat membacanya dengan cara yang menguntungkan. Dua
+contoh berikut memperlihatkan hal itu.
+
+\subsection{Contoh Pertama: Membaca Keterkaitan Sub-CPMK dengan Asesmen}
+
+Ambil \SUBCPMK{1.2}, yaitu merancang dan mengimplementasikan gerak objek
+berbasis \istilah{delta time} dan vektor pada Pygame. Ketika Anda membuka
+Bab~V, Anda akan menemukan bahwa Sub-CPMK tersebut disertai tiga indikator
+pencapaian, dan setiap indikator berpasangan dengan langkah praktikum serta
+bukti yang diperiksa. Pasangan tersebut diperlihatkan pada
+Tabel~\ref{tab:contoh-pasangan}.
+
+\begin{table}[htbp]
+\centering
+\caption{Pasangan indikator, aktivitas, dan bukti pada \SUBCPMK{1.2}}
+\label{tab:contoh-pasangan}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.6cm} L{4.5cm} Y@{}}
+\toprule
+\headrow \textbf{Indikator pencapaian} & \textbf{Aktivitas pada praktikum} & \textbf{Bukti yang diperiksa} \\
+\midrule
+\ind{a} menulis kode gerak menggunakan \code{pygame.Vector2} dan
+\istilah{delta time} &
+Langkah 1--3: menyusun kerangka program gerak dan menambahkan vektor
+kecepatan. &
+Berkas \code{code/python/ch05_gerak.py} pada repositori. \\
+\addlinespace
+\ind{b} menunjukkan kecepatan objek tetap konsisten pada 30 FPS dan 60 FPS &
+Langkah 4: menjalankan program pada dua nilai FPS berbeda, lalu mencatat waktu
+yang dibutuhkan objek untuk menempuh jarak yang sama. &
+Catatan pengamatan pada jurnal praktikum. \\
+\addlinespace
+\ind{c} menyinkronkan posisi bertipe \istilah{float} dengan \code{Rect}
+bertipe bilangan bulat &
+Langkah 5: memindahkan hasil perhitungan posisi ke \code{Rect} dan memeriksa
+apakah gambar objek bergeser dengan mulus. &
+Potongan kode penyelarasan posisi beserta penjelasan singkat. \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Asesmen bab: rubrik portofolio praktikum (kesesuaian fungsional)
+dan butir Kuis 1 tentang alasan pemakaian \istilah{delta time}.}
+\end{table}
+
+Jika Anda membaca bab dengan memperhatikan tabel semacam ini, tiga manfaat
+langsung Anda peroleh. Pertama, Anda mengetahui mengapa sebuah langkah
+praktikum harus dikerjakan, bukan sekadar mengikutinya. Kedua, Anda dapat
+memeriksa sendiri apakah pekerjaan Anda sudah memenuhi indikator, sebelum
+dinilai. Ketiga, ketika nilai Anda belum sesuai harapan, Anda dapat menunjuk
+indikator mana yang belum terpenuhi, bukan menebak-nebak.
+
+\subsection{Contoh Kedua: Tuntutan yang Meningkat pada Kemampuan yang Sama}
+
+Kemampuan yang tampak serupa muncul lebih dari sekali dengan
+tuntutan yang berbeda. Menggerakkan objek, misalnya, muncul pada Blok I dan
+kembali pada Blok III.
+
+\begin{contohbox}
+\textbf{Pada Bab~V (Blok I).} Anda diminta menulis sendiri seluruh
+perhitungannya: membaca tombol yang ditekan, menyusun vektor arah,
+mengalikannya dengan kecepatan dan \istilah{delta time}, lalu menambahkan
+hasilnya ke posisi objek. Seluruh keputusan ada di tangan Anda, dan seluruh
+kesalahan juga.
+
+\vspace{0.4em}
+\textbf{Pada Bab~XIII (Blok III).} Anda diminta mengonfigurasi
+\istilah{Rigidbody} dan \istilah{Collider} pada Unity, lalu memeriksa apakah
+gerak yang dihasilkan sesuai rancangan. Perhitungannya sudah dikerjakan
+\istilah{engine}; yang menjadi tanggung jawab Anda adalah memilih
+pengaturan yang tepat dan menganalisis ketika hasilnya menyimpang.
+\end{contohbox}
+
+Yang berubah bukan hanya perkakasnya, melainkan juga jenis kesalahan yang
+harus Anda temukan. Pada Blok I, kesalahan umumnya berupa perhitungan yang
+keliru dan dapat dilacak dari baris kode Anda sendiri. Pada Blok III,
+kesalahan umumnya berupa konfigurasi yang tidak sesuai sehingga perilaku objek
+terasa janggal---misalnya objek bergetar di permukaan lantai, atau menembus
+dinding ketika bergerak cepat. Kemampuan menganalisis gejala semacam itu
+dilatih pada \SUBCPMK{3.2} dan menjadi bekal penting pada saat proyek akhir.
+
+Dua contoh di atas memperlihatkan pola yang akan Anda temui berulang kali:
+setiap bab menyebut kemampuan yang hendak dicapai, menyediakan latihan untuk
+mencapainya, dan memeriksanya dengan cara yang terbuka. Dengan bekal
+pemahaman itu, Anda dapat mulai bekerja pada bab berikutnya.

@@ -1,0 +1,159 @@
+% =========================================================
+%  config/styles.tex
+%  Warna, tipe kolom, format judul, header/footer, keterangan tabel
+%  Skema warna dan tipe kolom diambil dari rps/config/styles.tex
+%  agar tampilan buku ajar dan RPS satu keluarga.
+% =========================================================
+
+% --- Warna institusi ------------------------------------
+\definecolor{ubPrimary}{HTML}{1F3864}
+\definecolor{ubAccent}{HTML}{2E75B6}
+\definecolor{ubHead}{HTML}{D9E2F3}
+\definecolor{ubAlt}{HTML}{F2F6FC}
+\definecolor{ubLine}{HTML}{BFBFBF}
+
+% --- Warna semantik untuk kotak & kode ------------------
+\definecolor{ubGreen}{HTML}{1E7B45}
+\definecolor{ubGreenBg}{HTML}{F1F8F2}
+\definecolor{ubRed}{HTML}{B3261E}
+\definecolor{ubRedBg}{HTML}{FDF2F1}
+\definecolor{ubWarn}{HTML}{A35A05}
+\definecolor{ubWarnBg}{HTML}{FFF8EC}
+\definecolor{ubGray}{HTML}{F6F6F6}
+
+% --- Tipe kolom -----------------------------------------
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\Centering\arraybackslash}p{#1}}
+\newcolumntype{J}[1]{>{\justifying\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+
+% --- Jarak antar paragraf -------------------------------
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\renewcommand{\arraystretch}{1.25}
+
+% --- Toleransi pemenggalan baris ------------------------
+\setlength{\emergencystretch}{2em}
+\tolerance=1500
+\hyphenpenalty=200
+\widowpenalty=1000
+\clubpenalty=1000
+
+% --- Nama bagian buku (bahasa Indonesia) ----------------
+% babel menetapkan nama bagian pada saat \begin{document}, sehingga
+% \renewcommand biasa pada preamble akan ditimpa. Karena itu nama bagian
+% diubah melalui mekanisme babel (\addto\captionsindonesian).
+\addto\captionsindonesian{%
+  \renewcommand{\bibname}{Daftar Pustaka}%
+  \renewcommand{\chaptername}{Bab}%
+  \renewcommand{\contentsname}{Daftar Isi}%
+  \renewcommand{\listfigurename}{Daftar Gambar}%
+  \renewcommand{\listtablename}{Daftar Tabel}%
+  \renewcommand{\figurename}{Gambar}%
+  \renewcommand{\tablename}{Tabel}%
+  \renewcommand{\appendixname}{Lampiran}%
+}
+
+% --- Format judul bab -----------------------------------
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\bfseries\color{ubPrimary}}
+  {\filright\normalsize\bfseries\color{ubAccent}\MakeUppercase{\chaptertitlename}~\thechapter}
+  {0.7ex}
+  {\Large}
+  [\vspace{0.5ex}{\color{ubAccent}\titlerule[0.9pt]}]
+\titlespacing*{\chapter}{0pt}{6pt}{26pt}
+
+% --- Format judul section -------------------------------
+\titleformat{\section}
+  {\normalfont\large\bfseries\color{ubPrimary}}
+  {\thesection}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.5em}{0.6em}
+
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries\color{ubAccent}}
+  {\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{1.1em}{0.4em}
+
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries}
+  {\thesubsubsection}{0.5em}{}
+\titlespacing*{\subsubsection}{0pt}{0.9em}{0.3em}
+
+% --- Format judul bab tak bernomor ----------------------
+\titleformat{name=\chapter,numberless}[display]
+  {\normalfont\LARGE\bfseries\color{ubPrimary}}
+  {}
+  {0pt}
+  {\Large}
+  [\vspace{0.5ex}{\color{ubAccent}\titlerule[0.9pt]}]
+\titlespacing*{name=\chapter,numberless}{0pt}{6pt}{26pt}
+
+% --- Header & footer ------------------------------------
+% Front matter memakai gaya polos (nomor halaman di tengah bawah);
+% gaya fancy dengan kepala halaman dipakai mulai main matter.
+\pagestyle{plain}
+\fancypagestyle{mainmatter}{%
+  \fancyhf{}%
+  \fancyhead[L]{\footnotesize\color{ubPrimary}\NamaPT}%
+  \fancyhead[R]{\footnotesize\color{ubPrimary}\leftmark}%
+  \fancyfoot[C]{\footnotesize\thepage}%
+  \renewcommand{\headrulewidth}{0.4pt}%
+  \renewcommand{\footrulewidth}{0pt}%
+}
+% \@chapapp bernilai "Bab" pada bagian utama dan berubah menjadi "Lampiran"
+% setelah \appendix. Memakai \chaptername secara langsung akan membuat judul
+% berjalan pada lampiran tertulis "Bab B", sebab \chaptername tidak berubah.
+\makeatletter
+\renewcommand{\chaptermark}[1]{\markboth{\@chapapp\ \thechapter.\ #1}{}}
+\makeatother
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+
+% --- Keterangan tabel & gambar --------------------------
+\captionsetup{
+  font=small,
+  labelfont={bf,color=ubPrimary},
+  skip=4pt
+}
+
+% --- Daftar (list) --------------------------------------
+\setlist[itemize]{topsep=2pt,itemsep=1pt,parsep=0pt,leftmargin=1.3em}
+\setlist[enumerate]{topsep=2pt,itemsep=2pt,parsep=0pt,leftmargin=1.5em}
+
+% Daftar khusus untuk checklist kompetensi
+\newlist{checklist}{itemize}{1}
+\setlist[checklist]{label=$\square$,leftmargin=1.7em,itemsep=3pt,topsep=3pt}
+
+% Daftar khusus untuk langkah praktikum
+\newlist{langkah}{enumerate}{1}
+\setlist[langkah]{label=\textbf{\arabic*.},leftmargin=1.9em,itemsep=3pt,topsep=3pt}
+
+% --- Tabel ringkas (keterangan di bawah tabel) ----------
+\newcommand{\tabsource}[1]{%
+  \par\vspace{2pt}{\footnotesize\itshape #1\par}%
+}
+
+% --- Garis tabel (booktabs) -----------------------------
+% Header tabel ditandai garis tebal di atas dan tipis di bawah,
+% sebagai pengganti pewarnaan latar baris (colortbl tidak tersedia).
+\renewcommand{\toprule}{\specialrule{1.3pt}{0pt}{0pt}}
+\renewcommand{\midrule}{\specialrule{0.5pt}{0pt}{0pt}}
+
+% --- Daftar isi (tocloft) -------------------------------
+\renewcommand{\cftchapfont}{\bfseries\color{ubPrimary}}
+\renewcommand{\cftchappagefont}{\bfseries\color{ubPrimary}}
+\renewcommand{\cftsecfont}{\color{black}}
+\renewcommand{\cfttoctitlefont}{\hfill\Large\bfseries\color{ubPrimary}}
+\renewcommand{\cftaftertoctitle}{\hfill}
+\renewcommand{\cftloftitlefont}{\hfill\Large\bfseries\color{ubPrimary}}
+\renewcommand{\cftafterloftitle}{\hfill}
+\renewcommand{\cftlottitlefont}{\hfill\Large\bfseries\color{ubPrimary}}
+\renewcommand{\cftafterlottitle}{\hfill}
+
+% --- Tampilan tautan ------------------------------------
+\hypersetup{
+  colorlinks = true,
+  linkcolor  = ubPrimary,
+  urlcolor   = ubAccent,
+  citecolor  = ubAccent,
+  filecolor  = ubAccent
+}

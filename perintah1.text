@@ -1,0 +1,32 @@
+Tugas :
+  Buat buku ajar untuk matakuliah Pengantar Pemrograman Game
+  dalam format Latex, buku tersebut harus sesuai dengan silabus atau rps
+
+silabus :
+  silabus atau rps matakuliah Pengantar Pemrograman Game : C:\Matakuliah\kuliah_pemrograman_game\rps
+
+Output :
+  Tulis buku ajar ke folder C:\Matakuliah\kuliah_pemrograman_game\buku_ajar
+
+arsitektur dan struktur buku ajar : 
+  1. C:\Matakuliah\kuliah_pemrograman_game\struktur_bab_buku_ajar_OBE.text
+  2. C:\Matakuliah\kuliah_pemrograman_game\Arsitektur_Buku_Ajar.md
+
+identitas matakuliah :
+   Nama Program Studi : Teknik Informatika
+   Nama Fakultas : Teknologi Informasi
+   Nama Perguruan Tinggi : Universitas Bale Bandung
+   Nama Mata Kuliah : Pengantar Pemrograman Game
+   Kode Mata Kuliah : MWCA009 
+   Semester : Ganjil
+   Dosen Pengampu : Cecep Suwanda, S.Si., M.Kom.
+
+referensi :
+  1. C:\Matakuliah\kuliah_pemrograman_game\referensi\inventwithpython
+  2. C:\Matakuliah\kuliah_pemrograman_game\referensi\makinggames
+  3. C:\Matakuliah\kuliah_pemrograman_game\referensi\UNITY_Ebook_Introduction to level design in game development and in Unity_V2
+  boleh menggunakan internet untuk melengkapi materi yang terdapat pada nomor 1,2 dan 3 di atas.
+    
+   
+
+  

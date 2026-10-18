@@ -1,0 +1,100 @@
+% chapters/15/praktikum.tex
+\begin{praktikumbox}
+Praktikum ini mengikuti Tugas Praktikum 12 pada RPS: menambahkan
+\code{AudioSource} dan \code{AudioClip} untuk musik latar serta efek suara,
+memicu efek suara pada peristiwa lompat, mengambil benda, dan permainan
+berakhir, serta menyesuaikan \istilah{timing} dan tingkat kekuatannya.
+
+\begin{langkah}
+  \item \textbf{Kumpulkan berkas bunyinya.} Sediakan satu berkas musik latar
+        dan sekurang-kurangnya empat berkas efek suara: lompat, mengambil
+        benda, terluka, dan kalah. Catat sumber serta lisensi setiap berkas
+        sejak awal.
+
+  \item \textbf{Impor dan atur.} Seret berkasnya ke folder \code{Assets}. Pada
+        berkas musik, matikan \istilah{Load In Background} apabila musiknya
+        perlu mulai seketika; pada efek suara pendek, pilih
+        \istilah{Decompress On Load} agar tidak ada penundaan.
+
+  \item \textbf{Susun pemusat bunyinya.} Buat \istilah{GameObject} kosong
+        bernama \code{ManajerBunyi}, lalu tambahkan dua komponen
+        \code{AudioSource} ke dalamnya: satu bernama \code{musicSource} dan
+        satu bernama \code{sfxSource}. Tempelkan skrip
+        \code{ch15_manajer_bunyi.cs} dari Daftar~\ref{lst:ch15-manajer}, lalu
+        hubungkan keenam rujukannya pada \istilah{Inspector}.
+
+  \item \textbf{Atur ruang bunyinya.} Pada \code{musicSource}, atur
+        \istilah{Spatial Blend} menjadi nol, sebab musik latar tidak memiliki
+        tempat. Pada \code{sfxSource}, nilai itu juga dibuat nol untuk efek
+        suara yang selalu berkaitan dengan pemain.
+
+  \item \textbf{Tambahkan pemicunya pada pemain.} Tempelkan skrip
+        \code{ch15_pemicu_bunyi.cs} dari Daftar~\ref{lst:ch15-pemicu} pada
+        benda pemain, lalu hubungkan rujukan \code{manajer} dan \code{hud}.
+        Tambahkan dua baris pada \code{ch13_kontrol_pemain.cs} sebagaimana
+        diperlihatkan pada Bagian~\ref{sec:peristiwa-bunyi}, agar bunyi lompat
+        terpanggil.
+
+  \item \textbf{Tandai benda yang dapat diambil.} Buat tanda \code{Pickup}
+        melalui menu \istilah{Tag}, lalu pasang pada setiap benda yang dapat
+        diambil. Tanpa langkah ini, sentuhannya diabaikan tanpa keluhan apa
+        pun.
+
+  \item \textbf{Susun tingkat kekuatannya.} Buat \istilah{AudioMixer} melalui
+        menu \istilah{Window}, lalu \istilah{Audio}, lalu
+        \istilah{Audio Mixer}. Tambahkan dua tingkat di bawah \code{Master},
+        yaitu \code{Musik} dan \code{Efek}, lalu arahkan keluaran setiap
+        \code{AudioSource} ke tingkat yang sesuai.
+
+  \item \textbf{Jalankan empat percobaan} pada
+        Tabel~\ref{tab:percobaan-bunyi} satu per satu. Catat apa yang Anda
+        dengar pada setiap percobaan, sebelum dan sesudah nilainya diubah.
+
+  \item \textbf{Tambahkan partikel sederhana} pada satu peristiwa, misalnya
+        pada saat benda diambil, sebagai pasangan yang terlihat bagi bunyinya.
+
+  \item \textbf{Tulis catatan praktikum} yang memuat daftar berkas bunyi
+        beserta sumber dan lisensinya, daftar peristiwa beserta bunyinya,
+        nilai tingkat kekuatan yang dipakai, dan hasil keempat percobaan.
+
+  \item \textbf{Simpan pekerjaan} ke repositori Git. Berkas bunyi berukuran
+        besar, sehingga berkasnya sebaiknya disimpan di luar repositori dan
+        alamatnya dicatat pada berkas keterangan.
+\end{langkah}
+\end{praktikumbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Lembar kerja Praktikum 12}
+\label{tab:lembar-praktikum-12}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.6cm} L{3.4cm} Y@{}}
+\toprule
+\headrow \textbf{Peristiwa} & \textbf{Berkas bunyi} & \textbf{Tingkat kekuatan dan catatan} \\
+\midrule
+Scene dimulai & & \\[1.4em]
+\midrule
+Pemain melompat & & \\[1.4em]
+\midrule
+Mengambil benda & & \\[1.4em]
+\midrule
+Pemain terluka & & \\[1.4em]
+\midrule
+Permainan berakhir & & \\[1.4em]
+\midrule
+\addlinespace
+\multicolumn{3}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Berkas musik latar beserta sumber dan lisensinya: \dotfill} \\[1.4em]
+\addlinespace
+\multicolumn{3}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Hasil percobaan terpenting yang Anda lakukan: \dotfill} \\[1.8em]
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Langkah kedelapan adalah langkah yang paling penting bagi indikator \ind{c}.
+Mengubah satu nilai lalu mendengarkan akibatnya adalah cara satu-satunya untuk
+memahami tingkat kekuatan bunyi. Nilai yang tercantum pada bab ini adalah
+titik awal; yang menentukan adalah pendengaran Anda pada level Anda sendiri.
+\end{catatabox}

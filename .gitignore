@@ -114,3 +114,12 @@ env/
 *.backup
 *.orig
 .cache/
+
+# -----------------------------------------------------------------------------
+# Buku referensi pihak ketiga (berhak cipta, total ~368 MB)
+# Tidak di-commit: berisi berkas utuh buku berhak cipta.
+# Unduh ulang dari sumber resmi bila diperlukan (lihat Daftar Pustaka).
+# -----------------------------------------------------------------------------
+referensi/inventwithpython/
+referensi/makinggames/
+referensi/UNITY_Ebook_*/

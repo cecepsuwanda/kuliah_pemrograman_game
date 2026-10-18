@@ -1,0 +1,33 @@
+% chapters/03/figures/lapisan-perkakas.tikz
+% Lapisan perkakas: program Anda memanggil Pygame, Pygame memakai SDL,
+% SDL berbicara dengan sistem operasi dan perangkat.
+\begin{tikzpicture}[
+  lapis/.style={
+    rectangle, rounded corners=2pt, draw=ubPrimary, thick, fill=ubAlt,
+    align=center, text width=70mm, inner sep=4pt, minimum height=10mm,
+    font=\footnotesize
+  },
+  lapissdl/.style={lapis, draw=ubAccent, fill=white},
+  lapisos/.style={lapis, draw=ubLine, fill=ubGray, text=black},
+  panah/.style={-{Stealth[length=2.2mm]}, thick, draw=ubAccent},
+  sisi/.style={font=\scriptsize\itshape, ubPrimary, align=left}
+]
+
+\node[lapis] (program) at (0,0)
+  {\textbf{Program Anda}\\[1pt]\scriptsize kode yang Anda tulis pada folder \code{code/}};
+\node[lapissdl] (pygame) at (0,-1.8)
+  {\textbf{Pygame}\\[1pt]\scriptsize jendela, gambar, huruf, bunyi, dan penanganan peristiwa};
+\node[lapissdl] (sdl) at (0,-3.6)
+  {\textbf{SDL}\\[1pt]\scriptsize lapisan penerjemah ke perangkat keras};
+\node[lapisos] (os) at (0,-5.4)
+  {\textbf{Sistem operasi dan perangkat}\\[1pt]\scriptsize layar, papan tombol, tetikus, pengeras suara};
+
+\draw[panah] (program) -- (pygame);
+\draw[panah] (pygame) -- (sdl);
+\draw[panah] (sdl) -- (os);
+
+\node[sisi, right=5mm of program, text width=42mm, anchor=west]
+  {perintah yang Anda tulis: \code{pygame.display.set_mode}};
+\node[sisi, right=5mm of sdl, text width=42mm, anchor=west]
+  {diterjemahkan ke perintah perangkat};
+\end{tikzpicture}

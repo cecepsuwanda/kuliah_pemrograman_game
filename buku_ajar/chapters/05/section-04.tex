@@ -1,0 +1,92 @@
+% chapters/05/section-04.tex
+\section{Menyinkronkan Posisi Pecahan dengan \code{Rect}}
+\label{sec:selaras-rect}
+
+Sampai di sini posisi objek berupa vektor dengan nilai pecahan, sedangkan
+seluruh perhitungan gerak berjalan dengan lancar. Persoalannya muncul ketika
+posisi itu hendak dipakai untuk menggambar.
+
+\subsection{Dua Tipe Data yang Berbeda}
+
+\code{pygame.Vector2} menyimpan nilai bertipe pecahan, misalnya 312,47.
+\code{pygame.Rect} menyimpan nilai bertipe bilangan bulat, dan memang
+dirancang demikian karena letak piksel pada layar tidak memiliki pecahan:
+piksel ke-312 tepat berada di tempatnya, dan tidak ada piksel ke-312,47.
+
+Karena itu, posisi yang berupa pecahan harus diselaraskan terlebih dahulu
+sebelum dipakai menggambar. Penyelarasan itu dilakukan setiap bingkai, tepat
+sebelum penggambaran.
+
+\begin{kodekeluaran}
+player_rect.center = (round(position.x), round(position.y))
+pygame.draw.rect(screen, PLAYER_COLOR, player_rect)
+\end{kodekeluaran}
+
+Pembulatan dilakukan karena posisi sesungguhnya tetap disimpan pada
+\code{position} sebagai pecahan. \code{player_rect} hanyalah salinan yang
+dibulatkan untuk keperluan menggambar dan---pada Bab~VII nanti---untuk
+memeriksa tabrakan.
+
+\subsection{Posisi Tetap Disimpan sebagai Pecahan}
+
+Aturan yang perlu Anda pegang adalah sebagai berikut.
+
+\begin{itemize}
+  \item \textbf{Posisi yang sebenarnya disimpan sebagai pecahan}
+        (\code{Vector2}), karena hanya dengan begitu gerak dapat berlangsung
+        halus. Pada kecepatan 20 piksel per detik dan laju 60 bingkai per
+        detik, perpindahan setiap bingkainya hanya 0,33 piksel; nilai itu harus
+        tersimpan agar dapat terakumulasi.
+  \item \textbf{\code{Rect} dipakai untuk menggambar dan memeriksa tabrakan},
+        dan diselaraskan dari posisi pecahan setiap bingkai. \code{Rect} bukan
+        tempat menyimpan posisi.
+\end{itemize}
+
+Akibat apabila aturan itu dilanggar diperlihatkan pada
+Bagian~\ref{sec:contoh-bab-5}. Objek yang posisinya disimpan sebagai bilangan
+bulat tidak akan bergerak sama sekali pada kecepatan rendah. Perpindahan 0,33
+piksel terpotong menjadi nol pada setiap bingkai, dan nilai yang terpotong itu
+hilang.
+
+\subsection{Membulatkan atau Memotong}
+
+Pilihan antara \code{round()} dan \code{int()} pada penyelarasan di atas
+memengaruhi letak objek yang terlihat. Keduanya memberi hasil yang sama untuk
+nilai pecahan di bawah 0,5, tetapi berbeda untuk nilai di atasnya.
+
+\begin{kodekeluaran}
+int(312.9)      hasilnya 312      (selalu ke arah nol)
+round(312.9)    hasilnya 313      (ke bilangan bulat terdekat)
+\end{kodekeluaran}
+
+Karena posisi yang benar adalah 312,9, maka nilai yang lebih dekat adalah 313.
+Memakai \code{int()} akan membuat objek tampak tertinggal sejauh hampir satu
+piksel secara sistematis. Selisih satu piksel itu tidak terlihat pada objek
+tunggal, tetapi menjadi terlihat sebagai gerak yang tersendat ketika beberapa
+objek bergerak bersama-sama, misalnya pada Bab~VII nanti.
+
+\begin{catatabox}
+Perbedaan antara membulatkan dan memotong juga menjelaskan mengapa posisi
+tidak boleh disimpan di dalam \code{Rect}. Apabila posisi disimpan sebagai
+bilangan bulat, membulatkan atau memotong tidak lagi menjadi pilihan: nilai
+pecahannya sudah hilang sebelum sempat terakumulasi.
+\end{catatabox}
+
+\subsection{Mengapa Pemisahan Ini Bermanfaat}
+
+Memisahkan ``posisi yang sebenarnya'' dari ``posisi yang digambar'' membawa
+tiga manfaat yang akan terasa pada bab-bab berikutnya.
+
+\begin{enumerate}
+  \item \textbf{Gerak tetap halus pada kecepatan rendah.} Perpindahan pecahan
+        tetap terakumulasi walaupun hasil penggambarannya baru berubah
+        sesekali.
+  \item \textbf{Perhitungan tabrakan tetap dapat dilakukan.} Pemeriksaan
+        tabrakan memerlukan \code{Rect} bertipe bilangan bulat, dan
+        \code{Rect} itu tersedia setiap bingkai tanpa mengorbankan ketelitian
+        posisi.
+  \item \textbf{Perubahan laju bingkai tidak mengubah posisi akhir.} Karena
+        posisi yang sebenarnya tidak bergantung pada pembulatan, dua komputer
+        dengan laju bingkai berbeda akan menghasilkan posisi akhir yang sama,
+        walaupun gambar yang ditampilkan sesaat berbeda.
+\end{enumerate}

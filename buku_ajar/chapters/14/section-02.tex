@@ -1,0 +1,74 @@
+% chapters/14/section-02.tex
+\section{Animator dan Peralihan Animasi}
+\label{sec:animator}
+
+\subsection{Mesin Keadaan untuk Animasi}
+
+Komponen \istilah{Animator} adalah mesin keadaan yang khusus mengurus animasi.
+Gagasannya sama dengan mesin keadaan pada Bab~IX, tetapi yang berpindah bukan
+perilaku benda, melainkan gambar yang ditampilkan.
+
+Keadaan pada \istilah{Animator} disebut \istilah{animation clip}, yaitu
+rangkaian gambar yang diputar berulang. Transisinya diatur melalui
+\istilah{parameter}, yaitu nilai yang ditetapkan oleh kode Anda. Susunan untuk
+pemain platformer diperlihatkan pada panel kiri
+Gambar~\ref{fig:animator-canvas}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/animator-dan-canvas.tikz}
+\caption{Mesin keadaan animasi dan susunan antarmuka pengguna}
+\label{fig:animator-canvas}
+\end{figure}
+
+Jendela \istilah{Animator} dibuka melalui menu \istilah{Window}, lalu
+\istilah{Animation}, lalu \istilah{Animator}. Di sana keadaan dan transisinya
+digambar dengan cara yang sama seperti diagram keadaan pada
+Gambar~\ref{fig:diagram-keadaan}: kotak untuk keadaan, dan anak panah untuk
+transisi \cite{unity-leveldesign}.
+
+\subsection{Jenis Parameter}
+
+Tiga jenis parameter yang tersedia perlu Anda bedakan.
+
+\begin{itemize}
+  \item \textbf{Angka pecahan} (\istilah{float}), dipakai untuk nilai yang
+        berubah halus, misalnya besar kecepatan.
+  \item \textbf{Nilai benar atau salah} (\istilah{bool}), dipakai untuk keadaan
+        yang hanya memiliki dua kemungkinan, misalnya sedang menyentuh tanah
+        atau tidak.
+  \item \textbf{Pemicu} (\istilah{trigger}), dipakai untuk kejadian yang terjadi
+        sekali dan tidak memiliki lama, misalnya lompatan atau menerima
+        kerusakan.
+\end{itemize}
+
+Pilihan yang tepat di antara ketiganya menghemat pekerjaan. Sebuah lompatan
+sebaiknya memakai \istilah{trigger}, bukan \istilah{bool} yang harus
+dikembalikan ke nilai semula oleh kode, sebab \istilah{trigger} dikembalikan
+sendiri oleh mesin setelah dipakai.
+
+\subsection{Menghubungkan Animasi dengan Keadaan Pemain}
+
+Kode Anda tidak memutar animasinya sendiri, melainkan hanya menetapkan nilai
+parameternya. Seluruh pekerjaan selebihnya dikerjakan mesin.
+
+\begin{kodekeluaran}
+animator.SetFloat(SpeedParam, Mathf.Abs(body.velocity.x));
+animator.SetBool(GroundedParam, kontrol.IsOnGround);
+\end{kodekeluaran}
+
+\begin{peringatanbox}
+Nama parameter yang dipakai pada kode harus sama persis dengan nama yang
+dibuat pada jendela \istilah{Animator}, termasuk besar-kecil hurufnya.
+Kesamaan itu \textbf{tidak diperiksa} oleh penyunting. Apabila namanya berbeda,
+program tetap berjalan tanpa kesalahan, tetapi animasinya tidak pernah
+berganti. Kebiasaan yang mencegahnya: pakai nama yang tetap, misalnya dengan
+menyimpannya pada peubah tetap seperti pada skrip Daftar~\ref{lst:ch14-animasi}.
+\end{peringatanbox}
+
+\begin{tipsbox}
+Animasi tidak selalu diperlukan. Pada permainan yang sederhana, gerak yang
+halus sudah cukup memberi kesan hidup, sedangkan animasi menambah pekerjaan,
+ukuran berkas, dan satu hal lagi yang dapat salah. Gunakanlah animasi pada hal
+yang memang paling terlihat pemain, misalnya gerak pemain dan musuh.
+\end{tipsbox}

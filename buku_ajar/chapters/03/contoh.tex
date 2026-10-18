@@ -1,0 +1,86 @@
+% chapters/03/contoh.tex
+\section{Dua Contoh Terapan}
+\label{sec:contoh-bab-3}
+
+\subsection{Contoh Pertama: Membaca Keluaran Pemeriksaan Lingkungan}
+
+Skrip pemeriksaan pada Bagian~\ref{sec:memasang-pygame} menghasilkan keluaran
+yang berbeda menurut keadaan komputer. Tabel~\ref{tab:contoh-keluaran-periksa}
+memperlihatkan tiga keadaan yang paling sering ditemui beserta tindakannya.
+
+\begin{table}[htbp]
+\centering
+\caption{Tiga keadaan keluaran pemeriksaan lingkungan dan tindakannya}
+\label{tab:contoh-keluaran-periksa}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.6cm} L{3.4cm} Y@{}}
+\toprule
+\headrow \textbf{Keluaran yang tampak} & \textbf{Keadaan} & \textbf{Tindakan} \\
+\midrule
+\code{Python : 3.11.9 (siap)}, \code{Pygame : 2.6.1},
+\code{Pengandar video : windows}, dan hasil akhir ``lingkungan siap dipakai'' &
+Seluruh perkakas siap. &
+Lanjutkan ke praktikum. Tidak ada yang perlu dipasang. \\
+\addlinespace
+\code{Pygame : belum terpasang} disertai petunjuk perintah pemasangan &
+Python siap, Pygame belum ada. &
+Jalankan \code{python -m pip install pygame}, lalu ulangi pemeriksaan. \\
+\addlinespace
+\code{Penafsir Python} menunjuk penafsir yang berbeda dengan tempat Pygame
+terpasang &
+Terdapat lebih dari satu Python pada komputer. &
+Pasang ulang memakai \code{python -m pip install pygame} agar mengikuti
+penafsir yang sedang dipakai. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Keadaan ketiga adalah yang paling sering membingungkan pemula. Pesan
+``Pygame belum terpasang'' muncul walaupun pemasangan sebelumnya berhasil,
+karena pemasangan itu dilakukan untuk penafsir Python yang berbeda. Baris
+\istilah{Penafsir Python} pada keluaran skrip sengaja ditampilkan untuk
+mempercepat penemuan sebab semacam ini.
+
+\subsection{Contoh Kedua: Membangun Program Secara Bertahap}
+
+Kesalahan yang paling sering dilakukan pemula adalah menulis seluruh program
+sekaligus, lalu berhadapan dengan puluhan pesan kesalahan tanpa mengetahui
+bagian mana yang menyebabkannya. Cara yang lebih baik adalah menambah satu
+bagian pada satu waktu, dan memastikan program berjalan setiap kali.
+
+Tabel~\ref{tab:contoh-tahap} memperlihatkan empat tahap pembangunan program
+jendela. Setiap tahap masih dapat dijalankan, sehingga kesalahan yang muncul
+selalu dapat dikaitkan dengan bagian yang baru saja ditambahkan.
+
+\begin{table}[htbp]
+\centering
+\caption{Empat tahap pembangunan program jendela}
+\label{tab:contoh-tahap}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.2cm} L{4.4cm} L{4.2cm} Y@{}}
+\toprule
+\headrow \textbf{Tahap} & \textbf{Yang ditambahkan} & \textbf{Hasil yang terlihat} & \textbf{Yang dibuktikan} \\
+\midrule
+1 & \code{pygame.init()} dan \code{set_mode} &
+Jendela terbuka, isinya masih hitam, program belum menutup sendiri. &
+Pygame berjalan dan penafsir yang dipakai sudah benar. \\
+\addlinespace
+2 & Penutup jendela: perulangan menunggu peristiwa &
+Jendela dapat ditutup dengan tombol silang. &
+Program dapat berakhir dengan rapi, bukan dihentikan paksa. \\
+\addlinespace
+3 & Pengisian warna latar dengan \code{screen.fill} &
+Jendela berwarna biru tua. &
+Permukaan jendela dapat digambar, dan warna yang dipilih sesuai. \\
+\addlinespace
+4 & Huruf, teks, dan \code{screen.blit} &
+Baris-baris informasi versi muncul di atas latar. &
+Penempatan teks dan pemakaian huruf bawaan bekerja. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Pada tahap ketiga dan keempat diperlukan penayangan ulang agar
+perubahan terlihat. Apabila isi jendela tidak berubah setelah Anda mengubah
+warna atau teks, periksa apakah \code{pygame.display.flip()} masih dipanggil
+setelah penggambaran.

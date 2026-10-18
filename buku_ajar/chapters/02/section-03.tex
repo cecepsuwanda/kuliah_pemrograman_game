@@ -1,0 +1,126 @@
+% chapters/02/section-03.tex
+\section{Ruang, Besaran, dan Representasi Keadaan}
+\label{sec:ruang-keadaan}
+
+Setelah waktu, unsur kedua yang harus disepakati adalah ruang: di mana objek
+berada, seberapa besar ukurannya, dan bagaimana keadaan permainan dinyatakan
+di dalam program.
+
+\subsection{Sistem Koordinat Layar dan Kartesius}
+
+Layar komputer menyusun gambar dari titik-titik yang tersusun dalam baris dan
+kolom. Titik kiri-atas dipakai sebagai titik asal, dan sumbu menurun ke bawah
+seiring bertambahnya nomor baris. Cara ini berbeda dari sistem kartesius yang
+Anda pelajari di sekolah, tempat titik asal biasanya berada di kiri-bawah dan
+sumbu menanjak ke atas. Kedua sistem diperlihatkan pada
+Gambar~\ref{fig:koordinat}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/koordinat.tikz}
+\caption{Sistem koordinat layar dan sistem koordinat kartesius}
+\label{fig:koordinat}
+\end{figure}
+
+Perbedaan ini bukan persoalan sepele. Nilai positif pada sumbu tegak berarti
+``ke bawah'' ketika Anda bekerja dengan koordinat layar, sehingga gravitasi
+yang seharusnya menarik objek ke bawah justru dinyatakan sebagai penambahan
+nilai, bukan pengurangan. Kebingungan tentang arah sering menjadi penyebab
+pertama mengapa objek pada program latihan bergerak ke arah yang berlawanan
+dengan dugaan penulisnya.
+
+Mesin permainan tertentu memakai sistem ketiga, yaitu koordinat dunia tiga
+dimensi dengan sumbu tegak yang dapat dipilih penataannya. Yang penting bukan
+sistem mana yang benar, melainkan kesadaran bahwa sistem yang dipakai harus
+diketahui secara pasti pada setiap tahap pekerjaan.
+
+\subsection{Skala dan Satuan}
+
+Persoalan berikutnya adalah ukuran. Berapa piksel panjang satu meter? Berapa
+besar sebuah karakter dibandingkan lebar layar? Pertanyaan semacam ini
+diistilahkan sebagai \istilah{metrics} dan dijawab lebih dahulu pada tahap
+perancangan level, karena angka yang dipilih menentukan rasa permainan
+\cite{unity-leveldesign}.
+
+Menetapkan skala secara sengaja membawa tiga manfaat. Pertama, ukuran objek
+menjadi konsisten, sehingga karakter setinggi dua petak tidak tiba-tiba
+berubah menjadi setinggi dua puluh piksel pada layar lain. Kedua, kecepatan
+gerak dapat dibandingkan secara bermakna; kecepatan berjalan dan berlari dapat
+dinyatakan sebagai perbandingan angka yang sama pada setiap level. Ketiga,
+perhitungan fisika menjadi lebih mudah diatur karena rentang nilainya masuk
+akal, tidak terlalu kecil maupun terlalu besar.
+
+\begin{catatabox}
+Pada Pygame, satuan yang paling wajar dipakai adalah piksel, sebab koordinat
+pada layar memang dinyatakan dalam piksel. Pada Unity, satuan dasar yang
+dipakai fisika adalah meter, dan satu satuan koordinat sama dengan satu meter.
+Perbedaan ini akan Anda rasakan pada Bab~XII ketika berpindah dari satu
+perkakas ke perkakas lainnya.
+\end{catatabox}
+
+\subsection{Besaran Turunan: Posisi, Kecepatan, dan Percepatan}
+
+Keadaan gerak sebuah objek dinyatakan oleh tiga besaran yang saling
+berkaitan. Besaran-besaran ini bukan sekadar nama, melainkan tingkatan
+perubahan terhadap waktu.
+
+\begin{description}
+  \item[Posisi] Letak objek pada suatu saat, dinyatakan sebagai pasangan atau
+        rangkap tiga angka.
+  \item[Kecepatan] Laju perubahan posisi terhadap waktu. Nilainya menyatakan
+        seberapa cepat, sedangkan arahnya menyatakan ke mana.
+  \item[Percepatan] Laju perubahan kecepatan terhadap waktu. Gravitasi adalah
+        contoh percepatan yang tetap besarnya dan mengarah ke bawah.
+\end{description}
+
+Hubungan antarketiganya bersifat berulang: kecepatan mengubah posisi, dan
+percepatan mengubah kecepatan. Urutan pembaruan inilah yang menentukan hasil
+simulasi, sebagaimana diuraikan pada Bagian~\ref{sec:simulasi-diskret}. Angka
+yang menyatakan besaran tersebut dikelompokkan menjadi vektor, yaitu kumpulan
+nilai yang diperlakukan sebagai satu kesatuan karena menyatakan besaran
+berarah. Pada Bab~V Anda akan memakai jenis data bawaan Pygame untuk keperluan
+itu \cite{pygame-docs}.
+
+\subsection{Ruang Batas dan Tabrakan}
+
+Untuk menentukan apakah dua objek bersentuhan, program tidak memeriksa setiap
+titik pada gambar objek. Cara yang dipakai lebih sederhana: setiap objek
+dilingkupi oleh persegi pembatas yang sisi-sisinya sejajar dengan sumbu
+koordinat, disebut \istilah{axis-aligned bounding box} (AABB). Dua objek
+dianggap bersentuhan apabila persegi pembatasnya beririsan.
+
+Pendekatan ini dipilih karena murah dihitung dan cukup untuk sebagian besar
+kebutuhan. Harga yang dibayar adalah ketelitian: dua objek yang bentuknya
+tidak mengisi seluruh persegi pembatasnya dapat terdeteksi bersentuhan
+walaupun gambar keduanya tidak benar-benar bersinggungan. Apabila ketelitian
+itu diperlukan, tersedia cara yang lebih cermat dengan memeriksa piksel yang
+benar-benar terisi \cite{pygame-sprite-mask}. Pertimbangan memilih di antara
+keduanya dibahas pada Bab~VII, sedangkan contoh kajian penerapannya pada
+permainan dapat dilihat pada \mbox{[R23]}.
+
+\subsection{Representasi Keadaan Permainan}
+
+Keadaan permainan adalah kumpulan seluruh nilai yang menentukan apa yang
+sedang terjadi. Nilai-nilai itu terbagi menjadi dua golongan.
+
+\begin{itemize}
+  \item \textbf{Keadaan yang terus berubah} dengan nilai pecahan: posisi,
+        kecepatan, sisa waktu tunggu, dan kemajuan animasi.
+  \item \textbf{Keadaan yang berubah secara terputus} dengan nilai tertentu
+        saja: keadaan NPC, apakah pemain sedang melompat, fase permainan
+        (bermain, jeda, selesai), skor, dan jumlah nyawa.
+\end{itemize}
+
+Membedakan keduanya bermanfaat. Golongan pertama menuntut perhitungan yang
+cermat dan penyajian yang halus, sedangkan golongan kedua menentukan aturan
+permainan dan lebih mudah diperiksa. Sebagian besar kesalahan logika
+permainan berasal dari golongan kedua: keadaan yang seharusnya sudah berubah
+ternyata belum, atau berubah dua kali padahal seharusnya sekali.
+
+Satu anjuran praktis yang berlaku sepanjang buku ini: nyatakan keadaan
+permainan secara terpusat dan sejelas mungkin. Apabila Anda menemukan diri
+Anda menyimpan satu informasi yang sama di dua tempat berbeda, hampir dapat
+dipastikan kedua salinan itu akan saling bertentangan pada suatu saat. Pada
+Bab~IX hal ini akan Anda jumpai kembali ketika menyusun mesin keadaan, tempat
+aturan ``satu keadaan aktif pada satu waktu'' mencegah percabangan logika yang
+rumit.

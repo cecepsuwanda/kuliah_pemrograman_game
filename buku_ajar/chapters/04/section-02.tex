@@ -1,0 +1,114 @@
+% chapters/04/section-02.tex
+\section{Membaca Masukan sebagai Peristiwa}
+\label{sec:membaca-masukan}
+
+\subsection{Mengapa Cara pada Bab III Tidak Cukup}
+
+Program jendela pada Bab~III menunggu peristiwa dengan
+\code{pygame.event.wait()}. Perintah itu \textbf{menghentikan} program sampai
+ada peristiwa yang terjadi. Cara tersebut memadai untuk program yang hanya
+menampilkan informasi, tetapi tidak untuk permainan.
+
+Bayangkan apa yang terjadi apabila \code{event.wait()} dipakai di dalam
+siklus permainan. Ketika pemain tidak menekan apa pun dan tidak menggerakkan
+tetikus, tidak ada peristiwa yang datang, sehingga program berhenti menunggu.
+Akibatnya tahap pembaruan dan penayangan tidak pernah dikerjakan, dan
+permainan membeku. Permainan yang benar harus tetap berjalan walaupun pemain
+sedang diam, karena objek-objek di dalamnya terus bergerak dan waktu terus
+berjalan.
+
+\subsection{Antrean Peristiwa dan Cara Mengosongkannya}
+
+Pygame mengumpulkan seluruh peristiwa yang terjadi ke dalam sebuah
+\textbf{antrean} (\istilah{queue}). Peristiwa masuk ke antrean ketika terjadi,
+dan menunggu di sana sampai ada yang membacanya. Perintah
+\code{pygame.event.get()} mengambil \textbf{seluruh} isi antrean sekaligus dan
+mengosongkannya, tanpa menunggu peristiwa baru datang.
+
+Karena itulah \code{event.get()} dipakai di dalam siklus, sedangkan
+\code{event.wait()} tidak. \code{event.get()} mengembalikan
+daftar, sehingga hasilnya dibaca dengan perulangan.
+
+\begin{kodekeluaran}
+for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+        running = False
+    elif event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_ESCAPE:
+            running = False
+\end{kodekeluaran}
+
+\begin{peringatanbox}
+Antrean peristiwa harus dikosongkan setiap bingkai. Apabila
+\code{pygame.event.get()} tidak pernah dipanggil, antrean terus bertambah
+panjang dan sistem operasi menganggap program tidak menanggapi masukan. Pada
+Windows, jendela program semacam itu akan ditandai sebagai ``tidak
+menanggapi'' dan dapat ditutup paksa oleh sistem.
+\end{peringatanbox}
+
+\subsection{Jenis Peristiwa yang Lazim}
+
+Setiap peristiwa memiliki jenis (\code{event.type}) dan, untuk sebagian
+peristiwa, keterangan tambahan. Peristiwa \code{KEYDOWN} misalnya memuat
+\code{event.key}, yaitu tombol yang ditekan. Jenis peristiwa yang paling
+sering dipakai pada Blok~I dan Blok~II diperlihatkan pada
+Tabel~\ref{tab:jenis-peristiwa}.
+
+\begin{table}[htbp]
+\centering
+\caption{Jenis peristiwa yang paling sering dipakai pada Blok I dan Blok II}
+\label{tab:jenis-peristiwa}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.0cm} L{4.2cm} Y@{}}
+\toprule
+\headrow \textbf{Jenis peristiwa} & \textbf{Keterangan tambahan} & \textbf{Dipakai untuk} \\
+\midrule
+\code{QUIT} & tidak ada &
+Menutup jendela: pemain meminta program berakhir. \\
+\addlinespace
+\code{KEYDOWN} & \code{event.key}, \code{event.mod} &
+Tombol ditekan. Peristiwa ini terjadi sekali saja untuk setiap penekanan, tidak
+berulang selama tombol ditahan. \\
+\addlinespace
+\code{KEYUP} & \code{event.key} &
+Tombol dilepas. Berguna untuk tindakan yang berakhir ketika tombol
+dilepaskan. \\
+\addlinespace
+\code{MOUSEBUTTONDOWN} & \code{event.pos}, \code{event.button} &
+Tombol tetikus ditekan, beserta letak penunjuk saat itu. \\
+\addlinespace
+\code{MOUSEMOTION} & \code{event.pos}, \code{event.rel} &
+Penunjuk tetikus bergeser. \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Sumber: dokumentasi Pygame \mbox{[R3]}.}
+\end{table}
+
+\subsection{Peristiwa Berbeda dari Keadaan Tombol}
+
+Satu hal yang sering membingungkan pemula perlu ditegaskan di sini.
+\code{event.get()} melaporkan \textbf{peristiwa}, yaitu sesuatu yang baru saja
+terjadi. Peristiwa \code{KEYDOWN} terjadi sekali pada saat tombol mulai
+ditekan, dan tidak terjadi lagi selama tombol itu tetap ditahan.
+
+Untuk gerak yang berlangsung terus selama tombol ditahan---misalnya karakter
+yang berjalan ke kanan---diperlukan cara lain, yaitu memeriksa
+\textbf{keadaan} seluruh tombol pada saat itu dengan
+\code{pygame.key.get_pressed()}. Perbedaan keduanya akan Anda pakai bersama
+pada Bab~V, dan memilih cara yang keliru merupakan salah satu penyebab
+gerakan yang tersendat: karakter yang hanya bergerak satu piksel setiap kali
+tombol ditekan \cite{pygame-docs}.
+
+Sebagai pedoman sederhana, gunakan peristiwa untuk tindakan yang terjadi
+sekali (melompat, menembak, membuka menu, mengakhiri program), dan gunakan
+keadaan tombol untuk tindakan yang berlangsung selama tombol ditahan
+(berjalan, mengarahkan, mempercepat).
+
+\begin{catatabox}
+Selain peristiwa bawaan Pygame, Anda dapat membuat peristiwa sendiri dan
+menaruh peristiwa itu ke antrean dengan \code{pygame.event.post()}. Cara itu
+dipakai pada program buku ini pada pilihan \code{--auto-close}, yaitu untuk
+mengirim peristiwa \code{QUIT} secara sengaja agar program dapat diuji tanpa
+jendela. Cara yang sama berguna nanti untuk menyampaikan kejadian di dalam
+permainan, misalnya ``skor bertambah'', kepada bagian program yang lain.
+\end{catatabox}

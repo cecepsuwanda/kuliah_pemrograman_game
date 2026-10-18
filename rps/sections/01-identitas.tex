@@ -1,0 +1,72 @@
+% =========================================================
+%  sections/01-identitas.tex
+%  Bagian 1 — Identitas Mata Kuliah
+% =========================================================
+
+\section{Identitas Mata Kuliah}
+
+\begin{table}[htbp]
+\centering
+\caption{Identitas mata kuliah \NamaMK}
+\label{tab:identitas}
+\begin{tabularx}{\textwidth}{@{}L{5.2cm}Y@{}}
+\toprule
+\headrow \textbf{Komponen} & \textbf{Keterangan} \\
+\midrule
+Nama Perguruan Tinggi   & \NamaPT \\
+Nama Fakultas           & \NamaFakultas \\
+Nama Program Studi      & \NamaProdi \\
+Nama Mata Kuliah        & \NamaMK \\
+Kode Mata Kuliah        & \KodeMK \\
+Semester                & \SemesterMK \\
+Bobot SKS               & 3 SKS (2 SKS teori, 1 SKS praktikum) \\
+Sifat Mata Kuliah       & Wajib \\
+Mata Kuliah Prasyarat   & Algoritma dan Pemrograman \\
+Dosen Pengampu          & \NamaDosen \\
+Bahasa Pengantar        & Bahasa Indonesia \\
+Bentuk Pembelajaran     & Kuliah tatap muka, praktikum laboratorium komputer, dan tugas terstruktur \\
+Media Pembelajaran      & LCD proyektor, komputer laboratorium, Python 3 + Pygame, Unity (versi LTS), repositori Git \\
+Alokasi Waktu           & 16 minggu $\times$ 150 menit tatap muka (14 minggu materi, UTS, dan UAS) \\
+Tahun Akademik          & \TahunAkademik \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection*{Deskripsi Singkat Mata Kuliah}
+
+Mata kuliah \NamaMK\ membekali mahasiswa dengan konsep dan keterampilan dasar
+pengembangan permainan digital. Perkuliahan disusun dalam dua tahap yang
+berurutan.
+
+\begin{enumerate}
+  \item \textbf{Tahap fondasi algoritma (Python + Pygame).}
+        Mahasiswa membangun pemahaman tentang \istilah{game} sebagai simulasi
+        interaktif \istilah{real-time}, merancang \istilah{game loop} dan
+        manajemen waktu, menggerakkan objek berbasis vektor dan
+        \istilah{delta time}, menerapkan fisika sederhana, mendeteksi
+        \istilah{collision}, serta mengimplementasikan kecerdasan buatan (AI)
+        dasar untuk NPC berupa perilaku \istilah{chase}, \istilah{Finite State
+        Machine} (FSM), dan \istilah{pathfinding} A*.
+  \item \textbf{Tahap implementasi \istilah{game engine} (Unity).}
+        Mahasiswa memindahkan solusi \istilah{computing} tersebut ke dalam
+        Unity untuk membangun level, mengonfigurasi sistem fisika dan
+        \istilah{collider}, serta mengintegrasikan aset visual dan audio ke
+        dalam interaksi permainan.
+\end{enumerate}
+
+Pembelajaran berpusat pada mahasiswa melalui praktikum terbimbing, dua proyek
+(mini proyek AI dan proyek akhir berupa prototipe \istilah{game}), serta
+\istilah{playtesting} antar kelompok. Penilaian dilakukan berbasis kriteria
+terhadap ketercapaian Sub-CPMK yang telah ditetapkan.
+
+\subsection*{Bahan Kajian Utama}
+
+\begin{itemize}
+  \item Arsitektur \istilah{game loop}: siklus input--update--render dan manajemen waktu.
+  \item Matematika vektor terapan, gerak berbasis \istilah{delta time}, dan integrasi numerik sederhana.
+  \item \istilah{Collision detection} dan resolusi tabrakan pada lingkungan 2D.
+  \item Kecerdasan buatan untuk NPC: perilaku reaktif, FSM, dan \istilah{pathfinding} A*.
+  \item \istilah{Game engine} Unity: \istilah{scene}, \istilah{GameObject}, sistem fisika, dan \istilah{level design}.
+  \item Integrasi aset visual, animasi, antarmuka pengguna, dan audio ke dalam \istilah{gameplay}.
+  \item Evaluasi produk melalui \istilah{playtesting}, pelaporan \istilah{bug}, dan refleksi desain.
+\end{itemize}

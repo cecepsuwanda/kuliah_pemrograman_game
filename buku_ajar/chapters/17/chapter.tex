@@ -1,0 +1,34 @@
+% =========================================================
+%  chapters/17/chapter.tex
+%  BAB XVII — Evaluasi, Refleksi, dan Integrasi Kompetensi
+% =========================================================
+
+\documentclass[../../main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Evaluasi, Refleksi, dan Integrasi Kompetensi}
+\label{chap:evaluasi-akhir}
+
+\input{tujuan}
+
+\subfile{section-01}
+\subfile{section-02}
+\subfile{section-03}
+\subfile{section-04}
+\subfile{section-05}
+
+\input{contoh}
+
+\input{latihan}
+
+\input{rangkuman}
+
+\input{evaluasi}
+
+\ifSubfilesClassLoaded{%
+  \clearpage
+  \input{../../references}%
+}{}
+
+\end{document}

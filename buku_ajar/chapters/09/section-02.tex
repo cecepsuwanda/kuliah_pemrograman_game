@@ -1,0 +1,118 @@
+% chapters/09/section-02.tex
+\section{Menggambar Diagram Keadaan--Transisi}
+\label{sec:diagram-keadaan}
+
+Sebelum mesin keadaan ditulis sebagai kode, ia digambar terlebih dahulu.
+Gambar itu bukan hiasan: ia adalah rancangan, dan kesalahan pada gambar akan
+menjadi kesalahan pada program.
+
+\subsection{Tiga Lambang yang Dipakai}
+
+Diagram keadaan--transisi hanya memakai tiga lambang.
+
+\begin{itemize}
+  \item \textbf{Kotak bersudut tumpul} menyatakan sebuah keadaan. Isinya nama
+        keadaan itu.
+  \item \textbf{Anak panah} menyatakan perpindahan yang mungkin terjadi, dari
+        keadaan asal menuju keadaan tujuan.
+  \item \textbf{Keterangan pada anak panah} menyatakan syarat perpindahan itu.
+        Syaratnya harus dapat diperiksa oleh program, misalnya ``jarak kurang
+        dari jari-jari persepsi''.
+\end{itemize}
+
+Diagram untuk NPC pada bab ini diperlihatkan pada
+Gambar~\ref{fig:diagram-keadaan}. Seluruh perpindahan yang
+mungkin tergambar di sana, dan tidak ada perpindahan lain yang sah.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/diagram-keadaan.tikz}
+\caption{Diagram keadaan--transisi NPC dengan empat keadaan}
+\label{fig:diagram-keadaan}
+\end{figure}
+
+\subsection{Tujuh Perpindahan yang Sah}
+
+Diagram tersebut memuat tujuh perpindahan. Tabel~\ref{tab:tujuh-perpindahan}
+memuatnya beserta syarat masing-masing, sehingga dapat diperiksa satu per satu.
+
+\begin{table}[htbp]
+\centering
+\caption{Tujuh perpindahan keadaan beserta syaratnya}
+\label{tab:tujuh-perpindahan}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.6cm} C{1.6cm} L{3.0cm} Y@{}}
+\toprule
+\headrow \textbf{Dari} & \textbf{Ke} & \textbf{Jenis syarat} & \textbf{Syarat} \\
+\midrule
+berdiam & berpatroli & pewaktu & Telah berdiam selama 1,5 detik. \\
+\addlinespace
+berdiam & mengejar & jarak & Pemain berada di dalam jari-jari persepsi. \\
+\addlinespace
+berpatroli & berdiam & peristiwa & Satu putaran patroli telah selesai. \\
+\addlinespace
+berpatroli & mengejar & jarak & Pemain berada di dalam jari-jari persepsi. \\
+\addlinespace
+mengejar & menyerang & jarak & Pemain berada di dalam jangkauan serang. \\
+\addlinespace
+mengejar & berdiam & pewaktu & Pemain tidak terlihat selama 1 detik. \\
+\addlinespace
+menyerang & mengejar & jarak & Pemain keluar dari jangkauan serang. \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Dua keadaan dapat berpindah ke keadaan yang sama
+melalui syarat yang sama, misalnya dari berdiam maupun dari berpatroli menuju
+mengejar. Hal itu wajar dan tidak menimbulkan persoalan.}
+\end{table}
+
+\subsection{Kesalahan yang Sering Terjadi pada Diagram}
+
+Tiga kesalahan berikut paling sering muncul, dan semuanya berpangkal pada satu
+sebab yang sama: syarat perpindahan yang tidak lengkap.
+
+\begin{enumerate}
+  \item \textbf{Perpindahan tanpa syarat yang jelas.} Menuliskan ``kadang
+        beralih mengejar'' tidak dapat diterjemahkan menjadi kode. Setiap
+        perpindahan harus memiliki syarat yang dapat diperiksa, yaitu
+        perbandingan nilai, keadaan tombol, atau pewaktu.
+  \item \textbf{Keadaan tanpa jalan keluar.} Keadaan yang tidak memiliki
+        perpindahan keluar membuat NPC terperangkap selamanya. Pada diagram di
+        atas, setiap keadaan memiliki sekurang-kurangnya satu perpindahan
+        keluar.
+  \item \textbf{Syarat yang saling bertentangan.} Apabila dua perpindahan dari
+        satu keadaan memiliki syarat yang keduanya benar pada saat yang sama,
+        hasilnya bergantung pada urutan pemeriksaan di dalam kode. Gejalanya
+        khas: NPC sesekali berperilaku tidak seperti dugaan, dan hanya pada
+        keadaan tertentu.
+\end{enumerate}
+
+\begin{tipsbox}
+Kebiasaan yang berguna: periksa diagram Anda dengan pertanyaan ``apabila
+kondisi ini benar, perpindahan mana yang terjadi?'' untuk setiap keadaan dan
+setiap nilai jarak yang mungkin. Apabila jawabannya lebih dari satu, urutkan
+syaratnya secara sadar dan tuliskan urutan itu pada diagram, misalnya dengan
+menomori anak panahnya.
+\end{tipsbox}
+
+\subsection{Pewaktu sebagai Syarat Perpindahan}
+
+Tiga dari tujuh perpindahan pada tabel di atas bersyarat
+pewaktu, bukan jarak. Pewaktu itu ada tiga jenis, dan ketiganya memiliki
+keperluan yang berbeda.
+
+\begin{description}
+  \item[Pewaktu berdiam] Menghitung lama NPC berdiam, agar ia tidak langsung
+        berpatroli pada bingkai berikutnya. Tanpa pewaktu ini, keadaan berdiam
+        tidak memiliki makna karena langsung ditinggalkan.
+  \item[Pewaktu tenggang] Menghitung lama NPC telah kehilangan pemain, agar ia
+        tidak langsung menyerah. Tanpa pewaktu ini, NPC akan berhenti mengejar
+        begitu saja ketika pemain berlari di balik sebuah rintangan selama satu
+        bingkai.
+  \item[Pewaktu jeda] Menghitung jarak waktu antara dua serangan, agar serangan
+        tidak terjadi pada setiap bingkai. Pewaktu ini disebut
+        \istilah{cooldown} pada RPS.
+\end{description}
+
+Ketiga pewaktu itu dijalankan dengan cara yang sama: ditambah dengan selang
+waktu setiap bingkai, lalu dibandingkan dengan nilai batasnya. Cara yang sama
+juga dipakai pada pewaktu lain mana pun di dalam permainan.

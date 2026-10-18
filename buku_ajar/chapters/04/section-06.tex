@@ -1,0 +1,107 @@
+% chapters/04/section-06.tex
+\section{Yang Belum Ada pada Siklus Ini}
+\label{sec:belum-ada}
+
+Siklus permainan sudah berjalan, tetapi permainannya belum. Bagian penutup
+ini menjelaskan apa yang masih kurang dan bagaimana kekurangan itu dilengkapi
+pada bab berikutnya.
+
+\subsection{Siklus Berjalan, tetapi Tidak Ada yang Bergerak}
+
+Program pada bab ini memperbarui keadaan berupa penghitung bingkai, dan
+penayangannya hanya menampilkan angka serta sebuah batang penanda. Tidak ada
+objek yang berpindah tempat, karena perpindahan objek memerlukan dua hal yang
+belum dibahas.
+
+\begin{enumerate}
+  \item \textbf{Keadaan yang lebih kaya.} Posisi dan kecepatan setiap objek
+        harus disimpan dan diperbarui setiap bingkai.
+  \item \textbf{Penggunaan selang waktu untuk perhitungan.} Program ini
+        sudah mengukur selang waktu melalui \code{clock.tick()}, tetapi nilai
+        itu baru dipakai untuk menampilkan waktu berjalan. Pada Bab~V nilai
+        yang sama dipakai sebagai pengali kecepatan, sehingga objek menempuh
+        jarak yang sama setiap detik terlepas dari laju bingkainya.
+\end{enumerate}
+
+Perangkatnya sudah lengkap. Yang belum ada hanyalah
+pemakaiannya. Hal ini disengaja: memisahkan pemasangan siklus dari
+penggunaan selang waktu membuat kedua persoalan dapat dipelajari satu per
+satu. Kesalahan pada gerak nanti dapat ditelusuri tanpa harus mempertanyakan
+apakah siklusnya sudah benar.
+
+\subsection{Langkah Tetap dan Langkah Berubah pada Siklus Ini}
+
+Bagian~2.2 telah membedakan dua cara memajukan simulasi. Sesudah menulis
+siklus sendiri, perbedaan itu dapat ditinjau kembali dengan contoh yang nyata.
+
+\textbf{Pada \istilah{fixed timestep}}, simulasi selalu maju dengan panjang
+langkah yang sama, misalnya 1/60 detik, sedangkan selisih waktu yang belum
+terpakai ditabung pada penampung. Cara ini menghasilkan simulasi yang dapat
+diulang persis dan perhitungan fisika yang stabil.
+
+\textbf{Pada \istilah{variable timestep}}, simulasi maju mengikuti lama bingkai
+yang sesungguhnya, sehingga panjang langkahnya berubah-ubah. Cara ini lebih
+sederhana untuk diterapkan.
+
+Siklus yang baru saja Anda tulis termasuk golongan kedua. Setiap putaran
+memakai selang waktu yang benar-benar berlangsung---kadang 16 milidetik,
+kadang 34 milidetik---sehingga langkahnya berubah-ubah. Untuk keperluan Blok~I
+dan Blok~II, cara ini memadai, dan sebagian besar permainan sederhana memang
+memakainya.
+
+Pilihan itu diambil secara sadar, bukan karena ketidaktahuan. Yang perlu Anda
+ketahui adalah batas kemampuannya: apabila panjang langkah suatu ketika
+menjadi sangat besar, misalnya karena komputer sesaat tersendat, objek yang
+bergerak cepat dapat melompat melewati rintangan tanpa terdeteksi. Gejala
+itu beserta penanganannya akan Anda jumpai kembali pada Bab~VII, sedangkan
+pada Bab~XIII Unity menyediakan langkah tetap untuk perhitungan fisika dan
+menyerahkan sisanya pada tahap yang mengikuti lama bingkai.
+
+\begin{catatabox}
+Cara memeriksa jenis langkah yang dipakai cukup sederhana: lihat apakah
+simulasi memakai selang waktu hasil pengukuran secara langsung. Apabila ya,
+itu langkah berubah. Apabila simulasi memakai nilai tetap dan menyimpan
+selisih waktunya, itu langkah tetap.
+\end{catatabox}
+
+\subsection{Perkembangan Siklus pada Bab-Bab Berikutnya}
+
+Bab-bab selanjutnya akan menambahkan bagian pada siklus yang sama, bukan
+menggantinya. Susunan yang akan Anda jumpai adalah sebagai berikut.
+
+\begin{table}[htbp]
+\centering
+\caption{Bagian yang ditambahkan pada siklus permainan pada bab-bab berikutnya}
+\label{tab:perkembangan-siklus}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.6cm} L{4.6cm} Y@{}}
+\toprule
+\headrow \textbf{Bab} & \textbf{Yang ditambahkan} & \textbf{Akibat pada siklus} \\
+\midrule
+Bab~V & Posisi, kecepatan, dan pemakaian selang waktu &
+Tahap pembaruan mulai mengubah keadaan objek, dan penayangan menggambar objek
+pada posisinya yang baru. \\
+\addlinespace
+Bab~VI & Gravitasi, lompatan, dan pantulan &
+Tahap pembaruan menghitung percepatan, lalu memperbarui kecepatan sebelum
+memperbarui posisi. \\
+\addlinespace
+Bab~VII & \istilah{Sprite}, \istilah{Group}, dan tabrakan &
+Tahap pembaruan memeriksa tabrakan antar-objek dan mengubah keadaan permainan
+sebagai akibatnya. \\
+\addlinespace
+Bab~VIII--XI & Pengendalian NPC &
+Tahap pembaruan memanggil lapisan keputusan dan lapisan navigasi, dan sebagian
+pekerjaan itu tidak dijalankan setiap bingkai karena alasan kinerja. \\
+\addlinespace
+Bab~XIII & Fisika mesin pada Unity &
+Langkah tetap dijalankan mesin untuk perhitungan fisika, sedangkan kode Anda
+dipanggil pada tahap yang mengikuti lama bingkai. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Dengan gambaran tersebut, dapat dikatakan bahwa bab ini adalah tulang
+belakang seluruh Blok~I dan Blok~II. Setiap bab berikutnya mengisi tahap
+pembaruan dengan pekerjaan baru, sementara kerangka siklusnya tetap seperti
+yang baru saja Anda tulis.

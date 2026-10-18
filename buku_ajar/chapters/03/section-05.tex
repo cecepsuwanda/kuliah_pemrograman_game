@@ -1,0 +1,150 @@
+% chapters/03/section-05.tex
+\section{Program Pygame Pertama}
+\label{sec:program-pertama}
+
+Bagian ini menuntun Anda menulis program Pygame yang benar-benar berjalan.
+Sasaran programnya sederhana: membuka jendela, menampilkan informasi versi
+perkakas yang dipakai, dan menunggu sampai jendela ditutup.
+
+\subsection{Kerangka Program dalam Lima Langkah}
+
+Setiap program Pygame, sederhana maupun rumit, mengikuti kerangka yang sama.
+Kelima langkah berikut akan Anda temui kembali, dengan tambahan, pada seluruh
+bab berikutnya.
+
+\begin{langkah}
+  \item \textbf{Memulai Pygame} dengan \code{pygame.init()}, sehingga seluruh
+        bagian pustaka yang diperlukan siap dipakai.
+  \item \textbf{Membuat permukaan tampilan} dengan
+        \code{pygame.display.set_mode()}, yang membuka jendela dan
+        mengembalikan permukaan tempat Anda menggambar.
+  \item \textbf{Menggambar isi jendela}: mengisi latar dengan satu warna, lalu
+        menempelkan teks atau bentuk di atasnya.
+  \item \textbf{Menayangkan hasil gambar} dengan \code{pygame.display.flip()},
+        karena gambar yang telah disusun masih berada di memori dan belum
+        terlihat pemain sebelum perintah itu dijalankan.
+  \item \textbf{Menunggu sampai program diakhiri, lalu membersihkan} dengan
+        \code{pygame.quit()}.
+\end{langkah}
+
+\subsection{Kode Lengkap}
+
+\kodepython{python/ch03_jendela.py}{Program Pygame pertama: jendela dan informasi versi}{lst:ch03-jendela}
+
+\subsection{Membedah Kode}
+
+\subsubsection{Membaca pilihan dari baris perintah}
+
+Fungsi \code{parse_arguments} memakai modul \code{argparse} bawaan Python untuk
+membaca pilihan yang Anda berikan ketika menjalankan program. Karena itu,
+ukuran jendela dapat diubah tanpa menyunting kode. Cara ini dipakai pada
+hampir seluruh program di buku ini, sebab mengubah nilai melalui baris
+perintah jauh lebih praktis daripada mengubah kode dan menjalankannya
+berulang kali.
+
+Pilihan \code{--auto-close} disediakan untuk pengujian otomatis. Ketika
+pilihan itu dipakai, program mengirim sendiri peristiwa penutupan jendela
+sehingga program berakhir tanpa perlu disentuh. Pilihan semacam ini berguna
+ketika program harus diuji pada komputer tanpa layar.
+
+\subsubsection{Memulai Pygame dan membuka jendela}
+
+Pemanggilan \code{pygame.init()} menyalakan seluruh bagian Pygame: tampilan,
+huruf, bunyi, dan penanganan peristiwa. Sesudah itu,
+\code{pygame.display.set_mode((640, 480))} membuka jendela berukuran
+640 kali 480 piksel. Nilai yang dikembalikannya disimpan pada variabel
+\code{screen}, yaitu \textbf{permukaan} (\istilah{surface}) tempat seluruh
+penggambaran dilakukan.
+
+Istilah permukaan perlu Anda pahami sejak awal. Pada Pygame, apa pun yang
+digambar---jendela, gambar yang dimuat dari berkas, atau teks---adalah
+permukaan. Menggambar berarti menempelkan satu permukaan ke permukaan lain
+dengan perintah \code{blit}. Cara berpikir itu akan terasa wajar setelah Anda
+memakainya beberapa kali.
+
+\subsubsection{Warna, huruf, dan teks}
+
+Warna dinyatakan sebagai rangkap tiga bilangan antara 0 dan 255 yang
+menyatakan banyaknya merah, hijau, dan biru. Nilai \code{(31, 56, 100)}
+menghasilkan biru tua, sedangkan \code{(255, 255, 255)} menghasilkan putih.
+
+Huruf dibuat dengan \code{pygame.font.Font(None, 26)}. Argumen pertama bernilai
+\code{None}, yang berarti Pygame memakai huruf bawaan. Pilihan itu disengaja
+agar program tidak bergantung pada huruf yang terpasang pada sistem operasi
+tertentu. Argumen kedua adalah ukuran huruf dalam piksel.
+
+Teks belum menjadi gambar sampai dijalankan melalui \code{font.render()}.
+Fungsi itu mengubah rangkaian huruf menjadi permukaan berisi gambar teks,
+beserta keterangan bahwa latar belakangnya dibuat transparan. Permukaan hasil
+\code{render} itulah yang kemudian ditempelkan ke jendela dengan \code{blit}.
+
+\subsubsection{Menunggu peristiwa dan mengakhiri program}
+
+Perhatikan bagian berikut dengan saksama, karena di sinilah letak perbedaan
+antara program ini dan siklus permainan yang sebenarnya.
+
+\begin{kodekeluaran}
+running = True
+while running:
+    event = pygame.event.wait()
+    if event.type == pygame.QUIT:
+        running = False
+\end{kodekeluaran}
+
+Perintah \code{pygame.event.wait()} menghentikan program sampai satu peristiwa
+(\istilah{event}) terjadi, misalnya tombol ditekan atau jendela ditutup.
+Apabila peristiwa itu adalah \code{QUIT}, yaitu permintaan menutup jendela,
+variabel \code{running} diubah menjadi salah dan perulangan berakhir.
+
+Perulangan tersebut adalah \textbf{perulangan peristiwa}, bukan siklus
+permainan. Ia hanya menunggu dan bereaksi; tidak ada keadaan yang diperbarui
+dan tidak ada gambar yang disusun ulang. Akibatnya, apa pun yang terjadi pada
+jendela---misalnya ditutup sebagian oleh jendela lain---isi jendela tidak
+digambar kembali. Untuk permainan yang sesungguhnya, ketiga pekerjaan itu,
+yaitu membaca masukan, memperbarui keadaan, dan menggambar ulang, harus
+dilakukan berulang kali tanpa berhenti. Itulah yang dibahas pada Bab~IV.
+
+Pemanggilan \code{pygame.quit()} pada akhirnya mematikan kembali seluruh
+bagian Pygame. Kebiasaan memanggilnya sebelum program berakhir mencegah
+berbagai masalah, terutama ketika program dijalankan berulang kali dari
+editor yang sama.
+
+\subsection{Percobaan yang Disarankan}
+
+Cara tercepat memahami sebuah program bukan dengan membacanya berulang kali,
+melainkan dengan mengubahnya. Ubahlah satu hal pada satu waktu, jalankan
+kembali, dan amati bedanya. Tabel~\ref{tab:percobaan-ch03} memuat percobaan
+yang dapat Anda mulai.
+
+\begin{table}[htbp]
+\centering
+\caption{Percobaan sederhana pada program pertama}
+\label{tab:percobaan-ch03}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{6.0cm} Y@{}}
+\toprule
+\headrow \textbf{Yang diubah dan caranya} & \textbf{Yang sebaiknya Anda amati} \\
+\midrule
+Ukuran jendela, melalui pilihan \code{--width} dan \code{--height} pada baris
+perintah. &
+Letak teks tetap pada sudut kiri-atas, sedangkan ruang kosong di sebelah kanan
+dan bawah bertambah. \\
+\addlinespace
+Warna latar, melalui nilai \code{WARNA_LATAR}. &
+Perubahan pada ketiga angka mengubah warna secara berbeda. Naikkan angka
+pertama untuk memperkuat merah. \\
+\addlinespace
+Ukuran huruf, melalui angka 26 pada pembuatan huruf. &
+Angka yang lebih besar menghasilkan teks yang lebih tinggi. Tambahkan baris
+teks untuk melihat jarak antar-baris. \\
+\addlinespace
+Jarak antar-baris, melalui nilai 32 pada penambahan posisi tegak. &
+Nilai yang lebih kecil membuat baris teks saling menempel atau saling
+menimpa. \\
+\addlinespace
+Judul jendela, melalui teks pada \code{pygame.display.set_caption}. &
+Judul pada bilah jendela berubah. Judul ini berguna untuk menandai program
+mana yang sedang berjalan. \\
+\bottomrule
+\end{tabularx}}
+\end{table}

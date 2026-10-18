@@ -1,0 +1,68 @@
+% chapters/14/section-01.tex
+\section{Jalan Pengolahan Aset}
+\label{sec:pipeline-impor}
+
+\subsection{Tiga Langkah dari Berkas menjadi Benda}
+
+Perbedaan besar antara Unity dan blok Python terletak pada saat aset
+dikerjakan. Pada Pygame, gambar dimuat ketika program dijalankan, sehingga
+program harus disunting untuk mengubahnya. Pada Unity, aset diolah ketika
+diimpor, dan hasilnya disimpan \cite{unity-manual-import}.
+
+\begin{langkah}
+  \item \textbf{Berkas disalin} ke dalam folder \code{Assets}. Unity memantau
+        folder itu, sehingga berkas yang baru muncul langsung diolah.
+  \item \textbf{Berkas diolah} menurut \istilah{importer setting} yang berlaku
+        baginya, lalu hasilnya disimpan pada folder \code{Library}. Pengolahan
+        itu hanya dilakukan sekali untuk setiap pengaturan, bukan setiap kali
+        scene dijalankan \cite{unity-manual-import}.
+  \item \textbf{Berkas dipakai} dengan menyeretnya dari \istilah{Project
+        window} ke \istilah{Scene} atau ke komponen \istilah{Sprite Renderer}.
+\end{langkah}
+
+Akibat pemisahan itu penting untuk Anda ketahui: mengubah \istilah{importer
+setting} berarti Unity mengolah ulang berkasnya, dan seluruh benda yang memakai
+berkas itu \textbf{langsung berubah} tanpa perlu disentuh satu per satu. Itulah
+sebabnya pengaturan impor menjadi tempat pertama yang perlu diperiksa ketika
+sebuah aset tampak salah.
+
+\subsection{Pengaturan Impor yang Paling Berpengaruh}
+
+Pada aset dua dimensi, empat pengaturan berikut yang paling sering berpengaruh.
+
+\begin{itemize}
+  \item \textbf{\istilah{Sprite Mode}.} Menentukan apakah berkas gambar berisi
+        satu gambar atau banyak gambar yang tersusun sebagai lembar. Nilai
+        \istilah{Single} untuk gambar tunggal, dan \istilah{Multiple} untuk
+        \istilah{sprite sheet}.
+  \item \textbf{\istilah{Pixels Per Unit}.} Menentukan berapa piksel gambar
+        yang setara dengan satu satuan pada scene. Nilai inilah yang mengaitkan
+        ukuran gambar dengan ukuran level yang telah Anda tetapkan pada
+        Bagian~13.1.
+  \item \textbf{\istilah{Filter Mode}.} Menentukan cara gambar dihaluskan ketika
+        diperbesar atau diperkecil. Nilai \istilah{Point} mempertahankan
+        ketajaman piksel, dan biasanya dipilih untuk gambar bergaya piksel.
+  \item \textbf{\istilah{Compression}.} Menentukan cara gambar dipadatkan saat
+        program dijalankan. Nilai \istilah{None} menjaga mutu gambar, sedangkan
+        nilai lain menghemat ruang dengan mengorbankan sedikit ketajaman.
+\end{itemize}
+
+\begin{peringatanbox}
+Jangan mengubah ukuran berkas gambar di luar Unity, misalnya dengan program
+penyunting gambar. Apabila berkasnya berubah, Unity akan mengolahnya ulang, dan
+hasilnya untuk seluruh benda yang memakainya berubah pula. Ukuran gambar
+sebaiknya diubah melalui pengaturan \istilah{Pixels Per Unit} pada Unity, agar
+perubahannya terkendali dan dapat dikembalikan.
+\end{peringatanbox}
+
+\subsection{\istilah{Sprite Sheet} dan Pemotongannya}
+
+Sebuah \istilah{sprite sheet} memuat beberapa gambar dalam satu berkas, dan
+pemotongannya diatur melalui \istilah{Sprite Editor}. Cara itu dipakai untuk
+gambar yang berubah-ubah, misalnya gerak berjalan yang dipecah menjadi beberapa
+bingkai.
+
+Kebiasaan yang menghemat waktu: tentukan ukuran setiap bingkai secara
+seragam, misalnya 64 kali 64 piksel, sehingga pemotongannya dapat dilakukan
+secara otomatis menurut ukuran itu. Ukuran yang tidak seragam menuntut
+pemotongan satu per satu, dan itu melelahkan serta mudah salah.

@@ -1,0 +1,99 @@
+% chapters/11/section-06.tex
+\section{Menutup Blok Python}
+\label{sec:menutup-blok-python}
+
+Bab ini menutup \CPMK{2} sekaligus menutup seluruh Blok~I dan Blok~II, yaitu
+seluruh bagian buku yang dikerjakan dengan Python. Bagian ini menyimpulkan apa
+yang telah dicapai dan apa yang menyusul.
+
+\subsection{Mini Proyek yang Dihasilkan}
+
+Mini proyek AI pada RPS menuntut tiga keluaran, dan ketiganya telah tersedia
+pada bab ini.
+
+\begin{itemize}
+  \item \textbf{Kode program}, yaitu mini permainan yang memuat NPC bermesin
+        keadaan yang mencari jalurnya sendiri. Kode itu tersusun atas berkas
+        \code{ch09_fsm.py}, \code{ch10_astar.py}, dan
+        \code{ch11_mini_proyek.py}.
+  \item \textbf{Ringkasan desain}, yaitu diagram keadaan pada
+        Gambar~\ref{fig:diagram-keadaan} dan diagram arsitektur pada
+        Gambar~\ref{fig:arsitektur-integrasi}.
+  \item \textbf{Laporan \istilah{playtest}}, yaitu catatan hasil ketiga
+        skenario uji pada Tabel~\ref{tab:tiga-skenario} beserta perbaikan yang
+        dirumuskan pada Tabel~\ref{tab:perbaikan}.
+\end{itemize}
+
+Penilaian mini proyek itu memakai rubrik pada Lampiran~A, dengan bobot
+\CPMK{2} sebesar 10 persen dari nilai akhir mata kuliah. Komponen penilaiannya
+meliputi implementasi mesin keadaan, implementasi pencarian jalur, penggabungan
+keduanya, pengujian beserta laporannya, dan presentasi.
+
+\subsection{Perkakas yang Telah Lengkap}
+
+Seluruh perkakas Blok~I dan Blok~II telah lengkap. Tabel~\ref{tab:perkakas-python}
+memuatnya.
+
+\begin{table}[htbp]
+\centering
+\caption{Perkakas blok Python yang telah lengkap beserta bab yang membahasnya}
+\label{tab:perkakas-python}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.6cm} L{2.6cm} Y@{}}
+\toprule
+\headrow \textbf{Perkakas} & \textbf{Dibahas pada} & \textbf{Kegunaan} \\
+\midrule
+Lingkungan kerja dan repositori & Bab~III &
+Menjalankan program dan menyimpan riwayat pekerjaan. \\
+\addlinespace
+Siklus permainan dan pengendalian waktu & Bab~IV &
+Menjalankan permainan dengan laju yang terkendali. \\
+\addlinespace
+Vektor, masukan, dan gerak & Bab~V &
+Menggerakkan benda dengan kecepatan yang sama pada setiap komputer. \\
+\addlinespace
+Gravitasi, lompatan, dan pantulan & Bab~VI &
+Memberi benda sifat jatuh, melompat, dan memantul. \\
+\addlinespace
+Kelas \code{Sprite}, wadah \code{Group}, dan tabrakan & Bab~VII &
+Mengelola banyak benda dan menangani persentuhannya. \\
+\addlinespace
+Perilaku mengejar & Bab~VIII &
+Membuat benda menentukan geraknya sendiri. \\
+\addlinespace
+Mesin keadaan & Bab~IX &
+Menyusun perilaku yang beragam beserta aturan perpindahannya. \\
+\addlinespace
+Pencarian jalur A* & Bab~X &
+Menemukan rute pada peta berhalangan. \\
+\addlinespace
+Penggabungan keduanya dan penilaian mutu & Bab~XI &
+Menghubungkan niat dengan rute, lalu mengukur dan memperbaiki mutunya. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection{Apa yang Menyusul}
+
+Capaian yang telah Anda peroleh bukan perkakas yang akan ditinggalkan. Pada
+Blok~III dan Blok~IV, pekerjaan berpindah ke Unity, dan seluruh gagasan pada
+tabel di atas tetap berlaku.
+
+Yang berubah hanyalah \textbf{letak tanggung jawabnya}. Siklus permainan,
+perhitungan fisika, deteksi tabrakan, dan penyajian diserahkan kepada mesin.
+Waktu Anda beralih kepada pekerjaan yang tidak dapat dikerjakan mesin, yaitu
+menentukan desain level, menyusun pengalaman bermain, dan menilai mutu hasilnya.
+
+Pengetahuan tentang mekanisme yang telah Anda bangun sendiri itulah yang
+membuat peralihan itu berjalan mulus. Ketika perilaku permainan pada Unity
+terasa janggal, Anda memiliki bekal untuk menelusuri sebabnya: apakah
+pengaturan komponennya yang keliru, apakah mesinnya yang bekerja dengan cara
+yang tidak Anda duga, atau apakah rancangan levelnya yang memang kurang tepat.
+
+\begin{catatabox}
+Bab~XII sampai Bab~XVI membahas Unity, dan Bab~XVII menutup buku ini dengan
+refleksi atas perbandingan kedua pendekatan. Perbandingan itu akan lebih
+bermakna apabila Anda telah merasakan sendiri kedua cara bekerja. Karena itu,
+simpanlah catatan praktikum Anda sejak Bab~III; catatan itulah bahan refleksi
+yang paling jujur pada akhir semester.
+\end{catatabox}

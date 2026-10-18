@@ -1,0 +1,87 @@
+% chapters/15/contoh.tex
+\section{Dua Contoh Terapan}
+\label{sec:contoh-bab-15}
+
+\subsection{Contoh Pertama: Menghitung Kekuatan Bunyi}
+
+\begin{contohbox}
+Seorang mahasiswa mengeluh bahwa bunyi lompatnya ``terlalu pelan'', padahal
+nilai \code{sfxVolume} sudah dinaikkan dari 0,5 menjadi 1,0. Musik latarnya
+memakai \code{musicVolume} bernilai 0,5.
+\end{contohbox}
+
+Nilai pada Unity bukan persentase, melainkan pengali kekuatan secara lurus.
+Karena itu, nilai 0,5 berarti kira-kira $-6$ dB, sedangkan nilai 1,0 berarti
+$0$ dB. Dengan kedua tingkat \istilah{AudioMixer} masih pada nilai bawaannya,
+keadaan sebelum perbaikan adalah:
+
+\[
+\text{musik} = -6 \text{ dB}, \qquad \text{efek} = -6 \text{ dB}.
+\]
+
+Keduanya sama kuat, dan di situlah masalahnya. Pada kekuatan yang sama, telinga
+mendahulukan bunyi yang berjalan terus-menerus, sehingga setiap bunyi lompatan
+tertutup oleh musik yang tidak pernah berhenti.
+
+Setelah \code{sfxVolume} dinaikkan menjadi 1,0, keadaannya menjadi:
+
+\[
+\text{musik} = -6 \text{ dB}, \qquad \text{efek} = 0 \text{ dB},
+\]
+
+yaitu selisih 6 dB, atau efek suara dua kali lebih kuat daripada musik. Selisih
+sebesar itu ternyata belum cukup. Di sinilah pengalaman mahasiswa itu berguna.
+Kenaikan yang terdengar besar pada angkanya hanya menghasilkan perbedaan yang
+kecil pada pendengaran, sebab 6 dB berarti dua kali kekuatan, bukan dua kali
+kenyaringan yang terdengar.
+
+Perbaikan yang benar adalah menurunkan musiknya, bukan menaikkan efek suaranya
+lebih jauh:
+
+\[
+\text{musik} = -12 \text{ dB}, \qquad \text{efek} = 0 \text{ dB}.
+\]
+
+Selisih 12 dB, atau sekitar empat kali kekuatan, cukup membuat bunyi lompatan
+terdengar jelas di atas musik yang sedang berjalan.
+
+Kesimpulan yang berlaku umum: \textbf{menyeimbangkan bunyi lebih sering berarti
+menurunkan yang terlalu kuat daripada menaikkan yang terlalu pelan}, dan
+selisih sekitar 10 dB antara efek suara dan musik latar adalah titik awal yang
+baik.
+
+\subsection{Contoh Kedua: Menelusuri Bunyi yang Tidak Terdengar}
+
+\begin{contohbox}
+Seorang mahasiswa melaporkan bahwa bunyi mengambil benda tidak pernah
+terdengar, sedangkan bunyi lompat dan bunyi terluka berjalan dengan baik.
+Program berjalan tanpa pesan kesalahan apa pun.
+\end{contohbox}
+
+Penelusurannya dilakukan menurut urutan berikut.
+
+\begin{langkah}
+  \item \textbf{Periksa daftar peristiwa.} Apakah pengambilan benda memang
+        sudah masuk daftar peristiwa yang memperoleh bunyi? Ternyata sudah,
+        sehingga masalahnya bukan pada rencananya.
+  \item \textbf{Periksa \code{Tag} pada bendanya.} Skrip memeriksa
+        \code{CompareTag("Pickup")} sebelum memanggil bunyinya. Ternyata
+        benda yang dapat diambil masih bertanda \istilah{Untagged}, sehingga
+        pemeriksaan itu selalu gagal dan seluruh isi bloknya dilewati,
+        termasuk penambahan skor.
+  \item \textbf{Periksa berkasnya.} Setelah tanda itu diperbaiki, bunyinya
+        masih belum terdengar. Berkasnya ternyata belum diseret ke peubah
+        \code{pickupSound} pada \istilah{Inspector}.
+  \item \textbf{Perbaiki keduanya, lalu jalankan kembali.} Bunyinya terdengar,
+        dan skornya bertambah.
+\end{langkah}
+
+Tiga hal dapat dipetik dari penelusuran itu. Pertama, kesalahan yang sama dapat
+menyebabkan dua gejala sekaligus; di sini skornya juga tidak bertambah, dan
+gejala kedua itulah yang seharusnya lebih dulu menarik perhatian. Kedua,
+pemeriksaan yang gagal secara diam-diam adalah penyebab yang paling sering
+terjadi pada peristiwa yang dipicu sentuhan. Ketiga, rujukan yang belum
+dihubungkan pada \istilah{Inspector} bernilai kosong, dan skrip pada
+Daftar~\ref{lst:ch15-pemicu} melewatinya tanpa keluhan --- sebab itulah
+pemeriksaan \code{if (manajer != null)} dipasang di mana-mana, dan sebab itulah
+pula pemasangan yang belum lengkap perlu diperiksa dengan sengaja.

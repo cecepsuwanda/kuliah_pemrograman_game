@@ -1,0 +1,98 @@
+% chapters/11/contoh.tex
+\section{Dua Contoh Analisis}
+\label{sec:contoh-bab-11}
+
+\subsection{Contoh Pertama: Menafsirkan Tabel Evaluasi}
+
+\begin{contohbox}
+Pada Tabel~\ref{tab:evaluasi-selang}, pencarian setiap bingkai menjalankan
+2.700 pencarian dengan jarak rata-rata 35 piksel, sedangkan selang 0,30 detik
+menjalankan 858 pencarian dengan jarak rata-rata 34 piksel.
+\end{contohbox}
+
+Perbandingan itu dapat dinyatakan dalam bentuk rasio, sehingga lebih mudah
+ditafsirkan.
+
+\[
+\text{rasio beban} = \frac{2700}{858} \approx 3{,}15,
+\qquad
+\text{selisih mutu} = 35 - 34 = 1 \text{ piksel}.
+\]
+
+Pekerjaan perhitungannya menjadi lebih dari tiga kali lipat, sedangkan
+perbaikan mutunya hanya satu piksel, yaitu sekitar tiga persen dari jaraknya.
+Kesimpulannya jelas: \textbf{pekerjaan tambahan itu tidak sepadan}.
+
+Sebaliknya, membandingkan baris terakhir dengan baris ketiga memberikan hasil
+yang berlawanan.
+
+\[
+\text{rasio beban} = \frac{858}{594} \approx 1{,}44,
+\qquad
+\text{selisih mutu} = 40 - 34 = 6 \text{ piksel}.
+\]
+
+Pada perbandingan ini, penghematan beban sebesar 31 persen harus dibayar dengan
+kemunduran mutu sebesar 6 piksel, yaitu sekitar delapan belas persen. Kali ini
+harga itu terlalu mahal.
+
+Kedua kesimpulan itu tidak dapat diperoleh hanya dengan
+melihat tabel, melainkan menuntut perhitungan rasio dan selisih. Cara berpikir
+itulah yang membedakan penilaian (ranah C5) dari sekadar penerapan (ranah C3).
+
+\begin{catatabox}
+Perhatikan pula bahwa kolom \istilah{Jarak akhir} pada program juga tercatat,
+tetapi nilainya tidak dipakai pada analisis di atas. Nilai itu hanya
+menggambarkan keadaan pada bingkai terakhir, sehingga mudah berubah menurut
+kebetulan posisi pemain pada saat itu. Untuk menilai mutu perilaku, dipakailah
+jarak \textbf{rata-rata}, yang menggambarkan perilaku sepanjang permainan.
+Memilih ukuran yang tepat merupakan bagian dari pekerjaan menilai.
+\end{catatabox}
+
+\subsection{Contoh Kedua: Merancang Skenario Uji}
+
+\begin{contohbox}
+Anda hendak menguji dua rancangan: rancangan A dengan selang hitung ulang
+setiap bingkai, dan rancangan B dengan selang 0,3 detik. Keduanya diuji pada
+ketiga skenario pada Tabel~\ref{tab:tiga-skenario}, dengan jalur pemain yang
+sama untuk kedua rancangan.
+\end{contohbox}
+
+Rancangan pengujiannya dapat disusun sebagai tabel dua arah, sebagaimana
+diperlihatkan pada Tabel~\ref{tab:rancangan-uji}.
+
+\begin{table}[htbp]
+\centering
+\caption{Rancangan pengujian dua rancangan pada tiga skenario}
+\label{tab:rancangan-uji}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{2.6cm} C{2.6cm} C{2.6cm} Y@{}}
+\toprule
+\headrow \textbf{Skenario} & \textbf{Rancangan A (setiap bingkai)} & \textbf{Rancangan B (0,3 detik)} & \textbf{Yang dibandingkan} \\
+\midrule
+Ruang terbuka & & & Jarak rata-rata dan banyaknya pencarian. \\
+\addlinespace
+Labirin & & & Jarak rata-rata, banyaknya pencarian, dan apakah jalurnya berubah-ubah tanpa sebab. \\
+\addlinespace
+Rintangan dinamis & & & Waktu yang diperlukan untuk memperbaiki jalur yang usang. \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Setiap sel pada tabel itu diisi dengan angka hasil pengukuran dan
+kesan mutu perilakunya.}
+\end{table}
+
+Tiga hal perlu diperhatikan pada rancangan pengujian itu.
+
+\begin{enumerate}
+  \item \textbf{Jalur pemainnya sama pada kedua rancangan.} Inilah yang membuat
+        hasilnya dapat dibandingkan. Apabila jalurnya berbeda, perbedaan
+        hasilnya dapat berasal dari jalur pemain, bukan dari rancangan yang
+        diuji.
+  \item \textbf{Ketiga skenario diuji untuk kedua rancangan.} Perbaikan yang
+        menguntungkan pada satu skenario dapat merugikan pada skenario lain.
+        Rancangan yang baik adalah yang terbaik secara keseluruhan, bukan yang
+        terbaik pada satu keadaan.
+  \item \textbf{Setiap sel memuat angka dan kesan.} Angka untuk dibandingkan,
+        kesan untuk menjelaskan. Laporan yang memuat keduanya jauh lebih
+        berguna daripada laporan yang hanya memuat salah satunya.
+\end{enumerate}

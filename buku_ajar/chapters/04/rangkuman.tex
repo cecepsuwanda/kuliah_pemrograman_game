@@ -1,0 +1,37 @@
+% chapters/04/rangkuman.tex
+\bagian{Rangkuman}
+
+\begin{rangkumanbox}
+\begin{itemize}
+  \item Siklus permainan terdiri atas tiga tahap---masukan, pembaruan, dan
+        penayangan---yang dikerjakan berurutan dan diulang terus-menerus
+        selama permainan berjalan.
+  \item Urutan tahapan bersifat wajib: masukan lebih dahulu agar pembaruan
+        mengetahui kehendak pemain, dan penayangan paling akhir agar yang
+        terlihat adalah keadaan yang sudah selesai dihitung.
+  \item Variabel keadaan harus dibuat di luar perulangan agar nilainya bertahan
+        dari satu bingkai ke bingkai berikutnya.
+  \item \code{pygame.event.get()} mengambil seluruh isi antrean peristiwa tanpa
+        menunggu, sehingga siklus tetap berjalan walaupun pemain sedang diam.
+        \code{pygame.event.wait()} menghentikan program dan tidak boleh dipakai
+        di dalam siklus.
+  \item Antrean peristiwa harus dikosongkan setiap bingkai; membiarkannya
+        menumpuk membuat jendela tidak menanggapi masukan.
+  \item Peristiwa berbeda dari keadaan tombol. Peristiwa \code{KEYDOWN} terjadi
+        sekali saat tombol mulai ditekan, sedangkan gerak yang berlangsung
+        selama tombol ditahan memerlukan \code{pygame.key.get_pressed()}.
+  \item \code{clock.tick()} mengukur selang waktu satu bingkai sekaligus
+        menahan laju bingkai, sehingga perintah itu diletakkan pada akhir
+        putaran siklus.
+  \item Batas laju bukan pembatasan mutu, melainkan penghematan. Pengukuran
+        memperlihatkan bahwa siklus berbatas memakai beberapa persen prosesor,
+        sedangkan siklus tanpa batas memakai hampir seluruh satu inti
+        prosesor.
+  \item Menaikkan batas laju tidak mempercepat program yang pekerjaannya memang
+        berat; yang menentukan laju tercapai adalah lama pekerjaan satu
+        bingkai.
+  \item Siklus pada bab ini memakai langkah berubah. Nilai selang waktu sudah
+        diukur, tetapi baru dipakai untuk menghitung waktu berjalan; Bab~V
+        memakainya untuk menggerakkan objek.
+\end{itemize}
+\end{rangkumanbox}

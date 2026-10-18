@@ -1,0 +1,89 @@
+% chapters/09/contoh.tex
+\section{Dua Contoh Terapan}
+\label{sec:contoh-bab-9}
+
+\subsection{Contoh Pertama: Melacak Keputusan pada Beberapa Bingkai}
+
+\begin{contohbox}
+Sebuah NPC memiliki jari-jari persepsi 260 piksel, jangkauan serang 46 piksel,
+pewaktu berdiam 1,5 detik, dan pewaktu tenggang 1 detik. Tabel~\ref{tab:jejak-keputusan}
+memperlihatkan keputusannya pada beberapa bingkai yang penting, beserta alasan
+masing-masing.
+\end{contohbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Jejak keputusan NPC pada bingkai-bingkai yang penting}
+\label{tab:jejak-keputusan}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.7cm} C{1.8cm} C{1.7cm} C{1.6cm} C{2.0cm} Y@{}}
+\toprule
+\headrow \textbf{Bingkai} & \textbf{Keadaan} & \textbf{Pewaktu} & \textbf{Jarak} & \textbf{Keputusan} & \textbf{Alasan} \\
+\midrule
+90 & berdiam & diam 1,50 & 463 & berpatroli &
+Pewaktu berdiam telah mencapai 1,5 detik, sedangkan pemain tidak terlihat. \\
+\addlinespace
+150 & berpatroli & diam 0,00 & 207 & mengejar &
+Pemain masuk ke dalam jari-jari persepsi. \\
+\addlinespace
+216 & mengejar & hilang 0,00 & 45 & menyerang &
+Jarak telah mencapai jangkauan serang 46 piksel. \\
+\addlinespace
+300 & menyerang & serang 0,10 & 35 & menyerang &
+Jarak masih di dalam jangkauan serang, sehingga keadaan tidak berubah. \\
+\addlinespace
+420 & menyerang & serang 0,70 & 508 & mengejar &
+Pemain menjauh melampaui jangkauan serang dikalikan 1,2. \\
+\addlinespace
+481 & mengejar & hilang 1,00 & 355 & berdiam &
+Pewaktu tenggang habis, yaitu satu detik tanpa melihat pemain. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Perhatikan baris terakhir. Jarak pada bingkai itu 355 piksel, yaitu masih di
+luar jari-jari persepsi 260 piksel, sehingga pewaktu tenggang berjalan sampai
+habis dan NPC menyerah. Apabila jaraknya kurang dari 260 piksel, NPC akan
+melihat pemain kembali, pewaktu tenggangnya dikembalikan ke nol, dan ia terus
+mengejar.
+
+Pemeriksaan jejak semacam ini merupakan cara yang paling cepat untuk menemukan
+kesalahan pada mesin keadaan. Apabila sebuah perpindahan terjadi terlalu cepat
+atau terlambat, penyebabnya akan tampak pada kolom pewaktu.
+
+\subsection{Contoh Kedua: Menghitung Jumlah Serangan}
+
+\begin{contohbox}
+Pada skenario pengujian, NPC berada pada keadaan menyerang sejak bingkai 217
+sampai bingkai 421, yaitu selama 204 bingkai. Pada laju 60 bingkai per detik,
+lamanya adalah
+
+\[
+204 \div 60 = 3{,}4 \text{ detik}.
+\]
+
+Pewaktu jeda serangan bernilai 0,8 detik, dan serangan pertama terjadi segera
+setelah keadaan dimasuki. Banyaknya serangan karena itu adalah
+
+\[
+\frac{3{,}4}{0{,}8} + 1 \approx 4{,}25 + 1 \approx 5
+\]
+
+apabila dibulatkan ke bawah, yaitu 5 serangan. Program mencatat
+\textbf{5 serangan}, sesuai dengan hitungan itu.
+\end{contohbox}
+
+Kesesuaian antara hitungan dan catatan program itu berguna untuk dua hal.
+Pertama, ia menunjukkan bahwa pewaktu jeda bekerja sebagaimana mestinya.
+Kedua, ia memberi Anda cara untuk merancang: apabila Anda menghendaki jumlah
+serangan tertentu selama pemain berada di dalam jangkauan, nilai pewaktu jeda
+dapat dihitung terbalik dari keinginan itu.
+
+\begin{catatabox}
+Hitungan semacam ini hanya berlaku apabila keadaan menyerang
+berlangsung tanpa terputus. Apabila pemain keluar masuk jangkauan serang
+beberapa kali, jumlah serangan menjadi lebih banyak daripada hitungan itu,
+sebab serangan pertama terjadi setiap kali keadaan dimasuki. Kebiasaan
+memeriksa ulang hitungan semacam ini terhadap catatan program merupakan bagian
+dari kebiasaan mengukur yang telah dibangun sejak Bab~IV.
+\end{catatabox}

@@ -1,0 +1,28 @@
+% chapters/03/figures/alur-kerja.tikz
+% Alur kerja harian: tulis, jalankan, amati, simpan; kembali menulis bila
+% hasilnya belum sesuai harapan.
+\begin{tikzpicture}[
+  langkah/.style={
+    rectangle, rounded corners=2pt, draw=ubPrimary, thick, fill=ubAlt,
+    align=center, text width=26mm, inner sep=3.5pt, minimum height=11mm,
+    font=\footnotesize
+  },
+  akhir/.style={langkah, draw=ubGreen, fill=ubGreenBg},
+  panah/.style={-{Stealth[length=2.4mm]}, thick, draw=ubAccent},
+  ulang/.style={-{Stealth[length=2.4mm]}, thick, draw=ubWarn, dashed},
+  label/.style={font=\scriptsize, ubWarn}
+]
+
+\node[langkah] (tulis) at (0,0) {Tulis atau\\perbaiki kode};
+\node[langkah, right=8mm of tulis] (jalan) {Jalankan\\program};
+\node[langkah, right=8mm of jalan] (amati) {Amati keluaran\\dan pesan galat};
+\node[akhir, right=8mm of amati] (simpan) {Simpan dan\\catat hasilnya};
+
+\draw[panah] (tulis) -- (jalan);
+\draw[panah] (jalan) -- (amati);
+\draw[panah] (amati) -- (simpan);
+
+\draw[ulang] (amati.south) -- ++(0,-10mm) -| (tulis.south);
+\node[label, anchor=north] at (4.5,-1.5)
+  {bila hasilnya belum sesuai harapan};
+\end{tikzpicture}

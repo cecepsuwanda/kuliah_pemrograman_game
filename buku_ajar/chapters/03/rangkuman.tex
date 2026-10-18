@@ -1,0 +1,39 @@
+% chapters/03/rangkuman.tex
+\bagian{Rangkuman}
+
+\begin{rangkumanbox}
+\begin{itemize}
+  \item Python adalah bahasa yang dijalankan oleh penafsir, sehingga langkah
+        pertama selalu memastikan penafsir tersedia dan dapat dipanggil.
+        Pemasangan di Windows perlu mencentang pilihan ``Add python.exe to
+        PATH''.
+  \item Pygame adalah pustaka yang mengurus jendela, gambar, huruf, bunyi,
+        dan masukan; di bawahnya bekerja SDL yang berbicara dengan perangkat
+        keras.
+  \item Pemasangan dilakukan dengan \code{python -m pip install pygame}. Bentuk
+        \code{python -m pip} memastikan pemasangan mengikuti penafsir yang akan
+        dipakai menjalankan program.
+  \item Kesiapan lingkungan diperiksa dengan skrip pemeriksaan yang
+        melaporkan versi Python, versi Pygame dan SDL, pengandar video, serta
+        ketersediaan huruf bawaan.
+  \item Struktur folder proyek memisahkan \code{code}, \code{catatan}, dan
+        \code{aset}, dilengkapi \code{README.md} dan \code{.gitignore}.
+  \item Git mencatat riwayat melalui tiga tempat: folder kerja, daftar siap
+        simpan, dan riwayat. Simpanlah pekerjaan sedikit tetapi sering, dengan
+        pesan yang menerangkan isinya.
+  \item Kerangka program Pygame terdiri atas lima langkah: memulai Pygame,
+        membuat permukaan tampilan, menggambar, menayangkan, serta menunggu
+        dan membersihkan.
+  \item Menggambar dan menayangkan adalah dua pekerjaan yang berbeda;
+        perubahan baru terlihat setelah \code{pygame.display.flip()} dijalankan.
+  \item Perulangan pada bab ini hanya menunggu peristiwa. Siklus permainan
+        yang memperbarui keadaan dan menggambar ulang secara terus-menerus
+        baru dibahas pada Bab~IV.
+  \item Pesan kesalahan dibaca dari baris terakhir ke atas, karena baris
+        terakhir memuat jenis kesalahan, sedangkan baris di atasnya memuat
+        berkas dan nomor baris penyebabnya.
+  \item Peringatan berbeda dari kesalahan. Sambutan Pygame dan peringatan
+        pustaka usang muncul pada setiap program dan bukan tanda adanya
+        masalah pada kode Anda.
+\end{itemize}
+\end{rangkumanbox}

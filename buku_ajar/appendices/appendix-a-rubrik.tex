@@ -1,0 +1,238 @@
+% appendices/appendix-a-rubrik.tex
+\chapter{Rubrik Penilaian Lengkap}
+\label{app:rubrik}
+
+Lampiran ini memuat rubrik penilaian dalam bentuk lengkap, yaitu beserta
+uraian setiap tingkat capaian. Bab~XVI dan Bab~XVII telah menyajikan bobot dan
+kriteria pokoknya; yang ditambahkan di sini adalah perbedaan antara tingkat
+yang satu dan tingkat berikutnya, agar penilaian tidak bergantung pada kesan
+penilai.
+
+\section{Cara Membaca Rubrik}
+
+Setiap kriteria dinilai pada empat tingkat. Tingkat yang dipakai adalah
+tingkat terendah yang \emph{seluruh} syaratnya terpenuhi, bukan tingkat
+tertinggi yang sebagian syaratnya terpenuhi. Apabila sebuah pekerjaan memenuhi
+tiga dari empat syarat pada tingkat ``Sangat Baik'', ia dinilai ``Baik''.
+
+\begin{table}[htbp]
+\centering
+\caption{Empat tingkat capaian yang dipakai pada seluruh rubrik}
+\label{tab:tingkat-capaian}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.4cm} C{2.2cm} Y@{}}
+\toprule
+\headrow \textbf{Tingkat} & \textbf{Rentang nilai} & \textbf{Ciri umum} \\
+\midrule
+Sangat Baik & 85--100 & Seluruh syarat terpenuhi, dan pekerjaannya dapat dipakai
+sebagai contoh bagi kelompok lain. \\
+\addlinespace
+Baik & 70--84 & Seluruh syarat pokok terpenuhi, dengan satu kekurangan kecil
+yang tidak mengubah hasil. \\
+\addlinespace
+Cukup & 60--69 & Syarat pokok terpenuhi sebagian; hasilnya berjalan, tetapi
+masih menuntut perbaikan sebelum dapat dipakai. \\
+\addlinespace
+Kurang & $<$ 60 & Syarat pokok tidak terpenuhi; hasilnya tidak berjalan atau
+tidak dapat diperiksa. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\section{Rubrik Mini Proyek AI}
+
+Mini Proyek AI menilai \CPMK{2}, yaitu perilaku NPC. Bobotnya 10 persen dari
+nilai akhir, dan dikerjakan berkelompok.
+
+\begin{landscape}
+\begin{table}[htbp]
+\centering
+\caption{Rubrik Mini Proyek AI beserta uraian empat tingkat capaian}
+\label{tab:rubrik-mini-lengkap}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\linewidth}{@{}L{2.8cm} C{1.3cm} Y Y Y Y@{}}
+\toprule
+\headrow \textbf{Kriteria} & \textbf{Bobot} & \textbf{Sangat Baik} & \textbf{Baik} & \textbf{Cukup} & \textbf{Kurang} \\
+\midrule
+Implementasi FSM & 25\% &
+Keadaan terpisah dan jelas; setiap transisi berjalan menurut jarak dan
+\istilah{cooldown}; tidak ada keadaan yang tidak dapat ditinggalkan. &
+Transisi berjalan dengan benar; satu keadaan kurang lengkap, misalnya tidak
+memiliki jalan kembali. &
+Sebagian transisi tidak berjalan; NPC sempat diam tanpa alasan yang jelas. &
+Keadaan tidak terpisah; perilaku ditulis sebagai rangkaian \code{if} yang
+saling bertumpuk. \\
+\addlinespace
+Implementasi A* & 25\% &
+Jalur benar pada peta berhalangan; memakai antrean prioritas; heuristik
+dipilih dengan alasan yang dapat dipertanggungjawabkan. &
+Jalur benar dan memakai antrean prioritas; heuristik dipakai tanpa penjelasan. &
+Jalur benar pada peta sederhana, tetapi gagal atau lambat pada peta
+berhalangan. &
+Jalur tidak selalu benar, atau pencarian tidak berakhir pada peta tertentu. \\
+\addlinespace
+Integrasi FSM dan A* & 20\% &
+Pencarian dipicu tepat pada keadaan pengejar; pencarian ulang berkala; kinerja
+terjaga dan alasannya dijelaskan. &
+Pencarian dipicu pada keadaan yang tepat, tanpa pencarian ulang berkala. &
+Pencarian dipicu pada keadaan yang kurang tepat, sehingga jalurnya tertinggal
+dari pergerakan pemain. &
+Pencarian dijalankan setiap bingkai, sehingga permainan melambat. \\
+\addlinespace
+Pengujian dan laporan & 20\% &
+Sekurang-kurangnya tiga skenario uji; pengamatan objektif dengan angka;
+perbaikan ditindaklanjuti dan hasilnya dicatat. &
+Tiga skenario uji dan pengamatan objektif; perbaikan belum ditindaklanjuti. &
+Skenario uji kurang dari tiga, atau pengamatannya berupa kesan. &
+Tidak ada skenario uji maupun laporan. \\
+\addlinespace
+Presentasi dan kerja sama & 10\% &
+Demonstrasi jelas dan tepat waktu; setiap anggota memahami bagiannya dan dapat
+menjawab pertanyaan. &
+Demonstrasi jelas; satu anggota kurang menguasai bagiannya. &
+Demonstrasi bergantung pada satu orang. &
+Demonstrasi tidak disiapkan. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+\end{landscape}
+
+\section{Rubrik Proyek Akhir}
+
+Proyek Akhir menilai \CPMK{3} dan \CPMK{4}, dengan bobot 30 persen dari nilai
+akhir. Rubrik ini adalah instrumen terbesar pada mata kuliah ini, dan
+satu-satunya yang menilai kemampuan menggabungkan bagian-bagian.
+
+\begin{landscape}
+\begin{table}[htbp]
+\centering
+\caption{Rubrik Proyek Akhir beserta uraian empat tingkat capaian}
+\label{tab:rubrik-akhir-lengkap}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\linewidth}{@{}L{2.8cm} C{1.3cm} Y Y Y Y@{}}
+\toprule
+\headrow \textbf{Kriteria} & \textbf{Bobot} & \textbf{Sangat Baik} & \textbf{Baik} & \textbf{Cukup} & \textbf{Kurang} \\
+\midrule
+Fungsionalitas mekanik inti dan level & 30\% &
+Level selesai dari awal sampai akhir tanpa penghambat; mekanik inti bekerja
+sesuai rancangan; kendali pemain responsif; tidak ditemukan
+\istilah{soft-lock}. &
+Level selesai, dan mekanik intinya bekerja; satu mekanik tambahan belum
+berjalan. &
+Level dapat dimainkan, tetapi ada bagian yang membingungkan atau satu tempat
+yang hanya dapat dicapai dengan susah payah. &
+Level tidak dapat diselesaikan, atau mekanik intinya tidak bekerja. \\
+\addlinespace
+Integrasi aset visual, animasi, dan UI & 25\% &
+Aset terpasang rapi dan seragam ukurannya; animasi berganti menurut keadaan;
+antarmuka menampilkan angka yang selalu benar. &
+Ketiganya terpasang; satu keadaan animasi atau satu angka antarmuka belum
+tepat. &
+Aset terpasang, tetapi animasi atau antarmuka belum terhubung sepenuhnya pada
+keadaan permainan. &
+Aset belum terpasang, atau antarmuka menampilkan angka yang tidak sesuai
+keadaan. \\
+\addlinespace
+Integrasi audio dan umpan balik & 15\% &
+Musik latar dan efek suara terpisah; setiap efek suara terpicu pada
+peristiwanya; tingkat kekuatan beralasan; ada pasangan yang terlihat. &
+Efek suara terpicu dengan benar; tingkat kekuatan belum ditata, atau satu
+peristiwa belum memperoleh bunyi. &
+Sebagian bunyi terpicu, atau musik tertutup oleh efek suara. &
+Bunyi belum terpasang, atau terdengar pada peristiwa yang salah. \\
+\addlinespace
+Kualitas kode dan struktur \istilah{project} & 15\% &
+\istilah{Project} tersusun rapi; penamaan konsisten; tidak ada kode mati;
+bagian yang berulang disatukan. &
+Struktur rapi dan penamaan konsisten; ada sedikit kode mati. &
+Struktur dapat dipahami, tetapi penamaannya tidak konsisten atau ada kode yang
+tidak terpakai. &
+Seluruh kode berada pada satu berkas, atau strukturnya tidak dapat dipahami. \\
+\addlinespace
+\istilah{Playtest}, laporan, dan presentasi & 15\% &
+Lembar \istilah{playtest} terisi oleh dua penguji atau lebih; \istilah{log bug}
+lengkap dengan status; laporan memuat keadaan sebelum dan sesudah; demo tepat
+waktu. &
+Kelengkapan lengkap; satu bagian laporan belum memuat bukti. &
+Kelengkapan sebagian; \istilah{log bug} tidak memuat status penanganan. &
+Kelengkapan tidak diserahkan, atau demo tidak dilakukan. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+\end{landscape}
+
+\section{Rubrik Portofolio Praktikum}
+
+Tugas praktikum dan portofolio menilai \CPMK{1} sampai \CPMK{4} dengan bobot
+25 persen. Penilaiannya dilakukan atas artefak mingguan pada repositori,
+bukan atas satu pekerjaan besar.
+
+\begin{table}[htbp]
+\centering
+\caption{Rubrik portofolio praktikum}
+\label{tab:rubrik-portofolio}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.4cm} C{1.4cm} Y@{}}
+\toprule
+\headrow \textbf{Kriteria} & \textbf{Bobot} & \textbf{Deskripsi capaian} \\
+\midrule
+Kelengkapan artefak & 40\% & Seluruh praktikum terkumpul, masing-masing dengan
+kode, keluaran, dan catatan singkat. \\
+\addlinespace
+Kebenaran hasil & 30\% & Kode berjalan dan menghasilkan keluaran yang sesuai
+dengan tujuan praktikum. \\
+\addlinespace
+Catatan dan penjelasan & 20\% & Setiap artefak disertai penjelasan mengapa
+caranya dipilih, bukan hanya apa yang dikerjakan. \\
+\addlinespace
+Riwayat penyimpanan & 10\% & Pekerjaan disimpan bertahap dengan pesan
+penyimpanan yang menerangkan isinya. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\section{Rubrik Laporan dan Refleksi}
+
+Rubrik ini dipakai bersama Proyek Akhir, dan disajikan lengkap pada
+Tabel~\ref{tab:rubrik-laporan-lengkap}.
+
+\begin{table}[htbp]
+\centering
+\caption{Rubrik laporan pengembangan dan refleksi beserta tingkat capaian}
+\label{tab:rubrik-laporan-lengkap}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.0cm} C{1.2cm} Y Y@{}}
+\toprule
+\headrow \textbf{Kriteria} & \textbf{Bobot} & \textbf{Sangat Baik atau Baik} & \textbf{Cukup atau Kurang} \\
+\midrule
+Kelengkapan dokumen & 20\% &
+Memuat ringkasan desain, daftar aset beserta lisensinya, lembar
+\istilah{playtest}, dan \istilah{log bug} dengan status penanganan. &
+Salah satu kelengkapan tidak diserahkan, atau daftar aset tidak memuat
+lisensinya. \\
+\addlinespace
+Laporan perbaikan & 30\% &
+Setiap perbaikan disertai keadaan sebelum, keadaan sesudah, dan buktinya. &
+Perbaikan diceritakan tanpa bukti, atau hanya sebagian perbaikan yang
+dilaporkan. \\
+\addlinespace
+Kesesuaian GDD dan \istilah{build} & 20\% &
+Perbedaan dicantumkan dengan jujur menurut tiga keadaan pada
+Tabel~\ref{tab:gdd-build}, beserta alasannya. &
+Perbedaan tidak dicantumkan, atau janji dihapus dari GDD agar tampak sesuai. \\
+\addlinespace
+Refleksi teknologi & 30\% &
+Setiap pernyataan memuat keadaan konkret, tindakan, dan hasil; ketiga tinjauan
+dijawab terpisah. &
+Refleksi berupa kesan umum, atau hanya sebagian tinjauan yang dijawab. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\section{Ketentuan Kelulusan}
+
+Kelulusan mata kuliah ini ditentukan oleh tiga ketentuan yang berlaku
+sekaligus: nilai akhir sekurang-kurangnya 60, kehadiran sekurang-kurangnya
+75 persen, dan penyerahan seluruh kelengkapan Proyek Akhir. Bobot setiap
+komponen, matriks sumbangannya kepada CPMK, dan konversi nilainya disajikan
+pada Bagian~\ref{sec:bobot-nilai}.

@@ -1,0 +1,233 @@
+% chapters/16/section-03.tex
+\section{Pemeriksaan Otomatis Tanpa Pemain}
+\label{sec:uji-otomatis}
+
+\subsection{Soft-lock: Kegagalan yang Tidak Terlihat}
+
+Satu jenis kesalahan pada level tidak menimbulkan pesan apa pun, tidak
+menghentikan program, dan tidak terlihat pada satu kali percobaan. Kesalahan
+itu disebut \istilah{soft-lock}: keadaan ketika pemain tidak dapat melanjutkan
+dan tidak dapat kembali, walaupun permainannya sendiri masih berjalan
+\cite{unity-leveldesign}.
+
+Pemain yang terjatuh ke dalam lubang yang terlalu tinggi untuk ditinggalkan
+mengalami \istilah{soft-lock}. Programnya tidak berhenti, tidak ada kesalahan
+yang tercetak pada jendela \istilah{Console}, dan penguji yang mencoba level itu
+satu kali mungkin tidak pernah menemukan lubang tersebut. Yang mengalami
+masalah hanya sebagian pemain, dan itulah yang membuat kesalahan ini mahal.
+
+Karena kesalahan ini bersifat pasti, bukan soal selera, ia dapat diperiksa
+secara pasti pula: dengan memeriksa setiap tempat pemain dapat berdiri, lalu
+menanyakan apakah dari sana titik tujuan masih dapat dicapai.
+
+\subsection{Jangkauan Lompatan Dihitung, Bukan Ditebak}
+
+Pemeriksaan itu menuntut satu angka: seberapa jauh pemain dapat melompat.
+Angka itu tidak perlu ditebak, sebab Anda sudah memiliki besarannya sejak
+Bab~VI dan Bab~XIII. Tinggi lompatan tertinggi berasal dari hukum gerak:
+
+\[
+h_{\text{maks}} = \frac{v_0^2}{2g},
+\qquad
+t = \frac{v_0 + \sqrt{v_0^2 - 2g\,\Delta h}}{g},
+\qquad
+x_{\text{maks}} = v_{\text{jalan}} \cdot t .
+\]
+
+Dengan $v_0 = 700$ piksel per detik, $g = 1800$ piksel per detik kuadrat, dan
+kecepatan jalan 300 piksel per detik, diperoleh tinggi 136,1 piksel dan jarak
+mendatar 233,3 piksel. Pada peta yang petaknya berukuran 32 piksel, kedua
+angka itu berarti:
+
+\begin{table}[htbp]
+\centering
+\caption{Jangkauan lompatan yang dihitung dari besaran fisika Bab VI}
+\label{tab:jangkauan-lompatan}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{7.0cm} Y@{}}
+\toprule
+\headrow \textbf{Ukuran} & \textbf{Nilai} \\
+\midrule
+Tinggi lompatan tertinggi & 136,1 piksel, yaitu 4,25 petak \\
+\addlinespace
+Jarak mendatar terjauh pada ketinggian yang sama & 233,3 piksel, yaitu 7,29 petak \\
+\addlinespace
+Jarak mendatar terjauh pada penurunan 5 petak & 288,6 piksel, yaitu 9,02 petak \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Jarak mendatar terjauh bergantung pada beda tingginya.
+Melompat ke tempat yang lebih rendah memberi waktu di udara lebih lama,
+sehingga jarak mendatar terjauhnya lebih jauh. Karena itu, pemeriksaan pada
+bab ini menghitung jangkauannya untuk setiap pasangan tempat berdiri, bukan
+memakai satu angka untuk seluruh level.
+
+\subsection{Algoritmanya Sudah Anda Miliki}
+
+Setelah jangkauan lompatan diketahui, pemeriksaannya menjadi persoalan yang
+sudah Anda selesaikan pada Bab~X: pencarian jalur. Yang berubah hanya satu
+hal.
+
+\begin{kodekeluaran}
+# Pada Bab X, tetangga sebuah petak adalah empat petak di sekelilingnya.
+def tetangga(peta, dinding, petak):
+    return [petak yang bersebelahan dan tidak berupa dinding]
+
+# Pada Bab XVI, tetangga sebuah pijakan adalah pijakan lain yang dapat
+# dicapai dengan berjalan, jatuh, atau melompat.
+def tetangga(peta, dinding, daftar_pijakan, petak):
+    hasil = [pijakan di kiri dan kanan yang dapat dicapai dengan berjalan]
+    hasil += [pijakan lain yang dapat dicapai dengan melompat atau jatuh]
+    return hasil
+\end{kodekeluaran}
+
+Sisanya sama persis: antrean prioritas, perkiraan jarak untuk mengarahkan
+pencarian, dan tabel biaya. Itulah pelajaran yang perlu Anda bawa dari bab
+ini: algoritma pencarian jalur bukan hanya untuk menggerakkan musuh, melainkan
+juga untuk memeriksa level Anda sendiri. Yang menentukan kegunaannya adalah
+aturan tetangganya.
+
+\subsection{Tiga Pemeriksaan dan Hasilnya}
+
+Skrip \code{ch16_uji_mandiri.py} menjalankan tiga pemeriksaan atas sebuah
+level. Ketiga peta bawaan pada skrip itu memperlihatkan pemeriksaan yang lulus,
+pemeriksaan yang menemukan tujuan yang tidak dapat dicapai, dan pemeriksaan
+yang menemukan \istilah{soft-lock}.
+
+\subsubsection*{Level yang bersih}
+
+\begin{kodekeluaran}
+$ python -I ch16_uji_mandiri.py --peta rapi
+====================================================================
+ UJI MANDIRI LEVEL  (tanpa pemain)
+====================================================================
+ Peta            : rapi  (30 x 12 petak)
+ Tempat berdiri  : 44
+ Tinggi lompat   : 4.25 petak
+ Jarak mendatar  : 7.29 petak (pada ketinggian yang sama)
+
+1. KETERJANGKAUAN
+-----------------
+ LULUS: seluruh tempat berdiri dapat mencapai tujuan.
+
+2. JALAN KE ATAS
+----------------
+ Tanpa jalan ke atas: 25 dari 44 tempat berdiri.
+   25 di antaranya setinggi atau lebih tinggi daripada
+   tujuan, sehingga tidak perlu naik. Ini wajar.
+ LULUS: tidak ada tempat di bawah tujuan yang hanya dapat turun.
+
+3. SIMULASI TANPA PEMAIN
+------------------------
+ Titik awal diacak 200 kali.
+ Berhasil mencapai tujuan: 200 (100.0%).
+ Panjang jalur  : terpendek 1 pijakan, terpanjang 5 pijakan, rata-rata 2.6 pijakan.
+
+KESIMPULAN
+----------
+ Level lolos seluruh pemeriksaan otomatis.
+ Langkah berikutnya adalah playtest dengan pemain, bukan
+ pemeriksaan otomatis. Yang dapat diperiksa mesin hanyalah
+ apakah levelnya mungkin diselesaikan, bukan apakah levelnya
+ menyenangkan.
+\end{kodekeluaran}
+
+\subsubsection*{Tujuan yang tidak dapat dicapai}
+
+Pada peta kedua, tujuan diletakkan di atas tiang yang terlalu tinggi dan
+terlalu jauh untuk dicapai. Program berjalan tanpa kesalahan apa pun; yang
+salah hanyalah rancangan levelnya.
+
+\begin{kodekeluaran}
+$ python -I ch16_uji_mandiri.py --peta sempit
+...
+1. KETERJANGKAUAN
+-----------------
+ GAGAL: 44 dari 45 tempat berdiri (97.8%) tidak dapat mencapai tujuan.
+...
+2. JALAN KE ATAS
+----------------
+ PERIKSA: 21 tempat (46.7%) berada di bawah tujuan tetapi
+ tidak dapat naik kembali.
+...
+ Jalan keluar terdekat: dari (10, 5) ke (20, 2).
+ Diperlukan jarak 10.00 petak, sedangkan jangkauannya hanya 5.62 petak,
+ yaitu kurang 4.38 petak. Perbaikan sekecil itu sudah cukup.
+
+3. SIMULASI TANPA PEMAIN
+------------------------
+ Titik awal diacak 200 kali.
+ Berhasil mencapai tujuan: 7 (3.5%).
+\end{kodekeluaran}
+
+Angka 3,5 persen itu penting untuk dipahami. Ia berarti permainannya masih
+dapat diselesaikan dari sebagian kecil tempat awal, sehingga penguji yang
+mencobanya beberapa kali mungkin menyimpulkan bahwa levelnya hanya
+``sulit'', bukan bahwa levelnya tidak dapat diselesaikan.
+
+\subsubsection*{\istilah{Soft-lock} yang tersembunyi}
+
+Peta ketiga adalah yang paling berbahaya, sebab ia \emph{hampir} benar.
+Tujuannya dapat dicapai dari hampir seluruh tempat, dan simulasi mengembalikan
+angka keberhasilan yang tinggi. Yang salah hanyalah satu lubang:
+
+\begin{kodekeluaran}
+$ python -I ch16_uji_mandiri.py --peta terjebak
+...
+1. KETERJANGKAUAN
+-----------------
+ GAGAL: 5 dari 32 tempat berdiri (15.6%) tidak dapat mencapai tujuan.
+ Ini calon soft-lock: pemain yang terlanjur sampai ke sana
+ tidak dapat melanjutkan permainan, walaupun programnya tidak
+ berhenti dan tidak ada pesan kesalahan apa pun.
+   terjebak di petak (1, 10)
+   terjebak di petak (2, 10)
+   terjebak di petak (3, 10)
+   terjebak di petak (4, 10)
+   terjebak di petak (5, 10)
+ Seluruh jalan keluar dari daerah terjebak terhalang
+ dinding, sehingga tidak ada lompatan yang dapat diperiksa.
+...
+3. SIMULASI TANPA PEMAIN
+------------------------
+ Titik awal diacak 200 kali.
+ Berhasil mencapai tujuan: 164 (82.0%).
+\end{kodekeluaran}
+
+Bandingkan kedua angka pada peta ketiga. Pemeriksaan keterjangkauan
+mengembalikan 15,6 persen, sedangkan simulasi mengembalikan 82,0 persen.
+Apabila Anda hanya menjalankan simulasinya, angka 82 persen akan terbaca
+sebagai keberhasilan. Yang menyingkap \istilah{soft-lock}-nya adalah
+pemeriksaan yang memeriksa \emph{setiap} tempat berdiri, bukan beberapa tempat
+yang kebetulan terpilih.
+
+\begin{catatabox}
+Pelajarannya berlaku umum: pengujian yang bergantung pada kebetulan hanya
+menemukan kesalahan yang kebetulan tersentuh. Pemeriksaan yang memeriksa
+seluruh keadaan akan menemukan kesalahan yang jarang muncul, dan justru
+kesalahan itulah yang paling merugikan pemain.
+\end{catatabox}
+
+\subsection{Apa yang Tidak Dapat Diperiksa Secara Otomatis}
+
+Pemeriksaan otomatis pada bab ini memberi jawaban yang pasti atas satu
+pertanyaan: apakah levelnya mungkin diselesaikan. Ia tidak dapat menjawab
+pertanyaan lain, dan batas kemampuannya perlu Anda sadari sebelum Anda
+mempercayainya.
+
+\begin{itemize}
+  \item Ia tidak dapat menilai apakah levelnya menyenangkan, adil, atau
+        membosankan.
+  \item Ia memakai jangkauan terbesar, yaitu pemain yang selalu berlari dengan
+        kecepatan penuh dan melompat pada saat yang paling menguntungkan.
+        Tempat yang lulus pemeriksaan ini belum tentu mudah dicapai pemain.
+  \item Ia tidak memeriksa apakah bunyinya terdengar, apakah animasinya
+        berganti, atau apakah antarmukanya menampilkan angka yang benar.
+  \item Ia memeriksa level yang Anda tuliskan pada berkasnya, bukan level yang
+        benar-benar Anda susun pada Unity. Penyesuaian tetap Anda lakukan
+        sendiri.
+\end{itemize}
+
+Dua batas terakhir menjelaskan mengapa \istilah{playtest} tetap diperlukan,
+dan itulah yang dibahas pada bagian berikutnya.

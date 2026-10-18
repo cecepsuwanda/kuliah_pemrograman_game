@@ -1,0 +1,118 @@
+% chapters/08/section-06.tex
+\section{AI Reaktif dan AI Berbasis Perencanaan}
+\label{sec:reaktif-perencanaan}
+
+NPC pada bab ini disebut reaktif karena seluruh keputusannya diambil dari
+keadaan yang teramati saat itu. Bagian ini membahas batas kemampuan cara itu,
+sesuai indikator \ind{c} pada bab ini.
+
+\subsection{Cara Kerja AI Reaktif}
+
+Kata ``reaktif'' berarti: keputusan pada bingkai ini hanya bergantung pada
+keadaan pada bingkai ini. NPC tidak mengingat apa yang terjadi sebelumnya dan
+tidak memperhitungkan apa yang akan terjadi kemudian. Ia mengamati, memutuskan,
+dan bertindak, lalu mengulanginya.
+
+Kesederhanaan itu membawa tiga keuntungan. Pertama, kodenya pendek dan mudah
+diperiksa. Kedua, perhitungannya murah, sehingga jumlah NPC dapat banyak.
+Ketiga, perilakunya mudah diramalkan oleh perancang, sehingga mudah diatur.
+
+\subsection{Kelemahan yang Langsung Terasa}
+
+Kelemahannya muncul begitu ada rintangan di antara NPC dan pemain. Perhatikan
+apa yang diketahui NPC: hanya arah menuju pemain. Ia tidak mengetahui bahwa
+ada dinding di antaranya, sebab dinding tidak termasuk dalam persepsinya.
+
+Akibatnya NPC bergerak lurus ke arah pemain, menabrak dinding, dan tetap
+menekan dinding itu selama pemain berada di baliknya. Dari sisi pemain, NPC
+tampak bodoh: ia berhenti di depan dinding tanpa berusaha mencari jalan lain.
+Keadaan itu diperlihatkan pada Gambar~\ref{fig:reaktif-perencanaan}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/reaktif-vs-perencanaan.tikz}
+\caption{Perilaku reaktif dan berbasis perencanaan ketika ada rintangan}
+\label{fig:reaktif-perencanaan}
+\end{figure}
+
+Satu hal yang perlu ditekankan: NPC itu tidak melakukan kesalahan. Ia
+melaksanakan keputusannya dengan benar. Yang kurang adalah
+\textbf{keterangan}---data yang tersedia baginya untuk mengambil keputusan.
+Menambahkan keterangan itulah yang mengubah AI reaktif menjadi AI berbasis
+perencanaan.
+
+\subsection{Cara Kerja AI Berbasis Perencanaan}
+
+AI berbasis perencanaan memperhitungkan lebih banyak keterangan sebelum
+memutuskan. Pada bentuk yang paling sederhana, ia memeriksa apakah jalan
+lurusnya terhalang, lalu mencari jalan memutar. Pada bentuk yang lebih umum,
+ia menyusun rangkaian langkah menuju tujuan, menilai biayanya, dan memilih yang
+paling murah.
+
+Biaya perhitungannya jauh lebih besar, sebab mencari jalan memutar menuntut
+penelusuran banyak kemungkinan. Karena itu, perencanaan biasanya tidak
+dijalankan setiap bingkai, melainkan hanya ketika keadaan berubah, misalnya
+ketika tujuan berpindah atau ketika jalan yang sedang ditempuh tidak lagi
+berlaku. Cara menghemat perhitungan itu dibahas pada Bab~XI.
+
+\subsection{Kapan Masing-Masing Dipakai}
+
+Pilihan di antara keduanya bukan soal mana yang lebih baik, melainkan soal
+kecukupan. Tabel~\ref{tab:pilihan-ai} memuat pertimbangannya.
+
+\begin{table}[htbp]
+\centering
+\caption{Pertimbangan memilih cara pengambilan keputusan pada NPC}
+\label{tab:pilihan-ai}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.4cm} L{3.0cm} Y@{}}
+\toprule
+\headrow \textbf{Keadaan permainan} & \textbf{Cara yang memadai} & \textbf{Alasan} \\
+\midrule
+Ruang terbuka tanpa rintangan &
+Reaktif &
+Tidak ada yang menghalangi, sehingga arah menuju pemain selalu dapat ditempuh.
+Inilah keadaan pada bab ini. \\
+\addlinespace
+Ruang dengan rintangan kecil yang dapat dihindari dengan mudah &
+Reaktif, ditambah penghindaran sederhana &
+Perencanaan penuh terlalu mahal untuk rintangan yang jarang. \\
+\addlinespace
+Labirin atau ruang dengan banyak rintangan &
+Berbasis perencanaan, yaitu pencarian jalur &
+Jalan lurus hampir selalu terhalang, sehingga diperlukan pencarian rute.
+Dibahas pada Bab~X. \\
+\addlinespace
+Banyak NPC yang harus berpindah tempat secara terkoordinasi &
+Berbasis perencanaan, dengan penghematan perhitungan &
+Biaya pencarian jalur menjadi pertimbangan utama. Dibahas pada Bab~XI. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection{Melengkapi Dua Kekurangan}
+
+NPC pada bab ini memiliki dua kekurangan yang akan dilengkapi pada bab-bab
+berikutnya.
+
+\begin{itemize}
+  \item \textbf{Kekurangan pengetahuan tentang rintangan.} Pada Bab~X, NPC
+        akan memperoleh kemampuan mencari jalan memutar melalui pencarian jalur
+        A*. Sebelum itu, Bab~IX melengkapinya dengan kemampuan menilai
+        keadaan, sehingga NPC dapat memutuskan untuk berpatroli atau mengelak,
+        bukan hanya mengejar atau berdiam.
+  \item \textbf{Kekurangan pertimbangan biaya.} Pada bab ini, seluruh NPC
+        menghitung persepsinya setiap bingkai. Selama jumlahnya sedikit, cara
+        itu tidak menimbulkan masalah. Pada Bab~XI, ketika jumlah NPC dan
+        luasnya pencarian jalur bertambah, biaya perhitungan menjadi
+        pertimbangan yang menentukan.
+\end{itemize}
+
+\begin{catatabox}
+Kedua kekurangan itu berbeda jenisnya. Yang pertama berkaitan
+dengan \textbf{kualitas keputusan}, sedangkan yang kedua berkaitan dengan
+\textbf{biaya keputusan}. Pada pengembangan permainan yang sesungguhnya, kedua
+pertimbangan itu selalu berjalan bersama: keputusan yang lebih baik biasanya
+menuntut perhitungan yang lebih mahal, dan tugas perancang adalah memilih
+titik keseimbangan yang tepat.
+\end{catatabox}

@@ -1,0 +1,92 @@
+% chapters/10/section-01.tex
+\section{Peta Berpetak sebagai Graf}
+\label{sec:peta-graf}
+
+Bagian~2.5 telah menjelaskan bahwa pencarian jalur adalah persoalan pada graf.
+Bagian ini mengubah peta permainan menjadi graf tersebut.
+
+\subsection{Dari Gambar Menjadi Simpul dan Sisi}
+
+Sebuah peta yang tampak sebagai gambar sesungguhnya tersusun dari petak-petak.
+Setiap petak kosong dapat dilalui, sedangkan petak dinding tidak. Perubahan
+dari gambar menjadi graf dilakukan dengan tiga aturan sederhana.
+
+\begin{enumerate}
+  \item \textbf{Setiap petak kosong menjadi satu simpul}, dinyatakan oleh
+        pasangan angka, yaitu kolom dan barisnya.
+  \item \textbf{Setiap pasangan petak yang bersebelahan menjadi satu sisi}.
+        Pada bab ini hanya empat arah yang dipakai, yaitu atas, bawah, kiri,
+        dan kanan, sehingga selalu ada paling banyak empat sisi pada setiap
+        simpul.
+  \item \textbf{Biaya setiap sisi bernilai satu}, sebab memindahkan benda satu
+        petak ke petak sebelahnya selalu sama jauhnya. Apabila kelak Anda
+        menghendaki medan yang berbeda-beda, misalnya pasir yang memperlambat,
+        biaya sisi itu dapat dibedakan.
+\end{enumerate}
+
+Ketiga aturan itu diperlihatkan pada panel kiri
+Gambar~\ref{fig:peta-heuristik}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/peta-dan-heuristik.tikz}
+\caption{Peta berpetak sebagai graf dan dua ukuran perkiraan jarak}
+\label{fig:peta-heuristik}
+\end{figure}
+
+\subsection{Peta Ditulis sebagai Gambar Huruf}
+
+Peta disimpan sebagai rangkaian baris huruf, sehingga bentuknya masih dapat
+dikenali ketika dibaca di dalam kode.
+
+\begin{kodekeluaran}
+PETA = (
+    "################################",
+    "#S...#.........#........#......#",
+    "#....#.........#........#......#",
+    ...
+)
+
+CELL = 28        # sisi setiap petak, dalam piksel
+\end{kodekeluaran}
+
+Huruf \code{#} menyatakan dinding, titik menyatakan petak kosong, \code{S}
+menyatakan titik awal, dan \code{G} menyatakan titik tujuan. Cara penulisan itu
+dipilih karena tiga alasan: petanya mudah disunting, bentuknya mudah
+diperiksa dengan mata, dan kesalahan penulisan baris langsung terlihat.
+
+Program bab ini memeriksa petanya sebelum dipakai. Pemeriksaan itu meliputi
+panjang seluruh baris yang harus sama, serta keberadaan tepat satu titik awal
+dan satu titik tujuan. Pemeriksaan semacam itu murah, dan menghindarkan Anda
+dari kesulitan mencari sebab kegagalan program yang sebenarnya berasal dari
+peta yang salah tulis.
+
+\subsection{Penentuan Petak Tetangga}
+
+Seluruh hubungan antar-simpul diringkas pada satu fungsi yang mengembalikan
+petak-petak yang bersebelahan dengan sebuah petak.
+
+\begin{kodekeluaran}
+def tetangga(peta_lebar, peta_tinggi, dinding, petak):
+    kolom, baris = petak
+    hasil = []
+    for geser_kolom, geser_baris in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+        baru = (kolom + geser_kolom, baris + geser_baris)
+        if 0 <= baru[0] < peta_lebar and 0 <= baru[1] < peta_tinggi:
+            if baru not in dinding:
+                hasil.append(baru)
+    return hasil
+\end{kodekeluaran}
+
+Fungsi itu menyaring dua hal sekaligus: tetangga yang
+keluar dari batas peta, dan tetangga yang berupa dinding. Dengan begitu,
+pencarian tidak perlu memikirkan dinding lagi; ia cukup memanggil fungsi itu
+dan menerima petak-petak yang memang dapat dilalui.
+
+\begin{catatabox}
+Seluruh peta dibaca ulang setiap kali pencarian
+dijalankan pada program bab ini. Cara itu memadai untuk keperluan pembelajaran,
+tetapi boros apabila pencarian dilakukan berulang kali. Pada Bab~XI, peta akan
+dibaca sekali saja lalu disimpan, sebab pencarian jalur di sana dijalankan
+berulang kali untuk beberapa NPC.
+\end{catatabox}

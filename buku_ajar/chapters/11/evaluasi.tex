@@ -1,0 +1,104 @@
+% chapters/11/evaluasi.tex
+\bagian{Asesmen dan Instrumen Penilaian}
+\label{sec:asesmen-integrasi}
+
+\begin{asesmenbox}
+\textbf{Kedudukan asesmen bab ini.} Bab ini menuntaskan \SUBCPMK{2.4} dan
+menutup \CPMK{2}. Asesmennya berupa \textbf{Mini Proyek AI} yang dinilai
+memakai rubrik pada Lampiran~A, dengan bobot \CPMK{2} sebesar 10 persen dari
+nilai akhir mata kuliah.
+
+\vspace{0.4em}
+Mini proyek ini dikumpulkan dan dipresentasikan pada minggu kesembilan. Materi
+Bab~VIII sampai Bab~XI juga termasuk bahan \textbf{Ujian Tengah Semester} pada
+minggu kesepuluh.
+\end{asesmenbox}
+
+\subsection*{Instrumen 1: Rubrik Mini Proyek AI}
+
+\begin{table}[htbp]
+\centering
+\caption{Rubrik penilaian Mini Proyek AI beserta indikator yang diukur}
+\label{tab:rubrik-mini-proyek-bab11}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.4cm} C{1.2cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{Kriteria} & \textbf{Bobot} & \textbf{Indikator} & \textbf{Deskripsi capaian} \\
+\midrule
+Implementasi mesin keadaan & 25\% & \ind{a} &
+NPC memiliki keadaan yang jelas beserta transisi yang berjalan menurut jarak
+dan pewaktu; tidak terjadi kebuntuan keadaan. \\
+\addlinespace
+Implementasi pencarian jalur & 25\% & \ind{a} &
+Pencarian jalur menghasilkan rute yang benar pada peta berhalangan, memakai
+antrean prioritas, dan heuristik yang dapat dipertanggungjawabkan. \\
+\addlinespace
+Penggabungan keduanya & 20\% & \ind{b} &
+Pencarian jalur dipicu tepat pada keadaan mengejar, diulang secara berkala,
+dan kinerjanya terjaga. \\
+\addlinespace
+Pengujian dan laporan & 20\% & \ind{a}, \ind{b}, \ind{c} &
+Terdapat tiga skenario uji beserta angka pengukurannya, hasil pengamatan yang
+objektif, dan perbaikan yang ditindaklanjuti. \\
+\addlinespace
+Presentasi dan kerja sama & 10\% & \ind{c} &
+Demonstrasi jelas, setiap anggota memahami bagiannya, serta mampu menjawab
+pertanyaan penguji. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection*{Instrumen 2: Soal Penilaian}
+
+Jawablah dengan singkat. Kunci jawaban beserta indikator yang diukur disajikan
+pada Tabel~\ref{tab:kunci-konsep-ch11}.
+
+\begin{enumerate}
+  \item Jelaskan mengapa pencarian jalur tidak dijalankan setiap bingkai, dan
+        sebutkan dua syarat yang memicunya.
+  \item Sebuah pencarian memeriksa 200 petak. Hitunglah beban perhitungannya
+        apabila empat NPC menghitung ulang setiap bingkai pada 60 bingkai per
+        detik.
+  \item Sebutkan tiga segi penilaian mutu perilaku NPC beserta ukuran
+        masing-masing, lalu jelaskan mengapa ketiganya bertentangan.
+  \item Mengapa jalur pemain pada skenario uji harus sama ketika membandingkan
+        dua rancangan?
+  \item Perbaikan seperti apa yang disebut perbaikan yang baik? Sebutkan tiga
+        sifatnya.
+\end{enumerate}
+
+\begin{table}[htbp]
+\centering
+\caption{Kunci soal penilaian Bab XI beserta indikator yang diukur}
+\label{tab:kunci-konsep-ch11}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{0.8cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{No} & \textbf{Indikator} & \textbf{Pokok jawaban} \\
+\midrule
+1 & \ind{b} &
+Karena biaya satu kali pencarian mahal, sedangkan hasilnya dapat dipakai
+berkali-kali. Pencarian dipicu ketika selang hitung ulangnya habis, dan ketika
+jalurnya sudah habis dilalui. \\
+\addlinespace
+2 & \ind{b} &
+$4 \times 60 \times 200 = 48.000$ petak setiap detik, yaitu sekitar empat puluh
+delapan ribu pemeriksaan petak setiap detik. \\
+\addlinespace
+3 & \ind{b} &
+Kelancaran diukur dengan laju bingkai, daya tanggap dengan jarak rata-rata NPC
+terhadap pemain, dan beban komputasi dengan banyaknya pencarian serta petak
+yang diperiksa. Ketiganya bertentangan sebab menambah daya tanggap menuntut
+perhitungan yang lebih banyak, dan perhitungan yang berlebihan mengurangi
+kelancaran. \\
+\addlinespace
+4 & \ind{a} &
+Agar perbedaan hasilnya benar-benar berasal dari rancangan yang diuji, bukan
+dari perbedaan jalur pemainnya. \\
+\addlinespace
+5 & \ind{c} &
+Perbaikan yang berdasarkan pengukuran, terarah pada penyebabnya, dan disertai
+cara mengukur keberhasilannya. \\
+\bottomrule
+\end{tabularx}}
+\end{table}

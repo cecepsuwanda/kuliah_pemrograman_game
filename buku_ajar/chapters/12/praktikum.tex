@@ -1,0 +1,81 @@
+% chapters/12/praktikum.tex
+\begin{praktikumbox}
+Praktikum ini mengikuti Tugas Praktikum 09 pada RPS: memasang Unity LTS,
+membuat \istilah{project} 2D, menyusun \istilah{scene} kosong berisi kamera dan
+objek primitif, lalu menyimpannya.
+
+\begin{langkah}
+  \item \textbf{Pasang Unity.} Pasang Unity Hub, lalu pasang satu versi Unity
+        \istilah{LTS} beserta modul dukungan 2D. Catat nomor versi yang Anda
+        pasang pada lembar kerja, sebab nomor itu akan Anda pakai sepanjang
+        blok ini.
+
+  \item \textbf{Buat \istilah{project} 2D.} Melalui Unity Hub, buat
+        \istilah{project} baru dengan templat 2D. Amati susunan panel yang
+        muncul, lalu tentukan panel mana yang \istilah{Hierarchy}, mana yang
+        \istilah{Scene}, mana yang \istilah{Inspector}, dan mana yang
+        \istilah{Project window}.
+
+  \item \textbf{Kenali scene bawaannya.} Periksa ketiga benda yang telah ada
+        pada \istilah{scene} bawaan, lalu tentukan mana kamera, mana
+        pencahayaan, dan mana objek primitif. Ubah letak objek primitif itu
+        dengan menyeretnya pada panel \istilah{Scene}, lalu perhatikan perubahan
+        nilai pada \istilah{Inspector}.
+
+  \item \textbf{Tambahkan objek primitif.} Tambahkan tiga objek primitif yang
+        berbeda, yaitu kubus, bola, dan silinder. Susun ketiganya berjajar, lalu
+        atur warnanya agar berbeda-beda.
+
+  \item \textbf{Tulis dan tempelkan skrip.} Ketik ulang
+        \code{ch12_skrip_pertama.cs} dari Daftar~\ref{lst:ch12-skrip} ke dalam
+        folder \code{Scripts} pada \istilah{Project window}, lalu tempelkan pada
+        salah satu objek primitif.
+
+  \item \textbf{Jalankan scene-nya.} Tekan tombol jalankan, lalu gerakkan objek
+        itu dengan tombol panah. Amati pesan yang muncul pada panel
+        \istilah{Console}. Catat selang bingkai dan jarak yang dilaporkan.
+
+  \item \textbf{Simpan dan periksa berkasnya.} Simpan \istilah{scene} dan
+        \istilah{project}, lalu periksa folder \code{Assets} pada penjelajah
+        berkas komputer Anda. Catat berkas apa saja yang muncul di sana, dan
+        berkas apa saja yang sebaiknya tidak disimpan pada repositori.
+
+  \item \textbf{Tulis catatan praktikum} yang memuat nomor versi Unity,
+        keterangan kegunaan setiap panel, tangkapan layar scene buatan Anda,
+        dan tabel padanan konsep Pygame dan Unity yang Anda susun sendiri.
+
+  \item \textbf{Simpan pekerjaan} ke repositori Git, dengan berkas
+        \code{.gitignore} yang mendaftarkan folder \code{Library},
+        \code{Temp}, \code{Obj}, dan \code{Build}.
+\end{langkah}
+\end{praktikumbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Lembar kerja Praktikum 09}
+\label{tab:lembar-praktikum-09}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.2cm} Y@{}}
+\toprule
+\headrow \textbf{Butir yang dicatat} & \textbf{Keterangan} \\
+\midrule
+Nomor versi Unity yang dipasang & \\[1.2em]
+\addlinespace
+Kegunaan setiap panel, dengan kata-kata sendiri & \\[2.4em]
+\addlinespace
+Nama berkas yang muncul pada folder \code{Assets} & \\[1.2em]
+\addlinespace
+Selang bingkai yang dilaporkan pada panel \istilah{Console} & \\[1.2em]
+\addlinespace
+Kendala yang dihadapi beserta cara mengatasinya & \\[2.4em]
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Langkah kedelapan menuntut Anda menyusun tabel padanan dengan kata-kata
+sendiri. Tabel itu bukan salinan dari Tabel~\ref{tab:padanan-lengkap}, melainkan
+hasil pemeriksaan Anda sendiri: bukalah kembali kode Python Anda pada blok
+sebelumnya, lalu tentukan padanannya pada Unity. Tabel itulah yang menjadi bukti
+indikator \ind{c}.
+\end{catatabox}

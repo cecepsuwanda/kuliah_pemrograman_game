@@ -1,0 +1,93 @@
+% chapters/05/section-06.tex
+\section{Yang Belum Ada pada Gerak Ini}
+\label{sec:belum-ada-gerak}
+
+Objek sudah bergerak dengan kecepatan tetap pada setiap laju bingkai. Bagian
+penutup ini menjelaskan batas kemampuan program tersebut dan apa yang
+ditambahkan pada bab-bab berikutnya.
+
+\subsection{Kecepatan yang Selalu Tetap}
+
+Kecepatan objek pada bab ini hanya berubah karena tombol ditekan atau dilepas.
+Selama tombol ditahan, nilainya tetap, dan begitu tombol dilepas, nilainya
+langsung menjadi nol. Gerak semacam itu disebut gerak lurus beraturan.
+
+Sebagian besar permainan tidak mencukupi diri dengan gerak semacam itu.
+Sebuah benda yang jatuh bergerak makin lama makin cepat; sebuah bola yang
+memantul kehilangan sebagian kecepatannya setiap kali menyentuh lantai; sebuah
+karakter yang melompat bergerak melambat ketika mendekati titik tertinggi.
+Ketiga gejala itu berasal dari \textbf{percepatan}, yaitu perubahan kecepatan
+terhadap waktu.
+
+Percepatan ditambahkan pada tahap pembaruan, tepat sebelum kecepatan dipakai
+untuk memperbarui posisi. Susunannya menjadi dua tingkat, sama seperti kaidah
+Euler pada Bagian~2.4.
+
+\begin{kodekeluaran}
+velocity = velocity + acceleration * delta_seconds
+position = position + velocity * delta_seconds
+\end{kodekeluaran}
+
+Baris pertama itulah yang ditambahkan pada Bab~VI, beserta cara memilih nilai
+percepatan agar gravitasi terasa wajar dan lompatan dapat dikendalikan.
+
+\subsection{Objek yang Belum Dapat Bertabrakan}
+
+Objek pada bab ini bergerak menembus apa pun. Ia hanya dibatasi oleh tepi
+jendela, dan pembatasan itu pun dilakukan dengan memotong nilai posisi, bukan
+dengan memeriksa tabrakan.
+
+Pada Bab~VII, posisi pecahan dan \code{Rect} yang telah Anda selaraskan akan
+dipakai untuk memeriksa kapan dua objek bersentuhan. Penyelarasan pada
+Bagian~\ref{sec:selaras-rect} justru menjadi bekal untuk
+pekerjaan itu: pemeriksaan tabrakan memerlukan \code{Rect} bertipe bilangan
+bulat, sedangkan ketelitian gerak memerlukan posisi bertipe pecahan.
+
+\subsection{Objek yang Masih Berupa Variabel Biasa}
+
+Program pada bab ini menggerakkan satu objek yang disimpan pada beberapa
+variabel: \code{position}, \code{velocity}, dan \code{player_rect}. Cara itu
+memadai untuk satu objek, tetapi menjadi tidak terkelola ketika objeknya
+berjumlah sepuluh atau seratus.
+
+Pygame menyediakan kelas \code{Sprite} yang menyatukan gambar, posisi, dan
+perilaku sebuah objek menjadi satu kesatuan, serta kelas \code{Group} untuk
+mengelola sekumpulan \istilah{sprite} sekaligus. Keduanya dibahas pada
+Bab~VII. Sesudah itu, menambahkan objek baru cukup dengan membuat satu objek
+lagi, bukan dengan menambah tiga variabel baru untuk setiap objek.
+
+\subsection{Ringkasan Perkembangan}
+
+\begin{table}[htbp]
+\centering
+\caption{Bagian yang ditambahkan pada gerak objek pada bab-bab berikutnya}
+\label{tab:perkembangan-gerak}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.6cm} L{5.0cm} Y@{}}
+\toprule
+\headrow \textbf{Bab} & \textbf{Yang ditambahkan} & \textbf{Akibatnya} \\
+\midrule
+Bab~VI & Percepatan: gravitasi, impuls lompatan, pantulan &
+Kecepatan tidak lagi tetap, melainkan berubah setiap bingkai menurut
+percepatan yang bekerja. \\
+\addlinespace
+Bab~VII & \code{Sprite}, \code{Group}, dan deteksi tabrakan &
+Objek menjadi satu kesatuan beserta gambarnya, dan perpindahannya dapat
+terhenti karena bertabrakan. \\
+\addlinespace
+Bab~VIII--XI & Pengendalian NPC &
+Kecepatan tidak lagi berasal dari tombol, melainkan dari keputusan yang
+diambil program sendiri. \\
+\addlinespace
+Bab~XIII & Fisika mesin pada Unity &
+Perhitungan percepatan dan tabrakan diserahkan kepada mesin, sedangkan kode
+Anda mengatur pengaturan dan menanggapi peristiwanya. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Dengan gambaran itu, tampak bahwa bab ini meletakkan dua hal yang akan dipakai
+terus: \textbf{posisi sebagai pecahan} yang diperbarui setiap bingkai, dan
+\textbf{perpindahan sebagai hasil kali kecepatan dengan selang waktu}. Kedua
+hal itu tidak akan berubah lagi sampai akhir buku, bahkan ketika
+perhitungannya diserahkan kepada mesin permainan.

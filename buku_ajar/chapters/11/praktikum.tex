@@ -1,0 +1,87 @@
+% chapters/11/praktikum.tex
+\begin{praktikumbox}
+Praktikum ini adalah \textbf{Mini Proyek AI} pada RPS, yaitu pekerjaan
+kelompok beranggotakan 2 sampai 3 mahasiswa. Keluarannya berupa kode program,
+ringkasan desain, laporan \istilah{playtest} 2 sampai 3 halaman, dan presentasi
+10 menit.
+
+\begin{langkah}
+  \item \textbf{Jalankan mini proyeknya.} Ketik ulang \code{ch11_mini_proyek.py}
+        dari Daftar~\ref{lst:ch11-mini-proyek} ke dalam folder \code{code}.
+        Berkas itu memakai \code{ch10_astar.py}, sehingga kedua
+        berkas harus berada pada folder yang sama.
+
+  \item \textbf{Jalankan evaluasi selang hitung ulang.} Jalankan program
+        dengan pilihan \code{--evaluasi}, lalu catat tabel yang dihasilkan.
+        Bandingkan dengan Tabel~\ref{tab:evaluasi-selang} pada buku ini, dan
+        jelaskan perbedaan yang Anda temukan.
+\begin{kodekeluaran}
+python ch11_mini_proyek.py --evaluasi
+\end{kodekeluaran}
+
+  \item \textbf{Uji skenario pertama: ruang terbuka.} Jalankan permainan dan
+        berlari lurus menjauh dari NPC. Catat jarak rata-rata yang ditampilkan
+        dan kesan Anda mengenai perilaku NPC.
+
+  \item \textbf{Uji skenario kedua: labirin.} Berlari mengelilingi lorong
+        sehingga jalan lurus selalu terhalang. Catat banyaknya pencarian jalur
+        dan kesan Anda mengenai jalur yang dipilih NPC.
+
+  \item \textbf{Uji skenario ketiga: rintangan dinamis.} Tambahkan satu benda
+        yang bergerak menutupi lorong, lalu amati perilaku NPC ketika jalurnya
+        menjadi usang. Apabila perlu, perlambat laju bingkai atau perbesar
+        selang hitung ulang agar kelemahannya lebih terlihat.
+
+  \item \textbf{Uji satu perbaikan.} Pilih satu perbaikan dari
+        Tabel~\ref{tab:perbaikan}---misalnya menyebar waktu perhitungan antar
+        NPC---lalu terapkan dan ukur hasilnya dengan cara yang tercantum pada
+        tabel itu.
+
+  \item \textbf{Susun laporan \istilah{playtest}} yang memuat ketiga skenario
+        beserta angka pengukuran, kesan mutu perilaku, perbaikan yang
+        diterapkan beserta hasil pengukurannya, dan kendala yang dihadapi
+        kelompok.
+
+  \item \textbf{Siapkan presentasi 10 menit} yang memperagakan mini proyeknya
+        secara langsung, lalu sampaikan pada pertemuan kelas. Setiap anggota
+        kelompok harus memahami bagiannya masing-masing.
+
+  \item \textbf{Simpan pekerjaan} ke repositori Git dengan pesan penyimpanan
+        yang menerangkan isinya.
+\end{langkah}
+\end{praktikumbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Lembar kerja Mini Proyek AI}
+\label{tab:lembar-mini-proyek}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{2.8cm} C{2.2cm} C{2.2cm} Y@{}}
+\toprule
+\headrow \textbf{Skenario} & \textbf{Jarak rata-rata} & \textbf{Banyaknya pencarian} & \textbf{Kesan mutu perilaku} \\
+\midrule
+Ruang terbuka & & & \\[1.6em]
+\addlinespace
+Labirin & & & \\[1.6em]
+\addlinespace
+Rintangan dinamis & & & \\[1.6em]
+\addlinespace
+\multicolumn{4}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Perbaikan yang diterapkan: \dotfill} \\[1.4em]
+\addlinespace
+\multicolumn{4}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Hasil pengukuran sesudah perbaikan: \dotfill} \\[1.4em]
+\addlinespace
+\multicolumn{4}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Kendala yang dihadapi kelompok dan cara mengatasinya: \dotfill} \\[2.0em]
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Penilaian mini proyek ini memakai rubrik pada Lampiran~A: implementasi mesin
+keadaan 25 persen, implementasi pencarian jalur 25 persen, penggabungan
+keduanya 20 persen, pengujian beserta laporan 20 persen, dan presentasi
+10 persen. Separuh nilainya berkaitan dengan pengujian dan
+penggabungan, bukan dengan penulisan kode semata.
+\end{catatabox}

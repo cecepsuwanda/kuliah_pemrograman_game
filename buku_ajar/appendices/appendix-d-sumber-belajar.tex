@@ -1,0 +1,224 @@
+% appendices/appendix-d-sumber-belajar.tex
+\chapter{Sumber Belajar}
+\label{app:sumber}
+
+Lampiran ini menjelaskan kegunaan setiap rujukan pada Daftar Pustaka, agar
+Anda dapat memilih bacaan menurut keperluan. Uraian lengkap setiap rujukan
+tidak diulang di sini; yang ditambahkan hanyalah keterangan tentang bagian
+mana yang berguna dan untuk bab mana.
+
+\section{Buku Teks dan Dokumentasi Resmi}
+
+Rujukan pada Tabel~\ref{tab:sumber-utama} adalah bacaan pokok. Ketiganya
+tersedia bebas, dan ketiganya dipakai berulang kali sepanjang buku ini.
+
+\begin{table}[htbp]
+\centering
+\caption{Buku teks dan dokumentasi resmi beserta kegunaannya}
+\label{tab:sumber-utama}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.1cm} L{4.6cm} Y@{}}
+\toprule
+\headrow \textbf{Kode} & \textbf{Bacaan} & \textbf{Kegunaan pada buku ini} \\
+\midrule
+\cite{sweigart-mg} & Sweigart, \istilah{Making Games with Python \& Pygame} &
+Pembahasan permainan lengkap dengan Pygame, dari \istilah{game loop} sampai
+bunyi. Berguna sebagai contoh utuh setelah Bab~XI. \\
+\addlinespace
+\cite{sweigart-invent} & Sweigart, \istilah{Invent Your Own Computer Games with
+Python} & Dasar Python dan permainan berbasis teks. Berguna sebelum Bab~III
+apabila dasar Python Anda belum kuat. \\
+\addlinespace
+\cite{pygame-docs} & Dokumentasi resmi Pygame &
+Rujukan perintah yang dipakai pada Bab~III--XI. Periksa di sini ketika nama
+atau argumen sebuah fungsi tidak lagi sesuai dengan contoh pada buku. \\
+\addlinespace
+\cite{pygame-sprite-mask} & Dokumentasi \code{pygame.mask} &
+Pembahasan tabrakan berdasarkan bentuk gambar, yang tidak dibahas pada
+Bab~VII tetapi berguna untuk permainan dengan bentuk tidak beraturan. \\
+\addlinespace
+\cite{unity-leveldesign} & Unity Technologies, \istilah{Introduction to Level
+Design in Game Development and in Unity} &
+Rancangan level, penyampaian keterangan kepada pemain, dan pengujian. Menjadi
+sandaran Bab~XII--XVI. \\
+\addlinespace
+\cite{unity-learn} & Unity Learn &
+Kumpulan tutorial resmi Unity. Berguna untuk melatih ulang langkah pada
+Bab~XII--XV sebelum mengerjakan proyek. \\
+\addlinespace
+\cite{unity-manual-import} & Unity Manual: \istilah{Importing Assets} dan
+\istilah{Audio} &
+Rujukan pengaturan impor dan bunyi pada Bab~XIV--XV. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\section{Tulisan Teknis Mendalam}
+
+Rujukan pada Tabel~\ref{tab:sumber-teknis} membahas satu topik secara
+mendalam. Sebagian besar tidak perlu dibaca seluruhnya; bacalah bagian yang
+bersangkutan ketika Anda ingin memahami alasan di balik sebuah pilihan.
+
+\begin{table}[htbp]
+\centering
+\caption{Tulisan teknis mendalam beserta bab yang berkaitan}
+\label{tab:sumber-teknis}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.1cm} L{4.6cm} Y@{}}
+\toprule
+\headrow \textbf{Kode} & \textbf{Bacaan} & \textbf{Kegunaan pada buku ini} \\
+\midrule
+\cite{nystrom-gameloop} & Nystrom, ``Fix Your Timestep'' dan pembahasan
+\istilah{game loop} & Alasan di balik \istilah{game loop} pada Bab~IV, termasuk
+pemisahan antara pembaruan tetap dan pembaruan tampilan. \\
+\addlinespace
+\cite{fiedler-timestep} & Fiedler, \istilah{Timestep} &
+Perbandingan beberapa cara menjalankan waktu pada permainan. Berguna setelah
+Bab~IV apabila gerak permainan Anda tidak stabil. \\
+\addlinespace
+\cite{catto-integration} & Catto, \istilah{Integration Basics} &
+Penjelasan Euler dan Verlet untuk fisika sederhana. Sandaran Bab~VI, termasuk
+alasannya mengenai galat yang mengecil ketika langkah waktunya diperkecil. \\
+\addlinespace
+\cite{santos-pathfinding} & Santos, \istilah{Pathfinding} &
+Penjelasan BFS, Dijkstra, dan A* beserta ilustrasinya. Sandaran Bab~X. \\
+\addlinespace
+\cite{santos-fsm} & Santos, \istilah{Finite State Machines} &
+Penjelasan mesin keadaan beserta contohnya. Sandaran Bab~IX. \\
+\addlinespace
+\cite{bendersky-pygame-astar} & Bendersky, A* pada Pygame &
+Contoh penerapan A* pada permainan dua dimensi. Berguna sebagai pembanding
+\code{ch10_astar.py}. \\
+\addlinespace
+\cite{munir-astar} & Munir, \istilah{Pencarian Jalur dengan A*} &
+Pembahasan sifat heuristik dan pengaruhnya pada hasil pencarian. Berguna untuk
+menjawab latihan pada Bab~X. \\
+\addlinespace
+\cite{itb-astar-navigasi} & ITB, ``Implementasi Algoritma A* dalam Navigasi
+Karakter'' & Contoh penerapan A* pada karakter permainan. \\
+\addlinespace
+\cite{stmikdharmapala-astar} & STMIK Dharmapala, penerapan A* pada permainan &
+Contoh penerapan pada permainan buatan Indonesia. \\
+\addlinespace
+\cite{itb-collision} & ITB, ``Collision Detection in Precision Parry-Based
+Combat'' & Pembahasan deteksi tabrakan yang lebih rinci daripada Bab~VII. \\
+\addlinespace
+\cite{pygame-chimp} & Pygame Community, \istilah{Chimp Line-by-Line} &
+Contoh permainan Pygame yang dibahas baris demi baris. Berguna setelah
+Bab~VII untuk melihat susunan program secara utuh. \\
+\addlinespace
+\cite{reintech-game-ai} & Reintech, ``How to Create a Video Game AI with
+Python'' & Contoh perilaku NPC dalam Python. Berguna sebagai pembanding
+Bab~VIII. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\section{Rencana Pembelajaran dan Kurikulum Pembanding}
+
+Rujukan pada Tabel~\ref{tab:sumber-rps} dipakai untuk menyusun peta capaian
+pada Bab~XVII, dan berguna bagi Anda yang ingin mengetahui bagaimana mata
+kuliah serupa disusun di tempat lain.
+
+\begin{table}[htbp]
+\centering
+\caption{Rencana pembelajaran dan kurikulum pembanding}
+\label{tab:sumber-rps}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.1cm} L{4.6cm} Y@{}}
+\toprule
+\headrow \textbf{Kode} & \textbf{Bacaan} & \textbf{Kegunaan pada buku ini} \\
+\midrule
+\cite{its-rps-game} & ITS, \istilah{RPS Desain dan Pemrograman Game} &
+Pembanding susunan capaian dan pokok bahasan. \\
+\addlinespace
+\cite{unima-rps-game} & UNIMA, \istilah{RPS Pengembangan Game} &
+Pembanding bentuk penilaian dan presentasi proyek. \\
+\addlinespace
+\cite{unesa-rps-game} & UNESA, \istilah{RPS Pemrograman Game} &
+Pembanding urutan materi antara blok algoritma dan blok mesin permainan. \\
+\addlinespace
+\cite{polibatam-kurikulum} & Politeknik Negeri Batam, \istilah{Kurikulum
+Program Studi Teknologi Permainan} & Pembanding daftar periksa capaian dan
+penyusunan daftar periksa pada Bab~XVI. \\
+\addlinespace
+\cite{univrab-pemrograman-game} & Universitas Abdurrab, \istilah{Deskripsi Mata
+Kuliah Pemrograman Game} & Pembanding cakupan materi dan prasyarat. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\section{Karya Akademik Indonesia}
+
+Rujukan pada Tabel~\ref{tab:sumber-karya} adalah skripsi, jurnal, dan laporan
+pengabdian dari perguruan tinggi Indonesia. Kegunaannya berbeda dari buku
+teks: karya seperti ini memperlihatkan bagaimana sebuah permainan sungguh
+dibangun dan dilaporkan, termasuk kekurangannya.
+
+\begin{table}[htbp]
+\centering
+\caption{Karya akademik Indonesia beserta kegunaannya}
+\label{tab:sumber-karya}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.1cm} L{4.6cm} Y@{}}
+\toprule
+\headrow \textbf{Kode} & \textbf{Bacaan} & \textbf{Kegunaan pada buku ini} \\
+\midrule
+\cite{uma-pygame} & Universitas Medan Area, \istilah{Panduan Membuat Game 2D
+Sederhana dengan Pygame} & Contoh pengantar yang ringkas untuk Bab~III--IV. \\
+\addlinespace
+\cite{ub-pygame} & Universitas Brawijaya, ``Game Development with Python'' &
+Contoh penyusunan permainan sederhana dan penjelasannya. \\
+\addlinespace
+\cite{dinus-pygame} & Universitas Dian Nuswantoro, ``Pemrograman dan Game
+dengan Python/Pygame'' & Contoh pelatihan Pygame bagi pemula. \\
+\addlinespace
+\cite{stmikjayakarta-pygame} & STMIK Jayakarta, ``Penerapan Library Pygame
+dalam Game RPG The Adventure'' & Contoh permainan RPG dengan Pygame, termasuk
+pengurusan bunyi. \\
+\addlinespace
+\cite{itn-astar-fsm} & ITN Malang, ``Penerapan A* dan FSM pada Game Lost
+Civilization'' & Contoh penggabungan A* dan FSM, sebagaimana Bab~XI. \\
+\addlinespace
+\cite{umri-astar-behaviour} & UMRI, ``Penerapan Algoritma A* dan Behaviour
+Trees'' & Pembanding pendekatan lain untuk perilaku NPC. \\
+\addlinespace
+\cite{uinmalang-fsm-fuzzy} & UIN Malang, \istilah{Implementasi FSM dan Logika
+Fuzzy} & Pembanding pendekatan yang lebih halus daripada FSM pada Bab~IX. \\
+\addlinespace
+\cite{uny-katelu} & UNY, \istilah{Pengembangan Permainan Edukasi KATELU dengan
+Unity 3D} & Contoh proyek Unity lengkap beserta laporannya. \\
+\addlinespace
+\cite{undip-media} & UNDIP, ``Media Pembelajaran Budaya Indonesia Menggunakan
+Unity'' & Contoh pencantuman aset dan sumber pada karya Unity. \\
+\addlinespace
+\cite{untan-edukasi} & UNTAN, ``Game Edukasi Budaya Indonesia'' &
+Pembanding rancangan permainan edukasi. \\
+\addlinespace
+\cite{rokania-unity} & STKIP Rokania, \istilah{Pelatihan Dasar Pemrograman Game
+dengan Unity} & Contoh pelatihan Unity bagi pemula, dan pembanding refleksi
+pemilihan teknologi pada Bab~XVI. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\section{Saran Urutan Membaca}
+
+Buku ini disusun agar dapat dibaca berurutan. Apabila Anda memerlukan bacaan
+tambahan, urutan berikut biasanya paling berguna.
+
+\begin{enumerate}
+  \item \textbf{Sebelum Bab~III}: \cite{sweigart-invent} untuk dasar Python.
+  \item \textbf{Setelah Bab~IV}: \cite{nystrom-gameloop} dan
+        \cite{fiedler-timestep} untuk memahami mengapa waktunya dijalankan
+        dengan cara itu.
+  \item \textbf{Setelah Bab~VI}: \cite{catto-integration} untuk galat
+        integrasi dan cara memperkecilnya.
+  \item \textbf{Setelah Bab~IX dan Bab~X}: \cite{santos-fsm} dan
+        \cite{santos-pathfinding} untuk pembahasan yang lebih rinci.
+  \item \textbf{Setelah Bab~XI}: \cite{sweigart-mg} untuk melihat satu
+        permainan Pygame yang lengkap.
+  \item \textbf{Setelah Bab~XVI}: \cite{unity-leveldesign} bagian pengujian,
+        lalu salah satu karya akademik pada Tabel~\ref{tab:sumber-karya}
+        sebagai contoh proyek yang dilaporkan.
+\end{enumerate}

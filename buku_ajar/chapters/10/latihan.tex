@@ -1,0 +1,46 @@
+% chapters/10/latihan.tex
+\bagian{Latihan dan Refleksi}
+
+\begin{enumerate}
+  \item Jelaskan bagaimana sebuah peta berpetak diubah menjadi graf. Sebutkan
+        apa yang menjadi simpul, apa yang menjadi sisi, dan berapa biaya setiap
+        sisinya.
+
+  \item Jelaskan perbedaan cara kerja pencarian melebar (BFS) dan algoritma
+        Dijkstra. Keadaan seperti apa yang membuat BFS tidak memadai?
+
+  \item Tuliskan rumus yang menentukan urutan pemeriksaan pada algoritma A*,
+        lalu jelaskan arti setiap unsurnya.
+
+  \item Sebuah petak berjarak enam langkah dari titik awal dan berjarak lima
+        satuan Manhattan dari titik tujuan. Hitunglah nilai $f$-nya.
+
+  \item Jelaskan syarat yang harus dipenuhi sebuah heuristik agar jalur yang
+        dihasilkan tetap terpendek. Periksa apakah jarak Manhattan dan jarak
+        Euclidean memenuhi syarat itu pada peta yang mengizinkan empat arah.
+
+  \item Jelaskan mengapa jarak Manhattan tidak memenuhi syarat itu pada peta
+        yang mengizinkan delapan arah, beserta akibatnya.
+
+  \item Pada Tabel~\ref{tab:perbandingan-heuristik}, biaya jalur ketiga
+        heuristik sama sedangkan banyaknya petak yang diperiksa berbeda.
+        Jelaskan mengapa demikian.
+
+  \item Jelaskan bagaimana jalur direkonstruksi dari tabel asal. Mengapa tabel
+        itu perlu memuat titik awal sebagai tanda berhenti?
+\end{enumerate}
+
+\begin{refleksibox}
+\begin{enumerate}
+  \item Pada langkah keenam praktikum, berapa biaya jalur yang dihasilkan
+        heuristik yang digandakan? Apakah Anda menyadarinya tanpa memeriksa
+        tabel perbandingan?
+  \item Ketika Anda membuat tujuan tidak dapat dicapai, apakah program
+        menanganinya dengan baik? Menurut Anda, apa yang seharusnya dilakukan
+        NPC pada keadaan itu?
+  \item Peta pada bab ini berukuran 32 kali 20 petak. Menurut perkiraan Anda,
+        berapa kali lipat petak yang diperiksa Dijkstra dibandingkan Manhattan
+        apabila petanya sepuluh kali lebih luas? Bagaimana Anda dapat menguji
+        perkiraan itu?
+\end{enumerate}
+\end{refleksibox}

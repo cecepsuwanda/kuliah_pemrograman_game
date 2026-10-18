@@ -1,0 +1,103 @@
+% =========================================================
+%  main.tex
+%  BUKU AJAR PENGANTAR PEMROGRAMAN GAME (MWCA009)
+%  Master document
+%
+%  Program Studi Teknik Informatika
+%  Fakultas Teknologi Informasi
+%  Universitas Bale Bandung
+%
+%  Kompilasi seluruh buku:
+%    latexmk -pdf main.tex
+%  atau:
+%    pdflatex main.tex   (jalankan dua kali agar daftar isi terisi)
+%
+%  Kompilasi satu bab:
+%    cd chapters\05
+%    latexmk -pdf chapter.tex
+% =========================================================
+
+\documentclass[12pt,a4paper,oneside]{book}
+
+% =========================================================
+%  KONFIGURASI GLOBAL
+% =========================================================
+
+\input{preamble}
+\input{metadata}
+
+% =========================================================
+%  DOKUMEN
+% =========================================================
+
+\begin{document}
+
+% =========================================================
+%  FRONT MATTER
+% =========================================================
+
+\frontmatter
+
+\input{frontmatter/cover}
+\input{frontmatter/copyright}
+\input{frontmatter/preface}
+\input{frontmatter/acknowledgements}
+\input{frontmatter/petunjuk-penggunaan}
+\input{frontmatter/learning-outcomes}
+
+\cleardoublepage
+\tableofcontents
+
+\cleardoublepage
+\listoffigures
+
+\cleardoublepage
+\listoftables
+
+% =========================================================
+%  MAIN MATTER
+%  Bab diaktifkan satu per satu setelah selesai dan diperiksa.
+% =========================================================
+
+\mainmatter
+
+\pagestyle{mainmatter}
+
+\subfile{chapters/01/chapter}   % Bab I    Pendahuluan dan Orientasi Buku
+\subfile{chapters/02/chapter}   % Bab II   Landasan Teori dan Konsep Dasar
+\subfile{chapters/03/chapter}   % Bab III  Materi 1  Pengantar & Setup Python/Pygame
+\subfile{chapters/04/chapter}   % Bab IV   Materi 2  Game Loop, Event Handling, Clock
+\subfile{chapters/05/chapter}   % Bab V    Materi 3  Gerak Objek, Vector2, Delta Time
+\subfile{chapters/06/chapter}   % Bab VI   Materi 4  Fisika Sederhana
+\subfile{chapters/07/chapter}   % Bab VII  Materi 5  Sprite, Group, Collision
+\subfile{chapters/08/chapter}   % Bab VIII Materi 6  AI NPC dan Perilaku Chase
+\subfile{chapters/09/chapter}   % Bab IX   Materi 7  Finite State Machine
+\subfile{chapters/10/chapter}   % Bab X    Materi 8  Pathfinding A*
+\subfile{chapters/11/chapter}   % Bab XI   Materi 9  Integrasi FSM dan A*
+\subfile{chapters/12/chapter}   % Bab XII  Materi 10 Pengenalan Unity
+\subfile{chapters/13/chapter}   % Bab XIII Materi 11 Level, Physics, Kontrol Pemain
+\subfile{chapters/14/chapter}   % Bab XIV  Materi 12 Aset Visual, Animasi, UI
+\subfile{chapters/15/chapter}   % Bab XV   Materi 13 Audio dan Trigger Interaksi
+\subfile{chapters/16/chapter}   % Bab XVI  Materi 14 Playtesting dan Presentasi
+\subfile{chapters/17/chapter}   % Bab XVII Evaluasi, Refleksi, Integrasi Kompetensi
+
+% =========================================================
+%  LAMPIRAN
+% =========================================================
+
+\appendix
+
+\input{appendices/appendix-a-rubrik}          % Lampiran A
+\input{appendices/appendix-b-tugas-portofolio}% Lampiran B
+\input{appendices/appendix-c-glosarium}       % Lampiran C
+\input{appendices/appendix-d-sumber-belajar}  % Lampiran D
+
+% =========================================================
+%  BACK MATTER
+% =========================================================
+
+\backmatter
+
+\input{references}
+
+\end{document}

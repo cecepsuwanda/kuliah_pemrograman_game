@@ -1,0 +1,89 @@
+% =========================================================
+%  config/listings.tex
+%  Konfigurasi penampilan kode program: Python dan C# (Unity).
+%  Seluruh buku memakai konfigurasi yang sama.
+% =========================================================
+
+% --- Gaya dasar kode program ----------------------------
+\lstdefinestyle{bookstyle}{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  breakatwhitespace=false,
+  postbreak=\mbox{\textcolor{ubAccent}{$\hookrightarrow$}\space},
+  frame=single,
+  framerule=0.4pt,
+  rulecolor=\color{ubLine},
+  numbers=left,
+  numberstyle=\tiny\color{ubAccent},
+  numbersep=9pt,
+  showstringspaces=false,
+  tabsize=4,
+  keepspaces=true,
+  columns=fullflexible,
+  captionpos=b,
+  xleftmargin=1.9em,
+  framexleftmargin=1.5em,
+  keywordstyle=\color{ubPrimary}\bfseries,
+  commentstyle=\color{ubGreen}\itshape,
+  stringstyle=\color{ubRed},
+  emphstyle=\color{ubWarn}\bfseries,
+  extendedchars=true,
+  inputencoding=utf8
+}
+
+% --- Gaya keluaran program (tanpa nomor baris) ----------
+\lstdefinestyle{outputstyle}{
+  style=bookstyle,
+  numbers=none,
+  xleftmargin=1.1em,
+  framexleftmargin=0.8em,
+  basicstyle=\ttfamily\footnotesize\color{black},
+  backgroundcolor=\color{ubGray}
+}
+
+% --- Bahasa Python --------------------------------------
+\lstdefinelanguage{PythonBook}{
+  language=Python,
+  morekeywords={self,True,False,None,as,with,assert,lambda,yield,global,nonlocal},
+  morecomment=[l]{\#},
+  morestring=[b]"
+}
+
+% --- Bahasa C# (skrip Unity) ----------------------------
+\lstdefinelanguage{CSharp}{
+  morekeywords={
+    abstract,as,base,bool,break,byte,case,catch,char,checked,class,const,
+    continue,decimal,default,delegate,do,double,else,enum,event,explicit,
+    extern,false,finally,fixed,float,for,foreach,goto,if,implicit,in,int,
+    interface,internal,is,lock,long,namespace,new,null,object,operator,out,
+    override,params,private,protected,public,readonly,ref,return,sbyte,
+    sealed,short,sizeof,stackalloc,static,string,struct,switch,this,throw,
+    true,try,typeof,uint,ulong,unchecked,unsafe,ushort,using,virtual,void,
+    volatile,while,var,get,set,value,async,await
+  },
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]",
+  morestring=[b]'
+}
+
+% --- Istilah khusus Unity ditandai tersendiri -----------
+\newcommand{\unityapi}[1]{\textcolor{ubWarn}{\textbf{#1}}}
+
+\lstset{style=bookstyle}
+
+% --- Perintah ringkas pemanggil kode --------------------
+% \kodepython{python/ch04_game_loop.py}{Judul}{lst:label}
+\newcommand{\kodepython}[3]{%
+  \lstinputlisting[style=bookstyle, language=PythonBook,
+    caption={#2}, label={#3}]{\codefile{#1}}%
+}
+% \kodecsharp{unity/ch13_player_controller.cs}{Judul}{lst:label}
+\newcommand{\kodecsharp}[3]{%
+  \lstinputlisting[style=bookstyle, language=CSharp,
+    caption={#2}, label={#3}]{\codefile{#1}}%
+}
+% \kodekeluaran{...} untuk menampilkan potongan keluaran program
+\lstnewenvironment{kodekeluaran}[1][]{%
+  \lstset{style=outputstyle, #1}}{}

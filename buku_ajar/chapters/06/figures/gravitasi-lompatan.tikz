@@ -1,0 +1,47 @@
+% chapters/06/figures/gravitasi-lompatan.tikz
+% Lintasan lompatan: kecepatan awal mengarah ke atas, puncak dengan kecepatan
+% tegak nol, lalu jatuh dengan kecepatan yang makin besar karena gravitasi.
+\begin{tikzpicture}[
+  lintasan/.style={very thick, draw=ubPrimary},
+  panah/.style={-{Stealth[length=2.4mm]}, very thick, draw=ubAccent},
+  panahgrav/.style={-{Stealth[length=2.4mm]}, very thick, draw=ubRed},
+  lantai/.style={thick, draw=ubLine},
+  label/.style={font=\scriptsize, align=left},
+  keterangan/.style={font=\scriptsize\itshape, ubPrimary, align=left}
+]
+
+% Lantai.
+\draw[lantai] (0,0) -- (8.0,0);
+
+% Lintasan: naik, mencapai puncak, lalu turun.
+\draw[lintasan] (0.8,0) .. controls (1.35,1.9) and (1.85,2.6) .. (2.4,2.6);
+\draw[lintasan] (2.4,2.6) .. controls (2.95,2.6) and (3.45,1.9) .. (4.0,0);
+
+% Tinggi lompatan.
+\draw[ubGreen, dashed] (0.8,0) -- (0.8,2.6);
+\draw[ubGreen, dashed] (0.8,2.6) -- (1.55,2.6);
+\node[label, ubGreen, anchor=east] at (0.72,1.3)
+  {$h = \dfrac{v_0^2}{2g}$};
+
+% Kecepatan awal, mengarah ke atas.
+\draw[panah] (0.98,0.3) -- (1.12,1.45);
+\node[label, ubAccent, anchor=south east] at (0.95,0.95) {$v_0$};
+
+% Puncak: kecepatan tegak bernilai nol.
+\fill[ubPrimary] (2.4,2.6) circle (1.8pt);
+\node[label, anchor=south] at (2.4,2.68) {kecepatan tegak nol};
+
+% Kecepatan saat jatuh, mengarah ke bawah dan makin besar.
+\draw[panah] (3.88,1.5) -- (3.72,0.35);
+\node[label, ubAccent, anchor=north east] at (3.6,1.05) {makin cepat};
+
+% Arah gravitasi yang selalu ke bawah.
+\draw[panahgrav] (5.6,2.3) -- (5.6,0.9);
+\node[label, ubRed, anchor=west] at (5.75,1.6)
+  {gravitasi $g$,\\selalu ke bawah};
+
+% Keterangan arah pada koordinat layar.
+\node[keterangan, anchor=north west, text width=52mm] at (5.2,-0.25)
+  {Pada koordinat layar, sumbu tegak menuju ke bawah, sehingga gerak ke atas
+   bernilai negatif.};
+\end{tikzpicture}

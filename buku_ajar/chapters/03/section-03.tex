@@ -1,0 +1,157 @@
+% chapters/03/section-03.tex
+\section{Memasang Pygame dan Memeriksa Pemasangan}
+\label{sec:memasang-pygame}
+
+\subsection{Kedudukan Pygame}
+
+Pygame bukan bahasa pemrograman dan bukan pula program yang berdiri sendiri.
+Ia adalah \textbf{pustaka}, yaitu kumpulan fungsi yang dapat Anda panggil dari
+program Python untuk mengurus pekerjaan yang berkaitan dengan permainan.
+Pekerjaan itu meliputi membuka jendela, menggambar bentuk dan teks, memuat
+berkas gambar dan bunyi, serta membaca masukan pemain \cite{pygame-docs}.
+
+Pekerjaan tingkat rendah di bawah Pygame ditangani oleh pustaka lain bernama
+SDL (\istilah{Simple DirectMedia Layer}). Program Anda tidak memanggil SDL
+secara langsung; Pygame yang menjadi perantaranya. Susunan lapisan tersebut
+diperlihatkan pada Gambar~\ref{fig:lapisan-perkakas}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/lapisan-perkakas.tikz}
+\caption{Lapisan perkakas dari kode Anda sampai perangkat keras}
+\label{fig:lapisan-perkakas}
+\end{figure}
+
+Susunan berlapis itu menjelaskan dua hal yang akan Anda jumpai nanti. Pertama,
+pesan kesalahan kadang menyebut SDL, bukan Pygame, karena masalahnya berada di
+lapisan yang lebih dalam. Kedua, versi SDL yang terpasang ikut menentukan
+kemampuan yang tersedia, sehingga nomor versinya perlu Anda catat ketika
+meminta bantuan.
+
+\subsection{Memasang Pygame}
+
+Pemasangan dilakukan dengan \istilah{pip}, yaitu pengelola paket milik Python.
+Jalankan perintah berikut pada terminal.
+
+\begin{kodekeluaran}
+python -m pip install pygame
+\end{kodekeluaran}
+
+Perintah tersebut dibaca sebagai berikut: ``jalankan modul \code{pip} dengan
+penafsir \code{python} yang sedang aktif, lalu pasang paket bernama
+\code{pygame}''. Bentuk \code{python -m pip} sengaja dipakai alih-alih
+\code{pip} saja. Alasannya, apabila pada komputer terdapat lebih dari satu
+versi Python, perintah \code{pip} dapat menunjuk versi yang berbeda dengan
+\code{python}. Akibatnya Pygame terpasang pada penafsir yang tidak Anda pakai,
+dan program tetap melaporkan bahwa Pygame tidak ditemukan. Bentuk
+\code{python -m pip} memastikan pemasangan dilakukan pada penafsir yang sama
+dengan yang akan menjalankan program Anda.
+
+Apabila pemasangan gagal karena masalah izin, tambahkan pilihan
+\code{--user} sehingga paket dipasang di folder pribadi Anda, bukan di
+folder sistem.
+
+\begin{kodekeluaran}
+python -m pip install --user pygame
+\end{kodekeluaran}
+
+\subsection{Memeriksa Pemasangan dengan Skrip}
+
+Menjalankan satu perintah pemasangan belum membuktikan bahwa lingkungan Anda
+siap. Perlu dipastikan pula bahwa Pygame dapat dipanggil, pengandar video
+tersedia, dan huruf bawaan dapat dimuat. Untuk keperluan itu, buku ini
+menyediakan skrip pemeriksaan yang dapat Anda pakai berulang kali, misalnya
+ketika berpindah komputer.
+
+\kodepython{python/ch03_periksa_lingkungan.py}{Skrip pemeriksaan kesiapan lingkungan kerja}{lst:ch03-periksa}
+
+Jalankan skrip tersebut dari terminal, dan Anda akan memperoleh keluaran
+serupa berikut.
+
+\begin{kodekeluaran}
+============================================================
+ PEMERIKSAAN LINGKUNGAN KERJA
+ Pengantar Pemrograman Game
+============================================================
+
+Python           : 3.11.9 (siap)
+Sistem operasi   : Windows 10 AMD64
+Penafsir Python  : C:\Program Files\Python311\python.exe
+Pygame           : 2.6.1
+SDL              : 2.28.4
+Pengandar video  : windows
+Huruf bawaan     : tersedia (tinggi 16 piksel)
+
+Hasil: lingkungan siap dipakai. Lanjutkan ke praktikum.
+\end{kodekeluaran}
+
+Baris \istilah{Penafsir Python} menunjukkan berkas penafsir yang sedang dipakai.
+Catatlah baris tersebut, karena ketika muncul masalah ``Pygame tidak
+ditemukan'', baris itulah yang menunjukkan penafsir mana yang harus
+diperiksa. Baris \istilah{Pengandar video} menunjukkan cara Pygame berbicara
+dengan layar; pada komputer biasa nilainya \code{windows} atau \code{x11},
+sedangkan pada pengujian tanpa layar nilainya \code{dummy}.
+
+Skrip tersebut juga memberikan kode keluar yang dapat diperiksa oleh perkakas
+lain: bernilai 0 apabila lingkungan siap, dan 1 apabila ada yang belum siap.
+Cara itu dipakai agar pemeriksaan dapat dijalankan berulang kali tanpa harus
+membaca seluruh keluarannya.
+
+\begin{catatabox}
+Saat pertama kali dijalankan, Pygame menampilkan dua baris sambutan pada
+terminal, yaitu keterangan versi dan ajakan mengunjungi laman komunitas
+Pygame. Kedua baris itu bukan kesalahan dan bukan bagian dari keluaran
+program Anda. Selain itu, pada sebagian versi muncul peringatan mengenai
+paket \code{pkg_resources} yang sudah usang. Peringatan tersebut berasal dari
+Pygame sendiri, tidak memengaruhi jalannya program, dan boleh diabaikan.
+Perbedaan antara peringatan dan kesalahan dijelaskan pada
+Bagian~\ref{sec:menelusuri-kesalahan}.
+\end{catatabox}
+
+\subsection{Mengatasi Masalah Pemasangan}
+
+Masalah pada tahap ini jarang berkaitan dengan kode, dan hampir selalu
+berkaitan dengan penafsir yang dipakai. Tabel~\ref{tab:masalah-pemasangan}
+memuat gejala yang paling sering muncul beserta penyebab dan tindakannya.
+
+\begin{table}[htbp]
+\centering
+\caption{Masalah pemasangan yang sering terjadi dan penanganannya}
+\label{tab:masalah-pemasangan}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.0cm} L{4.0cm} Y@{}}
+\toprule
+\headrow \textbf{Gejala} & \textbf{Penyebab yang paling sering} & \textbf{Tindakan} \\
+\midrule
+Perintah \code{python} tidak dikenali &
+Python belum terpasang, atau tidak terdaftar pada \istilah{PATH} sistem. &
+Pasang ulang dengan pilihan ``Add python.exe to PATH'' dicentang, atau pakai
+perintah \code{py} sebagai gantinya. \\
+\addlinespace
+Perintah \code{pip} tidak dikenali &
+\code{pip} tidak terdaftar pada \istilah{PATH}, walaupun Python terpasang. &
+Selalu pakai bentuk \code{python -m pip}, yang tidak bergantung pada
+\istilah{PATH}. \\
+\addlinespace
+\code{ModuleNotFoundError: No module named 'pygame'} &
+Pygame belum terpasang, atau terpasang pada penafsir Python yang berbeda. &
+Jalankan skrip pemeriksaan, perhatikan baris \istilah{Penafsir Python}, lalu
+pasang ulang dengan \code{python -m pip install pygame}. \\
+\addlinespace
+\code{Access is denied} ketika memasang &
+Tidak ada izin menulis pada folder instalasi Python. &
+Tambahkan pilihan \code{--user} pada perintah pemasangan. \\
+\addlinespace
+\code{pygame.error: No available video device} &
+Program dijalankan pada lingkungan tanpa layar, misalnya sesi jarak jauh. &
+Kerjakan pada komputer laboratorium; untuk pengujian tanpa layar, setel
+variabel \code{SDL_VIDEODRIVER} bernilai \code{dummy}. \\
+\addlinespace
+Jendela terbuka lalu langsung tertutup &
+Program dijalankan dengan pilihan \code{--auto-close} yang mengirim sendiri
+peristiwa penutup jendela. &
+Periksa argumen yang dipakai pada baris perintah dan jalankan tanpa pilihan
+tersebut. \\
+\bottomrule
+\end{tabularx}}
+\end{table}

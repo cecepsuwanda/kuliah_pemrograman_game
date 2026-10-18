@@ -1,0 +1,79 @@
+% chapters/05/praktikum.tex
+\begin{praktikumbox}
+Praktikum ini mengikuti Tugas Praktikum 03 pada RPS: menggerakkan karakter
+dengan tombol WASD atau tombol panah pada kecepatan tetap (piksel per detik),
+lalu membandingkan perilakunya pada 30 dan 60 bingkai per detik. Isilah lembar
+kerja pada Tabel~\ref{tab:lembar-praktikum-03}.
+
+\begin{langkah}
+  \item \textbf{Jalankan program gerak.} Ketik ulang \code{ch05_gerak.py} dari
+        Daftar~\ref{lst:ch05-gerak} ke dalam folder \code{code}. Jalankan, lalu
+        gerakkan persegi dengan tombol WASD dan dengan tombol panah. Pastikan
+        keduanya bekerja.
+
+  \item \textbf{Amati penyelarasan posisi dan \code{Rect}.} Perhatikan dua
+        baris pertama pada jendela. Gerakkan objek perlahan, lalu perhatikan
+        bahwa nilai pecahan berubah dengan halus sedangkan nilai bulat melompat
+        satu piksel setiap kali.
+
+  \item \textbf{Ukur kecepatan pada 30 bingkai per detik.} Jalankan program
+        dengan perintah berikut, lalu catat kecepatan terukurnya.
+\begin{kodekeluaran}
+python ch05_gerak.py --fps 30 --frames 18 --auto-direction kanan
+\end{kodekeluaran}
+
+  \item \textbf{Ukur kecepatan pada 60 dan 120 bingkai per detik.} Ulangi
+        langkah sebelumnya dengan \code{--fps 60 --frames 36} dan
+        \code{--fps 120 --frames 72}, yaitu jumlah bingkai yang menghasilkan
+        lama berjalan kurang lebih sama. Bandingkan kecepatan terukurnya.
+
+  \item \textbf{Uji gerak diagonal.} Jalankan program dengan
+        \code{--auto-direction diagonal}, lalu bandingkan kecepatan terukurnya
+        dengan gerak lurus. Sesudah itu, hapus pemanggilan \code{normalize()}
+        pada fungsi \code{update_position}, jalankan kembali, dan catat
+        perbedaannya. Kembalikan baris itu sesudah selesai.
+
+  \item \textbf{Tambahkan objek kedua.} Tambahkan satu persegi lagi yang
+        bergerak dengan kecepatan berbeda, misalnya 120 piksel per detik
+        dengan tombol IJKL. Pastikan kedua objek bergerak dengan kecepatan
+        masing-masing tanpa saling mempengaruhi.
+
+  \item \textbf{Tulis catatan praktikum} yang memuat tabel pengukuran Anda
+        beserta kesimpulan mengenai hubungan antara laju bingkai dan kecepatan
+        objek.
+
+  \item \textbf{Simpan pekerjaan} ke repositori Git dengan pesan penyimpanan
+        yang menerangkan isinya.
+\end{langkah}
+\end{praktikumbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Lembar kerja Praktikum 03}
+\label{tab:lembar-praktikum-03}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{2.6cm} C{2.6cm} C{2.8cm} Y@{}}
+\toprule
+\headrow \textbf{Batas laju} & \textbf{Waktu berjalan} & \textbf{Jarak tempuh} & \textbf{Kecepatan terukur} \\
+\midrule
+30 FPS, 18 bingkai & & & \\[1.4em]
+\addlinespace
+60 FPS, 36 bingkai & & & \\[1.4em]
+\addlinespace
+120 FPS, 72 bingkai & & & \\[1.4em]
+\addlinespace
+\multicolumn{4}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Kecepatan yang ditetapkan: 200 piksel per detik, arah lurus.} \\
+\addlinespace
+\multicolumn{4}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Arah diagonal tanpa \code{normalize()}: kecepatan terukur \dotfill} \\[1.4em]
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Apabila kecepatan terukur Anda berbeda-beda secara berarti pada ketiga laju
+bingkai, periksa lebih dahulu apakah \code{delta_seconds} benar-benar dipakai
+sebagai pengali perpindahan. Kekeliruan itu tidak menimbulkan pesan kesalahan,
+sehingga hanya dapat ditemukan melalui pengukuran seperti pada praktikum ini.
+\end{catatabox}

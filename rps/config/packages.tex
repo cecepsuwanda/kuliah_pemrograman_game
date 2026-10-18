@@ -1,0 +1,43 @@
+% =========================================================
+%  config/packages.tex
+%  Daftar paket LaTeX untuk dokumen RPS
+%  Semua paket global didefinisikan di sini, bukan di sections/.
+% =========================================================
+
+% --- Pengkodean & bahasa --------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english,indonesian]{babel}
+
+% --- Tata letak halaman --------------------------------
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{pdflscape}
+\usepackage{fancyhdr}
+\usepackage{ragged2e}
+
+% --- Tabel ---------------------------------------------
+% Catatan: opsi [table] pada xcolor (colortbl) tidak dipakai karena
+% colortbl versi pada instalasi ini memerlukan array.sty yang lebih baru
+% (\insert@pcolumn tidak terdefinisi). Pewarnaan baris tabel karena itu
+% digantikan oleh penebalan garis header pada config/styles.tex.
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{xcolor}
+
+% --- Gambar & posisi mengambang ------------------------
+\usepackage{graphicx}
+\usepackage{float}
+
+% --- Tipografi & daftar --------------------------------
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{caption}
+
+% --- Tautan (dimuat paling akhir) ----------------------
+\usepackage[bookmarks=true]{hyperref}
+\usepackage{url}
+\usepackage{xurl}   % memungkinkan pemenggalan URL panjang pada sembarang karakter

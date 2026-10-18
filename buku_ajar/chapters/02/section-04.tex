@@ -1,0 +1,115 @@
+% chapters/02/section-04.tex
+\section{Simulasi Fisika Diskret dan Integrasi Numerik}
+\label{sec:simulasi-diskret}
+
+Gerak pada permainan tampak berlangsung terus-menerus, padahal komputer
+menghitungnya secara terputus. Bagian ini menjelaskan bagaimana gerak yang
+seolah bersinambung itu dihasilkan dari perhitungan yang hanya dilakukan
+sesekali, beserta harga yang harus dibayar atas cara tersebut.
+
+\subsection{Simulasi Kontinu pada Mesin Diskret}
+
+Sebuah bola yang jatuh bergerak menurut hukum gerak yang berlaku pada setiap
+saat. Posisinya pada saat setengah detik, seperempat detik, atau sepersekian
+detik mana pun dapat dihitung. Kenyataan itu disebut simulasi kontinu.
+
+Komputer tidak dapat menghitung pada setiap saat karena jumlah saat tidak
+terhingga. Yang dapat dilakukannya adalah menghitung posisi pada beberapa saat
+tertentu, misalnya setiap seperenam puluh detik, lalu menghubungkan hasilnya
+menjadi gerak yang tampak mulus. Selisih antarwaktu perhitungan itulah yang
+disebut panjang langkah, dilambangkan $\Delta t$, dan sama dengan selang waktu
+yang telah Anda kenal pada Bagian~\ref{sec:model-waktu}.
+
+Karena itu, hasil simulasi pada komputer selalu merupakan hampiran atas gerak
+yang sebenarnya. Pertanyaan yang tepat bukanlah ``apakah hasilnya tepat?'',
+melainkan ``seberapa besar selisihnya, dan apakah selisih itu masih dapat
+diterima untuk keperluan permainan?'' \cite{catto-integration}.
+
+\subsection{Kaidah Euler}
+
+Cara paling sederhana untuk memajukan simulasi adalah kaidah Euler, yang
+menghitung nilai baru berdasarkan nilai lama dan laju perubahannya. Untuk
+keadaan gerak, kaidah ini diterapkan pada dua tingkat secara berurutan.
+
+\begin{align}
+v &\leftarrow v + a\,\Delta t, \label{eq:euler-v}\\
+p &\leftarrow p + v\,\Delta t. \label{eq:euler-p}
+\end{align}
+
+Persamaan~\eqref{eq:euler-v} memperbarui kecepatan menggunakan percepatan,
+kemudian Persamaan~\eqref{eq:euler-p} memperbarui posisi menggunakan kecepatan
+yang baru saja diperbarui. Urutan tersebut tidak boleh ditukar. Apabila posisi
+diperbarui lebih dahulu dengan kecepatan yang lama, hasilnya sama dengan
+memakai kecepatan satu langkah sebelumnya. Pada benda yang sedang jatuh,
+kesalahan seperti itu menumpuk ke satu arah, sehingga benda terlihat jatuh
+lebih cepat daripada seharusnya.
+
+Bentuk yang dipakai pada buku ini, yaitu memperbarui kecepatan lebih dahulu,
+dikenal sebagai kaidah Euler semi-implisit. Kelebihannya bukan pada
+ketelitiannya, melainkan pada sifatnya yang lebih stabil dan mudah dipahami,
+sehingga banyak dipakai pada permainan.
+
+\subsection{Galat dan Panjang Langkah}
+
+Seberapa besar selisih yang timbul? Gambar~\ref{fig:integrasi-euler} memuat
+jawabannya untuk satu contoh sederhana: sebuah benda dilepaskan dari
+ketinggian 10 satuan tanpa kecepatan awal, dengan percepatan gravitasi 10
+satuan per detik kuadrat.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/integrasi-euler.tikz}
+\caption{Lintasan benda jatuh bebas: perbandingan hasil eksak dan dua panjang langkah Euler}
+\label{fig:integrasi-euler}
+\end{figure}
+
+Setelah dua detik, lintasan yang sebenarnya menempatkan benda pada ketinggian
+$-10$ satuan. Dengan panjang langkah $0{,}5$ detik, kaidah Euler menempatkannya
+pada $-15$ satuan; dengan panjang langkah $0{,}25$ detik, pada $-12{,}5$
+satuan. Selisihnya menyusut dari 5 satuan menjadi 2,5 satuan ketika panjang
+langkah diperkecil menjadi separuh.
+
+Pola tersebut berlaku umum pada kaidah Euler: \textbf{galat berbanding lurus
+dengan panjang langkah}. Memperkecil panjang langkah menjadi separuh
+memperkecil galat menjadi kira-kira separuh pula. Sifat ini disebut ketelitian
+tingkat pertama. Konsekuensinya praktis, yaitu menyetel panjang langkah adalah
+cara paling langsung untuk menukar beban perhitungan dengan ketelitian.
+
+\begin{catatabox}
+Galat pada contoh tersebut bukan kesalahan penulisan
+program, melainkan akibat tak terhindarkan dari menghampiri gerak yang
+bersinambung dengan perhitungan yang terputus. Menambah panjang langkah pada
+umumnya lebih merugikan daripada menguntungkan, dan menghaluskan tampilan
+tidak memperbaiki perhitungan yang mendasarinya.
+\end{catatabox}
+
+\subsection{Kestabilan dan Pilihan Praktis}
+
+Selain kurang teliti, langkah yang terlalu panjang dapat membuat simulasi
+tidak stabil. Objek yang bergerak cepat dapat melewati seluruh lebar dinding
+dalam satu langkah, sehingga pemeriksaan tabrakan yang dilakukan setelah
+langkah tersebut tidak menemukan apa pun dan objek keluar dari ruang
+permainan. Gejala ini disebut penembusan (\istilah{tunneling}) dan akan Anda
+jumpai kembali pada Bab~VII.
+
+Tiga cara penanganan berikut lazim dipakai, dan ketiganya dapat digabungkan.
+
+\begin{enumerate}
+  \item \textbf{Membatasi panjang langkah maksimum.} Apabila selang waktu satu
+        bingkai ternyata jauh lebih lama daripada biasanya, nilainya dipangkas
+        sebelum dipakai. Cara ini mencegah simulasi melompat jauh ketika
+        komputer sesaat tersendat.
+  \item \textbf{Memecah langkah menjadi beberapa sub-langkah.} Satu bingkai
+        yang panjang dibagi menjadi beberapa langkah pendek yang dijalankan
+        berurutan, sehingga perpindahan pada setiap langkah tetap kecil.
+  \item \textbf{Memakai langkah tetap.} Simulasi selalu maju dengan panjang
+        langkah yang sama, sebagaimana telah diuraikan pada
+        Bagian~\ref{sec:model-waktu}.
+\end{enumerate}
+
+Pada Blok~I dan Blok~II, ketiga cara itu Anda terapkan sendiri pada kode Anda.
+Pada Blok~III, Unity menyediakan langkah tetap melalui tahap pembaruannya
+sendiri, dan tugas Anda berpindah menjadi memilih nilai panjang langkah yang
+tepat serta mengenali gejala ketika nilai tersebut kurang sesuai. Perpindahan
+tanggung jawab semacam inilah yang dibahas lebih jauh pada
+Bagian~\ref{sec:pustaka-mesin}.

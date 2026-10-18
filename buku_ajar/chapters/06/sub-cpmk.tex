@@ -1,0 +1,34 @@
+% chapters/06/sub-cpmk.tex
+\begin{subcpmkbox}
+Bab ini menuntaskan \SUBCPMK{1.3} secara utuh. Ketiga indikatornya diperiksa,
+dan buktinya berupa prototipe permainan yang benda-bendanya jatuh, melompat,
+dan memantul.
+
+\vspace{0.5em}
+\textbf{\SUBCPMK{1.3} Menerapkan logika fisika sederhana (gravitasi, lompatan,
+pantulan) dalam simulasi 2D} --- ranah C3, \CPMK{1}, \CPL{03}.
+
+\vspace{0.5em}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.9cm} L{4.0cm} L{2.5cm} Y@{}}
+\toprule
+\headrow \textbf{Indikator} & \textbf{Rumusan} & \textbf{Dibahas pada} & \textbf{Bukti} \\
+\midrule
+\ind{a} & Menerapkan integrasi Euler untuk memperbarui kecepatan dan posisi &
+Bagian~\ref{sec:percepatan} &
+Kode \code{ch06_fisika.py} pada repositori, khususnya urutan pembaruan
+kecepatan lalu posisi. \\
+\addlinespace
+\ind{b} & Mengimplementasikan lompatan yang hanya aktif ketika objek berada di
+tanah &
+Bagian~\ref{sec:lompatan} &
+Kode lompatan beserta uji bahwa menahan tombol tidak menghasilkan lompatan
+berulang. \\
+\addlinespace
+\ind{c} & Menghasilkan pantulan dengan koefisien restitusi sederhana &
+Bagian~\ref{sec:pantulan} &
+Kode pantulan pada lantai dan dinding, beserta catatan pengukuran tinggi
+pantulan pada lembar kerja praktikum. \\
+\bottomrule
+\end{tabularx}}
+\end{subcpmkbox}

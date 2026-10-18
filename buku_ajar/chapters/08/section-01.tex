@@ -1,0 +1,80 @@
+% chapters/08/section-01.tex
+\section{Dari yang Digerakkan Menjadi yang Bergerak Sendiri}
+\label{sec:bergerak-sendiri}
+
+Sampai bab sebelumnya, kecepatan setiap benda ditentukan dari luar dirinya.
+Bagian ini menjelaskan apa yang berubah ketika benda mulai menentukan
+kecepatannya sendiri.
+
+\subsection{Siapa yang Menentukan Kecepatan}
+
+Perhatikan asal kecepatan pada tiga bab terakhir.
+
+\begin{itemize}
+  \item \textbf{Pada Bab~V}, kecepatan pemain berasal dari tombol yang ditekan.
+        Bendanya pasif: ia bergerak hanya karena diperintah.
+  \item \textbf{Pada Bab~VI}, kecepatan tegak berubah karena percepatan
+        gravitasi. Perubahannya tetap dan sama untuk semua benda; tidak ada
+        keputusan di dalamnya.
+  \item \textbf{Pada Bab~VII}, kecepatan berubah karena tabrakan. Perubahan itu
+        juga bukan keputusan, melainkan akibat dari keadaan.
+\end{itemize}
+
+Pada bab ini, kecepatan berasal dari \textbf{keputusan benda itu sendiri}
+berdasarkan keadaan di sekitarnya. Bendanya menjadi agen, yaitu sesuatu yang
+mengamati, memutuskan, dan bertindak. Perbedaan itu tampak pada kode: fungsi
+\code{update} benda tidak lagi menerima arah dari luar, melainkan menghitung
+arahnya sendiri dari posisi pemain.
+
+\begin{catatabox}
+Pandangan permainan berubah pada bab ini. Bab~VI dan Bab~VII
+memakai pandangan samping, sehingga gravitasi menjadi unsur utama. Bab ini
+memakai \textbf{pandangan atas} (dilihat dari langit-langit), sehingga gravitasi
+tidak diperlukan dan yang menjadi unsur utama adalah arah pada bidang datar.
+Pilihan pandangan itu merupakan keputusan perancangan, bukan keharusan teknis.
+\end{catatabox}
+
+\subsection{Susunan Keputusan sebuah Agen}
+
+Bagian~2.5 telah menjelaskan bahwa pengendalian benda memerlukan dua lapisan,
+yaitu lapisan keputusan dan lapisan navigasi. Bab ini menyusun lapisan
+keputusan yang paling sederhana, yaitu \textbf{perilaku reaktif}: keputusan
+diambil semata-mata dari keadaan yang teramati saat itu.
+
+Tiga langkah berikut selalu ada pada agen mana pun, dari yang paling sederhana
+sampai yang paling rumit.
+
+\begin{langkah}
+  \item \textbf{Persepsi.} Mengumpulkan keterangan tentang keadaan di
+        sekitarnya. Pada bab ini keterangan itu hanya satu: di mana pemain
+        berada sekarang.
+  \item \textbf{Keputusan.} Menentukan tindakan yang dipilih. Pada bab ini
+        hanya ada dua pilihan, yaitu mengejar atau berdiam.
+  \item \textbf{Tindakan.} Melaksanakan keputusan itu dengan mengubah kecepatan,
+        lalu posisi.
+\end{langkah}
+
+Yang menarik dari susunan itu adalah keluwesannya. Menambahkan perilaku baru
+berarti menambahkan pilihan pada langkah kedua, sedangkan langkah pertama dan
+ketiga tidak perlu berubah. Sifat itulah yang membuat susunan ini dapat
+dikembangkan menjadi mesin keadaan pada Bab~IX, dan dilengkapi pencarian jalur
+pada Bab~X.
+
+\subsection{Perilaku yang Dibangun pada Bab Ini}
+
+Perilaku yang dibangun sederhana dan sengaja demikian: NPC mengejar pemain
+apabila pemain berada di dalam jangkauannya, dan berdiam apabila pemain berada
+di luar jangkauan. Walaupun sederhana, perilaku ini sudah memuat seluruh
+persoalan penting: bagaimana jarak dihitung, bagaimana arah ditentukan,
+bagaimana kecepatan dibatasi, dan kapan berhenti.
+
+Tiga hal berikut sengaja belum ada, dan masing-masing menuntut bab tersendiri.
+
+\begin{itemize}
+  \item \textbf{Keadaan yang lebih dari dua}, misalnya berpatroli dan
+        menyerang. Dibahas pada Bab~IX.
+  \item \textbf{Pengetahuan tentang rintangan}, sehingga NPC dapat mencari
+        jalan memutar. Dibahas pada Bab~X.
+  \item \textbf{Pertimbangan biaya perhitungan} ketika jumlah NPC bertambah.
+        Dibahas pada Bab~XI.
+\end{itemize}

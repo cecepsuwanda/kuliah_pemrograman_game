@@ -1,0 +1,100 @@
+% chapters/10/contoh.tex
+\section{Dua Contoh Analisis}
+\label{sec:contoh-bab-10}
+
+\subsection{Contoh Pertama: Menghitung Biaya, Perkiraan, dan Jumlahnya}
+
+\begin{contohbox}
+Sebuah peta bersih berukuran lima kali empat petak, tanpa dinding. Titik
+awalnya berada pada petak $(0, 3)$ dan titik tujuannya pada petak $(4, 0)$.
+Heuristik yang dipakai adalah jarak Manhattan.
+
+Jarak Manhattan antara titik awal dan titik tujuan adalah
+
+\[
+h_{\text{awal}} = |4 - 0| + |0 - 3| = 7 .
+\]
+
+Tabel~\ref{tab:hitung-fgh} memuat perhitungan $g$, $h$, dan $f$ untuk beberapa
+petak.
+\end{contohbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Perhitungan biaya, perkiraan, dan jumlahnya pada beberapa petak}
+\label{tab:hitung-fgh}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{2.2cm} C{2.4cm} C{2.4cm} C{2.0cm} Y@{}}
+\toprule
+\headrow \textbf{Petak} & \textbf{$g$ (langkah dari awal)} & \textbf{$h$ (perkiraan ke tujuan)} & \textbf{$f = g + h$} & \textbf{Keterangan} \\
+\midrule
+$(0,3)$ & 0 & 7 & 7 & Titik awal. \\
+\addlinespace
+$(1,3)$ & 1 & 6 & 7 & Satu langkah ke kanan. \\
+\addlinespace
+$(2,2)$ & 3 & 4 & 7 & Dua langkah menuju tujuan, satu langkah menjauh. \\
+\addlinespace
+$(3,1)$ & 5 & 2 & 7 & Lima langkah ditempuh, dua langkah tersisa. \\
+\addlinespace
+$(4,0)$ & 7 & 0 & 7 & Titik tujuan. \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Nilai $f$ sama pada seluruh petak, yaitu 7. Sifat
+itu berlaku pada peta tanpa dinding, sebab setiap langkah mengurangi perkiraan
+sisa jarak tepat satu.}
+\end{table}
+
+Baris ketiga menarik untuk diperhatikan. Petak $(2,2)$ menuntut tiga langkah,
+yaitu satu langkah lebih banyak daripada jarak mendatarnya dari titik awal.
+Meskipun demikian, nilai $h$-nya berkurang sebanyak itu pula, sehingga nilai
+$f$-nya tetap 7. Itulah sebabnya petak itu tetap dianggap sama menjanjikannya
+dengan petak-petak lain pada jalur terpendek.
+
+Sifat itu menjelaskan mengapa A* pada peta tanpa dinding memeriksa begitu
+banyak petak: seluruh petak memiliki nilai $f$ yang sama, sehingga heuristiknya
+tidak memberi petunjuk arah sama sekali. Manfaat heuristik baru terasa ketika
+ada dinding: petak yang terpaksa memutar memperoleh $g$ yang lebih besar tanpa
+pengurangan $h$ yang sepadan, sehingga nilai $f$-nya membesar dan A* menunda
+pemeriksaannya.
+
+\subsection{Contoh Kedua: Menganalisis Hasil Perbandingan}
+
+\begin{contohbox}
+Pada peta bab ini, ketiga heuristik menghasilkan biaya jalur yang sama, yaitu
+50, dengan panjang 51 petak. Banyaknya petak yang diperiksa berbeda-beda:
+Manhattan 274 petak, Euclidean 353 petak, dan tanpa perkiraan 437 petak.
+\end{contohbox}
+
+Perbandingan itu dapat dinyatakan dalam bentuk rasio, sehingga lebih mudah
+ditafsirkan.
+
+\begin{itemize}
+  \item Euclidean memeriksa $353 \div 274 \approx 1{,}29$ kali lipat petak
+        Manhattan, yaitu sekitar 29 persen lebih banyak.
+  \item Tanpa perkiraan memeriksa $437 \div 274 \approx 1{,}59$ kali lipat,
+        yaitu sekitar 59 persen lebih banyak.
+\end{itemize}
+
+Biaya jalurnya tetap sama pada ketiganya. Inilah yang dimaksud
+dengan pengaruh heuristik terhadap \textbf{kinerja} pencarian, bukan terhadap
+\textbf{mutu} hasilnya: yang berubah hanyalah banyaknya pekerjaan yang perlu
+dilakukan. Pada peta yang kecil, pekerjaan tambahan itu tidak terasa. Pada peta
+yang luas, ia menentukan apakah permainan masih dapat berjalan pada laju
+bingkai yang wajar.
+
+Perlu dicatat pula bahwa rasio itu \textbf{tidak tetap} untuk peta yang
+berbeda. Pada peta yang penuh liku, keunggulan Manhattan menjadi jauh lebih
+besar, sebab Dijkstra terpaksa memeriksa hampir seluruh petak yang dapat
+dilalui. Sebaliknya, pada peta yang jalurnya hampir lurus, ketiganya hampir
+sama saja. Karena itu, perbandingan semacam ini sebaiknya dilakukan pada peta
+yang benar-benar dipakai, bukan pada peta contoh.
+
+\begin{catatabox}
+Satu hal yang tidak terlihat pada perbandingan itu adalah \textbf{mutu jalur}
+apabila heuristiknya tidak memenuhi syarat. Selama heuristiknya tidak
+melebihkan jarak, seluruh baris pada tabel akan memiliki biaya yang sama. Begitu
+heuristiknya melebihkan jarak---misalnya karena dikalikan dua---biaya jalurnya
+dapat membesar, dan itulah satu-satunya tanda bahwa ada yang keliru. Karena itu,
+pemeriksaan biaya jalur harus selalu dijalankan bersama perbandingan waktu
+pencarian.
+\end{catatabox}

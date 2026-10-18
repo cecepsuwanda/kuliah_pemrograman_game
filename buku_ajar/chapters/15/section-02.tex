@@ -1,0 +1,103 @@
+% chapters/15/section-02.tex
+\section{AudioClip, AudioSource, dan Ruang}
+\label{sec:audioclip-audiosource}
+
+\subsection{Dua Hal yang Berbeda}
+
+Pada Unity, bunyi dipisahkan menjadi dua hal: berkasnya dan pemutarnya.
+Perbedaan itu tampak sepele, tetapi menjelaskan sebagian besar kesulitan yang
+akan Anda temui.
+
+\begin{description}
+  \item[\code{AudioClip}] Berkas bunyi yang telah diimpor, misalnya
+        \code{lompat.wav}. Ia hanya berisi data. Ia tidak tahu di mana ia
+        berada, dan ia tidak dapat berbunyi sendiri.
+  \item[\code{AudioSource}] Komponen yang menempel pada sebuah
+        \istilah{GameObject}. Ia yang memutar \code{AudioClip}, mengatur
+        kekuatannya, dan menentukan dari mana bunyinya terdengar.
+\end{description}
+
+Membandingkannya dengan Bab~XIV berguna. \code{AudioClip} berperan seperti
+\istilah{animation clip}: data yang tersimpan, dan tidak berbuat apa-apa
+sendiri. \code{AudioSource} berperan seperti komponen \istilah{Animator}:
+komponen yang menempel pada benda dan mengurus pemutarannya
+\cite{unity-manual-import}. Karena itu,
+pertanyaan ``di mana bunyi ini terdengar'' selalu dijawab oleh letak
+\code{AudioSource}, bukan oleh berkasnya.
+
+Rantai lengkapnya, dari peristiwa sampai ke pengeras suara, diperlihatkan pada
+Gambar~\ref{fig:rantai-bunyi}. Kedua lajur bertemu pada
+\istilah{AudioMixer}, dan itulah yang akan Anda pakai pada
+Bagian~\ref{sec:waktu-volume}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/rantai-bunyi.tikz}
+\caption{Jalan bunyi dari peristiwa permainan sampai ke pendengar}
+\label{fig:rantai-bunyi}
+\end{figure}
+
+\subsection{Bunyi Datar dan Bunyi Beruang}
+
+Setiap \code{AudioSource} memiliki pengaturan \istilah{Spatial Blend}, yaitu
+penggeser dari nol sampai satu yang menentukan seberapa besar posisinya
+berpengaruh.
+
+\begin{itemize}
+  \item \textbf{Nilai nol} berarti bunyi terdengar sama dari mana pun, seolah
+        tidak memiliki tempat. Ini yang dipakai untuk musik latar dan seluruh
+        bunyi antarmuka pengguna.
+  \item \textbf{Nilai satu} berarti bunyi memiliki tempat di dalam ruang, dan
+        kekuatannya berkurang menurut jarak pemain darinya. Ini yang dipakai
+        untuk bunyi benda di dalam level.
+\end{itemize}
+
+Nilai di antaranya dipakai untuk keperluan khusus, misalnya bunyi yang perlu
+sedikit memiliki tempat tetapi tidak boleh hilang ketika pemain menjauh.
+
+Ketika \istilah{Spatial Blend} bernilai satu, jarak bunyi diatur melalui dua
+nilai. \istilah{Min Distance} adalah jarak sampai bunyi mulai melemah; di
+dalam jarak itu kekuatannya penuh. \istilah{Max Distance} adalah jarak saat
+bunyi berhenti melemah lebih jauh. Nilai bawaan Unity sering kali terlalu
+besar untuk permainan dua dimensi, sehingga bunyi-bunyi di sudut level masih
+terdengar jelas padahal seharusnya sudah jauh.
+
+\subsection{Play dan PlayOneShot}
+
+Ada dua cara memanggil bunyi dari kode, dan pilihan di antara keduanya
+menentukan perilaku yang Anda peroleh.
+
+\begin{kodekeluaran}
+// Cara pertama: satu sumber, satu bunyi pada satu waktu.
+// Memanggilnya lagi memotong bunyi yang sedang berbunyi.
+sfxSource.PlayOneShot(klipLompat);
+
+// Cara kedua: mengganti isi sumber, lalu memutarnya.
+// Bunyi sebelumnya berhenti, dan yang baru dimulai dari awal.
+sfxSource.Stop();
+sfxSource.clip = klipLompat;
+sfxSource.Play();
+\end{kodekeluaran}
+
+Untuk efek suara, \code{PlayOneShot} hampir selalu pilihan yang tepat, sebab
+ia mengizinkan beberapa bunyi berbunyi bersamaan pada satu
+\code{AudioSource}. Memanggil \code{PlayOneShot} tiga kali dalam tiga bingkai
+menghasilkan tiga bunyi yang bertumpuk. Sebaliknya, memakai \code{Play} dalam
+keadaan yang sama menghasilkan satu bunyi yang selalu terpotong sebelum
+selesai --- dan itulah yang terdengar seperti suara mesin yang patah-patah.
+
+Untuk musik latar, \code{Play} yang dipakai, sebab hanya satu musik yang boleh
+berbunyi pada satu waktu, dan kita justru menghendaki musik lama berhenti.
+
+\begin{tipsbox}
+\code{PlayOneShot} menerima satu argumen kedua yang jarang diketahui, yaitu
+kekuatan bunyinya:
+
+\begin{kodekeluaran}
+sfxSource.PlayOneShot(klipLompat, 0.8f);
+\end{kodekeluaran}
+
+Argumen itu berguna ketika satu berkas bunyi dipakai untuk beberapa keperluan
+dengan kekuatan yang berbeda, misalnya bunyi langkah yang lebih pelan ketika
+pemain sedang menyelinap.
+\end{tipsbox}

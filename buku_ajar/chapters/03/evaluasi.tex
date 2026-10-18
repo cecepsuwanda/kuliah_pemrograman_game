@@ -1,0 +1,93 @@
+% chapters/03/evaluasi.tex
+\bagian{Asesmen dan Instrumen Penilaian}
+\label{sec:asesmen-lingkungan}
+
+\begin{asesmenbox}
+\textbf{Kedudukan asesmen bab ini.} Bab ini dinilai melalui Tugas Praktikum 01
+yang termasuk komponen \istilah{tugas praktikum dan portofolio} pada RPS,
+yaitu komponen berbobot 25\% dari nilai akhir yang mengukur
+\CPMK{1} sampai \CPMK{4}. Penilaian dilakukan atas artefak yang tersimpan pada
+repositori Git Anda, bukan atas jawaban lisan atau hafalan.
+
+\vspace{0.4em}
+\textbf{Yang dikumpulkan.} Repositori Git memuat struktur folder proyek,
+skrip pemeriksaan lingkungan, program jendela yang telah disunting, berkas
+\code{.gitignore}, berkas \code{README.md}, dan catatan praktikum.
+\end{asesmenbox}
+
+\subsection*{Instrumen 1: Rubrik Praktikum 01}
+
+\begin{table}[htbp]
+\centering
+\caption{Rubrik penilaian Praktikum 01}
+\label{tab:rubrik-praktikum-01}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.8cm} C{1.5cm} Y@{}}
+\toprule
+\headrow \textbf{Kriteria} & \textbf{Bobot} & \textbf{Deskripsi capaian} \\
+\midrule
+Kesesuaian fungsional & 40\% &
+Program jendela berjalan tanpa kesalahan, menampilkan seluruh baris informasi
+versi, dapat diubah ukurannya melalui baris perintah, dan menutup dengan rapi
+ketika jendela ditutup. \\
+\addlinespace
+Kualitas kode dan struktur & 30\% &
+Berkas tersusun pada folder yang benar, penamaan konsisten, terdapat komentar
+pada bagian yang perlu dijelaskan, dan tidak ada kode sisa yang tidak dipakai.
+Berkas \code{.gitignore} tersedia dan berfungsi. \\
+\addlinespace
+Kelengkapan dokumentasi & 30\% &
+Berkas \code{README.md} menerangkan isi repositori, catatan praktikum memuat
+kendala beserta cara penyelesaiannya, dan pesan penyimpanan Git menerangkan
+pekerjaan yang disimpan. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection*{Instrumen 2: Soal Konsep}
+
+Jawablah dengan singkat, tanpa membuka bab terlebih dahulu. Kunci jawaban
+disajikan pada Tabel~\ref{tab:kunci-konsep-ch03}.
+
+\begin{enumerate}
+  \item Apa pekerjaan yang dilakukan \code{pygame.init()}?
+  \item Apa bedanya menggambar dengan \code{screen.blit} dan menayangkan
+        dengan \code{pygame.display.flip()}?
+  \item Mengapa program pada bab ini belum disebut memiliki siklus permainan?
+  \item Mengapa pemasangan Pygame sebaiknya memakai bentuk
+        \code{python -m pip}?
+\end{enumerate}
+
+\begin{table}[htbp]
+\centering
+\caption{Kunci soal konsep Bab III}
+\label{tab:kunci-konsep-ch03}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{0.8cm} Y@{}}
+\toprule
+\headrow \textbf{No} & \textbf{Pokok jawaban} \\
+\midrule
+1 & Menyalakan seluruh bagian pustaka Pygame, yaitu tampilan, huruf, bunyi, dan
+penanganan peristiwa, sehingga dapat dipakai oleh program. \\
+\addlinespace
+2 & Menggambar hanya menyusun isi permukaan di memori, sedangkan menayangkan
+memindahkan hasilnya ke layar sehingga terlihat pemain. Tanpa penayangan,
+jendela tetap menampilkan gambar lama. \\
+\addlinespace
+3 & Karena perulangannya hanya menunggu peristiwa. Keadaan permainan tidak
+diperbarui dan gambar tidak disusun ulang, sehingga tidak ada perubahan yang
+berkelanjutan. \\
+\addlinespace
+4 & Agar pemasangan mengikuti penafsir Python yang sama dengan yang akan
+dipakai menjalankan program, terutama pada komputer yang memiliki lebih dari
+satu versi Python. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Apabila kriteria kelengkapan dokumentasi belum terpenuhi, lengkapi catatan
+praktikum Anda lebih dahulu. Kebiasaan mencatat kendala pada minggu-minggu
+awal akan sangat membantu pada Bab~XVI, ketika Anda harus menyusun laporan
+pengembangan dan \istilah{log bug} untuk proyek akhir.
+\end{catatabox}

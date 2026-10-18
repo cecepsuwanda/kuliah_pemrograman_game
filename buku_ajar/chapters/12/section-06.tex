@@ -1,0 +1,106 @@
+% chapters/12/section-06.tex
+\section{Padanan Konsep dengan Pygame}
+\label{sec:padanan-unity}
+
+Inilah bagian yang menjelaskan mengapa blok Python tidak menjadi pekerjaan
+yang sia-sia. Seluruh konsep yang telah Anda pelajari tetap berlaku; yang
+berubah hanyalah nama dan cara memakainya. Tabel~\ref{tab:padanan-lengkap}
+memuat padanannya secara lengkap.
+
+\begin{table}[htbp]
+\centering
+\caption{Padanan lengkap konsep Pygame dan Unity}
+\label{tab:padanan-lengkap}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.4cm} L{4.0cm} Y@{}}
+\toprule
+\headrow \textbf{Konsep} & \textbf{Pada Pygame} & \textbf{Pada Unity} \\
+\midrule
+Siklus permainan & Perulangan yang Anda tulis (Bab~IV) &
+Dijalankan mesin; Anda mengisi fungsi \code{Update}. \\
+\addlinespace
+Selang waktu & \code{delta_seconds} hasil pengukuran \code{clock.tick()} &
+\code{Time.deltaTime}. \\
+\addlinespace
+Keadaan benda & Variabel pada objek Python &
+Nilai \code{transform.position}, \code{transform.rotation}, dan peubah pada
+skrip. \\
+\addlinespace
+Gambar benda & \code{sprite.image} &
+Komponen \istilah{Sprite Renderer} beserta aset gambarnya. \\
+\addlinespace
+Persegi pembatas & \code{sprite.rect} &
+\istilah{Collider} beserta ukurannya. \\
+\addlinespace
+Gerak & \code{position += velocity * dt} (Bab~V) &
+\code{transform.position += direction * speed * Time.deltaTime}. \\
+\addlinespace
+Fisika & Perhitungan sendiri (Bab~VI) &
+Komponen \istilah{Rigidbody}. \\
+\addlinespace
+Tabrakan & \code{spritecollide} dan penyelesaian per sumbu (Bab~VII) &
+Diperiksa mesin dan dilaporkan sebagai peristiwa \\
+\addlinespace
+Kelas benda & Kelas turunan \code{pygame.sprite.Sprite} (Bab~VII) &
+\istilah{GameObject} beserta komponennya. \\
+\addlinespace
+Wadah benda & \code{pygame.sprite.Group} &
+Daftar pada \istilah{Hierarchy} atau kumpulan pada skrip. \\
+\addlinespace
+Tingkat permainan & Keadaan yang disusun di dalam kode &
+Istilah{Scene}. \\
+\addlinespace
+Keluaran pesan & \code{print} pada terminal &
+\code{Debug.Log} pada panel \istilah{Console}. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection{Cara Membaca Tabel Itu}
+
+Baris yang paling banyak berubah adalah baris yang berkaitan dengan
+\textbf{siapa yang mengerjakan}. Perhatikan tiga contoh.
+
+\begin{enumerate}
+  \item Pada baris \istilah{siklus permainan}, pekerjaan yang pada Bab~IV
+        menuntut puluhan baris kode kini tidak ditulis sama sekali. Yang perlu
+        Anda pahami bukan lagi cara menulisnya, melainkan \textbf{kapan} fungsi
+        Anda dipanggil.
+  \item Pada baris \istilah{tabrakan}, pemeriksaannya diserahkan kepada mesin.
+        Namun penyelesaiannya---yaitu menentukan apa yang terjadi ketika dua
+        benda bersentuhan---tetap menjadi tanggung jawab Anda, sebagaimana
+        dijelaskan pada Bagian~7.2.
+  \item Pada baris \istilah{kelas benda}, perbedaan cara menyusunnya paling
+        besar. Objek pada Python disusun dengan mewarisi kelas, sedangkan
+        \istilah{GameObject} pada Unity disusun dengan menempelkan komponen.
+        Keduanya bertujuan sama, yaitu menyatukan data dan perilaku.
+\end{enumerate}
+
+\subsection{Konsep yang Tetap Sama Persis}
+
+Beberapa konsep tidak berubah sama sekali, dan inilah bekal terpenting dari blok
+Python.
+
+\begin{itemize}
+  \item \textbf{Kecepatan dinyatakan dalam satuan per detik} dan dikalikan
+        selang waktu. \code{Time.deltaTime} menggantikan
+        \code{delta_seconds}, tetapi perannya sama persis.
+  \item \textbf{Arah dinormalkan sebelum dikalikan kecepatan}, agar gerak
+        diagonal tidak lebih cepat.
+  \item \textbf{Posisi yang sebenarnya disimpan sebagai pecahan}, sedangkan
+        yang dipakai memeriksa tabrakan berupa bilangan bulat. Pada Unity,
+        keduanya disediakan mesin.
+  \item \textbf{Mendeteksi tabrakan dan menyelesaikannya adalah dua pekerjaan
+        yang berbeda}. Yang pertama dapat diserahkan kepada mesin; yang kedua
+        tidak.
+  \item \textbf{Perhitungan yang mahal tetapi tidak mendesak sebaiknya
+        disebar}, bukan dijalankan setiap bingkai (Bab~XI).
+\end{itemize}
+
+\begin{catatabox}
+Kelima butir di atas tidak dapat dipelajari dari panduan
+Unity mana pun, sebab panduan itu membahas \textbf{cara memakai} Unity, bukan
+\textbf{cara kerja} permainan. Pengetahuan itulah yang Anda peroleh dengan
+menulis seluruh mekanismenya sendiri pada blok Python, dan itulah alasan urutan
+materi pada mata kuliah ini disusun demikian.
+\end{catatabox}

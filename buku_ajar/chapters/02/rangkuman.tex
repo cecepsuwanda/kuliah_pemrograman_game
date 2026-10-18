@@ -1,0 +1,37 @@
+% chapters/02/rangkuman.tex
+\bagian{Rangkuman}
+
+\begin{rangkumanbox}
+\begin{itemize}
+  \item Permainan dipandang sebagai sistem buatan yang memuat empat unsur:
+        pemain, aturan, konflik atau tantangan, dan keluaran terukur.
+  \item Program permainan adalah sistem waktu nyata: ia berjalan terus dan
+        harus menanggapi masukan pemain dengan segera, sehingga pekerjaannya
+        disusun sebagai siklus masukan--pembaruan--penayangan yang berulang.
+  \item Program permainan tersusun dari subsistem masukan, pengendali waktu,
+        simulasi, aturan dan tabrakan, penyajian, audio, serta data dan
+        penyimpanan.
+  \item Waktu tidak boleh diukur dengan jumlah bingkai. Kecepatan dinyatakan
+        dalam satuan per detik, lalu dikalikan selang waktu
+        ($\text{perpindahan} = \text{kecepatan} \times \Delta t$) agar perilaku
+        permainan sama pada setiap komputer.
+  \item Langkah berubah mengikuti lama bingkai dan paling mudah diterapkan;
+        langkah tetap memakai panjang langkah yang sama dengan bantuan
+        penampung waktu, sehingga hasilnya dapat diulang dan lebih stabil.
+  \item Koordinat layar ber titik asal di kiri-atas dengan sumbu tegak menurun,
+        berbeda dari koordinat kartesius. Selain itu, skala dan satuan harus
+        ditetapkan secara sengaja.
+  \item Keadaan gerak dinyatakan oleh posisi, kecepatan, dan percepatan.
+        Tabrakan diperiksa dengan persegi pembatas sejajar sumbu, yang murah
+        dihitung tetapi kurang teliti.
+  \item Komputer mensimulasikan gerak secara terputus melalui kaidah Euler.
+        Urutan pembaruannya penting, dan galatnya berbanding lurus dengan
+        panjang langkah.
+  \item Pengendalian NPC terbagi menjadi lapisan keputusan, yang dijawab
+        dengan mesin keadaan, dan lapisan navigasi, yang dijawab dengan
+        pencarian jalur pada graf.
+  \item Pustaka menunggu dipanggil, sedangkan mesin memanggil kode Anda.
+        Mesin mempercepat pengembangan tetapi menyembunyikan sebab akibat,
+        sehingga pemahaman tentang mekanisme dasar tetap diperlukan.
+\end{itemize}
+\end{rangkumanbox}

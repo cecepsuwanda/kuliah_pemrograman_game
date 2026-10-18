@@ -1,0 +1,87 @@
+% chapters/10/section-06.tex
+\section{Yang Belum Ada pada Pencarian Ini}
+\label{sec:belum-ada-astar}
+
+NPC sudah dapat mengetahui jalannya. Bagian ini menjelaskan apa yang masih
+kurang agar pengetahuan itu benar-benar dipakai di dalam permainan.
+
+\subsection{Pencarian yang Belum Terhubung dengan NPC}
+
+Program pada bab ini mencari jalur dan memperlihatkannya, tetapi belum ada NPC
+yang menempuh jalur itu. Penghubungan keduanya adalah pekerjaan Bab~XI, dan
+penghubungan itu tidak sesederhana menambahkan beberapa baris.
+
+Tiga persoalan muncul ketika pencarian jalur dipakai di dalam permainan.
+
+\begin{enumerate}
+  \item \textbf{Kapan pencarian dijalankan.} Pencarian tidak dapat dijalankan
+        setiap bingkai untuk setiap NPC, sebab biayanya terlalu besar.
+        Keputusan tentang kapan pencarian perlu diulang---misalnya ketika
+        tujuan berpindah, atau ketika jalur yang ditempuh tidak lagi
+        berlaku---merupakan inti Bab~XI.
+  \item \textbf{Rintangan yang bergerak.} Peta pada bab ini tetap. Apabila ada
+        benda yang berpindah menutupi jalan, jalur yang sudah dihitung dapat
+        menjadi tidak berlaku di tengah jalan.
+  \item \textbf{Jalur yang ditempuh benda.} Jalur berupa rangkaian petak,
+        sedangkan benda bergerak dengan kecepatan dalam piksel per detik.
+        Perlu aturan untuk menentukan kapan sebuah petak dianggap sudah
+        dicapai.
+\end{enumerate}
+
+\subsection{Bentuk Peta yang Lebih Rumit}
+
+Peta pada bab ini berpetak dan mengizinkan empat arah. Tiga bentuk
+pengembangan berikut lazim dipakai pada permainan yang sesungguhnya.
+
+\begin{itemize}
+  \item \textbf{Delapan arah}, sehingga benda dapat bergerak diagonal. Seperti
+        dijelaskan pada Bagian~\ref{sec:heuristik}, heuristiknya harus
+        disesuaikan agar tidak melebihkan jarak.
+  \item \textbf{Peta berbiaya berbeda}, misalnya jalan berbatu yang lebih
+        lambat dilalui. Pencariannya tidak berubah, sebab A* memang sudah
+        memperhitungkan biaya sisi. Yang berubah hanyalah nilai biaya pada
+        fungsi penentuan tetangga.
+  \item \textbf{\istilah{NavMesh}}, yaitu peta jalur berupa rangkaian bidang
+        yang menutupi daerah yang dapat dilalui, bukan rangkaian petak. Cara itu
+        lebih tepat untuk peta tiga dimensi, dan itulah yang dipakai Unity
+        melalui \istilah{AI Navigation}, sebagaimana akan Anda lihat pada
+        Bab~XII dan Bab~XIII.
+\end{itemize}
+
+\begin{catatabox}
+Pemahaman tentang \istilah{NavMesh} pada dasarnya adalah
+pemahaman yang sama dengan yang Anda peroleh pada bab ini: simpul, sisi, biaya,
+dan pencarian. Perbedaannya terletak pada bentuk simpulnya, yaitu bidang
+segitiga alih-alih petak, dan pada kenyataan bahwa pencariannya dilakukan oleh
+mesin, bukan oleh kode Anda. Pengetahuan tentang cara kerja pencarian itulah
+yang membuat Anda dapat menilai mengapa sebuah jalur yang dihasilkan mesin
+terasa aneh, dan apa yang perlu diubah pada pengaturannya.
+\end{catatabox}
+
+\subsection{Ringkasan Perkembangan}
+
+\begin{table}[htbp]
+\centering
+\caption{Bagian yang ditambahkan pada pencarian jalur pada bab berikutnya}
+\label{tab:perkembangan-astar}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.6cm} L{5.0cm} Y@{}}
+\toprule
+\headrow \textbf{Bab} & \textbf{Yang ditambahkan} & \textbf{Akibatnya} \\
+\midrule
+Bab~XI & Penghubungan dengan mesin keadaan, penyimpanan jalur, dan pengulangan
+pencarian secara berkala &
+NPC mengejar dengan rute memutar, dan biaya pencariannya diatur agar tetap
+ringan. \\
+\addlinespace
+Bab~XIII & \istilah{NavMesh} pada Unity &
+Pencarian jalur diserahkan kepada mesin, sedangkan kode Anda mengatur tujuan,
+luas jangkauan, dan tingginya rintangan. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Dengan gambaran itu, tampak bahwa bab ini melengkapi lapisan navigasi yang
+telah diperkenalkan pada Bab~II. Setelah bab ini, kedua lapisan sudah tersedia:
+lapisan keputusan pada Bab~IX, dan lapisan navigasi pada bab ini. Bab~XI
+menghubungkan keduanya, dan di sanalah NPC yang sebenarnya terbentuk.

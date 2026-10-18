@@ -1,0 +1,78 @@
+% chapters/12/section-05.tex
+\section{Skrip C\# Pertama}
+\label{sec:skrip-pertama}
+
+\subsection{Kode Lengkap}
+
+\kodecsharp{unity/ch12_skrip_pertama.cs}{Skrip C\# pertama: menggerakkan, memutar, dan melaporkan keadaan benda}{lst:ch12-skrip}
+
+\subsection{Menempelkan Skrip pada Benda}
+
+Skrip yang baru ditulis belum berpengaruh apa pun. Ia perlu ditempelkan pada
+sebuah \istilah{GameObject} lebih dahulu, dan caranya ada dua.
+
+\begin{enumerate}
+  \item \textbf{Menyeret berkas skrip} dari \istilah{Project window} ke sebuah
+        benda pada \istilah{Hierarchy} atau pada \istilah{Scene}.
+  \item \textbf{Menambahkan komponen} melalui tombol \istilah{Add Component}
+        pada \istilah{Inspector}, lalu memilih nama skripnya.
+\end{enumerate}
+
+Setelah ditempelkan, skrip itu tampak sebagai salah satu komponen pada
+\istilah{Inspector}, beserta nilai pengaturannya. Nilai itulah yang Anda ubah
+untuk mengatur kecepatan geraknya, tanpa menyunting kode.
+
+\subsection{Fungsi yang Dipanggil Mesin}
+
+Skrip tersebut tidak memuat siklus permainan. Tidak ada
+perulangan \code{while}, dan tidak ada pemanggilan gambar. Yang ada hanyalah
+dua fungsi, yaitu \code{Start} dan \code{Update}, beserta fungsi ketiga yaitu
+\code{OnDisable}.
+
+Fungsi-fungsi itu \textbf{dipanggil oleh mesin} pada saat yang telah
+ditentukan. Urutannya tetap dan sama untuk setiap benda, sebagaimana
+diperlihatkan pada Tabel~\ref{tab-daur-hidup}.
+
+\begin{table}[htbp]
+\centering
+\caption{Fungsi skrip yang dipanggil mesin beserta waktu pemanggilannya}
+\label{tab-daur-hidup}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.0cm} L{3.4cm} Y@{}}
+\toprule
+\headrow \textbf{Fungsi} & \textbf{Kapan dipanggil} & \textbf{Dipakai untuk} \\
+\midrule
+\code{Awake} & Sekali, ketika benda dibuat &
+Menyiapkan rujukan ke komponen lain, termasuk yang tidak bergantung pada benda
+lain. \\
+\addlinespace
+\code{Start} & Sekali, sebelum bingkai pertama &
+Menyiapkan nilai awal yang bergantung pada benda lain, yang belum tentu siap
+ketika \code{Awake} dijalankan. \\
+\addlinespace
+\code{Update} & Sekali setiap bingkai &
+Menangani masukan dan hal yang mengikuti lama bingkai. Padanan tahap pembaruan
+pada Bab~IV. \\
+\addlinespace
+\code{FixedUpdate} & Berkala, dengan selang tetap &
+Menangani perhitungan fisika. Padanan \istilah{fixed timestep} pada Bagian~2.2. \\
+\addlinespace
+\code{OnDisable} & Ketika skrip dimatikan &
+Membereskan pekerjaan, misalnya menyimpan keadaan atau menutup berkas. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Urutan pemanggilan itu menjawab pertanyaan yang telah Anda
+kenal sejak Bab~IV: mana yang lebih dahulu, membaca masukan atau memperbarui
+keadaan? Pada Unity, mesin yang menentukan urutannya, sedangkan tugas Anda
+adalah meletakkan pekerjaan pada fungsi yang tepat.
+
+\begin{catatabox}
+Perhatikan pemakaian \code{Time.deltaTime} pada skrip di atas. Nilainya
+menyatakan lama bingkai yang baru saja berlangsung, sebagaimana
+\code{delta_seconds} pada Bab~V. Perhatikan pula pemakaian
+\code{direction.normalized}: penormalan vektor arah yang Anda pelajari pada
+Bagian~5.2 tetap diperlukan, sebab tanpa itu benda bergerak lebih cepat ketika
+menempuh arah diagonal.
+\end{catatabox}

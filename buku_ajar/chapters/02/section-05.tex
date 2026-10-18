@@ -1,0 +1,123 @@
+% chapters/02/section-05.tex
+\section{Keputusan dan Navigasi pada NPC}
+\label{sec:keputusan-navigasi}
+
+Bagian ini membahas landasan teori bagi Blok~II, yaitu cara membuat objek yang
+dikendalikan komputer---lazim disebut NPC, kependekan dari
+\istilah{non-player character}---berperilaku masuk akal di dalam permainan.
+Landasan ini dipakai pada Bab~VIII sampai Bab~XI.
+
+\subsection{Dua Pertanyaan yang Berbeda}
+
+Perilaku NPC yang tampak cerdas sebenarnya merupakan hasil kerja dua lapisan
+yang menjawab dua pertanyaan berbeda.
+
+\begin{itemize}
+  \item \textbf{Lapisan keputusan} menjawab pertanyaan ``apa yang sebaiknya
+        saya lakukan sekarang?'' Jawabannya berupa niat, misalnya berpatroli,
+        mengejar pemain, atau mundur.
+  \item \textbf{Lapisan navigasi} menjawab pertanyaan ``bagaimana cara menuju
+        ke sana?'' Jawabannya berupa rangkaian langkah atau arah gerak.
+\end{itemize}
+
+Memisahkan keduanya membawa manfaat besar. Keputusan dapat diubah tanpa
+menyentuh cara berpindah, dan sebaliknya, cara berpindah dapat diganti tanpa
+mengubah aturan perilaku. Pemisahan itu juga memudahkan pengujian, sebab
+setiap lapisan dapat diperiksa secara terpisah. Kedua lapisan tersebut beserta
+gelang umpan baliknya diperlihatkan pada Gambar~\ref{fig:lapisan-npc}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/lapisan-npc.tikz}
+\caption{Lapisan keputusan dan navigasi pada pengendalian NPC}
+\label{fig:lapisan-npc}
+\end{figure}
+
+\subsection{Agen Reaktif dan Agen Berbasis Perencanaan}
+
+Pada lapisan keputusan, terdapat dua pendekatan yang berbeda tingkat
+kerumitannya.
+
+\textbf{Agen reaktif} menentukan tindakannya semata-mata berdasarkan keadaan
+yang teramati saat itu. Contohnya, NPC yang bergerak lurus ke arah pemain
+selama pemain berada dalam jarak tertentu \cite{reintech-game-ai}. Cara ini
+mudah diterapkan dan murah dihitung, tetapi mudah dikelabui: begitu pemain
+berlindung di balik dinding, NPC akan terus menabrak dinding itu.
+
+\textbf{Agen berbasis perencanaan} memperhitungkan keadaan yang lebih luas,
+misalnya mencari rute mengelilingi rintangan, sebelum memutuskan langkah
+berikutnya. Hasilnya lebih meyakinkan, tetapi menuntut perhitungan tambahan
+dan penataan yang lebih rumit.
+
+Perlu ditegaskan bahwa pilihan di antara keduanya bukan soal benar atau salah,
+melainkan soal kecukupan. Sebuah permainan dengan ruang terbuka dan tanpa
+rintangan tidak memerlukan perencanaan; permainan berlatar labirin jelas
+memerlukannya.
+
+\subsection{Mesin Keadaan sebagai Model Keputusan}
+
+Cara yang paling banyak dipakai untuk menyusun lapisan keputusan adalah mesin
+keadaan (\istilah{finite state machine}). Gagasannya sederhana: NPC selalu
+berada pada tepat satu keadaan, dan perpindahan antar-keadaan terjadi karena
+adanya peristiwa atau syarat tertentu.
+
+Tiga istilah yang perlu Anda kuasai sejak awal adalah keadaan, peristiwa, dan
+transisi. \textbf{Keadaan} (\istilah{state}) menyatakan apa yang sedang
+dilakukan NPC, misalnya berdiam, berpatroli, atau mengejar.
+\textbf{Peristiwa} (\istilah{event}) menyatakan sesuatu yang terjadi, misalnya
+pemain memasuki jarak pandang. \textbf{Transisi} adalah aturan yang menyatakan
+perpindahan dari satu keadaan ke keadaan lain ketika suatu peristiwa terjadi.
+
+Kekuatan pendekatan ini terletak pada batasan ``tepat satu keadaan pada satu
+waktu''. Batasan itu menghapus kebutuhan memikirkan kombinasi perilaku yang
+saling bertabrakan, misalnya NPC yang mengejar dan berpatroli sekaligus.
+Susunan keadaan yang lazim pada permainan adalah diam, berpatroli, mengejar,
+serta menyerang atau menghindar \cite{santos-fsm}.
+
+Pendekatan ini juga dipakai di luar permainan; Unity menyediakan
+perkakas bawaan untuk menyusunnya secara visual, yang dapat Anda lihat pada
+Bab~XII \cite{unity-leveldesign}. Mengerjakannya sendiri terlebih dahulu pada
+Bab~IX bertujuan agar Anda memahami aturan yang mendasarinya, bukan sekadar
+memindahkan kotak pada layar.
+
+\subsection{Pencarian Jalur sebagai Persoalan Graf}
+
+Pada lapisan navigasi, persoalan mencari rute dinyatakan sebagai pencarian pada
+graf. Peta dibagi menjadi petak-petak, setiap petak yang dapat dilalui menjadi
+simpul (\istilah{node}), dan hubungan antara dua petak yang bersebelahan
+menjadi sisi (\istilah{edge}). Sisi dapat memiliki biaya, sehingga jarak yang
+ditempuh dapat dibedakan menurut tingkat kesulitan medannya.
+
+Pencarian jalur bertujuan menemukan rangkaian sisi yang menghubungkan tempat
+asal dengan tempat tujuan dengan biaya sekecil mungkin. Dua sifat yang perlu
+dibedakan pada setiap kaidah pencarian adalah:
+
+\begin{itemize}
+  \item \textbf{kelengkapan}, yaitu jaminan bahwa jalan akan ditemukan apabila
+        memang ada, dan
+  \item \textbf{keoptimalan}, yaitu jaminan bahwa jalan yang ditemukan adalah
+        yang termurah.
+\end{itemize}
+
+Kaidah pencarian yang mempertimbangkan perkiraan jarak ke tujuan, disebut
+heuristik, dapat jauh lebih cepat daripada pencarian yang menelusuri semua
+kemungkinan secara buta. Perkiraan itu harus bersifat tidak melebihkan jarak
+sebenarnya agar keoptimalan hasil tetap terjaga \cite{munir-astar}. Analisis
+dan penerapannya, termasuk pengaruh pilihan heuristik terhadap jumlah simpul
+yang diperiksa, dibahas pada Bab~X \cite{santos-pathfinding}.
+
+\subsection{Anggaran Waktu dan Biaya Perhitungan}
+
+Satu hal yang membedakan Blok~II dari dua blok lainnya adalah sifat
+perhitungannya yang bergantung pada keadaan. Gerak objek biasa memerlukan
+waktu yang tetap, berapa pun keadaannya. Sebaliknya, pencarian jalur baru
+dijalankan ketika tujuan berubah atau ketika jalur yang sedang ditempuh tidak
+lagi berlaku, dan biayanya tumbuh seiring luas peta yang ditelusuri.
+
+Karena itu, perancangan perilaku NPC tidak dapat dipisahkan dari anggaran
+waktu satu bingkai yang telah dibahas pada Bagian~\ref{sec:model-waktu}.
+Apabila pencarian jalur dijalankan setiap bingkai untuk setiap NPC, anggaran
+tersebut akan habis dan laju bingkai menurun. Cara-cara menghematnya, misalnya
+menjalankan pencarian secara berkala dan menyimpan hasilnya untuk dipakai
+ulang, akan Anda susun pada Bab~XI. Contoh penerapan pada permainan yang lebih
+besar tersedia pada \mbox{[R25]} dan \mbox{[R34]}.

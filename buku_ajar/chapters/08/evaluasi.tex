@@ -1,0 +1,97 @@
+% chapters/08/evaluasi.tex
+\bagian{Asesmen dan Instrumen Penilaian}
+\label{sec:asesmen-chase}
+
+\begin{asesmenbox}
+\textbf{Kedudukan asesmen bab ini.} Bab ini menuntaskan \SUBCPMK{2.1} dan
+merupakan bab pertama pada \CPMK{2}. Ketiga indikatornya diperiksa melalui
+penilaian artefak program (Tugas Praktikum 06) dan soal konsep.
+
+\vspace{0.4em}
+Materi Bab~VIII termasuk bahan \textbf{Kuis 2} pada minggu kedelapan
+(Materi 6--7) dan bahan \textbf{Ujian Tengah Semester} pada minggu kesepuluh
+yang mengukur \CPMK{1} dan \CPMK{2}.
+\end{asesmenbox}
+
+\subsection*{Instrumen 1: Rubrik Praktikum 06}
+
+\begin{table}[htbp]
+\centering
+\caption{Rubrik penilaian Praktikum 06 beserta indikator yang diukur}
+\label{tab:rubrik-praktikum-06}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.2cm} C{1.3cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{Kriteria} & \textbf{Bobot} & \textbf{Indikator} & \textbf{Deskripsi capaian} \\
+\midrule
+Perhitungan arah dan jarak & 35\% & \ind{a} &
+Vektor menuju pemain dihitung dengan urutan yang benar, jaraknya dipakai untuk
+memutuskan, dan arahnya dinormalkan sebelum dikalikan kecepatan. \\
+\addlinespace
+Konsistensi kecepatan & 30\% & \ind{b} &
+Kecepatan NPC tetap pada segala jarak; tabel pengukuran cara yang benar dan
+cara yang salah terisi lengkap beserta penjelasan perbedaannya. \\
+\addlinespace
+Penjelasan perilaku dan kelemahannya & 35\% & \ind{c} &
+Perbedaan AI reaktif dan berbasis perencanaan dijelaskan dengan tepat, dan
+catatan praktikum memuat pengamatan sendiri atas kelemahan perilaku reaktif
+ketika ada rintangan. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection*{Instrumen 2: Soal Konsep}
+
+Jawablah dengan singkat. Kunci jawaban beserta indikator yang diukur disajikan
+pada Tabel~\ref{tab:kunci-konsep-ch08}.
+
+\begin{enumerate}
+  \item Sebuah NPC berada pada $(150, 200)$ dan pemain pada $(450, 600)$.
+        Hitunglah vektor menuju pemain, jaraknya, dan vektor kecepatannya
+        apabila kecepatannya ditetapkan 100 piksel per detik.
+  \item Mengapa vektor arah perlu dinormalkan sebelum dikalikan kecepatan?
+        Sertakan satu contoh akibatnya apabila langkah itu dilupakan.
+  \item Apa keperluan jarak henti, dan bagaimana Anda menentukan nilainya?
+  \item Jelaskan perbedaan AI reaktif dan AI berbasis perencanaan beserta satu
+        keadaan permainan yang cocok untuk masing-masing.
+  \item Sebuah NPC reaktif menekan dinding selama pemain berada di baliknya.
+        Apakah itu kesalahan NPC? Jelaskan.
+\end{enumerate}
+
+\begin{table}[htbp]
+\centering
+\caption{Kunci soal konsep Bab VIII beserta indikator yang diukur}
+\label{tab:kunci-konsep-ch08}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{0.8cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{No} & \textbf{Indikator} & \textbf{Pokok jawaban} \\
+\midrule
+1 & \ind{a} &
+Vektor menuju pemain $(300, 400)$; jaraknya $\sqrt{300^2 + 400^2} = 500$
+piksel; arahnya $(0{,}6, 0{,}8)$; kecepatannya
+$(60, 80)$ piksel per detik, dengan panjang 100 piksel per detik. \\
+\addlinespace
+2 & \ind{b} &
+Karena panjang vektor jarak sama dengan jaraknya, sehingga kecepatan menjadi
+bergantung pada jarak. Contohnya, pada jarak 300 piksel kecepatannya menjadi
+300 piksel per detik, yaitu tiga kali nilai yang ditetapkan pada soal di atas. \\
+\addlinespace
+3 & \ind{b} &
+Agar NPC berhenti ketika sudah cukup dekat, sehingga tidak bergetar di atas
+pemain. Nilainya harus lebih besar daripada perpindahan satu bingkai, yaitu
+kecepatan dibagi laju bingkai. \\
+\addlinespace
+4 & \ind{c} &
+AI reaktif hanya memakai keadaan saat itu sehingga murah dan mudah diperiksa,
+cocok untuk ruang terbuka. AI berbasis perencanaan memperhitungkan rintangan
+dan mencari rute, cocok untuk labirin atau ruang dengan banyak rintangan,
+dengan biaya perhitungan yang lebih besar. \\
+\addlinespace
+5 & \ind{c} &
+Bukan. NPC itu melaksanakan keputusannya dengan benar berdasarkan keterangan
+yang tersedia baginya, yaitu arah menuju pemain. Yang kurang adalah keterangan
+mengenai rintangan, dan menambahkannya menuntut pencarian jalur. \\
+\bottomrule
+\end{tabularx}}
+\end{table}

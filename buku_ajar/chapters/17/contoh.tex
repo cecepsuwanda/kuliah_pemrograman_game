@@ -1,0 +1,86 @@
+% chapters/17/contoh.tex
+\section{Dua Contoh Terapan}
+\label{sec:contoh-bab-17}
+
+\subsection{Contoh Pertama: Menghitung Nilai Akhir dari Komponennya}
+
+\begin{contohbox}
+Seorang mahasiswa memperoleh nilai sebagai berikut: tugas praktikum dan
+portofolio 82, kuis 75, Ujian Tengah Semester 68, Mini Proyek AI 85, Proyek
+Akhir 78, dan partisipasi 90. Berapa nilai akhirnya, dan bagaimana nilainya
+tersebar pada keempat CPMK?
+\end{contohbox}
+
+Nilai akhir dihitung dari bobot komponen pada
+Tabel~\ref{tab:komponen-nilai}:
+
+\[
+\begin{aligned}
+\text{Nilai akhir} ={}& 0{,}25(82) + 0{,}10(75) + 0{,}20(68) \\
+&+ 0{,}10(85) + 0{,}30(78) + 0{,}05(90) \\
+={}& 20{,}5 + 7{,}5 + 13{,}6 + 8{,}5 + 23{,}4 + 4{,}5
+= 78{,}0 .
+\end{aligned}
+\]
+
+Nilai 78 termasuk huruf B pada Tabel~\ref{tab:konversi-nilai}.
+
+Sebaran pada CPMK dihitung dari Tabel~\ref{tab:matriks-bobot}, dengan
+membagi setiap sumbangan dengan bobot CPMK-nya. Untuk \CPMK{1}, yang berbobot
+25 persen:
+
+\[
+\text{\CPMK{1}} = \frac{8(82) + 5(75) + 10(68) + 2(90)}{25}
+= \frac{656 + 375 + 680 + 180}{25} = \frac{1\,891}{25} = 75{,}6 .
+\]
+
+Dengan cara yang sama, \CPMK{2} memperoleh
+$(6 \times 82 + 5 \times 75 + 10 \times 68 + 10 \times 85 + 1 \times 90)/32
+= 77{,}7$, \CPMK{3} memperoleh
+$(6 \times 82 + 15 \times 78)/22 = 75{,}5$, dan \CPMK{4} memperoleh
+$(5 \times 82 + 15 \times 78 + 1 \times 90)/21 = 79{,}5$.
+
+Keempatnya di atas 70, sehingga seluruh CPMK tercapai. Ada satu hal yang tidak
+tampak pada nilai akhir. \CPMK{1} dan \CPMK{3} hanya sedikit di atas ambang.
+Keduanya menarik perhatian pada nilai UTS sebesar 68, yaitu nilai terendah, dan
+UTS adalah satu-satunya instrumen yang mengukur \CPMK{1} dan \CPMK{2} tanpa
+bantuan pekerjaan praktikum.
+
+\subsection{Contoh Kedua: Menelusuri Kesenjangan Kompetensi}
+
+\begin{contohbox}
+Seorang mahasiswa memperoleh nilai praktikum 88, tetapi nilai UTS 55 dan nilai
+ujian tulis pada UAS 58. Nilai akhirnya masih lulus, tetapi ia merasa tidak
+memahami materinya. Ke mana ia harus menelusuri?
+\end{contohbox}
+
+Pola itu menunjukkan satu hal yang khas: pekerjaan praktikumnya baik,
+sedangkan jawaban tulisnya lemah. Ada dua kemungkinan, dan keduanya perlu
+diperiksa dengan cara yang berbeda.
+
+\begin{langkah}
+  \item \textbf{Periksa apakah praktikumnya dikerjakan sendiri.} Apabila
+        pekerjaan praktikum dikerjakan bersama atau disalin, nilai tinggi pada
+        praktikum tidak mencerminkan penguasaan, dan nilai tulis yang rendah
+        adalah keterangan yang lebih jujur.
+  \item \textbf{Periksa Sub-CPMK mana yang paling banyak ditanyakan pada
+        UTS.} Pada Tabel~\ref{tab:peta-subcpmk}, UTS mengukur Sub-CPMK 1.1
+        sampai 1.4. Apabila jawaban yang salah terpusat pada satu pokok
+        bahasan, kesenjangannya ada di situ, bukan menyebar.
+  \item \textbf{Periksa jenis pertanyaannya.} Soal UTS memuat dua bentuk:
+        menjelaskan konsep dan memperbaiki kode. Nilai rendah pada bentuk
+        pertama berarti pemahamannya belum sampai; nilai rendah pada bentuk
+        kedua berarti ia dapat memakai konsepnya tetapi belum dapat
+        menjelaskannya.
+  \item \textbf{Kembali ke bab yang bersangkutan, dan kerjakan ulang
+        latihannya.} Untuk Sub-CPMK 1.2, misalnya, kerjakan kembali latihan
+        Bab~V dan jalankan kembali \code{ch05_gerak.py} dengan mengubah
+        \istilah{delta time}-nya.
+\end{langkah}
+
+Tiga hal dapat dipetik dari contoh itu. Pertama, nilai akhir yang lulus tidak
+berarti seluruh Sub-CPMK tercapai; ia hanya berarti jumlah berbobotnya cukup.
+Kedua, sebaran nilai pada CPMK memperlihatkan \emph{di mana} kesenjangannya,
+sedangkan nilai akhir menyembunyikannya. Ketiga, penelusuran selalu berakhir
+pada satu bab tertentu, dan itulah gunanya peta pada
+Tabel~\ref{tab:peta-subcpmk}.

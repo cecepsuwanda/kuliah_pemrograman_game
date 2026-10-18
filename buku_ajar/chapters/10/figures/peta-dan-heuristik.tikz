@@ -1,0 +1,69 @@
+% chapters/10/figures/peta-dan-heuristik.tikz
+% Dua hal yang perlu dipahami sebelum menulis pencarian: peta berpetak sebagai
+% graf, dan dua cara mengukur perkiraan jarak ke tujuan.
+\begin{tikzpicture}[
+  sel/.style={rectangle, draw=ubLine, thick, minimum size=7mm, inner sep=0pt,
+              font=\scriptsize},
+  dinding/.style={sel, fill=ubGray},
+  terbuka/.style={sel, fill=white},
+  awal/.style={sel, fill=ubGreenBg, draw=ubGreen},
+  tujuan/.style={sel, fill=ubRedBg, draw=ubRed},
+  panah/.style={-{Stealth[length=2mm]}, thick, draw=ubAccent},
+  judul/.style={font=\footnotesize\bfseries, ubPrimary, align=center},
+  label/.style={font=\scriptsize, align=left}
+]
+
+% ---------- Panel A: peta berpetak sebagai graf ----------
+\begin{scope}
+  \node[judul, anchor=south] at (1.5,0.35) {peta berpetak sebagai graf};
+
+  \foreach \x in {0,...,4} {
+    \foreach \y in {0,...,3} {
+      \node[terbuka] at (\x*0.75,-\y*0.75) {};
+    }
+  }
+  \node[dinding] at (1*0.75,0) {};
+  \node[dinding] at (3*0.75,-1*0.75) {};
+  \node[dinding] at (1*0.75,-2*0.75) {};
+  \node[dinding] at (2*0.75,-3*0.75) {};
+  \node[awal] at (0,-3*0.75) {S};
+  \node[tujuan] at (4*0.75,0) {G};
+
+  % Empat tetangga dari satu petak.
+  \draw[panah] (2*0.75,-1*0.75) -- (2*0.75,-1.5*0.75);
+  \draw[panah] (2*0.75,-1*0.75) -- (2*0.75,-0.5*0.75);
+  \draw[panah] (2*0.75,-1*0.75) -- (2.5*0.75,-1*0.75);
+  \draw[panah] (2*0.75,-1*0.75) -- (1.5*0.75,-1*0.75);
+
+  \node[label, anchor=north west, text width=52mm] at (-0.2,-2.55)
+    {Setiap petak kosong menjadi satu simpul, dan hubungan dengan petak
+     bersebelahan menjadi sisi graf. Empat arah dipakai, sehingga biaya
+     perpindahan selalu satu.};
+\end{scope}
+
+% ---------- Panel B: dua ukuran perkiraan jarak ----------
+\begin{scope}[xshift=7.4cm]
+  \node[judul, anchor=south] at (1.5,0.35) {dua ukuran perkiraan jarak};
+
+  \foreach \x in {0,...,4} {
+    \foreach \y in {0,...,3} {
+      \node[terbuka] at (\x*0.75,-\y*0.75) {};
+    }
+  }
+  \node[awal] at (0,-3*0.75) {S};
+  \node[tujuan] at (4*0.75,0) {G};
+
+  % Jalur tangga (Manhattan) dan garis lurus (Euclidean).
+  \draw[ubAccent, thick] (0,-3*0.75) -- (4*0.75,-3*0.75) -- (4*0.75,0);
+  \draw[ubRed, thick, dashed] (0,-3*0.75) -- (4*0.75,0);
+
+  \node[label, ubAccent, anchor=north west] at (-0.2,-2.55)
+    {Manhattan: $h = |\Delta x| + |\Delta y|$};
+  \node[label, ubRed, anchor=north west] at (-0.2,-3.05)
+    {Euclidean: $h = \sqrt{\Delta x^2 + \Delta y^2}$};
+  \node[label, anchor=north west, text width=52mm] at (-0.2,-3.75)
+    {Keduanya tidak melebihkan jarak sebenarnya, sehingga keduanya
+     menghasilkan jalur terpendek. Manhattan lebih dekat kepada jarak
+     sebenarnya, sehingga lebih sedikit petak diperiksa.};
+\end{scope}
+\end{tikzpicture}

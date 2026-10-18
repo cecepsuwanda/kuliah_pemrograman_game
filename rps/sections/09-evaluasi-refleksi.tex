@@ -1,0 +1,97 @@
+% =========================================================
+%  sections/09-evaluasi-refleksi.tex
+%  Bagian 9 — Evaluasi dan Refleksi Pembelajaran
+% =========================================================
+
+\section{Evaluasi dan Refleksi Pembelajaran}
+
+\subsection{Penilaian Formatif}
+
+Penilaian formatif dilaksanakan sepanjang semester untuk memantau kemajuan
+mahasiswa dan memberikan umpan balik sebelum asesmen sumatif.
+
+\begin{itemize}
+  \item \textbf{Umpan balik praktikum mingguan.} Dosen dan asisten memeriksa
+        artefak praktikum setiap minggu dan memberikan catatan perbaikan
+        langsung pada repositori mahasiswa.
+  \item \textbf{Kuis singkat.} Dua kuis pada Minggu 5 dan Minggu 8 digunakan
+        untuk mendeteksi miskonsepsi lebih awal, khususnya pada konsep
+        \istilah{delta time}, resolusi \istilah{collision}, dan transisi FSM.
+  \item \textbf{Umpan balik sejawat.} Pada Minggu 9 dan Minggu 15 mahasiswa
+        saling menilai hasil kerja kelompok lain menggunakan lembar
+        \istilah{playtest} terstruktur, kemudian mendiskusikan temuannya.
+  \item \textbf{Demonstrasi kelas.} Setiap kelompok memperagakan kemajuan
+        proyeknya secara berkala agar memperoleh masukan sebelum tenggat akhir.
+\end{itemize}
+
+\subsection{Penilaian Sumatif}
+
+Penilaian sumatif diarahkan untuk menilai ketercapaian CPMK secara menyeluruh
+melalui UTS (Minggu 10) dan UAS (Minggu 16), serta melalui penilaian mini
+proyek AI (Minggu 9) dan proyek akhir (Minggu 15--16). Bobot dan
+keterkaitannya dengan CPMK diuraikan pada Bagian~\ref{sec:penilaian}.
+
+\subsection{Refleksi Mahasiswa}
+
+Setiap mahasiswa mengisi lembar refleksi pada akhir semester yang memuat tiga
+pertanyaan pokok:
+
+\begin{enumerate}
+  \item Konsep apa yang paling sulit dipahami pada blok Python/Pygame dan blok
+        Unity, dan bagaimana usaha yang dilakukan untuk mengatasinya?
+  \item Apa perbedaan pengalaman bekerja dengan Python/Pygame dibandingkan
+        dengan Unity, ditinjau dari kemudahan, kendali atas algoritma, dan
+        kecepatan pengembangan?
+  \item Kompetensi apa yang ingin dikembangkan setelah mata kuliah ini, dan
+        bagaimana rencana untuk mencapainya?
+\end{enumerate}
+
+Hasil refleksi dibahas dalam sesi penutup pada Minggu 15 dan direkapitulasi
+oleh dosen sebagai masukan perbaikan pelaksanaan perkuliahan.
+
+\subsection{Refleksi Dosen dan Penjaminan Mutu}
+
+Setelah perkuliahan berakhir, dosen melakukan analisis ketercapaian CPMK
+dengan menghitung persentase mahasiswa yang mencapai ambang batas pada setiap
+CPMK. Analisis tersebut dilaporkan kepada program studi sebagai bagian dari
+siklus penjaminan mutu (\istilah{Plan--Do--Check--Act}) dan menjadi dasar
+penyesuaian RPS pada semester berikutnya.
+
+\begin{table}[htbp]
+\centering
+\caption{Ambang ketercapaian CPMK dan tindak lanjut}
+\label{tab:ambang}
+\begin{tabularx}{\textwidth}{@{}C{1.8cm} L{3.2cm} C{2.2cm} L{3.2cm} Y@{}}
+\toprule
+\headrow \textbf{CPMK} & \textbf{Indikator Ketercapaian} & \textbf{Ambang Batas} & \textbf{Instrumen Pemantauan} & \textbf{Tindak Lanjut Bila Belum Tercapai} \\
+\midrule
+\CPMK{1} &
+Mahasiswa mampu merancang dan mengimplementasikan \istilah{game loop}, gerak berbasis \istilah{delta time}, fisika sederhana, dan \istilah{collision}. &
+$\geq 75\%$ mahasiswa bernilai $\geq 70$ &
+Praktikum 01--05, Kuis 1, UTS &
+Menyediakan sesi remedial praktikum dan contoh kode pembanding; memperjelas indikator pada RPS berikutnya. \\
+\addlinespace
+\CPMK{2} &
+Mahasiswa mampu mengimplementasikan perilaku \istilah{chase}, FSM, dan A* serta memadukannya. &
+$\geq 75\%$ mahasiswa bernilai $\geq 70$ &
+Praktikum 06--09, Kuis 2, Mini Proyek AI &
+Menambah latihan terarah pada bagian yang paling lemah (FSM atau A*) dan memperpanjang bimbingan proyek. \\
+\addlinespace
+\CPMK{3} &
+Mahasiswa mampu membangun level Unity yang dapat dimainkan dengan fisika yang benar. &
+$\geq 75\%$ mahasiswa bernilai $\geq 70$ &
+Praktikum 09--10, Proyek Akhir &
+Menambah demonstrasi terbimbing dan menyediakan proyek contoh sebagai acuan tahapan. \\
+\addlinespace
+\CPMK{4} &
+Mahasiswa mampu mengintegrasikan aset visual, UI, dan audio serta mengevaluasi prototipe. &
+$\geq 75\%$ mahasiswa bernilai $\geq 70$ &
+Praktikum 11--12, Proyek Akhir, UAS &
+Menyediakan pustaka aset siap pakai dan sesi \istilah{playtest} tambahan sebelum tenggat akhir. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Apabila suatu CPMK belum mencapai ambang batas, dosen mencatat penyebabnya
+(materi, metode, atau asesmen) dan mengusulkan perbaikan yang akan diterapkan
+pada pelaksanaan semester berikutnya.

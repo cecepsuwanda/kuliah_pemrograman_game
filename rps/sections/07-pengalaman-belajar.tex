@@ -1,0 +1,234 @@
+% =========================================================
+%  sections/07-pengalaman-belajar.tex
+%  Bagian 7 — Pengalaman Belajar Mahasiswa
+% =========================================================
+
+\section{Pengalaman Belajar Mahasiswa}
+
+Pengalaman belajar mahasiswa diwujudkan dalam rangkaian aktivitas mingguan yang
+secara langsung mengarah pada pencapaian Sub-CPMK. Setiap pertemuan memiliki
+keluaran yang dapat diamati: berkas kode, level yang dapat dimainkan, atau
+laporan evaluasi. Tabel~\ref{tab:mingguan} menyajikan rencana pembelajaran
+mingguan untuk 16 minggu, sedangkan spesifikasi tugas dan proyek diuraikan
+pada bagian setelahnya.
+
+\subsection{Rencana Pembelajaran Mingguan}
+
+\begin{landscape}
+{\setlength{\tabcolsep}{3pt}\footnotesize%
+\begin{longtable}{@{}L{1.0cm} L{2.0cm} L{4.2cm} L{3.0cm} L{7.8cm} L{3.4cm} L{2.0cm}@{}}
+\caption{Rencana pembelajaran mingguan mata kuliah \NamaMK}
+\label{tab:mingguan}\\
+\toprule
+\headrow \textbf{Mg} & \textbf{Sub-CPMK} & \textbf{Pokok Bahasan} & \textbf{Metode \& Bentuk} & \textbf{Pengalaman Belajar Mahasiswa} & \textbf{Asesmen} & \textbf{Ref} \\
+\midrule
+\endfirsthead
+\toprule
+\headrow \textbf{Mg} & \textbf{Sub-CPMK} & \textbf{Pokok Bahasan} & \textbf{Metode \& Bentuk} & \textbf{Pengalaman Belajar Mahasiswa} & \textbf{Asesmen} & \textbf{Ref} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{7}{r}{\footnotesize\itshape bersambung ke halaman berikutnya} \\
+\endfoot
+\bottomrule
+\endlastfoot
+
+1 & Orientasi (menuju 1.1) &
+Ruang lingkup mata kuliah dan kontrak belajar; keterkaitan \CPL{03}--\CPL{04}, CPMK, dan Sub-CPMK; \istilah{game} sebagai simulasi interaktif \istilah{real-time}; peran algoritma dan bahasa pemrograman; instalasi Python 3, Pygame, dan editor; struktur folder proyek. &
+Kuliah interaktif, demonstrasi, praktik terbimbing &
+Menyiapkan lingkungan kerja (Python 3, Pygame, editor, Git); menjalankan skrip pertama yang membuka jendela Pygame dan menampilkan versi Pygame; menyusun struktur folder proyek dan mengunggahnya ke repositori; mendiskusikan kontrak kuliah dan capaian pembelajaran. &
+Tugas Praktikum 01 (unjuk kerja) & [R1], [R2], [R20], [R21] \\
+\addlinespace
+
+2 & 1.1 &
+Siklus input $\rightarrow$ \istilah{update} $\rightarrow$ \istilah{render}; \istilah{event handling} (\code{pygame.event.get}, \code{QUIT}); \code{pygame.time.Clock}; pembatasan FPS; konsep \istilah{fixed} dan \istilah{variable timestep}. &
+Kuliah, \istilah{live coding}, praktik terbimbing &
+Menulis \istilah{game loop} lengkap secara mandiri; menangkap \istilah{event} keluar dan tombol; membatasi laju bingkai dengan \code{Clock}; menampilkan nilai FPS pada judul jendela; mengubah batas FPS dan mencatat pengaruhnya terhadap beban prosesor. &
+Tugas Praktikum 02; observasi kinerja \istilah{loop} & [R3], [R5], [R6], [R22] \\
+\addlinespace
+
+3 & 1.2 &
+\code{pygame.Vector2}; posisi dan kecepatan; \code{pygame.key.get\_pressed}; \istilah{delta time} (\code{dt = clock.tick(FPS) / 1000}); sinkronisasi posisi \istilah{float} dengan \code{Rect} bilangan bulat. &
+Kuliah, \istilah{live coding}, praktik terbimbing &
+Mengimplementasikan pergerakan karakter dengan WASD atau tombol panah menggunakan \code{Vector2} dan \istilah{delta time}; membandingkan kecepatan objek pada 30 FPS dan 60 FPS; memperbaiki ketidaksesuaian antara posisi bertipe pecahan dan \code{Rect} bertipe bilangan bulat. &
+Tugas Praktikum 03 & [R3], [R32], [R1] \\
+\addlinespace
+
+4 & 1.3 &
+Percepatan gravitasi; \istilah{jump impulse}; pantulan dinding dan lantai; integrasi Euler sederhana; batas lantai. &
+Kuliah, praktik terbimbing, latihan terbuka &
+Menerapkan gravitasi, impuls lompatan, dan pantulan menggunakan integrasi Euler; memastikan lompatan hanya aktif ketika objek menyentuh tanah; menguji perilaku objek pada nilai gravitasi dan koefisien pantulan yang berbeda. &
+Tugas Praktikum 04 & [R7], [R22], [R1] \\
+\addlinespace
+
+5 & 1.4 &
+\code{Sprite} dan \code{Group}; \code{spritecollide} dan \code{groupcollide}; AABB dengan \code{Rect}; pengantar \istilah{pixel-perfect} dengan \code{mask}; resolusi \istilah{collision} sumbu demi sumbu. &
+Kuliah, praktik terbimbing, \istilah{problem-based learning} &
+Mengorganisasi objek permainan ke dalam \code{Sprite} dan \code{Group}; memilih serta menerapkan metode \istilah{collision} yang sesuai; menyelesaikan tabrakan per sumbu sehingga objek tidak menembus dinding; membangun mekanik pengumpulan item dan penghindaran rintangan dengan sistem skor. &
+Tugas Praktikum 05; \textbf{Kuis 1} (Materi 1--4) & [R4], [R23], [R21] \\
+\addlinespace
+
+6 & 2.1 &
+Persepsi jarak dan arah; normalisasi vektor menuju pemain; batasan kecepatan; perbedaan AI reaktif dan AI berbasis perencanaan. &
+Kuliah, \istilah{live coding}, praktik terbimbing &
+Menghitung vektor arah NPC menuju pemain dan menormalisasinya; membatasi besar kecepatan agar gerak konsisten; memvisualisasikan arah pengejaran dengan garis; membandingkan perilaku AI reaktif dengan AI yang mempertimbangkan perencanaan. &
+Tugas Praktikum 06 & [R1], [R2], [R19], [R33] \\
+\addlinespace
+
+7 & 2.2 &
+\istilah{State}, \istilah{event}, \istilah{transition}; diagram idle--patrol--chase--attack/flee; implementasi sebagai kelas atau fungsi Python; kondisi jarak dan \istilah{cooldown}. &
+Kuliah, praktik terbimbing, \istilah{problem-based learning} &
+Merancang diagram \istilah{state}--transisi NPC; mengimplementasikan FSM sebagai kelas atau fungsi Python; menambahkan transisi berbasis jarak dan \istilah{cooldown}; menguji setiap \istilah{state} dan transisinya secara terpisah. &
+Tugas Praktikum 07 & [R9], [R25], [R27] \\
+\addlinespace
+
+8 & 2.3 &
+Representasi grid dan graf; biaya $g$, heuristik $h$, dan $f = g + h$; jarak Manhattan dan Euclidean; antrean prioritas \code{heapq}; pemulihan jalur. &
+Kuliah, \istilah{live coding}, praktik terbimbing &
+Membangun representasi grid dan graf berbiaya dari peta berhalangan; mengimplementasikan A* dengan \code{heapq} dan heuristik Manhattan atau Euclidean; memulihkan jalur dan memvisualisasikannya pada grid Pygame; menganalisis pengaruh heuristik terhadap jumlah simpul yang diperiksa. &
+Tugas Praktikum 08; \textbf{Kuis 2} (Materi 6--7) & [R8], [R10], [R11], [R34] \\
+\addlinespace
+
+9 & 2.4 &
+FSM memanggil A* pada \istilah{state chase}; \istilah{repath} berkala; batasan performa; skenario uji (labirin dan rintangan dinamis sederhana). &
+\istilah{Project-based learning}, kerja kelompok, presentasi &
+Mengintegrasikan FSM dengan A*: \istilah{state chase} memanggil A* dan melakukan \istilah{repath} secara berkala; menyusun skenario uji berupa labirin dan rintangan dinamis sederhana; melaksanakan \istilah{playtest} antar kelompok; menyusun laporan singkat hasil \istilah{playtest} beserta perbaikan yang dilakukan. &
+Presentasi dan laporan \textbf{Mini Proyek AI} & [R8], [R9], [R26], [R25] \\
+\addlinespace
+
+10 & 1.1--2.4 &
+Asesmen tengah semester atas \CPMK{1} dan \CPMK{2}. &
+Ujian tertulis dan uji kode &
+Mengerjakan soal konsep \istilah{game loop}, manajemen waktu, vektor, fisika sederhana, \istilah{collision}, FSM, dan A*; menyelesaikan tugas perbaikan \istilah{bug} (\istilah{debugging}) pada kode Pygame yang disediakan dalam batas waktu tertentu. &
+\textbf{UTS} & --- \\
+\addlinespace
+
+11 & 3.1 &
+Unity Hub dan Editor; \istilah{Hierarchy}, \istilah{Inspector}, \istilah{Project window}; \istilah{scene}; \istilah{GameObject} dan komponen; perbandingan konsep Unity dengan Pygame. &
+Kuliah, demonstrasi, praktik terbimbing &
+Menavigasi antarmuka Unity; membuat \istilah{project} 2D; menyusun \istilah{scene} berisi kamera dan objek primitif; menyimpan \istilah{scene} dan mengelola aset; membandingkan istilah Unity dengan konsep Pygame yang telah dipelajari. &
+Tugas Praktikum 09 & [R12], [R13], [R15], [R16] \\
+\addlinespace
+
+12 & 3.2 &
+\istilah{Tilemap} dan \istilah{greyboxing}; \istilah{Collider2D/3D}; \istilah{Rigidbody}; \istilah{script} gerak pada \code{Update} dan \code{FixedUpdate}; \istilah{trigger volume}; desain jalur pemain. &
+Demonstrasi, praktik terbimbing, \istilah{problem-based learning} &
+Menyusun level dengan \istilah{tilemap} dan \istilah{greyboxing}; mengonfigurasi \istilah{Collider} dan \istilah{Rigidbody}; menulis \istilah{script} kontrol pemain; menambahkan \istilah{trigger volume}; menganalisis dan memperbaiki masalah fisika seperti \istilah{jitter}, objek menembus \istilah{collider}, atau jatuh tanpa henti. &
+Tugas Praktikum 10; penilaian level & [R12], [R13], [R18], [R35] \\
+\addlinespace
+
+13 & 4.1 &
+\istilah{Pipeline} impor Unity; \istilah{sprite sheet} dan \istilah{Animator}; \istilah{Canvas} UI (skor dan nyawa); penggantian \istilah{placeholder greybox} dengan aset sesungguhnya. &
+Demonstrasi, praktik terbimbing, kerja kelompok &
+Mengimpor \istilah{sprite} dan mengatur \istilah{importer setting}; menyiapkan \istilah{Animator} beserta transisi animasi idle dan run; membangun UI \istilah{Canvas} untuk skor dan nyawa; mengganti \istilah{placeholder} dengan aset visual; membandingkan \istilah{scene} sebelum dan sesudah integrasi aset. &
+Tugas Praktikum 11 & [R12], [R14], [R28], [R29] \\
+\addlinespace
+
+14 & 4.2 &
+\code{AudioClip} dan \code{AudioSource}; BGM dan SFX; \istilah{trigger} pada \istilah{pickup}, tabrakan, serta kondisi menang dan kalah; partikel sederhana (opsional). &
+Demonstrasi, praktik terbimbing, kerja kelompok &
+Menambahkan \code{AudioSource} dan \code{AudioClip} untuk BGM serta SFX; memicu efek suara pada peristiwa lompat, mengambil item, dan \istilah{game over}; menambahkan partikel sederhana (opsional); menyesuaikan \istilah{timing} dan level volume agar umpan balik terasa tepat. &
+Tugas Praktikum 12 & [R14], [R24], [R30], [R31] \\
+\addlinespace
+
+15 & 4.3 &
+\istilah{Checklist} fungsional; \istilah{playtest} antar kelompok; \istilah{log bug}; kesesuaian GDD dengan \istilah{build}; presentasi demo; refleksi pilihan Python dan Unity. &
+\istilah{Project-based learning}, \istilah{playtest}, \istilah{peer review}, presentasi &
+Menyusun \istilah{checklist} fungsional dan lembar \istilah{playtest}; melaksanakan \istilah{playtest} antar kelompok; mencatat \istilah{bug} dan masalah integrasi; memfinalisasi \istilah{build}; menyajikan demo 5--10 menit; menyusun laporan perbaikan dan refleksi pemilihan teknologi (Python/Pygame atau Unity). &
+Presentasi \textbf{Proyek Akhir}; laporan perbaikan & [R12], [R16], [R18], [R30] \\
+\addlinespace
+
+16 & 4.3 &
+Asesmen akhir semester atas \CPMK{3} dan \CPMK{4}. &
+Uji fungsional, presentasi, dan penilaian dokumen &
+Menyerahkan \istilah{build} dan \istilah{project source} prototipe \istilah{game}; menjalani uji fungsional oleh dosen menggunakan \istilah{checklist} penilaian; menyerahkan laporan pengembangan serta lembar refleksi pembelajaran. &
+\textbf{UAS} & --- \\
+
+\end{longtable}}
+\tabsource{Keterangan: Mg = minggu ke-; Ref = nomor rujukan pada Bagian~\ref{sec:referensi}; UTS = Ujian Tengah Semester; UAS = Ujian Akhir Semester; GDD = \istilah{Game Design Document}.}
+\end{landscape}
+
+\subsection{Tugas dan Proyek}
+
+\subsubsection{Tugas Praktikum (Portofolio Individu)}
+
+Tugas praktikum dikerjakan setiap minggu secara individual dan dikumpulkan
+melalui repositori Git pribadi mahasiswa. Setiap tugas memuat kode program yang
+dapat dijalankan, tangkapan layar hasil, dan catatan singkat kendala yang
+dihadapi beserta cara penyelesaiannya. Dosen menilai enam sampel portofolio
+secara acak sebagai dasar nilai portofolio, sehingga mahasiswa terdorong
+mengerjakan seluruh rangkaian tugas secara berkelanjutan.
+
+\subsubsection{Kuis}
+
+Kuis dilaksanakan dua kali dalam bentuk tes singkat (15--20 menit) untuk
+memantau pemahaman konsep secara formatif.
+
+\begin{itemize}
+  \item \textbf{Kuis 1} (Minggu 5) mencakup Materi 1--4: struktur \istilah{game loop}, manajemen waktu, vektor, dan fisika sederhana.
+  \item \textbf{Kuis 2} (Minggu 8) mencakup Materi 6--7: perilaku \istilah{chase} dan \istilah{Finite State Machine}.
+\end{itemize}
+
+\subsubsection{Mini Proyek AI (Kelompok, Materi 6--9)}
+
+Mini proyek AI dikerjakan dalam kelompok beranggotakan 2--3 mahasiswa dan
+dikumpulkan pada Minggu 9.
+
+\begin{table}[htbp]
+\centering
+\caption{Spesifikasi mini proyek AI}
+\label{tab:miniproyek}
+\begin{tabularx}{\textwidth}{@{}L{3.4cm} Y@{}}
+\toprule
+\headrow \textbf{Aspek} & \textbf{Ketentuan} \\
+\midrule
+Bentuk keluaran &
+Kode program Python/Pygame, ringkasan desain (\istilah{Game Design Document} singkat), dan laporan \istilah{playtest} 2--3 halaman. \\
+\addlinespace
+Isi wajib &
+Satu atau lebih NPC yang menerapkan FSM (minimal \istilah{idle}, \istilah{patrol}, dan \istilah{chase}) dan menggunakan A* pada peta berhalangan saat berada pada \istilah{state chase}. \\
+\addlinespace
+Pengujian &
+Menyertakan minimal tiga skenario uji (ruang terbuka, labirin, dan rintangan dinamis sederhana) beserta hasil pengamatan. \\
+\addlinespace
+Presentasi &
+Demonstrasi 10 menit pada Minggu 9, dilanjutkan tanya jawab dan umpan balik dari kelompok lain. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{Proyek Akhir (Kelompok, Materi 10--15)}
+
+Proyek akhir berupa prototipe \istilah{game} yang dibangun dengan Unity dan
+dikumpulkan pada Minggu 16.
+
+\begin{table}[htbp]
+\centering
+\caption{Spesifikasi proyek akhir}
+\label{tab:proyekakhir}
+\begin{tabularx}{\textwidth}{@{}L{3.4cm} Y@{}}
+\toprule
+\headrow \textbf{Aspek} & \textbf{Ketentuan} \\
+\midrule
+Bentuk keluaran &
+\istilah{Build} yang dapat dijalankan, \istilah{project source}, ringkasan desain, laporan pengembangan, dan lembar \istilah{playtest} yang telah diisi penguji. \\
+\addlinespace
+Isi wajib &
+Minimal satu level yang dapat dimainkan, kontrol pemain, mekanik inti, aset visual dengan animasi, elemen UI, serta aset audio yang terhubung pada peristiwa \istilah{gameplay}. \\
+\addlinespace
+Pengujian &
+\istilah{Playtest} antar kelompok pada Minggu 15 menggunakan lembar penilaian terstruktur; seluruh \istilah{bug} yang ditemukan dicatat pada \istilah{log bug} dan diberi status penanganan. \\
+\addlinespace
+Presentasi &
+Demo 5--10 menit pada Minggu 15 dan uji fungsional oleh dosen pada Minggu 16. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{Lembar Refleksi Pembelajaran}
+
+Pada akhir semester setiap mahasiswa mengisi lembar refleksi yang memuat:
+konsep yang paling sulit dipahami dan cara mengatasinya, perbandingan
+pengalaman bekerja dengan Python/Pygame dan Unity, serta rencana pengembangan
+kompetensi lanjutan. Lembar ini menjadi masukan perbaikan perkuliahan pada
+semester berikutnya.

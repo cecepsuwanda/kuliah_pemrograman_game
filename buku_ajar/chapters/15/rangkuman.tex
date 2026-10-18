@@ -1,0 +1,47 @@
+% chapters/15/rangkuman.tex
+\bagian{Rangkuman}
+
+\begin{rangkumanbox}
+\begin{itemize}
+  \item Bunyi menjangkau pemain tanpa menuntut perhatian matanya. Karena itu,
+        setiap keterangan yang disampaikan melalui bunyi sebaiknya disampaikan
+        pula secara terlihat, agar permainan tetap dapat dipahami oleh pemain
+        yang pendengarannya terganggu.
+  \item Ada dua jenis bunyi yang perlu dibedakan sejak awal. Musik latar
+        berjalan terus dan tidak boleh bertumpuk; efek suara dipanggil menurut
+        kejadian dan justru perlu dapat bertumpuk.
+  \item Satu \code{AudioSource} tidak boleh dipakai untuk keduanya, sebab setiap
+        efek suara akan menghentikan musik yang sedang berjalan.
+  \item \code{AudioClip} adalah datanya, \code{AudioSource} adalah pemutarnya.
+        Letak bunyi di dalam ruang ditentukan oleh \code{AudioSource}, bukan
+        oleh berkasnya.
+  \item \istilah{Spatial Blend} bernilai nol untuk musik latar dan antarmuka,
+        dan bernilai satu untuk bunyi benda di dalam level.
+  \item \code{PlayOneShot} dipakai untuk efek suara, sebab beberapa bunyi dapat
+        berbunyi bersamaan. \code{Play} dipakai untuk musik latar, sebab hanya
+        satu musik yang boleh berjalan.
+  \item Bunyi dipusatkan pada satu skrip, agar hanya ada satu musik yang
+        berjalan dan perbandingan kekuatannya tetap sama di mana pun bunyi itu
+        dipanggil.
+  \item Bunyi dipanggil pada peristiwa, bukan pada keadaan. Memanggilnya
+        berdasarkan keadaan menghasilkan bunyi yang berulang setiap bingkai.
+  \item Bunyi dipanggil di \code{Update}, bukan di \code{FixedUpdate}, sebab
+        penundaan dua sampai tiga bingkai sudah terasa pada bunyi yang pendek.
+  \item Kekuatan bunyi pada \istilah{AudioMixer} dinyatakan dalam desibel.
+        Menurunkan 6 dB berarti mengurangi kekuatannya menjadi separuh, tetapi
+        perubahannya tidak terdengar sebesar itu.
+  \item Selisih sekitar 10 dB antara efek suara dan musik latar adalah titik
+        awal yang baik. Menyeimbangkan bunyi lebih sering berarti menurunkan
+        yang terlalu kuat daripada menaikkan yang terlalu pelan.
+  \item Menggeser nada sedikit setiap kali mencegah bunyi yang berulang
+        terdengar seperti mesin.
+  \item Partikel adalah pasangan yang terlihat bagi bunyi, dan dipanggil pada
+        peristiwa yang sama.
+  \item Hak pakai berkas bunyi lebih berat akibatnya daripada hak pakai gambar,
+        sebab musik lebih mudah dikenali. Catat sumber dan lisensinya sejak
+        mengunduh.
+  \item Bab ini menuntaskan \SUBCPMK{4.2}. Seluruh bagian yang terlihat dan
+        terdengar dari level Anda sudah lengkap; yang tersisa adalah mengujinya
+        pada Bab~XVI.
+\end{itemize}
+\end{rangkumanbox}

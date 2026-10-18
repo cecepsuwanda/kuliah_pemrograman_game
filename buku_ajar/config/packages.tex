@@ -1,0 +1,103 @@
+% =========================================================
+%  config/packages.tex
+%  Seluruh paket LaTeX untuk Buku Ajar Pengantar Pemrograman Game
+%  Aturan: paket global hanya didefinisikan di berkas ini,
+%  tidak di chapter.tex atau section-*.tex (Arsitektur §36, Rule 3).
+% =========================================================
+
+% --- Pengkodean & bahasa --------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english,indonesian]{babel}
+
+% --- Tata letak halaman ---------------------------------
+\usepackage[
+  a4paper,
+  left=2.9cm, right=2.4cm, top=2.8cm, bottom=2.8cm,
+  headsep=0.5cm, footskip=1.0cm
+]{geometry}
+\usepackage{pdflscape}
+\usepackage{fancyhdr}
+\usepackage{ragged2e}
+\usepackage{microtype}
+
+% --- Tabel ----------------------------------------------
+% Catatan: opsi [table] pada xcolor (colortbl) tidak dipakai karena
+% colortbl pada instalasi ini menuntut array.sty yang lebih baru
+% (\insert@pcolumn tidak terdefinisi). Pewarnaan baris tabel digantikan
+% oleh penebalan garis header pada config/styles.tex.
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{xcolor}
+
+% --- Gambar & posisi mengambang -------------------------
+\usepackage{graphicx}
+\usepackage{float}
+
+% --- Tipografi & daftar ---------------------------------
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{caption}
+\usepackage{needspace}
+\usepackage{etoolbox}
+
+% --- Matematika -----------------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% --- Kode program ---------------------------------------
+\usepackage{listings}
+\usepackage{upquote}
+
+% --- Diagram --------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+  arrows.meta,
+  positioning,
+  shapes.geometric,
+  shapes.misc,
+  calc,
+  fit,
+  backgrounds,
+  matrix,
+  chains,
+  decorations.pathreplacing,
+  patterns
+}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% --- Kotak informasi ------------------------------------
+\usepackage{tcolorbox}
+
+% --- Kompilasi modular ----------------------------------
+% subfiles memuat paket import: ketika \subfile{chapters/XX/chapter}
+% dijalankan, \input@path dan \Ginput@path disetel ke direktori bab,
+% sehingga \includegraphics{figures/...}, \input{contoh}, dan
+% \subfile{section-01} tetap benar pada kompilasi bab mandiri maupun
+% pada kompilasi seluruh buku.
+\usepackage{subfiles}
+
+% --- Rujukan silang antar-bab untuk kompilasi bab mandiri
+% (Arsitektur §40). Label dari main.aux diimpor bila berkasnya ada.
+% Dipakai xr-hyper (bukan xr) karena hyperref sudah dimuat; xr biasa
+% menimbulkan galat "\XR@prefix undefined" pada \cite.
+\usepackage{xr-hyper}
+
+% --- Tautan (dimuat paling akhir) -----------------------
+\usepackage{url}
+\usepackage{xurl}
+\usepackage[
+  bookmarks=true,
+  bookmarksnumbered=true,
+  bookmarksopen=true,
+  breaklinks=true
+]{hyperref}

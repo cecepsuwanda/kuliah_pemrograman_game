@@ -1,0 +1,112 @@
+% chapters/15/section-03.tex
+\section{Memicu Bunyi dari Peristiwa Permainan}
+\label{sec:peristiwa-bunyi}
+
+\subsection{Daftar Peristiwa dan Bunyinya}
+
+Pekerjaan menghubungkan bunyi dimulai dari daftar, bukan dari kode. Tuliskan
+peristiwa apa saja yang pantas memperoleh tanggapan bunyi, lalu tentukan bunyi
+untuk masing-masing. Daftar itu menjadi rencana kerja sekaligus daftar
+pemeriksaan Anda pada akhir bab.
+
+\begin{table}[htbp]
+\centering
+\caption{Daftar peristiwa permainan beserta bunyinya}
+\label{tab:peristiwa-bunyi}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.4cm} L{2.7cm} C{1.5cm} Y@{}}
+\toprule
+\headrow \textbf{Peristiwa} & \textbf{Bunyi} & \textbf{Jenis} & \textbf{Pasangan yang terlihat} \\
+\midrule
+Scene dimulai & musik latar & BGM &
+Musik berjalan sejak layar pertama; tidak ada kekosongan sebelum pemain
+bergerak. \\
+\addlinespace
+Pemain melompat & \code{jumpSound} & SFX &
+Animasi lompatan pada Bab~XIV, dan posisi pemain yang benar-benar naik. \\
+\addlinespace
+Pemain mengambil benda & \code{pickupSound} & SFX &
+Angka skor pada antarmuka bertambah, dan bendanya menghilang. \\
+\addlinespace
+Pemain terluka & \code{hurtSound} & SFX &
+Jumlah nyawa berkurang, dan ikon nyawa di sudut layar ikut berubah. \\
+\addlinespace
+Pemain menyentuh tujuan & \code{winSound} & SFX &
+Pesan kemenangan, dan musik latar berhenti supaya tidak bersaing. \\
+\addlinespace
+Permainan berakhir & \code{gameOverSound} & SFX &
+Musik latar berhenti, lalu layar akhir muncul. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Perhatikan kolom terakhir. Ia bukan hiasan. Kolom itu memaksa Anda memikirkan
+pasangan yang terlihat bagi setiap bunyi, sebagaimana dibahas pada
+Bagian~\ref{sec:peran-bunyi} \cite{unity-leveldesign}. Bunyi yang tidak
+memiliki pasangan yang terlihat perlu dipertanyakan: apakah ia benar-benar
+diperlukan?
+
+\subsection{Mengapa Bunyi Dipusatkan pada Satu Skrip}
+
+Pada Bab~XIV, setiap benda mengurus tampilannya sendiri. Untuk bunyi, cara itu
+justru menyulitkan. Ada dua hal yang harus berlaku bagi seluruh permainan
+sekaligus: hanya satu musik yang boleh berjalan, dan perbandingan kekuatan
+musik dengan efek suara harus tetap sama di mana pun bunyi itu dipanggil.
+
+Karena itu, bunyi dipusatkan pada satu skrip. Setiap bagian permainan memanggil
+skrip itu, dan tidak memainkan bunyinya sendiri-sendiri. Susunan itu
+diperlihatkan pada Gambar~\ref{fig:rantai-bunyi}: seluruh lajur bermuara pada
+satu titik.
+
+\subsection{Skrip Pemusat Bunyi}
+
+Daftar~\ref{lst:ch15-manajer} memperlihatkan skrip pemusat itu. Perhatikan
+empat hal di dalamnya.
+
+\begin{enumerate}
+  \item \textbf{Dua sumber bunyi yang terpisah.} \code{musicSource} untuk
+        musik latar dan \code{sfxSource} untuk efek suara, sesuai peringatan
+        pada Bagian~\ref{sec:peran-bunyi}.
+  \item \textbf{Satu salinan yang hidup terus.} \code{Instance} dan
+        \code{DontDestroyOnLoad} menjaga agar musik tidak terputus ketika
+        berpindah \istilah{scene}, dan salinan yang berlebih dibuang.
+  \item \textbf{\code{PlayOneShot} untuk efek suara}, sesuai pembahasan pada
+        Bagian~\ref{sec:audioclip-audiosource}.
+  \item \textbf{Penggeser nada} yang dijelaskan pada
+        Bagian~\ref{sec:waktu-volume}.
+\end{enumerate}
+
+\kodecsharp{unity/ch15_manajer_bunyi.cs}{Pemusat bunyi permainan: musik latar dan efek suara}{lst:ch15-manajer}
+
+\subsection{Menghubungkan Peristiwa dengan Bunyinya}
+
+Skrip kedua menghubungkan peristiwa permainan dengan bunyi yang telah
+disediakan pemusatnya. Ia ditempatkan pada benda pemain, sebab di sanalah
+sebagian besar peristiwa terjadi.
+
+\kodecsharp{unity/ch15_pemicu_bunyi.cs}{Menghubungkan peristiwa permainan dengan bunyinya}{lst:ch15-pemicu}
+
+Bunyi lompat dipanggil oleh skrip kendali pemain, bukan dibaca sendiri oleh
+skrip ini. Alasannya sama dengan alasan pada Bab~XIII: masukan pemain dibaca di
+satu tempat saja. Tambahkan dua baris berikut pada \code{ch13_kontrol_pemain.cs}
+buatan Anda.
+
+\begin{kodekeluaran}
+public PemicuBunyi pemicuBunyi;          // tambahkan pada bagian peubah
+
+// Di dalam Update(), pada pemeriksaan tombol lompat:
+if (Input.GetButtonDown("Jump"))
+{
+    jumpRequested = true;
+    if (pemicuBunyi != null) pemicuBunyi.Lompat();
+}
+\end{kodekeluaran}
+
+\begin{catatabox}
+Baris \code{if (pemicuBunyi != null)} bukan kelebihan. Rujukan yang belum
+dihubungkan pada \istilah{Inspector} bernilai kosong, dan memanggilnya akan
+menghentikan permainan dengan kesalahan. Kebiasaan memeriksa sebelum memanggil
+itu dipakai berulang-ulang pada skrip bab ini, dan itulah yang membuat
+kesalahan pemasangan menjadi kesalahan yang mudah ditemukan, bukan
+kegagalan yang membingungkan.
+\end{catatabox}

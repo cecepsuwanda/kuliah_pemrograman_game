@@ -1,0 +1,33 @@
+% chapters/05/figures/normalisasi-diagonal.tikz
+% Gerak diagonal tanpa dan dengan penormalan vektor arah.
+\begin{tikzpicture}[
+  panah/.style={-{Stealth[length=2.2mm]}, very thick},
+  kisi/.style={draw=ubLine!60, very thin},
+  judul/.style={font=\footnotesize\bfseries, ubPrimary},
+  label/.style={font=\scriptsize, align=center}
+]
+
+% ---------- Tanpa penormalan ----------
+\begin{scope}
+  \foreach \x in {0,1,2} \draw[kisi] (\x,0) -- (\x,-2);
+  \foreach \y in {0,-1,-2} \draw[kisi] (0,\y) -- (2,\y);
+  \draw[panah, ubRed] (0,0) -- (1.7,-1.7);
+  \node[label, ubRed, anchor=north] at (1.0,-2.15)
+    {panjang $\sqrt{2} \approx 1{,}414$};
+  \node[judul, anchor=south] at (1.0,0.25) {tanpa penormalan};
+  \node[label, anchor=north, text width=42mm] at (1.0,-2.75)
+    {kecepatan menjadi $283$ piksel/detik, yaitu $41$ persen lebih cepat};
+\end{scope}
+
+% ---------- Dengan penormalan ----------
+\begin{scope}[xshift=7.2cm]
+  \foreach \x in {0,1,2} \draw[kisi] (\x,0) -- (\x,-2);
+  \foreach \y in {0,-1,-2} \draw[kisi] (0,\y) -- (2,\y);
+  \draw[panah, ubGreen] (0,0) -- (1.2,-1.2);
+  \node[label, ubGreen, anchor=north] at (1.0,-2.15)
+    {panjang $1$};
+  \node[judul, anchor=south] at (1.0,0.25) {dengan penormalan};
+  \node[label, anchor=north, text width=42mm] at (1.0,-2.75)
+    {kecepatan tetap $200$ piksel/detik, sama dengan gerak lurus};
+\end{scope}
+\end{tikzpicture}

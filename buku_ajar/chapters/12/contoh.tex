@@ -1,0 +1,84 @@
+% chapters/12/contoh.tex
+\section{Dua Contoh Terapan}
+\label{sec:contoh-bab-12}
+
+\subsection{Contoh Pertama: Membaca Tangkapan Layar Editor}
+
+\begin{contohbox}
+Perhatikan kembali Gambar~\ref{fig:editor-unity}. Tangkapan layar itu
+memperlihatkan sebuah \istilah{project} 2D yang baru dibuat, dengan
+\istilah{scene} kosong yang memuat tiga benda.
+\end{contohbox}
+
+Tabel~\ref{tab:baca-tangkapan} memuat pembacaan setiap bagian tangkapan layar
+itu.
+
+\begin{table}[htbp]
+\centering
+\caption{Pembacaan bagian-bagian tangkapan layar editor}
+\label{tab:baca-tangkapan}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.0cm} Y@{}}
+\toprule
+\headrow \textbf{Yang tampak} & \textbf{Keterangan} \\
+\midrule
+Daftar di kiri atas &
+\istilah{Hierarchy}, memuat sebuah scene bernama \istilah{SampleScene} dan tiga
+benda di dalamnya. \\
+\addlinespace
+Ruang abu-abu di tengah, dengan tanda kamera, matahari, dan kubus &
+\istilah{Scene}, menampilkan benda-benda itu dari sudut pandang perancang.
+Ketiga benda itu adalah kamera, pencahayaan, dan objek primitif berupa kubus. \\
+\addlinespace
+Panel di kanan dengan tulisan \istilah{Inspector} &
+\istilah{Inspector}, menampilkan keterangan mengenai project dan bantuan
+pengenalan, sebab belum ada benda yang dipilih. \\
+\addlinespace
+Daftar berkas di bawah, dengan folder dan berkas &
+\istilah{Project window}, memuat berkas project, yaitu scene
+\istilah{SampleScene} beserta dua paket bawaan. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Ketiga benda pada scene itu adalah susunan bawaan yang
+disediakan Unity ketika sebuah \istilah{project} 2D dibuat: sebuah kamera, sebuah
+pencahayaan, dan sebuah objek primitif. Susunan itulah yang akan Anda susun
+sendiri pada praktikum, lalu Anda ubah sesuai keperluan.
+
+\subsection{Contoh Kedua: Menelusuri Urutan Pemanggilan Fungsi}
+
+\begin{contohbox}
+Sebuah skrip ditempelkan pada sebuah kubus, lalu scene dijalankan selama dua
+detik dengan laju 60 bingkai per detik, kemudian dihentikan. Program
+mencetak pesan melalui \code{Debug.Log}.
+\end{contohbox}
+
+Urutan pemanggilan fungsinya dapat ditelusuri sebagai berikut.
+
+\begin{enumerate}
+  \item \textbf{\code{Awake} dan \code{Start}} dipanggil sekali, sebelum bingkai
+        pertama. Pesan \code{Skrip mulai} tercetak satu kali, beserta posisi awal
+        benda.
+  \item \textbf{\code{Update}} dipanggil 120 kali, yaitu sekali untuk setiap
+        bingkai selama dua detik pada 60 bingkai per detik.
+  \item \textbf{Pelaporan berkala} tercetak sekali setiap dua detik, yaitu satu
+        kali pada akhir penjalanan. Pesannya memuat waktu berjalan, jarak benda
+        dari posisi awalnya, dan selang bingkai.
+  \item \textbf{\code{OnDisable}} dipanggil sekali ketika penjalanan dihentikan.
+        Pesannya memuat lama penjalanan.
+\end{enumerate}
+
+Urutan itu seluruhnya ditentukan mesin, bukan oleh kode Anda.
+Lama penjalanan diukur oleh skrip Anda sendiri melalui
+penjumlahan \code{Time.deltaTime}, sebagaimana kebiasaan yang telah dibangun
+sejak Bab~IV: yang tidak diukur tidak dapat diperiksa.
+
+\begin{catatabox}
+Perhatikan selang bingkai yang dilaporkan, yaitu sekitar 16,7 milidetik pada 60
+bingkai per detik. Angka itu jauh lebih besar daripada selang bingkai pada
+program Pygame yang Anda tulis, yang dapat mencapai 5 milidetik ketika tanpa
+pembatasan. Bahkan perhatikan bahwa pada Unity, pembatasan laju bingkai
+dilakukan mesin, bukan melalui \code{clock.tick()}. Selang yang lebih besar itu
+wajar, sebab mesin mengerjakan jauh lebih banyak pekerjaan setiap bingkai.
+\end{catatabox}

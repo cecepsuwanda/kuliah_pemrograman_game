@@ -1,0 +1,118 @@
+% chapters/05/section-01.tex
+\section{Posisi dan Kecepatan sebagai Vektor}
+\label{sec:posisi-vektor}
+
+Bab~II telah memperkenalkan posisi, kecepatan, dan percepatan sebagai besaran
+bertingkat yang saling berkaitan. Bagian ini mengubah gagasan tersebut menjadi
+jenis data yang dapat dipakai di dalam program.
+
+\subsection{Mengapa Pasangan Angka Perlu Disatukan}
+
+Sebuah objek pada bidang datar memiliki posisi yang dinyatakan oleh dua angka:
+jarak mendatar dan jarak tegak. Cara paling sederhana adalah menyimpannya
+pada dua variabel terpisah.
+
+\begin{kodekeluaran}
+position_x = 200.0
+position_y = 130.0
+velocity_x = 200.0
+velocity_y = 0.0
+\end{kodekeluaran}
+
+Cara itu dapat dipakai, tetapi cepat menjadi merepotkan. Setiap operasi harus
+ditulis dua kali, dan setiap kali sebuah fungsi menerima posisi, ia harus
+menerima dua argumen. Ketika jumlah objek bertambah, jumlah variabel bertambah
+dua kali lipat, dan kekeliruan menukar pasangan angka---misalnya menambahkan
+kecepatan mendatar ke posisi tegak---menjadi sulit terlihat karena keduanya
+bertipe sama.
+
+Pygame menyediakan jenis data \code{pygame.Vector2} yang menyatukan kedua
+angka tersebut menjadi satu nilai. Posisi dan kecepatan pada
+Gambar~\ref{fig:vektor-kecepatan} dinyatakan sebagai vektor, dan seluruh
+perhitungan dilakukan atas vektor, bukan atas komponennya satu per satu.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/vektor-kecepatan.tikz}
+\caption{Posisi, kecepatan, dan perpindahan sebagai vektor}
+\label{fig:vektor-kecepatan}
+\end{figure}
+
+\subsection{Operasi Vektor yang Sering Dipakai}
+
+Tabel~\ref{tab:operasi-vector2} memuat operasi vektor yang akan Anda pakai
+sepanjang Blok~I dan Blok~II. Seluruh operasi itu disediakan oleh Pygame,
+sehingga tidak perlu ditulis sendiri \cite{pygame-docs}.
+
+\begin{table}[htbp]
+\centering
+\caption{Operasi \code{pygame.Vector2} yang paling sering dipakai}
+\label{tab:operasi-vector2}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{5.2cm} Y@{}}
+\toprule
+\headrow \textbf{Penulisan} & \textbf{Arti dan contoh} \\
+\midrule
+\code{pygame.Vector2(200, 130)} &
+Membuat vektor baru. Contoh di atas berarti 200 satuan mendatar dan 130 satuan
+tegak dari titik asal. \\
+\addlinespace
+\code{position.x}, \code{position.y} &
+Membaca atau mengubah salah satu komponen. Berguna untuk membatasi posisi pada
+tepi jendela. \\
+\addlinespace
+\code{position + velocity * dt} &
+Menjumlahkan vektor dan mengalikannya dengan satu angka. Perhitungan dilakukan
+per komponen secara otomatis. \\
+\addlinespace
+\code{velocity.length()} &
+Panjang vektor, yaitu besarnya kecepatan dalam piksel per detik. \\
+\addlinespace
+\code{velocity.length_squared()} &
+Kuadrat panjang vektor. Dipakai untuk memeriksa apakah vektor bernilai nol,
+tanpa menghitung akar. \\
+\addlinespace
+\code{direction.normalize()} &
+Vektor baru yang arahnya sama tetapi panjangnya satu. Vektor asalnya tidak
+berubah. \\
+\addlinespace
+\code{a.distance_to(b)} &
+Jarak antara dua titik. Berguna nanti untuk mengukur jarak pemain terhadap
+objek lain. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Operasi penjumlahan dan perkalian dengan satu angka bekerja per komponen. Jadi
+\code{pygame.Vector2(200, 130) + pygame.Vector2(10, -5)} menghasilkan vektor
+bernilai (210, 125), dan \code{pygame.Vector2(10, 5) * 3} menghasilkan vektor
+bernilai (30, 15). Cara berpikir yang perlu dibangun adalah memperlakukan
+vektor sebagai satu nilai, bukan sebagai dua angka yang kebetulan ditulis
+berdampingan.
+
+\subsection{Satu Kekhasan Koordinat Layar}
+
+Satu hal yang sudah disebut pada Bagian~2.3 perlu dikembalikan ke hadapan Anda
+sekarang, karena akibatnya akan terasa pada kode.
+
+Pada koordinat layar, sumbu tegak menuju ke \textbf{bawah}. Karena itu, gerak
+ke atas dinyatakan sebagai \textbf{pengurangan} nilai tegak, bukan
+penambahan.
+
+\begin{kodekeluaran}
+if keys[pygame.K_UP] or keys[pygame.K_w]:
+    direction.y -= 1        # ke atas, bukan ke bawah
+\end{kodekeluaran}
+
+Kekeliruan pada baris itu merupakan salah satu kesalahan pertama yang paling
+sering terjadi: tombol atas ditekan, tetapi objek bergerak ke bawah. Apabila
+Anda mengalaminya, periksa lebih dahulu tanda pada komponen tegak, sebelum
+mencari penyebab lain yang lebih rumit.
+
+\begin{catatabox}
+Fungsi \code{normalize()} mengembalikan vektor \textbf{baru} dan
+tidak mengubah vektor asalnya. Menulis \code{direction.normalize()} tanpa
+menyimpan hasilnya tidak berpengaruh apa pun. Apabila Anda memang ingin
+mengubah vektor asalnya, gunakan \code{normalize_ip()} yang bekerja di tempat.
+Perbedaan keduanya mudah terlewat dan pernah menjadi sumber kebingungan.
+\end{catatabox}

@@ -1,0 +1,141 @@
+% chapters/15/section-04.tex
+\section{Waktu dan Kekuatan Bunyi}
+\label{sec:waktu-volume}
+
+\subsection{Bunyi Harus Terdengar pada Kejadiannya}
+
+Indikator ketiga pada bab ini menuntut lebih dari sekadar ``bunyi sudah
+terpasang''. Bunyi harus terdengar pada saat yang tepat. Ada tiga hal yang
+menentukan.
+
+Pertama, \textbf{bunyi dipanggil pada peristiwa, bukan pada keadaan}. Bunyi
+lompat dipanggil ketika tombol lompat ditekan, bukan selama tombol itu
+tertahan. Memanggilnya berdasarkan keadaan menghasilkan bunyi yang berulang
+setiap bingkai, dan itu terdengar seperti kerusakan.
+
+Kedua, \textbf{perhatikan di mana pemeriksaan dilakukan}. Pada Bab~XIII, tombol
+lompat dibaca di \code{Update} lalu dilaksanakan di \code{FixedUpdate}, sebab
+lompatan berkaitan dengan fisika. Bunyi tidak berkaitan dengan fisika. Apabila
+bunyi baru dipanggil di \code{FixedUpdate}, sedangkan bingkai fisika berjalan
+lebih jarang daripada bingkai tampilan, bunyi dapat tertunda sampai dua atau
+tiga bingkai. Pada permainan yang berjalan 60 bingkai per detik, tiga bingkai
+berarti sekitar 50 milidetik, dan pada bunyi yang pendek, penundaan sebesar itu
+sudah terasa. Panggillah bunyi pada peristiwanya dibaca, yaitu di
+\code{Update}.
+
+Ketiga, \textbf{jangan menunggu animasi selesai}. Bunyi adalah umpan balik
+seketika. Pemain menekan tombol, dan ia perlu segera memperoleh tanggapan bahwa
+tekanannya diterima. Menunda bunyi sampai animasi lompatan mencapai bingkai
+tertentu membuat permainan terasa lamban, walaupun gerakannya sendiri sudah
+benar.
+
+\subsection{Tingkat Kekuatan Bunyi}
+
+Bunyi permainan Anda akan terdengar paling tidak memuaskan pada satu hal:
+musik latarnya menenggelamkan efek suaranya. Pemain tidak dapat mendengar
+lompatannya sendiri, sehingga setiap lompatan terasa tanpa tanggapan.
+
+Jalan keluarnya bukan mengubah berkas bunyinya satu per satu, melainkan menyusun
+tingkat kekuatan bunyi. Susunan yang dipakai pada bab ini diperlihatkan pada
+Gambar~\ref{fig:hierarki-volume}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/hierarki-volume.tikz}
+\caption{Tingkat kekuatan bunyi pada \istilah{AudioMixer}}
+\label{fig:hierarki-volume}
+\end{figure}
+
+Pada \istilah{AudioMixer}, kekuatan bunyi dinyatakan dalam desibel, dan satuannya
+tidak naik secara lurus. Menurunkan 6 dB berarti mengurangi kekuatannya menjadi
+kira-kira separuh, dan menaikkan 6 dB berarti melipatgandakannya. Karena itu,
+penggeser pada menu pengaturan sebaiknya tetap bernilai lurus dari nol sampai
+satu, sebagaimana yang dipahami pemain, lalu diubah ke desibel sebelum
+diberikan kepada \istilah{AudioMixer}:
+
+\begin{kodekeluaran}
+// Penggeser bernilai 0 sampai 1; mixer menuntut desibel.
+// Nilai 0 tidak dapat diubah, sebab desibelnya menuju tak hingga negatif.
+if (nilaiPenggeser > 0.0001f)
+    mixer.SetFloat("VolumeMusik", Mathf.Log10(nilaiPenggeser) * 20f);
+else
+    mixer.SetFloat("VolumeMusik", -80f);   // dianggap senyap
+\end{kodekeluaran}
+
+Nilai $-80$ dB dipakai sebagai pengganti senyap, sebab itulah batas terendah
+yang masih diterima \istilah{AudioMixer}.
+
+\begin{tipsbox}
+Angka pada Gambar~\ref{fig:hierarki-volume} dapat dipakai sebagai titik awal,
+bukan sebagai patokan. Yang perlu Anda lakukan adalah mendengarkan level Anda
+sendiri, lalu memutuskan apakah setiap bunyi terdengar pada saat yang tepat.
+Mata rantai yang paling sering salah adalah efek suara yang terlalu pelan,
+bukan yang terlalu kuat.
+\end{tipsbox}
+
+\subsection{Menggeser Nada agar Tidak Terdengar Seperti Mesin}
+
+Ketika pemain berlari di atas lantai, bunyi langkah dipanggil berulang-ulang
+dengan cepat. Apabila setiap panggilan memainkan berkas yang sama persis,
+telinga mengenali pengulangan itu, dan bunyinya terdengar seperti mesin.
+Perbaikannya murah: geser nadanya sedikit setiap kali, dengan besar yang
+berbeda-beda.
+
+\begin{kodekeluaran}
+// Nada digeser antara 0,92 dan 1,08 kali nada aslinya.
+sfxSource.pitch = 1.0f + Random.Range(-0.08f, 0.08f);
+sfxSource.PlayOneShot(klipLangkah);
+\end{kodekeluaran}
+
+Nilai yang dipakai pada Daftar~\ref{lst:ch15-manajer} adalah delapan persen.
+Lebih dari itu, bunyi langkah mulai terdengar berubah-ubah nadanya seperti
+mainan; kurang dari itu, pengulangannya masih terdengar. Untuk bunyi yang
+jarang dipanggil, misalnya bunyi kalah, penggeser nada justru tidak diperlukan.
+
+\subsection{Meredam Musik untuk Sementara}
+
+Ada kalanya bunyi tertentu perlu terdengar jelas, sedangkan musik latar sedang
+ramai. Caranya bukan menghentikan musik, melainkan menurunkannya untuk
+sementara, lalu mengembalikannya. Cara itu disebut \istilah{ducking}, dan pada
+\istilah{AudioMixer} dilakukan dengan mengubah nilai satu tingkat saja:
+
+\begin{kodekeluaran}
+// Musik diturunkan ketika pemain terluka, lalu dinaikkan kembali.
+musikMixer.SetFloat("VolumeMusik", -20f);
+Invoke(nameof(KembalikanMusik), 0.8f);
+\end{kodekeluaran}
+
+\subsection{Empat Percobaan yang Perlu Anda Lakukan}
+
+Nilai pada bab ini adalah titik awal. Empat percobaan berikut memperlihatkan
+pengaruh setiap pengaturan, dan semuanya cukup dilakukan dengan mengubah satu
+nilai lalu menjalankan kembali permainannya.
+
+\begin{table}[htbp]
+\centering
+\caption{Empat percobaan pengaturan bunyi}
+\label{tab:percobaan-bunyi}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.6cm} L{3.4cm} Y@{}}
+\toprule
+\headrow \textbf{Yang diubah} & \textbf{Menjadi} & \textbf{Yang akan Anda dengar} \\
+\midrule
+\code{musicVolume} & 0,2 lalu 1,0 &
+Pada nilai rendah, musik hampir tidak terdengar dan efek suara mendominasi;
+pada nilai tinggi, bunyi lompat mulai tertelan musik. \\
+\addlinespace
+\code{pitchVariation} & 0,0 lalu 0,25 &
+Pada nilai nol, bunyi berulang terdengar seperti mesin. Pada nilai terlalu
+besar, bunyinya berubah-ubah seperti mainan. \\
+\addlinespace
+\code{PlayOneShot} diganti \code{Play} &
+Pada skrip langkah &
+Dua langkah yang berdekatan saling memotong, sehingga bunyinya terputus-putus. \\
+\addlinespace
+\istilah{Spatial Blend} pada bunyi benda &
+0 lalu 1 &
+Pada nilai nol, bunyi benda di sudut level terdengar sama kuatnya dengan yang
+ada di dekat pemain. \\
+\bottomrule
+\end{tabularx}}
+\end{table}

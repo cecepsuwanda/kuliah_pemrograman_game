@@ -1,0 +1,106 @@
+% chapters/08/section-04.tex
+\section{Kapan Mengejar dan Kapan Berhenti}
+\label{sec:berhenti}
+
+Perilaku mengejar memerlukan dua batas, bukan satu. Bagian ini menjelaskan
+keduanya dan persoalan yang muncul apabila batas yang kedua dilupakan.
+
+\subsection{Jarak Henti dan Getaran di Atas Pemain}
+
+Apabila NPC terus mengejar sampai jaraknya nol, kecepatannya selalu mengarah
+ke pemain, dan pada setiap bingkai ia berpindah sejauh kecepatan dikalikan
+selang waktu. Perpindahan itu tidak dapat berhenti tepat pada posisi pemain:
+NPC akan melampauinya, lalu berbalik, melampauinya lagi, dan seterusnya.
+
+Pada kecepatan 150 piksel per detik dan laju 60 bingkai per detik, perpindahan
+setiap bingkainya 2,5 piksel. NPC akan bergetar di sekitar pemain dengan
+simpangan sekitar 2,5 piksel. Getaran itu tidak hanya jelek dipandang; ia juga
+membuat NPC tampak menempel pada pemain dan mengganggu pemeriksaan tabrakan.
+
+Penanganannya adalah menentukan jarak henti: apabila jarak ke pemain sudah
+kurang dari nilai itu, NPC berhenti.
+
+\begin{kodekeluaran}
+if self.distance <= self.stop_distance:
+    self.velocity = pygame.Vector2(0, 0)
+elif self.distance <= self.radius:
+    self.velocity = to_player.normalize() * self.speed
+else:
+    self.velocity = pygame.Vector2(0, 0)
+\end{kodekeluaran}
+
+\begin{tipsbox}
+Perhatikan hubungan antara jarak henti dan perpindahan setiap bingkai. Agar
+getaran tidak terjadi, \textbf{jarak henti harus lebih besar daripada
+perpindahan satu bingkai}, yaitu kecepatan dibagi laju bingkai. Pada contoh di
+atas, perpindahan setiap bingkainya 2,5 piksel sedangkan jarak hentinya 30
+piksel, sehingga aman. Akan tetapi, apabila kecepatannya dinaikkan menjadi
+3.000 piksel per detik, perpindahan setiap bingkainya menjadi 50 piksel dan
+melampaui jarak henti, sehingga NPC akan melewati daerah henti tanpa pernah
+berhenti di dalamnya.
+\end{tipsbox}
+
+\subsection{Dua Batas, Empat Keadaan}
+
+Dengan adanya kedua batas itu, keputusan NPC memiliki empat kemungkinan.
+Tabel~\ref{tab:empat-keputusan} memuatnya.
+
+\begin{table}[htbp]
+\centering
+\caption{Empat kemungkinan keputusan NPC menurut jaraknya terhadap pemain}
+\label{tab:empat-keputusan}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.4cm} L{2.8cm} Y@{}}
+\toprule
+\headrow \textbf{Jarak ke pemain} & \textbf{Keputusan} & \textbf{Kecepatan} \\
+\midrule
+Lebih besar daripada jari-jari persepsi & Berdiam &
+Nol. Pemain tidak terlihat. \\
+\addlinespace
+Di antara jari-jari dan jarak henti & Mengejar &
+Arah menuju pemain, besarnya tetap. \\
+\addlinespace
+Lebih kecil daripada jarak henti & Berhenti &
+Nol. Pemain sudah tercapai. \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Baris kedua adalah keadaan yang menghasilkan perilaku mengejar,
+yaitu perilaku yang menjadi pokok bab ini.}
+\end{table}
+
+\subsection{Penghalang pada Batas Persepsi}
+
+Persoalan kecil muncul pada batas jari-jari persepsi. Apabila pemain berada
+tepat pada batas itu---misalnya berjalan mengelilingi NPC---keputusan NPC
+berganti-ganti antara mengejar dan berdiam pada setiap bingkai, karena jaraknya
+naik turun di sekitar nilai batas. Gejalanya terlihat sebagai NPC yang bergetar
+dan berkedip warnanya.
+
+Penanganannya sederhana dan telah lama dipakai pada perkakas lain: pakai
+\textbf{dua nilai batas}, bukan satu. NPC mulai mengejar ketika jaraknya
+kurang dari jari-jari persepsi, tetapi tidak berhenti mengejar sebelum jaraknya
+melampaui nilai yang sedikit lebih besar.
+
+\begin{kodekeluaran}
+if self.chasing:
+    batas = self.radius * 0.85      # bertahan sedikit lebih lama
+else:
+    batas = self.radius
+
+if self.distance > batas:
+    self.chasing = False
+elif self.distance > self.stop_distance:
+    self.chasing = True
+\end{kodekeluaran}
+
+Cara itu disebut \istilah{hysteresis}, dan dipakai pada banyak alat pengatur
+untuk mencegah pergantian keadaan yang berlebihan.
+
+\begin{catatabox}
+Perhatikan variabel \code{self.chasing} pada potongan kode di atas. Variabel itu
+mengingat keputusan pada bingkai sebelumnya, sehingga keputusan pada bingkai
+ini tidak hanya bergantung pada jarak, melainkan juga pada keadaan sebelumnya.
+Itulah keadaan pertama yang dimiliki sebuah NPC. Menambah keadaan lain, misalnya
+berpatroli dan menyerang, beserta aturan perpindahan di antaranya, akan
+menghasilkan mesin keadaan yang dibahas pada Bab~IX.
+\end{catatabox}

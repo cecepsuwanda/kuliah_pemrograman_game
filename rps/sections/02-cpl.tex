@@ -1,0 +1,65 @@
+% =========================================================
+%  sections/02-cpl.tex
+%  Bagian 2 — Capaian Pembelajaran Lulusan (CPL)
+% =========================================================
+
+\section{Capaian Pembelajaran Lulusan (CPL)}
+
+Capaian Pembelajaran Lulusan (CPL) adalah kompetensi lulusan yang dibebankan
+pada mata kuliah ini. Rumusan CPL mengacu pada profil lulusan Program Studi
+\NamaProdi\ dan dinyatakan dalam bentuk kompetensi lulusan yang mencakup aspek
+pengetahuan dan keterampilan.
+
+\begin{table}[htbp]
+\centering
+\caption{CPL yang dibebankan pada mata kuliah \NamaMK}
+\label{tab:cpl}
+\begin{tabularx}{\textwidth}{@{}C{2.0cm}Y C{3.0cm} C{1.8cm}@{}}
+\toprule
+\headrow \textbf{Kode} & \textbf{Rumusan CPL} & \textbf{Aspek Kompetensi} & \textbf{Ranah Bloom} \\
+\midrule
+\CPL{03} &
+Kemampuan merancang dan menganalisis algoritma untuk menyelesaikan
+permasalahan organisasi secara optimal, serta memilih dan menerapkannya pada
+bahasa pemrograman tertentu. &
+Pengetahuan (P) dan Keterampilan Umum (KU) &
+C4--C5 \\
+\addlinespace
+\CPL{04} &
+Kemampuan mendesain, mengimplementasi, dan mengevaluasi solusi berbasis
+\istilah{computing} yang memenuhi kebutuhan-kebutuhan \istilah{computing} pada
+sebuah disiplin program. &
+Keterampilan Khusus (KK) &
+C5--C6 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection*{Penjabaran CPL pada Mata Kuliah}
+
+\begin{itemize}
+  \item \textbf{\CPL{03} --- Algoritma dan bahasa pemrograman.}
+        Pada mata kuliah ini CPL03 diwujudkan melalui perancangan dan analisis
+        algoritma permainan: siklus \istilah{game loop}, manajemen waktu,
+        gerak berbasis vektor, fisika sederhana, deteksi tabrakan, serta
+        algoritma AI (perilaku \istilah{chase}, FSM, dan A*). Seluruh algoritma
+        tersebut diimplementasikan langsung pada bahasa pemrograman Python
+        dengan \istilah{library} Pygame, sehingga mahasiswa memahami mekanisme
+        internal permainan tanpa bergantung pada fitur \istilah{black-box}
+        \istilah{game engine}.
+
+  \item \textbf{\CPL{04} --- Desain, implementasi, dan evaluasi solusi
+        \istilah{computing}.}
+        Pada mata kuliah ini CPL04 diwujudkan melalui desain dan implementasi
+        solusi permainan pada \istilah{game engine} Unity (penyusunan
+        \istilah{project} dan \istilah{scene}, pembangunan level, konfigurasi
+        fisika dan \istilah{collider}, integrasi aset visual dan audio), serta
+        evaluasi solusi tersebut melalui \istilah{playtesting}, pencatatan
+        \istilah{bug}, dan perbaikan berulang terhadap prototipe.
+\end{itemize}
+
+Kedua CPL tersebut bersifat saling melengkapi: CPL03 membangun kemampuan
+algoritmik yang bersifat mendasar, sedangkan CPL04 membangun kemampuan
+mendesain dan mengevaluasi produk \istilah{computing} yang utuh. Bobot
+kontribusi masing-masing CPL terhadap nilai akhir mata kuliah diuraikan pada
+Bagian~\ref{sec:penilaian}.

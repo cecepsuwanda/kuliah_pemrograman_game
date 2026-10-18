@@ -1,0 +1,43 @@
+% chapters/07/figures/sprite-group.tikz
+% Hubungan kelas Sprite dan wadah Group: satu kelas menghasilkan banyak benda,
+% dan wadah mengerjakan perintah untuk seluruh bendanya sekaligus.
+\begin{tikzpicture}[
+  kotak/.style={
+    rectangle, rounded corners=2pt, draw=ubPrimary, thick, fill=ubAlt,
+    align=center, inner sep=4pt, font=\footnotesize
+  },
+  wadah/.style={
+    rectangle, rounded corners=2pt, draw=ubAccent, thick, fill=white,
+    align=center, inner sep=6pt, font=\footnotesize
+  },
+  benda/.style={circle, draw=ubAccent, thick, fill=ubAccent!25, inner sep=3pt},
+  panah/.style={-{Stealth[length=2.4mm]}, thick, draw=ubAccent},
+  label/.style={font=\scriptsize, align=center}
+]
+
+% Kelas sebagai resep, di sebelah kiri.
+\node[kotak, text width=34mm] (kelas) at (0,0)
+  {\textbf{kelas \code{Item}}\\[2pt]\scriptsize resep benda: gambar,\\rect, dan perilakunya};
+
+% Tiga benda hasil kelas tersebut, di dalam wadah Group di sebelah kanan.
+\node[wadah, text width=48mm, minimum height=20mm] (grup) at (7.6,0) {};
+\node[anchor=south, font=\scriptsize\bfseries, ubAccent] at (7.6,1.15)
+  {wadah \code{Group}};
+
+\node[benda] at (6.4,-0.1) {};
+\node[benda] at (7.6,-0.1) {};
+\node[benda] at (8.8,-0.1) {};
+
+\draw[panah] (kelas.east) -- node[label, above, yshift=1pt]
+  {membuat tiga benda} (grup.west);
+
+% Keterangan di bawah diagram, pada barisnya sendiri.
+\node[label, anchor=north, text width=124mm] at (3.8,-1.7)
+  {\code{update()} dan \code{draw()} diberikan kepada wadah, lalu wadah
+   mengerjakannya untuk setiap benda di dalamnya. Perintah tidak perlu ditulis
+   satu per satu.};
+
+\node[label, anchor=north, text width=124mm] at (3.8,-2.7)
+  {Satu kelas dipakai berulang kali. Menambah benda baru cukup dengan membuat
+   satu benda lagi dan memasukkannya ke dalam wadah.};
+\end{tikzpicture}

@@ -1,0 +1,36 @@
+% chapters/02/figures/lapisan-npc.tikz
+% Dua lapisan pengendalian NPC: keputusan (mesin keadaan) dan navigasi
+% (pencarian jalur), dengan gelang umpan balik dari dunia permainan.
+\begin{tikzpicture}[
+  lapis/.style={
+    rectangle, rounded corners=2pt, draw=ubPrimary, thick, fill=ubAlt,
+    align=center, text width=62mm, inner sep=4pt, minimum height=11mm,
+    font=\footnotesize
+  },
+  lapisnav/.style={lapis, draw=ubAccent, fill=white},
+  dunia/.style={lapis, draw=ubGreen, fill=ubGreenBg},
+  panah/.style={-{Stealth[length=2.4mm]}, thick, draw=ubAccent},
+  gelang/.style={-{Stealth[length=2.4mm]}, thick, draw=ubWarn, dashed},
+  label/.style={font=\scriptsize\itshape, ubPrimary, align=center}
+]
+
+\node[lapis] (persepsi) at (0,0)
+  {\textbf{Persepsi}\\[1pt]\scriptsize masukan pemain dan keadaan dunia};
+\node[lapis] (keputusan) at (0,-1.9)
+  {\textbf{Lapisan keputusan}\\[1pt]\scriptsize mesin keadaan: diam, berpatroli, mengejar\\[1pt]\scriptsize menghasilkan \itshape tujuan};
+\node[lapisnav] (navigasi) at (0,-3.8)
+  {\textbf{Lapisan navigasi}\\[1pt]\scriptsize pencarian jalur pada peta berhalangan\\[1pt]\scriptsize menghasilkan \itshape rangkaian langkah};
+\node[lapis] (aksi) at (0,-5.7)
+  {\textbf{Aksi}\\[1pt]\scriptsize gerak, animasi, dan suara};
+\node[dunia] (dunia) at (0,-7.4)
+  {\textbf{Dunia permainan}\\[1pt]\scriptsize keadaan yang diperbarui};
+
+\draw[panah] (persepsi) -- (keputusan);
+\draw[panah] (keputusan) -- node[right, label, xshift=2mm] {niat} (navigasi);
+\draw[panah] (navigasi) -- node[right, label, xshift=2mm] {jalur} (aksi);
+\draw[panah] (aksi) -- (dunia);
+
+\draw[gelang] (dunia.west) -- ++(-2.8,0) |- (persepsi.west);
+\node[label, anchor=west, text width=28mm] at (-9.4,-3.6)
+  {umpan balik: setiap langkah diamati kembali};
+\end{tikzpicture}

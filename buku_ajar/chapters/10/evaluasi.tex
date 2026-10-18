@@ -1,0 +1,100 @@
+% chapters/10/evaluasi.tex
+\bagian{Asesmen dan Instrumen Penilaian}
+\label{sec:asesmen-astar}
+
+\begin{asesmenbox}
+\textbf{Kedudukan asesmen bab ini.} Bab ini menuntaskan \SUBCPMK{2.3}.
+Ketiga indikatornya diperiksa melalui penilaian artefak program (Tugas
+Praktikum 08), tangkapan layar pencarian, dan soal konsep yang menuntut
+analisis.
+
+\vspace{0.4em}
+Materi Bab~X termasuk bahan \textbf{Mini Proyek AI} pada minggu kesembilan dan
+bahan \textbf{Ujian Tengah Semester} pada minggu kesepuluh.
+\end{asesmenbox}
+
+\subsection*{Instrumen 1: Rubrik Praktikum 08}
+
+\begin{table}[htbp]
+\centering
+\caption{Rubrik penilaian Praktikum 08 beserta indikator yang diukur}
+\label{tab:rubrik-praktikum-08}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.2cm} C{1.3cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{Kriteria} & \textbf{Bobot} & \textbf{Indikator} & \textbf{Deskripsi capaian} \\
+\midrule
+Representasi peta dan pencarian & 35\% & \ind{a} &
+Peta dibaca menjadi graf dengan benar, fungsi tetangga menyaring batas dan
+dinding, dan pencarian A* memakai antrean prioritas. \\
+\addlinespace
+Analisis pengaruh heuristik & 35\% & \ind{b} &
+Tabel perbandingan tiga heuristik terisi lengkap, biaya jalur terbukti sama,
+dan pengaruh heuristik terhadap kinerja dijelaskan beserta akibat heuristik
+yang melebihkan jarak. \\
+\addlinespace
+Rekonstruksi dan visualisasi & 30\% & \ind{c} &
+Jalur direkonstruksi dengan benar, pemeriksaan keabsahan berjalan bersih, dan
+tangkapan layar pencarian disertakan pada laporan. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection*{Instrumen 2: Soal Analisis}
+
+Jawablah dengan singkat. Kunci jawaban beserta indikator yang diukur disajikan
+pada Tabel~\ref{tab:kunci-konsep-ch10}.
+
+\begin{enumerate}
+  \item Uraikan bagaimana sebuah peta berpetak menjadi graf, dan hitunglah
+        banyaknya tetangga yang mungkin pada satu petak untuk gerak empat arah.
+  \item Sebuah petak berjarak delapan langkah dari titik awal dan berjarak tiga
+        satuan Manhattan dari titik tujuan. Hitunglah $f$-nya, lalu jelaskan
+        mengapa nilai itu menentukan urutan pemeriksaannya.
+  \item Pada peta bab ini, Manhattan memeriksa 274 petak sedangkan Dijkstra 437
+        petak, tetapi biaya jalurnya sama. Jelaskan mengapa demikian.
+  \item Sebuah heuristik dikalikan dua agar pencariannya lebih cepat. Jelaskan
+        akibatnya terhadap mutu jalur, dan bagaimana Anda mengenalinya.
+  \item Tuliskan langkah-langkah rekonstruksi jalur dari tabel asal, termasuk
+        langkah yang diperlukan apabila tujuan tidak dapat dicapai.
+\end{enumerate}
+
+\begin{table}[htbp]
+\centering
+\caption{Kunci soal analisis Bab X beserta indikator yang diukur}
+\label{tab:kunci-konsep-ch10}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{0.8cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{No} & \textbf{Indikator} & \textbf{Pokok jawaban} \\
+\midrule
+1 & \ind{a} &
+Setiap petak kosong menjadi simpul, setiap pasangan petak bersebelahan menjadi
+sisi berbiaya satu, dan dinding tidak menjadi simpul. Untuk gerak empat arah,
+setiap petak memiliki paling banyak empat tetangga. \\
+\addlinespace
+2 & \ind{b} &
+$f = g + h = 8 + 3 = 11$. Petak dengan $f$ terkecil diperiksa lebih dahulu,
+sebab nilai itu menyatakan perkiraan biaya total jalur yang melalui petak
+tersebut. \\
+\addlinespace
+3 & \ind{b} &
+Kedua heuristik itu tidak melebihkan jarak, sehingga keduanya menghasilkan
+jalur terpendek dengan biaya yang sama. Yang berbeda hanyalah banyaknya petak
+yang diperiksa, sebab Manhattan lebih mengarahkan pencarian ke arah tujuan
+daripada tanpa perkiraan. \\
+\addlinespace
+4 & \ind{b} &
+Heuristik yang melebihkan jarak tidak lagi memenuhi syarat, sehingga jalur yang
+dihasilkan dapat lebih panjang daripada yang terpendek. Pencariannya memang
+lebih cepat, dan tanda satu-satunya adalah biaya jalur yang lebih besar pada
+tabel perbandingan. \\
+\addlinespace
+5 & \ind{c} &
+Periksa lebih dahulu apakah tujuan ada pada tabel asal; apabila tidak, jalurnya
+kosong dan keadaan itu harus ditangani. Apabila ada, telusuri dari tujuan ke
+asalnya berulang kali sampai asalnya bernilai kosong, kumpulkan petaknya, lalu
+balik urutannya. \\
+\bottomrule
+\end{tabularx}}
+\end{table}

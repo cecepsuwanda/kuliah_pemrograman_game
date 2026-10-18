@@ -1,0 +1,44 @@
+% chapters/13/rangkuman.tex
+\bagian{Rangkuman}
+
+\begin{rangkumanbox}
+\begin{itemize}
+  \item Level pertama disusun secara \istilah{greyboxing}, yaitu dari balok
+        abu-abu tanpa aset, agar mekaniknya dapat diuji sebelum aset yang mahal
+        dibuat.
+  \item Level dua dimensi juga dapat disusun dengan \istilah{tilemap}, yang
+        seluruh petaknya cukup memerlukan satu \istilah{Collider}.
+  \item Ukuran level ditetapkan lebih dahulu: tinggi lompatan, lebar celah, dan
+        tinggi bongkahan. Ketiganya saling bergantung dan menentukan apakah
+        levelnya terasa adil.
+  \item Benda diam cukup memerlukan \istilah{Collider}; benda bergerak
+        memerlukan \istilah{Collider} beserta \istilah{Rigidbody}.
+  \item Tiga tipe \istilah{Rigidbody}: \istilah{dynamic} untuk benda yang
+        bergerak menurut fisika, \istilah{kinematic} untuk benda yang geraknya
+        ditentukan kode, dan \istilah{static} untuk benda diam yang tidak
+        memerlukan \istilah{Rigidbody} sama sekali.
+  \item \istilah{Trigger} adalah \istilah{Collider} yang tidak menghalangi,
+        melainkan hanya memanggil fungsi tertentu pada kode Anda. Ketiga
+        syaratnya adalah tanda \istilah{Is Trigger}, keberadaan
+        \istilah{Rigidbody}, dan \istilah{layer} yang saling diperiksa.
+  \item Kontrol pemain membaca masukan pada \code{Update} dan menggerakkan
+        \istilah{Rigidbody} pada \code{FixedUpdate}. Perbedaan keduanya sama
+        dengan pembedaan langkah berubah dan langkah tetap pada Bagian~2.2.
+  \item Pemeriksaan tanah dilakukan dengan memeriksa lingkaran kecil di bawah
+        kaki pemain, bukan dengan membandingkan letak lantai, agar bekerja pada
+        segala bentuk permukaan.
+  \item Empat masalah fisika yang paling sering terjadi: benda bergetar,
+        menembus \istilah{Collider}, jatuh tanpa henti, dan tersangkut pada
+        dinding. Seluruhnya memiliki gejala dan penyebab yang khas.
+  \item Urutan penelusuran masalah fisika: periksa komponennya lebih dahulu,
+        tampilkan bentuk batas benda, periksa pengaturan fisika, baru periksa
+        kode Anda. Pada Unity, sebagian besar masalah justru berada pada
+        pengaturan komponen.
+  \item Kamera dipindahkan pada \code{LateUpdate}, yaitu setelah seluruh
+        perhitungan bingkai selesai, dan kelambatannya merupakan salah satu
+        pengatur rasa gerak yang paling berpengaruh.
+  \item Bab ini menutup \CPMK{3}. Level yang dihasilkan menjadi pijakan bagi
+        Bab~XIV sampai Bab~XVI, yang melengkapinya dengan aset, audio, dan
+        pengujian.
+\end{itemize}
+\end{rangkumanbox}

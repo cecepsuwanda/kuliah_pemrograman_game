@@ -1,0 +1,96 @@
+% chapters/13/section-05.tex
+\section{Masalah Fisika dan Perbaikannya}
+\label{sec:masalah-fisika}
+
+Inilah bagian inti bab ini, yaitu menganalisis dan memperbaiki masalah fisika,
+sesuai indikator \ind{c}. Empat masalah berikut paling sering terjadi, dan
+keempatnya memiliki gejala yang khas.
+
+\subsection{Empat Masalah yang Paling Sering}
+
+\begin{table}[htbp]
+\centering
+\caption{Empat masalah fisika, penyebabnya, dan perbaikannya}
+\label{tab:masalah-fisika}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{2.8cm} L{4.2cm} Y@{}}
+\toprule
+\headrow \textbf{Gejala} & \textbf{Penyebab} & \textbf{Perbaikan} \\
+\midrule
+Benda bergetar ketika bergerak atau ketika kamera mengikutinya &
+Benda digerakkan melalui \code{transform.position} pada \code{Update},
+sehingga letaknya berubah di antara dua langkah fisika. &
+Gerakkan melalui \istilah{Rigidbody} pada \code{FixedUpdate}, dan aktifkan
+\istilah{Interpolate} pada benda yang diikuti kamera. \\
+\addlinespace
+Benda menembus dinding atau lantai, terutama ketika bergerak cepat &
+Pemeriksaan tabrakan bawaan dilakukan pada saat-saat tertentu saja, sehingga
+benda yang cepat dapat melompati benda lain di antaranya. &
+Ubah \istilah{Collision Detection} menjadi \istilah{Continuous}, atau
+kurangi kecepatannya. Gejala ini sama dengan \istilah{tunneling} pada
+Bagian~2.4. \\
+\addlinespace
+Benda jatuh tanpa henti &
+Benda tidak memiliki \istilah{Collider}, atau lantainya tidak memiliki
+\istilah{Collider}, atau keduanya berada pada \istilah{layer} yang tidak
+saling diperiksa. &
+Periksa ketiga hal itu berturut-turut, dengan menampilkan bentuk batas benda
+melalui panel \istilah{Physics Debug}. \\
+\addlinespace
+Benda tersangkut pada dinding, atau memantul aneh pada sudut &
+Benda memiliki dua \istilah{Collider} yang saling bertumpang tindih, atau
+memakai \istilah{Collider} dari gambar yang bentuknya rumit, atau bergesekan
+dengan dinding tanpa bahan gesekan. &
+Pakai satu \istilah{Collider} sederhana, dan berikan bahan fisika dengan
+gesekan nol pada benda yang bergesekan dengan dinding. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection{Menampilkan Bentuk Batas Benda}
+
+Cara paling cepat untuk memeriksa masalah fisika adalah dengan
+\textbf{menampilkan bentuk batasnya}. Apabila bentuk batas itu tidak tampak
+pada tempat yang seharusnya, penyebabnya hampir pasti berkaitan dengan letak
+atau ukuran \istilah{Collider}, bukan dengan kode Anda.
+
+Panel \istilah{Physics Debug} pada tangkapan layar
+Gambar~\ref{fig:editor-fisika} memperlihatkan hal itu: kotak kuning pada gambar
+tersebut adalah bentuk batas sebuah benda, dan terlihat bahwa bentuknya jauh
+lebih sederhana daripada gambarnya. Panel itu dibuka melalui menu
+\istilah{Window}, lalu \istilah{Analysis}, lalu \istilah{Physics Debug}.
+
+\begin{tipsbox}
+Kebiasaan yang menghemat waktu: apabila perilaku fisika terasa janggal,
+tampilkan lebih dahulu bentuk batas benda, dan periksa apakah letak serta
+ukurannya sudah sesuai dugaan. Sebagian besar masalah fisika pada tahap
+pembelajaran berasal dari \istilah{Collider}, bukan dari kode.
+\end{tipsbox}
+
+\subsection{Urutan Penelusuran yang Disarankan}
+
+Empat langkah berikut disarankan untuk menelusuri masalah fisika, dan
+urutannya sengaja disusun dari yang paling murah.
+
+\begin{langkah}
+  \item \textbf{Periksa komponennya pada \istilah{Inspector}.} Apakah benda
+        yang bergerak memiliki \istilah{Rigidbody} dan \istilah{Collider}?
+        Apakah benda diam cukup memiliki \istilah{Collider}? Apakah
+        \istilah{Collider} pada benda yang bergerak ditandai sebagai
+        \istilah{trigger} tanpa sengaja?
+  \item \textbf{Tampilkan bentuk batas benda} melalui \istilah{Physics Debug},
+        lalu periksa letak dan ukurannya.
+  \item \textbf{Periksa pengaturan fisika} yang berkaitan dengan gejala:
+        \istilah{Gravity Scale} untuk masalah berat, \istilah{Collision
+        Detection} untuk masalah penembusan, dan \istilah{Interpolate} untuk
+        masalah getaran.
+  \item \textbf{Baru periksa kode Anda}, dan periksa lebih dahulu apakah
+        \istilah{Rigidbody} digerakkan pada fungsi yang tepat.
+\end{langkah}
+
+\begin{peringatanbox}
+Perhatikan urutan itu. Pada blok Python, masalah selalu berada pada kode Anda,
+sebab seluruh perhitungannya memang Anda tulis sendiri. Pada Unity, sebagian
+besar masalah justru berada pada pengaturan komponen. Menelusuri kode terlebih
+dahulu merupakan kebiasaan dari blok sebelumnya yang perlu disesuaikan.
+\end{peringatanbox}

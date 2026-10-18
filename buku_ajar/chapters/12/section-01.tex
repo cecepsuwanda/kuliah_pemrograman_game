@@ -1,0 +1,88 @@
+% chapters/12/section-01.tex
+\section{Pekerjaan yang Berpindah Tangan}
+\label{sec:perpindahan-tangan}
+
+Bagian~2.6 telah menjelaskan perbedaan cara kerja pustaka dan mesin permainan
+secara umum. Bab ini memperlihatkannya secara nyata, pada perkakas yang akan
+Anda pakai sampai akhir semester.
+
+\subsection{Apa yang Tidak Lagi Anda Tulis}
+
+Bandingkan apa yang Anda tulis pada Bab~IV sampai Bab~VII dengan apa yang
+tersedia pada Unity.
+
+\begin{table}[htbp]
+\centering
+\caption{Pekerjaan yang pada Pygame Anda tulis sendiri, dan padanannya pada Unity}
+\label{tab:pekerjaan-berpindah}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.2cm} L{3.2cm} Y@{}}
+\toprule
+\headrow \textbf{Pekerjaan} & \textbf{Pada Pygame} & \textbf{Pada Unity} \\
+\midrule
+Siklus permainan & Ditulis sendiri (Bab~IV) &
+Dijalankan mesin; kode Anda dipanggil pada tahap yang telah ditentukan. \\
+\addlinespace
+Perhitungan fisika & Ditulis sendiri (Bab~VI) &
+Dihitung mesin melalui komponen \istilah{Rigidbody}. \\
+\addlinespace
+Deteksi tabrakan & Ditulis sendiri (Bab~VII) &
+Diperiksa mesin melalui \istilah{Collider}, dan dilaporkan kepada kode Anda
+sebagai peristiwa. \\
+\addlinespace
+Penayangan & Dipanggil sendiri setiap bingkai &
+Dikerjakan mesin; kode Anda hanya mengubah keadaan benda. \\
+\addlinespace
+Penyuntingan level & Diubah melalui kode &
+Diubah melalui penyunting visual, tanpa menulis kode. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Perpindahan tangan itu membawa dua akibat yang berlawanan. Di satu sisi,
+pekerjaan Anda menjadi jauh lebih singkat: benda yang pada Bab~VII menuntut
+puluhan baris kode kini cukup disusun dengan beberapa kali klik. Di sisi lain,
+Anda kehilangan sebagian kejelasan: ketika perilaku permainan tidak sesuai
+harapan, penyebabnya dapat berada pada kode Anda, pada pengaturan komponen,
+atau pada cara mesin bekerja.
+
+Pengetahuan yang Anda peroleh pada blok Python itulah bekal untuk membedakan
+ketiganya. Kebiasaan mengukur, memasang pemeriksa mandiri, dan mencatat
+keadaan---yang telah dibangun sejak Bab~IV---justru menjadi lebih penting pada
+blok ini, sebab mesin menyembunyikan lebih banyak daripada yang ditampilkannya.
+
+\begin{catatabox}
+Satu hal tidak berpindah tangan: \textbf{kecepatan dinyatakan
+dalam satuan per detik, dan dikalikan selang waktu}. Pada Unity, selang waktu
+itu disediakan mesin melalui \code{Time.deltaTime}, bukan diukur sendiri
+melalui \code{clock.tick()} seperti pada Bab~V. Konsepnya sama persis; yang
+berubah hanyalah siapa yang mengukurnya.
+\end{catatabox}
+
+\subsection{Perkakas yang Diperlukan}
+
+Unity dipasang melalui dua program yang terpisah, dan perbedaan keduanya perlu
+diketahui sejak awal.
+
+\begin{description}
+  \item[Unity Hub] Program kecil yang mengurus pemasangan dan pengelolaan
+        versi Unity beserta \istilah{project} Anda. Melalui program inilah Anda
+        memasang versi Unity, membuka \istilah{project}, dan berpindah di antara
+        beberapa \istilah{project}.
+  \item[Unity Editor] Program utama tempat Anda bekerja: menyusun scene,
+        menempelkan komponen, menulis \istilah{script}, dan menjalankan
+        permainannya.
+\end{description}
+
+Versi yang dipakai sebaiknya versi \istilah{LTS} (\istilah{long-term support}),
+yaitu versi yang didukung dalam jangka waktu panjang. Versi itu lebih stabil
+dan lebih banyak dipakai, sehingga contoh kode dan tutorial yang Anda temukan
+di internet lebih mungkin cocok.
+
+\begin{catatabox}
+Unity menuntut ruang penyimpanan dan memori yang jauh lebih besar daripada
+Python dan Pygame: sekitar lima sampai lima belas gigabita untuk pemasangan,
+bergantung pada modul yang dipilih. Periksa spesifikasi komputer Anda lebih
+dahulu, dan pilih hanya modul yang memang diperlukan, misalnya dukungan
+\istilah{2D} dan penyunting kode.
+\end{catatabox}

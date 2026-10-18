@@ -1,0 +1,30 @@
+% chapters/02/figures/waktu-bingkai.tikz
+% Perbandingan langkah berubah (variable timestep) dan langkah tetap
+% (fixed timestep). Jarak antar-tanda tegak menyatakan lama satu bingkai.
+\begin{tikzpicture}[font=\scriptsize]
+  % ---------- Langkah berubah ----------
+  \node[anchor=west, ubPrimary, font=\footnotesize\bfseries] at (0,3.45)
+    {Langkah berubah: panjang langkah mengikuti lama bingkai};
+  \draw[ubAccent, thick] (0,3.0) -- (11.2,3.0);
+  \foreach \x in {0,0.9,2.6,3.3,5.0,5.6,7.3,8.0,8.7,10.4,11.2}
+    \draw[ubAccent, thick] (\x,2.85) -- (\x,3.15);
+  \node[anchor=west, ubRed] at (0.75,2.45) {$\Delta t$ besar};
+  \node[anchor=west, ubGreen] at (6.55,2.45) {$\Delta t$ kecil};
+  \draw[ubRed, -{Stealth[length=1.8mm]}] (1.45,2.62) -- (1.05,2.86);
+  \draw[ubGreen, -{Stealth[length=1.8mm]}] (7.15,2.62) -- (7.62,2.86);
+  \node[anchor=west, font=\scriptsize\itshape] at (0,1.85)
+    {\istilah{Delta time} menjaga kecepatan objek tetap sama di setiap komputer.};
+
+  % ---------- Langkah tetap ----------
+  \node[anchor=west, ubPrimary, font=\footnotesize\bfseries] at (0,1.05)
+    {Langkah tetap: panjang langkah selalu sama, sisa waktu ditabung};
+  \draw[ubAccent, thick] (0,0.6) -- (11.2,0.6);
+  \foreach \x in {0,1.12,2.24,3.36,4.48,5.60,6.72,7.84,8.96,10.08,11.2}
+    \draw[ubAccent, thick] (\x,0.45) -- (\x,0.75);
+  \node[anchor=west, font=\scriptsize\itshape] at (0,-0.15)
+    {Selisih waktu yang belum terpakai disimpan pada penampung (\istilah{accumulator}).};
+
+  % ---------- Sumbu waktu ----------
+  \draw[ubLine, -{Stealth[length=2mm]}] (0,-0.85) -- (11.4,-0.85);
+  \node[anchor=north, ubLine] at (5.6,-0.9) {waktu nyata};
+\end{tikzpicture}

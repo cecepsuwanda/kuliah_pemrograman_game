@@ -1,0 +1,101 @@
+% =========================================================
+%  sections/03-cpmk.tex
+%  Bagian 3 — Capaian Pembelajaran Mata Kuliah (CPMK)
+% =========================================================
+
+\section{Capaian Pembelajaran Mata Kuliah (CPMK)}
+
+CPMK adalah kemampuan atau kompetensi spesifik yang diharapkan dikuasai
+mahasiswa setelah menyelesaikan mata kuliah \NamaMK. Setiap CPMK diturunkan
+dari CPL yang dibebankan pada mata kuliah ini.
+
+\begin{table}[htbp]
+\centering
+\caption{Rumusan CPMK dan keterkaitannya dengan CPL}
+\label{tab:cpmk}
+\begin{tabularx}{\textwidth}{@{}C{2.0cm}Y C{3.6cm} C{1.8cm}@{}}
+\toprule
+\headrow \textbf{Kode} & \textbf{Rumusan CPMK} & \textbf{CPL Terkait} & \textbf{Ranah Bloom} \\
+\midrule
+\CPMK{1} &
+Merancang \istilah{game loop} dan logika fisika sederhana. &
+\CPL{03} (utama), \CPL{04} (pendukung) &
+C2--C4 \\
+\addlinespace
+\CPMK{2} &
+Menerapkan algoritma kecerdasan buatan (AI) dasar untuk NPC. &
+\CPL{03} (utama), \CPL{04} (pendukung) &
+C3--C5 \\
+\addlinespace
+\CPMK{3} &
+Menggunakan \istilah{game engine} (Unity) untuk membangun level. &
+\CPL{04} (utama), \CPL{03} (pendukung) &
+C3--C4 \\
+\addlinespace
+\CPMK{4} &
+Mengintegrasikan aset audio dan visual ke dalam interaksi \istilah{game}. &
+\CPL{04} (utama), \CPL{03} (pendukung) &
+C3--C5 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Matriks Hubungan CPL--CPMK}
+\label{sec:matriks-cpl-cpmk}
+
+\begin{table}[htbp]
+\centering
+\caption{Matriks hubungan CPL dan CPMK}
+\label{tab:matriks-cpl-cpmk}
+\begin{tabularx}{\textwidth}{@{}L{3.8cm}@{\extracolsep{\fill}}C{2.4cm} C{2.4cm} C{2.4cm} C{2.4cm}@{}}
+\toprule
+\headrow & \textbf{\CPMK{1}} & \textbf{\CPMK{2}} & \textbf{\CPMK{3}} & \textbf{\CPMK{4}} \\
+\headrow & \footnotesize \istilah{Game loop} \& fisika & \footnotesize AI NPC & \footnotesize Engine \& level & \footnotesize Aset audio-visual \\
+\midrule
+\CPL{03} --- Algoritma dan bahasa          & \Utama & \Utama & \Pendukung & \Pendukung \\
+\CPL{04} --- Desain, implementasi, evaluasi & \Pendukung & \Pendukung & \Utama & \Utama \\
+\bottomrule
+\end{tabularx}
+\tabsource{Keterangan: \textbf{Utama} = CPMK merupakan perwujudan langsung CPL;
+Pendukung = CPMK memperkuat pencapaian CPL.}
+\end{table}
+
+\subsection*{Penjelasan Hubungan}
+
+\begin{itemize}
+  \item \textbf{\CPL{03} $\rightarrow$ \CPMK{1}:} mahasiswa merancang algoritma
+        siklus input--update--render, \istilah{timestep}, gerak, dan
+        \istilah{collision}, lalu menerapkannya dengan Python/Pygame.
+  \item \textbf{\CPL{03} $\rightarrow$ \CPMK{2}:} mahasiswa menganalisis dan
+        mengimplementasikan algoritma AI (\istilah{chase}, FSM, A*) pada bahasa
+        Python tanpa bergantung pada fitur \istilah{black-box}
+        \istilah{game engine}.
+  \item \textbf{\CPL{04} $\rightarrow$ \CPMK{3}:} mahasiswa mendesain dan
+        mengimplementasikan solusi level/prototipe pada Unity, lalu
+        mengevaluasi hasilnya.
+  \item \textbf{\CPL{04} $\rightarrow$ \CPMK{4}:} mahasiswa mengintegrasikan
+        aset multimedia ke interaksi \istilah{game} dan mengevaluasi kualitas
+        pengalaman audio-visual.
+  \item \textbf{\CPL{04} juga mendukung \CPMK{1}--\CPMK{2}} pada tahap evaluasi
+        prototipe sederhana (\istilah{playtest}, perbaikan \istilah{bug},
+        refleksi desain).
+  \item \textbf{\CPL{03} juga mendukung \CPMK{3}--\CPMK{4}} ketika mahasiswa
+        memilih dan menyesuaikan algoritma/\istilah{script} C\# serta struktur
+        data di dalam \istilah{engine}.
+\end{itemize}
+
+\subsection{Pendekatan Teknologi per CPMK}
+
+\begin{table}[htbp]
+\centering
+\caption{Pendekatan teknologi yang digunakan pada setiap tahap}
+\label{tab:teknologi}
+\begin{tabularx}{\textwidth}{@{}L{4.6cm} L{5.0cm} Y@{}}
+\toprule
+\headrow \textbf{Tahap} & \textbf{Teknologi} & \textbf{CPMK} \\
+\midrule
+Fondasi algoritma   & Python 3 + Pygame & \CPMK{1}, \CPMK{2} \\
+Implementasi \istilah{engine}     & Unity (C\#)        & \CPMK{3}, \CPMK{4} \\
+\bottomrule
+\end{tabularx}
+\end{table}

@@ -1,0 +1,34 @@
+% chapters/09/sub-cpmk.tex
+\begin{subcpmkbox}
+Bab ini menuntaskan \SUBCPMK{2.2} secara utuh. Ketiga indikatornya diperiksa,
+dan buktinya berupa diagram keadaan, program NPC bermesin keadaan, serta
+catatan pengujian setiap keadaan dan perpindahannya.
+
+\vspace{0.5em}
+\textbf{\SUBCPMK{2.2} Mengimplementasikan \istilah{Finite State Machine}
+(\istilah{idle}, \istilah{patrol}, \istilah{chase}, \istilah{attack/flee})
+untuk NPC} --- ranah C3, \CPMK{2}, \CPL{03}.
+
+\vspace{0.5em}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.9cm} L{4.0cm} L{2.5cm} Y@{}}
+\toprule
+\headrow \textbf{Indikator} & \textbf{Rumusan} & \textbf{Dibahas pada} & \textbf{Bukti} \\
+\midrule
+\ind{a} & Menggambar diagram \istilah{state}--transisi NPC &
+Bagian~\ref{sec:diagram-keadaan} &
+Diagram keadaan--transisi buatan sendiri, dengan empat keadaan dan setiap
+perpindahan yang diberi syarat yang dapat diperiksa. \\
+\addlinespace
+\ind{b} & Mengimplementasikan transisi berbasis jarak dan \istilah{cooldown} &
+Bagian~\ref{sec:menerapkan-fsm} &
+Kode mesin keadaan, beserta penjelasan setiap syarat perpindahan dan pewaktu
+yang dipakai. \\
+\addlinespace
+\ind{c} & Menguji setiap \istilah{state} dan transisinya secara terpisah &
+Bagian~\ref{sec:menguji-keadaan} &
+Catatan perpindahan keadaan beserta nomor bingkainya, hasil skenario pengujian,
+dan pemeriksaan keabsahan seluruh perpindahan. \\
+\bottomrule
+\end{tabularx}}
+\end{subcpmkbox}

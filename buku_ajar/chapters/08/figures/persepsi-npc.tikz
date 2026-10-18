@@ -1,0 +1,42 @@
+% chapters/08/figures/persepsi-npc.tikz
+% Persepsi NPC: jarak ke pemain menentukan keputusan, arah menuju pemain
+% menentukan kecepatan, dan besarnya kecepatan tetap berapa pun jaraknya.
+\begin{tikzpicture}[
+  npc/.style={rectangle, draw=ubRed, thick, fill=ubRed!25, inner sep=4pt},
+  pemain/.style={rectangle, draw=ubPrimary, thick, fill=ubPrimary!25, inner sep=4pt},
+  lingkar/.style={draw=ubLine, thick, dashed},
+  lingkarkecil/.style={draw=ubGreen, thick},
+  garisjarak/.style={draw=ubWarn, thick, dashed},
+  panah/.style={-{Stealth[length=2.4mm]}, very thick, draw=ubAccent},
+  label/.style={font=\scriptsize, align=left}
+]
+
+% NPC di titik asal, dengan lingkaran persepsi dan lingkaran jarak henti.
+\draw[lingkar] (0,0) circle (3.0);
+\draw[lingkarkecil] (0,0) circle (0.55);
+\node[npc] (npc) at (0,0) {NPC};
+
+% Pemain berada di dalam jari-jari persepsi.
+\node[pemain] (player) at (2.3,1.8) {P};
+
+% Garis jarak dan garis arah.
+\draw[garisjarak] (npc.center) -- (player.center);
+\node[label, ubWarn, anchor=south east] at (1.35,1.15) {$d$};
+
+\draw[panah] (0.3,0.24) -- (1.15,0.9);
+\node[label, ubAccent, anchor=west] at (1.05,0.72)
+  {kecepatan $= \dfrac{\text{arah}}{|d|} \times v$};
+
+% Keterangan lingkaran.
+\node[label, ubLine, anchor=west] at (2.15,2.15) {jari-jari persepsi};
+\draw[ubLine, thin] (2.1,2.1) -- (2.0,1.35);
+
+\node[label, ubGreen, anchor=north west] at (0.5,-0.75) {jarak henti};
+\draw[ubGreen, thin] (0.55,-0.7) -- (0.38,-0.42);
+
+% Keterangan perilaku.
+\node[label, anchor=north, text width=104mm] at (0,-3.5)
+  {Apabila pemain berada di dalam jari-jari persepsi dan di luar jarak henti,
+   NPC bergerak menuju pemain dengan kecepatan tetap. Perhatikan bahwa panjang
+   panah kecepatan tidak bergantung pada jarak $d$.};
+\end{tikzpicture}

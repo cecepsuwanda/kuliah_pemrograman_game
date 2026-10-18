@@ -1,0 +1,103 @@
+% chapters/07/section-05.tex
+\section{Program Tabrakan Lengkap}
+\label{sec:program-tabrakan}
+
+Bagian ini menyatukan seluruh unsur menjadi satu prototipe permainan yang dapat
+dimainkan: pemain bergerak, jatuh, melompat, mendarat di bongkahan, terhalang
+oleh sisinya, mengumpulkan kepingan, dan kehilangan nyawa ketika menyentuh
+rintangan.
+
+\subsection{Kode Lengkap}
+
+\kodepython{python/ch07_tabrakan.py}{Permainan dengan tabrakan per sumbu, kepingan, dan rintangan}{lst:ch07-tabrakan}
+
+\subsection{Tiga Pemakaian Tabrakan di Dalamnya}
+
+Ketiga perintah pemeriksaan tabrakan dipakai untuk keperluan
+yang berbeda, sesuai pertimbangan pada Tabel~\ref{tab:perintah-tabrakan}.
+
+\begin{description}
+  \item[Bongkahan, dengan \code{colliderect} dan penyelesaian per sumbu.]
+        Diperiksa di dalam \code{Player.update}. Pemeriksaan ini bukan sekadar
+        mengetahui, melainkan memperbaiki posisi dan kecepatan. Hasilnya
+        adalah kemampuan mendarat di atas bongkahan dan terhalang oleh
+        sisinya, yaitu indikator \ind{b}.
+  \item[Kepingan, dengan \code{spritecollide} bernilai benar.]
+        Diperiksa pada tahap pembaruan. Kepingan yang tersentuh langsung
+        dikeluarkan dari wadahnya, dan jumlahnya dihitung dari panjang daftar
+        yang dikembalikan.
+  \item[Rintangan, dengan \code{spritecollide} bernilai salah.]
+        Diperiksa dengan cara yang sama, tetapi rintangannya tidak
+        dikeluarkan, sebab rintangan harus tetap ada di tempatnya. Sentuhan
+        mengurangi satu nyawa dan mengembalikan pemain ke titik awal.
+\end{description}
+
+\subsection{Pemeriksaan yang Dijalankan Sepanjang Waktu}
+
+Program ini memeriksa kebenaran penanganan tabrakannya sendiri pada setiap
+bingkai, sebagaimana dianjurkan pada Bagian~\ref{sec:per-sumbu}. Penghitung
+tumpang tindih ditampilkan pada terminal ketika program berakhir.
+
+\begin{kodekeluaran}
+Bingkai dijalankan       : 239
+Kepingan terkumpul       : 1 dari 5
+Skor                     : 10
+Tersentuh rintangan      : 3
+Bingkai bertumpang tindih: 0
+\end{kodekeluaran}
+
+Baris terakhir adalah yang paling penting: nilai nol menunjukkan bahwa pada
+seluruh bingkai yang dijalankan, pemain tidak pernah berada di dalam
+bongkahan. Dengan kata lain, penanganan tabrakannya benar. Angka itu tetap nol
+walaupun pemain bergerak cepat, melompat, dan terhalang berkali-kali.
+
+\begin{catatabox}
+Program itu dijalankan dengan pilihan \code{--auto-run} yang
+menggerakkan pemain secara otomatis. Kemampuan menjalankan program tanpa
+sentuhan manusia semacam itu berguna untuk pengujian: Anda dapat menjalankan
+ratusan bingkai dalam beberapa detik, dan memeriksa kebenaran penanganan
+tabrakan tanpa harus memainkannya sendiri.
+\end{catatabox}
+
+\subsection{Percobaan yang Disarankan}
+
+\begin{table}[htbp]
+\centering
+\caption{Percobaan pada program tabrakan}
+\label{tab:percobaan-ch07}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{5.6cm} Y@{}}
+\toprule
+\headrow \textbf{Yang diubah dan caranya} & \textbf{Yang sebaiknya Anda amati} \\
+\midrule
+Menyatukan kedua sumbu, dengan memindahkan posisi pada kedua sumbu sekaligus
+lalu memeriksa tabrakan sekali saja. &
+Pemain yang menabrak sisi bongkahan terangkat ke atasnya, dan pemain yang
+mendarat kadang tersangkut di udara. Kembalikan sesudah percobaan. \\
+\addlinespace
+Menghapus penolan kecepatan tegak sesudah mendarat. &
+Pemain bergetar halus di permukaan bongkahan, sebab posisinya diperbaiki
+berulang kali pada setiap bingkai. \\
+\addlinespace
+Memperbesar kecepatan pemain sampai di atas 1500 piksel per detik. &
+Pemain dapat menembus bongkahan yang tipis, karena pada satu bingkai
+perpindahannya melampaui tebal bongkahan. \\
+\addlinespace
+Menghapus pemeriksaan \code{count_overlaps}. &
+Program tetap berjalan, tetapi Anda kehilangan alat untuk mengetahui apakah
+penanganan tabrakannya masih benar. \\
+\addlinespace
+Mengubah nilai \code{dokill} menjadi salah pada pemeriksaan kepingan. &
+Kepingan tidak hilang ketika tersentuh, dan skor bertambah setiap bingkai
+selama pemain menyentuhnya. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{peringatanbox}
+Percobaan pertama pada tabel tersebut adalah yang paling penting untuk dicoba.
+Mengerjakan penanganan tabrakan dengan cara yang salah, lalu mengamati
+gejalanya sendiri, jauh lebih berkesan daripada hanya membacanya. Catatlah
+gejala yang Anda amati pada lembar kerja praktikum; gejala itulah yang menjadi
+bahan analisis pada Bagian~\ref{sec:analisis-tabrakan}.
+\end{peringatanbox}

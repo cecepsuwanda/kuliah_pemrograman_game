@@ -1,0 +1,37 @@
+% chapters/07/figures/aabb-mask.tikz
+% Kapan persegi pembatas tidak cukup: dua benda miring yang persegi
+% pembatasnya beririsan, tetapi gambarnya tidak bersinggungan.
+\begin{tikzpicture}[
+  kotakpembatas/.style={draw=ubRed, thick, dashed},
+  bentuk/.style={draw=ubPrimary, thick, fill=ubPrimary!20},
+  panah/.style={-{Stealth[length=2.2mm]}, thick, draw=ubAccent},
+  judul/.style={font=\footnotesize\bfseries, ubPrimary},
+  label/.style={font=\scriptsize, align=center}
+]
+
+% ---------- Persegi pembatas beririsan ----------
+\begin{scope}
+  \node[judul, anchor=south] at (1.9,2.9) {diperiksa dengan persegi pembatas};
+
+  \draw[bentuk] (0.35,0.35) -- (2.35,1.55) -- (0.35,1.55) -- cycle;
+  \draw[bentuk] (1.45,0.35) -- (3.45,1.55) -- (1.45,1.55) -- cycle;
+  \draw[kotakpembatas] (0.35,0.35) rectangle (2.35,1.55);
+  \draw[kotakpembatas] (1.45,0.35) rectangle (3.45,1.55);
+
+  \node[label, anchor=north, text width=52mm] at (1.9,-0.15)
+    {Kedua persegi beririsan, sehingga program menyimpulkan kedua benda
+     bersentuhan, padahal gambarnya tidak bersinggungan.};
+\end{scope}
+
+% ---------- Diperiksa dengan mask ----------
+\begin{scope}[xshift=7.6cm]
+  \node[judul, anchor=south] at (1.9,2.9) {diperiksa dengan \istilah{mask}};
+
+  \draw[bentuk] (0.35,0.35) -- (2.35,1.55) -- (0.35,1.55) -- cycle;
+  \draw[bentuk] (1.45,0.35) -- (3.45,1.55) -- (1.45,1.55) -- cycle;
+
+  \node[label, anchor=north, text width=52mm] at (1.9,-0.15)
+    {Yang dibandingkan adalah titik-titik yang benar-benar terisi. Karena tidak
+     ada yang bertumpang tindih, kedua benda dinilai tidak bersentuhan.};
+\end{scope}
+\end{tikzpicture}

@@ -1,0 +1,48 @@
+% chapters/06/figures/pantulan.tikz
+% Pantulan dengan koefisien restitusi 0,8: setiap pantulan menyisakan 64
+% persen tinggi sebelumnya, sebab tinggi sebanding dengan kuadrat kecepatan.
+\begin{tikzpicture}[
+  bola/.style={circle, draw=ubAccent, thick, fill=ubAlt, inner sep=2pt},
+  lantai/.style={thick, draw=ubLine},
+  label/.style={font=\scriptsize, align=left},
+  lintasan/.style={very thick, draw=ubPrimary},
+  ukur/.style={draw=ubGreen, dashed, thin}
+]
+
+\draw[lantai] (0,0) -- (8.2,0);
+
+% Jatuh dari ketinggian h.
+\draw[lintasan] (0,3.2) .. controls (0.75,1.5) and (1.0,0.5) .. (1.2,0);
+
+% Tiga pantulan berikutnya, tinggi menyusut menjadi 0,64 kali setiap kali.
+\draw[lintasan] (1.2,0) .. controls (1.75,1.7) and (2.25,2.05) .. (2.6,2.05);
+\draw[lintasan] (2.6,2.05) .. controls (2.95,2.05) and (3.5,1.6) .. (4.0,0);
+
+\draw[lintasan] (4.0,0) .. controls (4.35,1.1) and (4.9,1.31) .. (5.1,1.31);
+\draw[lintasan] (5.1,1.31) .. controls (5.35,1.31) and (5.75,1.0) .. (6.2,0);
+
+\draw[lintasan] (6.2,0) .. controls (6.4,0.7) and (6.8,0.84) .. (6.9,0.84);
+\draw[lintasan] (6.9,0.84) .. controls (7.05,0.84) and (7.3,0.6) .. (7.7,0);
+
+% Bola pada puncak setiap pantulan.
+\node[bola] at (0,3.2) {};
+\node[bola] at (2.6,2.05) {};
+\node[bola] at (5.1,1.31) {};
+\node[bola] at (6.9,0.84) {};
+
+% Garis ukur tinggi setiap pantulan.
+\draw[ukur] (0,3.2) -- (8.6,3.2);
+\draw[ukur] (0,2.05) -- (8.6,2.05);
+\draw[ukur] (0,1.31) -- (8.6,1.31);
+\draw[ukur] (0,0.84) -- (8.6,0.84);
+
+\node[label, ubGreen, anchor=west] at (8.7,3.2) {$h$};
+\node[label, ubGreen, anchor=west] at (8.7,2.05) {$0{,}64\,h$};
+\node[label, ubGreen, anchor=west] at (8.7,1.31) {$0{,}41\,h$};
+\node[label, ubGreen, anchor=west] at (8.7,0.84) {$0{,}26\,h$};
+
+\node[label, anchor=north west, text width=150mm] at (0,-0.35)
+  {Dengan koefisien restitusi $e = 0{,}8$, kecepatan setelah setiap pantulan
+   tinggal $0{,}8$ kali, sedangkan tinggi yang dicapai tinggal
+   $e^2 = 0{,}64$ kali, sebab tinggi sebanding dengan kuadrat kecepatan.};
+\end{tikzpicture}

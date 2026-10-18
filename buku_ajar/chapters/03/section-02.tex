@@ -1,0 +1,116 @@
+% chapters/03/section-02.tex
+\section{Menyiapkan Perkakas}
+\label{sec:menyiapkan-perkakas}
+
+Hanya ada dua perkakas yang wajib ada pada bab ini, yaitu penafsir Python dan
+sebuah editor kode. Dua perkakas lain, yaitu terminal dan Git, sangat
+dianjurkan karena keduanya akan dipakai terus sepanjang semester.
+
+\subsection{Penafsir Python}
+
+Python adalah bahasa pemrograman yang kodenya dijalankan oleh sebuah program
+lain, yaitu \textbf{penafsir} (\istilah{interpreter}). Berkas berisi kode
+Python bukan program yang dapat dijalankan langsung oleh sistem operasi; ia
+harus diserahkan kepada penafsir. Karena itu, langkah pertama selalu
+memastikan penafsir tersedia dan dapat dipanggil.
+
+Sebelum memasang apa pun, periksalah lebih dahulu apakah Python sudah ada pada
+komputer yang Anda pakai. Pada komputer laboratorium, Python biasanya sudah
+terpasang. Buka terminal, lalu jalankan salah satu perintah berikut.
+
+\begin{kodekeluaran}
+python --version
+\end{kodekeluaran}
+
+Apabila perintah tersebut tidak dikenali, cobalah bentuk lain yang khusus
+tersedia pada Windows.
+
+\begin{kodekeluaran}
+py --version
+\end{kodekeluaran}
+
+Perintah yang berhasil akan menampilkan versi Python, misalnya
+\code{Python 3.11.9}. Buku ini memakai Python 3.8 atau versi yang lebih baru;
+versi 3.11 dipakai pada contoh dan tangkapan keluaran di sepanjang buku.
+
+Apabila Python belum ada, unduhlah dari laman resmi Python dan pilih versi
+terbaru untuk sistem operasi Anda. Satu hal yang sering terlewat pada
+pemasangan di Windows: \textbf{centang pilihan ``Add python.exe to PATH''}
+pada layar pertama pemasangan. Tanpa centang tersebut, perintah
+\code{python} tidak akan dikenali walaupun Python sudah terpasang, dan Anda
+harus mengetikkan alamat lengkap penafsir setiap kali menjalankan program.
+
+\begin{catatabox}
+Apabila Anda memakai komputer laboratorium bersama, jangan memasang apa pun
+tanpa sepengetahuan pengelola laboratorium. Cukup periksa apakah Python dan
+Pygame sudah tersedia dengan menjalankan skrip pemeriksaan pada
+Bagian~\ref{sec:memasang-pygame}. Apabila belum tersedia, laporkan kepada
+dosen atau pengelola laboratorium.
+\end{catatabox}
+
+\subsection{Editor Kode}
+
+Editor kode adalah program untuk menulis kode. Anda boleh memakai editor apa
+pun, termasuk editor bawaan yang sederhana, asalkan memenuhi tiga syarat
+berikut.
+
+\begin{enumerate}
+  \item \textbf{Menyoroti sintaksis}, yaitu mewarnai bagian kode menurut
+        jenisnya. Warna berbeda untuk kata kunci, teks, dan komentar membuat
+        kesalahan seperti tanda kutip yang belum ditutup mudah terlihat.
+  \item \textbf{Mengatur indentasi secara otomatis}. Python sangat peka
+        terhadap indentasi, sedangkan editor yang baik membantu Anda
+        mempertahankannya secara konsisten.
+  \item \textbf{Memudahkan penyimpanan berkas dengan akhiran yang benar},
+        yaitu \code{.py}, pada folder yang Anda tentukan.
+\end{enumerate}
+
+Editor yang menyediakan terminal terpadu dan penampil pesan kesalahan akan
+menghemat waktu, karena Anda tidak perlu berpindah jendela untuk menjalankan
+program dan membaca kesalahannya. Pilihan yang lazim dipakai mahasiswa antara
+lain Visual Studio Code, PyCharm Community, dan editor teks dengan tambahan
+penyorot sintaksis. Buku ini tidak mewajibkan salah satunya; perintah yang
+dicontohkan dijalankan dari terminal sehingga berlaku pada editor mana pun.
+
+\subsection{Terminal}
+
+Terminal adalah jendela tempat Anda mengetikkan perintah, termasuk perintah
+untuk menjalankan program. Banyak mahasiswa baru menghindari terminal dan
+menjalankan program melalui tombol pada editor. Cara itu memang berfungsi,
+tetapi terminal tetap perlu dikuasai karena tiga alasan. Pertama, terminal
+menampilkan pesan kesalahan secara lengkap, sedangkan sebagian editor hanya
+menampilkan sebagian. Kedua, terminal tempat perintah pemasangan paket
+dijalankan. Ketiga, terminal dipakai untuk perintah Git pada
+Bagian~\ref{sec:struktur-git}.
+
+Hanya dua perintah terminal yang perlu Anda kuasai lebih dahulu, yaitu
+berpindah folder dan melihat isi folder.
+
+\begin{kodekeluaran}
+cd proyek-pygame\code
+dir          (Windows)
+ls           (Linux dan macOS)
+\end{kodekeluaran}
+
+Perintah \code{cd} berarti \istilah{change directory}, yaitu berpindah ke
+folder lain. Perintah \code{dir} atau \code{ls} menampilkan daftar berkas pada
+folder yang sedang aktif. Kebiasaan yang perlu dibangun sejak awal adalah
+selalu memastikan folder kerja Anda benar sebelum menjalankan program.
+Kesalahan ``berkas tidak ditemukan'' yang paling sering terjadi bukan
+disebabkan berkasnya hilang, melainkan karena terminal sedang berada di folder
+yang keliru.
+
+\subsection{Pengendali Versi Git}
+
+Git mencatat riwayat perubahan berkas. Seluruh tugas praktikum pada mata
+kuliah ini dikumpulkan melalui repositori Git pribadi, sehingga Git termasuk
+perkakas wajib meskipun bukan untuk menulis kode. Pemasangan dan cara
+pemakaiannya diuraikan pada Bagian~\ref{sec:struktur-git}; apabila Git belum
+tersedia, pemasangannya dapat ditunda sampai bagian tersebut dibaca.
+
+\begin{catatabox}
+Daftar lengkap perkakas beserta kegunaannya pada setiap blok materi dapat
+Anda lihat pada Tabel~\ref{tab:perlengkapan} di Bab~I. Yang perlu ada pada
+minggu pertama hanyalah Python, editor, dan Git; Unity baru diperlukan mulai
+Bab~XII.
+\end{catatabox}

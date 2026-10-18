@@ -1,0 +1,84 @@
+% chapters/12/object-model.tikz
+\section{GameObject dan Komponen}
+\label{sec:gameobject}
+
+Benda pada Unity tidak disusun dengan mewarisi kelas, melainkan dengan
+menempelkan komponen. Bagian ini menjelaskan gagasan penyusunan itu, sebab
+gagasan itulah yang membedakannya dari blok Python.
+
+\subsection{Benda Kosong yang Disusun dari Bagian}
+
+Sebuah \istilah{GameObject} pada dasarnya adalah wadah kosong. Ia tidak
+memiliki gambar, tidak memiliki bentuk, dan tidak melakukan apa pun. Yang
+membuatnya berguna adalah \textbf{komponen} yang menempel padanya.
+
+Sebuah benda yang tampak di layar tersusun atas sekurang-kurangnya tiga
+komponen.
+
+\begin{itemize}
+  \item \istilah{Transform}, yang memuat letak, putaran, dan ukuran benda.
+        Komponen ini wajib ada pada setiap \istilah{GameObject}.
+  \item \istilah{Mesh Renderer} atau \istilah{Sprite Renderer}, yang menentukan
+        bentuk atau gambar yang ditampilkan.
+  \item \istilah{Collider}, yang menentukan bentuk batas benda untuk keperluan
+        tabrakan.
+\end{itemize}
+
+Selain ketiganya, komponen lain dapat ditambahkan sesuai keperluan, misalnya
+\istilah{Rigidbody} untuk benda yang mengikuti fisika, \istilah{AudioSource}
+untuk benda yang bersuara, atau \istilah{script} C\# yang Anda tulis sendiri.
+
+\begin{catatabox}
+Komponen yang Anda tulis sendiri pun berupa \istilah{script} C\#.
+Skrip itu ditempelkan pada sebuah \istilah{GameObject}, dan sejak saat itu ia
+menjadi bagian dari benda tersebut. Karena itu, satu skrip yang sama dapat
+ditempelkan pada banyak benda, dan masing-masing benda menjalankannya sendiri
+dengan nilainya sendiri. Inilah padanan dari kelas dan objek pada blok Python,
+tetapi dengan cara yang berbeda.
+\end{catatabox}
+
+\subsection{Perbandingan dengan Cara Pygame}
+
+Perhatikan perbedaan keduanya.
+
+\begin{itemize}
+  \item \textbf{Pada Pygame}, sebuah benda adalah objek dari kelas yang Anda
+        tulis. Seluruh sifat dan perilakunya ditentukan oleh kelas itu, dan
+        benda yang berbeda perilakunya menuntut kelas yang berbeda.
+  \item \textbf{Pada Unity}, sebuah benda adalah wadah yang diisi komponen.
+        Perilakunya ditentukan oleh komponen apa saja yang menempel padanya,
+        dan benda yang berbeda perilakunya cukup diberi komponen yang berbeda.
+\end{itemize}
+
+Perbedaan itu membawa akibat praktis yang penting: menambahkan kemampuan pada
+sebuah benda tidak menuntut perubahan kode, melainkan cukup dengan menempelkan
+komponen. Sebuah benda dapat diubah menjadi benda yang mengikuti fisika hanya
+dengan menambahkan \istilah{Rigidbody}, tanpa menyentuh satu baris pun kode
+yang sudah ada.
+
+\subsection{Pengaturan Komponen pada \istilah{Inspector}}
+
+Setiap komponen memiliki pengaturan, dan seluruhnya ditampilkan pada
+\istilah{Inspector}. Pengaturan itu dapat diubah dengan mengetikkan angkanya
+langsung, atau dengan menggeser penunjuk sambil menekan tetikus.
+
+Perhatikan dua hal pada saat mengubah pengaturan.
+
+\begin{enumerate}
+  \item \textbf{Nilai yang diubah ketika scene sedang berjalan tidak
+        tersimpan.} Unity sengaja memisahkan nilai yang diubah ketika berjalan
+        dari nilai yang tersimpan, sehingga percobaan tidak merusak susunan
+        Anda. Nilai itu akan dikembalikan ketika Anda berhenti menjalankan
+        scene.
+  \item \textbf{Pengaturan komponen yang tampak pada \istilah{Inspector}
+        berasal dari kode Anda.} Perubahan pada nilai publik di dalam skrip
+        akan tampak pada panel itu, dan nilai yang Anda ubah pada panel itu
+        akan menimpa nilai bawaan pada skrip.
+\end{enumerate}
+
+\begin{tipsbox}
+Kebiasaan yang berguna: berikan nilai bawaan yang masuk akal pada skrip Anda,
+sehingga benda yang baru saja ditempeli skrip itu langsung berperilaku wajar
+tanpa perlu diatur. Cara itu menghemat waktu, terutama ketika Anda menempelkan
+skrip yang sama pada banyak benda.
+\end{tipsbox}

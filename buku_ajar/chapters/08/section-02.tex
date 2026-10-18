@@ -1,0 +1,86 @@
+% chapters/08/section-02.tex
+\section{Persepsi Jarak dan Arah}
+\label{sec:persepsi}
+
+Langkah pertama pada susunan keputusan adalah persepsi. Pada bab ini, yang
+diamati hanyalah posisi pemain, dan yang dihitung dari keterangan itu ada dua:
+jarak dan arah.
+
+\subsection{Vektor Menuju Pemain}
+
+Jarak dan arah diperoleh dari satu perhitungan yang sama, yaitu selisih kedua
+posisi.
+
+\begin{kodekeluaran}
+to_player = player.position - self.position
+self.distance = to_player.length()
+\end{kodekeluaran}
+
+Baris pertama menghasilkan vektor yang menunjuk dari NPC ke pemain. Perhatikan
+urutan pengurangannya: yang dikurangi adalah posisi NPC, sehingga vektornya
+menunjuk \textbf{dari NPC menuju pemain}. Apabila urutannya dibalik, vektornya
+menunjuk arah sebaliknya dan NPC justru menjauh. Kekeliruan itu sering terjadi
+karena kedua urutan sama-sama masuk akal ketika ditulis.
+
+Baris kedua menghitung panjang vektor itu, yaitu jaraknya dalam piksel. Nilai
+itulah yang dipakai untuk memutuskan, sedangkan vektornya dipakai untuk
+bergerak. Perbedaan peran keduanya diperlihatkan pada
+Gambar~\ref{fig:persepsi-npc}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/persepsi-npc.tikz}
+\caption{Persepsi NPC: jarak untuk memutuskan, arah untuk bergerak}
+\label{fig:persepsi-npc}
+\end{figure}
+
+\subsection{Jari-jari Persepsi sebagai Batas Keputusan}
+
+NPC tidak seharusnya mengetahui keberadaan pemain di mana pun. Jangkauan
+penglihatannya dibatasi oleh sebuah nilai yang disebut jari-jari persepsi.
+Nilai itu dibandingkan dengan jarak yang baru saja dihitung.
+
+\begin{kodekeluaran}
+if self.distance <= self.radius:
+    # pemain terlihat: keputusan berikutnya adalah mengejar
+else:
+    # pemain tidak terlihat: berdiam
+\end{kodekeluaran}
+
+Nilai jari-jari itu bukan urusan teknis, melainkan urusan perancangan. Jari-jari
+yang terlalu besar membuat NPC terasa mengetahui segala hal; jari-jari yang
+terlalu kecil membuat NPC mudah dihindari sehingga permainan kehilangan
+tantangan. Pada program bab ini, nilainya dapat diubah melalui baris perintah
+agar pengaruhnya dapat dirasakan langsung.
+
+\begin{tipsbox}
+Untuk membandingkan jarak dengan jari-jari, kuadrat jaraknya
+sudah mencukupi, sehingga akar pada \code{length()} dapat dihindari. Pada bab
+ini \code{length()} tetap dipakai karena jaraknya juga ditampilkan pada layar
+dan dipakai untuk keperluan lain. Kebiasaan memilih perhitungan yang paling
+murah---sebagaimana disebutkan pada Bagian~5.2---baru menjadi penting ketika
+jumlah NPC bertambah banyak, dan hal itu dibahas pada Bab~XI.
+\end{tipsbox}
+
+\subsection{Menggambar Persepsi agar Keputusannya Terlihat}
+
+Perilaku NPC sulit diperiksa apabila hanya dilihat dari geraknya. Karena itu,
+program bab ini menggambar tiga hal yang memperlihatkan keputusannya.
+
+\begin{itemize}
+  \item \textbf{Lingkaran jari-jari persepsi}, sehingga batas jangkauannya
+        tampak.
+  \item \textbf{Lingkaran jarak henti}, yaitu batas kapan NPC berhenti,
+        sebagaimana dibahas pada Bagian~\ref{sec:berhenti}.
+  \item \textbf{Garis arah menuju pemain}, yaitu garis tipis dari setiap NPC ke
+        pemain. Garis ini bukan bagian dari permainan yang sesungguhnya; ia
+        dipakai untuk memeriksa apakah arah yang dihitung memang benar.
+  \item \textbf{Warna NPC}, yang berubah menurut keputusannya: satu warna
+        ketika mengejar, warna lain ketika berdiam.
+\end{itemize}
+
+Cara menggambar keadaan internal semacam ini merupakan kebiasaan yang sangat
+berguna ketika mengembangkan kecerdasan buatan. Tanpa gambar itu, Anda hanya
+melihat NPC yang bergerak atau tidak bergerak, dan tidak dapat membedakan
+``berdiam karena memutuskan berdiam'' dari ``berdiam karena kesalahan
+perhitungan''.

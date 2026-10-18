@@ -1,0 +1,96 @@
+% chapters/16/section-04.tex
+\section{Lembar dan Pelaksanaan \istilah{Playtest}}
+\label{sec:lembar-playtest}
+
+\subsection{Mengamati, Bukan Bertanya}
+
+\istilah{Playtest} yang dilakukan dengan benar menghasilkan keterangan yang
+berbeda dari yang Anda duga. Pertanyaan ``apakah permainannya bagus'' tidak
+berguna, sebab jawabannya sopan dan tidak dapat ditindaklanjuti. Yang berguna
+adalah pengamatan atas apa yang benar-benar dilakukan penguji.
+
+Perbedaan keduanya perlu Anda pahami sebelum menyusun lembar
+\istilah{playtest}. Ketika penguji mengatakan permainannya ``cukup jelas'',
+Anda tidak memperoleh apa pun. Ketika Anda melihat penguji berhenti selama
+dua puluh detik di depan pintu yang belum terbuka, lalu berjalan ke arah yang
+salah, Anda memperoleh satu temuan yang dapat langsung Anda perbaiki.
+
+\begin{tipsbox}
+Catat waktu, bukan hanya kejadian. ``Penguji berhenti 20 detik di depan pintu
+sebelum menemukan jalannya'' jauh lebih berguna daripada ``penguji sempat
+bingung''. Angka waktu memudahkan Anda membandingkan hasil perbaikan Anda
+dengan hasil sebelumnya.
+\end{tipsbox}
+
+\subsection{Isi Lembar \istilah{Playtest}}
+
+Lembar \istilah{playtest} memuat dua bagian: keterangan tentang penguji, dan
+catatan atas apa yang diamati selama permainan berlangsung. Bentuknya
+diperlihatkan pada Tabel~\ref{tab:lembar-playtest}.
+
+\begin{table}[htbp]
+\centering
+\caption{Lembar \istilah{playtest} yang dipakai pada praktikum bab ini}
+\label{tab:lembar-playtest}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.2cm} Y@{}}
+\toprule
+\headrow \textbf{Bagian} & \textbf{Isi} \\
+\midrule
+Keterangan penguji & Nama atau kelompok, dan pengalaman bermain permainan
+sejenis. \\
+\addlinespace
+Berkas yang diuji & Nama \istilah{build} beserta tanggalnya. \\
+\addlinespace
+Waktu penyelesaian & Lama permainan dari awal sampai tujuan, atau keterangan
+bahwa pemain berhenti sebelum selesai. \\
+\addlinespace
+Titik berhenti & Tempat dan waktu ketika penguji berhenti lebih lama dari
+sepuluh detik, beserta apa yang tampak ia cari. \\
+\addlinespace
+Kesalahan yang terlihat & Setiap keadaan yang tidak seharusnya terjadi,
+beserta urutan tindakan yang menyebabkannya. \\
+\addlinespace
+Masukan penguji & Pendapat penguji, dicatat apa adanya, tanpa dibantah. \\
+\addlinespace
+Catatan penguji sendiri & Hal yang Anda amati tetapi tidak disebutkan
+penguji. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection{Pelaksanaan \istilah{Playtest} antar Kelompok}
+
+\istilah{Playtest} pada praktikum bab ini dilakukan antar kelompok, dan
+keuntungannya berjalan dua arah: kelompok Anda memperoleh penguji yang belum
+pernah melihat karya Anda, dan Anda memperoleh pengalaman menguji karya orang
+lain.
+
+\begin{langkah}
+  \item \textbf{Siapkan \istilah{build} yang dapat dijalankan} pada komputer
+        lain, bukan pada komputer Anda. Berkas yang hanya berjalan di komputer
+        pembuatnya bukan \istilah{build}.
+  \item \textbf{Tuliskan tujuan sesi} pada lembar \istilah{playtest}: bagian
+        mana yang paling Anda ragukan. Pengujian yang diarahkan akan
+        menemukan lebih banyak daripada pengujian yang dibiarkan bebas.
+  \item \textbf{Serahkan kendali tanpa memberi petunjuk.} Perkenalkan hanya
+        tujuan permainannya, lalu diam. Jangan menjawab pertanyaan dengan
+        jawaban; jawablah dengan ``apa yang Anda duga seharusnya terjadi''.
+  \item \textbf{Amati dan catat}, termasuk pada menit-menit pertama. Menit
+        pertama adalah menit yang paling banyak memuat temuan, dan menit itu
+        pula yang paling cepat Anda lupakan.
+  \item \textbf{Kumpulkan kesan sesudahnya}, bukan selama permainan.
+        Menghentikan permainan di tengah jalan untuk bertanya merusak
+        pengalamannya.
+  \item \textbf{Tukar peran.} Uji karya kelompok lain dengan cara yang sama,
+        agar Anda memahami bagaimana rasanya diamati.
+  \item \textbf{Ringkas temuan segera}, selagi ingatan Anda masih segar, lalu
+        pindahkan temuan yang dapat diulang ke log \istilah{bug}.
+\end{langkah}
+
+\begin{peringatanbox}
+Jangan membela karya Anda selama sesi berlangsung. Penguji yang merasa
+pendapatnya diperdebatkan akan berhenti memberi masukan, dan sesi berikutnya
+menjadi sia-sia. Bantahan, apabila memang perlu, disampaikan sesudah sesinya
+selesai, dan biasanya tidak perlu sama sekali.
+\end{peringatanbox}

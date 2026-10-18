@@ -1,0 +1,42 @@
+% chapters/11/figures/arsitektur-integrasi.tikz
+% Hubungan mesin keadaan dan pencarian jalur di dalam satu NPC.
+\begin{tikzpicture}[
+  kotak/.style={
+    rectangle, rounded corners=2pt, draw=ubPrimary, thick, fill=ubAlt,
+    align=center, text width=36mm, inner sep=4pt, minimum height=11mm,
+    font=\footnotesize
+  },
+  simpan/.style={kotak, draw=ubGreen, fill=ubGreenBg},
+  panah/.style={-{Stealth[length=2.4mm]}, thick, draw=ubAccent},
+  label/.style={font=\scriptsize, align=center}
+]
+
+% Lapisan keputusan.
+\node[kotak] (fsm) at (0,0)
+  {\textbf{Mesin keadaan}\\[2pt]\scriptsize berpatroli, mengejar, menyerang};
+
+% Lapisan navigasi.
+\node[kotak, below=16mm of fsm] (cari)
+  {\textbf{Pencarian jalur A*}\\[2pt]\scriptsize dari petak sekarang ke petak pemain};
+
+% Simpanan jalur dan pengikut jalur.
+\node[simpan, right=14mm of cari] (jalur)
+  {\textbf{Simpanan jalur}\\[2pt]\scriptsize rangkaian petak beserta\\waktu hitung ulang terakhir};
+\node[kotak, above=16mm of jalur] (ikuti)
+  {\textbf{Pengikut jalur}\\[2pt]\scriptsize bergerak menuju petak\\berikutnya pada jalur};
+
+\draw[panah] (fsm) -- node[label, left, xshift=-2pt]
+  {niat:\\kejar} (cari);
+\draw[panah] (cari) -- node[label, below, yshift=-1pt]
+  {jalur} (jalur);
+\draw[panah] (jalur) -- node[label, left, xshift=-2pt]
+  {dipakai} (ikuti);
+\draw[panah] (ikuti) -- node[label, right, xshift=2pt]
+  {gerak} (fsm);
+
+\node[label, anchor=north, text width=140mm] at (3.4,-4.4)
+  {Mesin keadaan menentukan niat, sedangkan pencarian jalur menentukan rute.
+   Karena pencarian jalur mahal, hasilnya disimpan dan dipakai berkali-kali;
+   pencarian diulang hanya menurut selang waktu tertentu atau ketika jalurnya
+   sudah habis dilalui.};
+\end{tikzpicture}

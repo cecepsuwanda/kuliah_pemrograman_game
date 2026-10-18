@@ -1,0 +1,79 @@
+% chapters/03/praktikum.tex
+\begin{praktikumbox}
+Praktikum ini mengikuti Tugas Praktikum 01 pada RPS, yaitu menyiapkan
+lingkungan kerja, menjalankan program jendela pertama, dan menyimpan struktur
+proyek ke repositori Git. Kerjakan seluruh langkah secara berurutan dan isi
+lembar kerja pada Tabel~\ref{tab:lembar-praktikum-01}. Kumpulkan hasilnya pada
+repositori Git pribadi Anda.
+
+\begin{langkah}
+  \item \textbf{Periksa lingkungan kerja.} Jalankan skrip
+        \code{ch03_periksa_lingkungan.py} dari folder \code{code}. Catat
+        seluruh keluarannya, termasuk baris \istilah{Penafsir Python} dan
+        \istilah{Pengandar video}. Apabila ada bagian yang belum siap,
+        selesaikan lebih dahulu dengan merujuk
+        Tabel~\ref{tab:masalah-pemasangan}.
+
+  \item \textbf{Buat struktur folder.} Buat folder proyek bernama
+        \code{proyek-pygame} dengan susunan seperti pada
+        Gambar~\ref{fig:struktur-proyek}: folder \code{code},
+        \code{catatan}, dan \code{aset}.
+
+  \item \textbf{Salin skrip pemeriksaan} ke dalam folder \code{code}, lalu
+        pastikan skrip tersebut masih berjalan dari tempat yang baru.
+
+  \item \textbf{Ketik ulang program jendela.} Ketik ulang
+        \code{ch03_jendela.py} dari Daftar~\ref{lst:ch03-jendela} ke dalam
+        folder \code{code}. \textbf{Jangan menyalin dan menempelkan} berkas
+        yang tersedia; mengetik ulang membuat Anda memperhatikan setiap baris.
+        Jalankan program, lalu tutup jendelanya.
+
+  \item \textbf{Ubah ukuran dan warna.} Jalankan program dengan lebar 800 dan
+        tinggi 600 piksel. Setelah itu, ubah nilai \code{WARNA_LATAR} menjadi
+        warna pilihan Anda, lalu jalankan kembali.
+
+  \item \textbf{Tambahkan satu baris teks} berisi nama dan nomor induk
+        mahasiswa Anda, lalu atur posisinya agar tidak bertumpuk dengan baris
+        lain.
+
+  \item \textbf{Buat berkas \code{.gitignore}} sesuai
+        Bagian~\ref{sec:struktur-git}, lalu simpan seluruh pekerjaan dengan
+        pesan penyimpanan yang menerangkan isinya.
+
+  \item \textbf{Tulis catatan praktikum} pada folder \code{catatan} memuat
+        kendala yang Anda hadapi dan cara penyelesaiannya. Catatan ini menjadi
+        bagian penilaian kelengkapan dokumentasi.
+\end{langkah}
+\end{praktikumbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Lembar kerja Praktikum 01}
+\label{tab:lembar-praktikum-01}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.6cm} L{5.0cm} Y@{}}
+\toprule
+\headrow \textbf{Langkah} & \textbf{Hasil yang dicatat} & \textbf{Keterangan Anda} \\
+\midrule
+1 & Versi Python, versi Pygame, versi SDL, dan nama pengandar video & \\[1.2em]
+\addlinespace
+1 & Nama berkas penafsir Python yang dipakai & \\[1.2em]
+\addlinespace
+4 & Apakah jendela terbuka dan tertutup dengan benar? & \\[1.2em]
+\addlinespace
+5 & Ukuran jendela dan warna latar yang Anda pilih & \\[1.2em]
+\addlinespace
+6 & Posisi baris teks tambahan dan alasan pemilihannya & \\[1.2em]
+\addlinespace
+7 & Pesan penyimpanan yang Anda pakai & \\[1.2em]
+\addlinespace
+8 & Satu kendala yang Anda hadapi beserta cara penyelesaiannya & \\[2.0em]
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Praktikum ini dinilai sebagai artefak portofolio. Yang diperiksa adalah
+kesesuaian fungsional program, kerapian kode, dan kelengkapan dokumentasi.
+Rubrik penilaiannya ada pada Bagian~\ref{sec:asesmen-lingkungan}.
+\end{catatabox}

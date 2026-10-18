@@ -1,0 +1,106 @@
+% chapters/04/section-01.tex
+\section{Kerangka Siklus Permainan}
+\label{sec:kerangka-siklus}
+
+Bab~II telah menjelaskan mengapa program permainan berjalan terus dan
+mengapa waktu harus dikelola. Bab ini mewujudkannya menjadi kode. Bagian
+pertama membahas kerangkanya; bagian-bagian berikutnya membahas setiap tahap
+secara terperinci.
+
+\subsection{Tiga Tahap yang Selalu Sama}
+
+Siklus permainan terdiri atas tiga tahap yang dikerjakan berurutan dan
+diulang terus-menerus, seperti diperlihatkan pada
+Gambar~\ref{fig:siklus-game-loop}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/siklus-game-loop.tikz}
+\caption{Siklus permainan: tiga tahap yang diulang setiap bingkai}
+\label{fig:siklus-game-loop}
+\end{figure}
+
+\begin{enumerate}
+  \item \textbf{Masukan} (\istilah{input}). Membaca peristiwa yang terjadi sejak
+        bingkai sebelumnya: tombol yang ditekan, tetikus yang digeser, atau
+        jendela yang hendak ditutup. Hasil tahap ini adalah gambaran tentang
+        apa yang sedang diinginkan pemain.
+  \item \textbf{Pembaruan} (\istilah{update}). Mengubah keadaan permainan
+        berdasarkan masukan tersebut dan berdasarkan berjalannya waktu.
+        Pekerjaan pada tahap ini meliputi pemindahan objek, pemeriksaan
+        tabrakan, penambahan skor, dan penentuan perilaku objek yang
+        dikendalikan komputer.
+  \item \textbf{Penayangan} (\istilah{render}). Menggambar ulang seluruh isi
+        jendela menurut keadaan yang baru saja diperbarui, lalu
+        menampilkannya kepada pemain.
+\end{enumerate}
+
+Ketiga tahap itu berlangsung dalam waktu yang sangat singkat, biasanya jauh
+di bawah sepersepuluh detik, lalu diulang. Karena pengulangannya cepat,
+pemain melihat satu gambar yang terus berubah dan merasakannya sebagai gerak
+yang hidup.
+
+\subsection{Mengapa Urutannya Demikian}
+
+Urutan tahapan bukan pilihan gaya penulisan, melainkan keharusan yang lahir
+dari sifat pekerjaannya.
+
+\begin{itemize}
+  \item \textbf{Masukan didahulukan} karena pembaruan memerlukan pengetahuan
+        tentang kehendak pemain. Apabila pembaruan dijalankan lebih dahulu,
+        tombol yang baru ditekan baru akan berpengaruh pada bingkai berikutnya,
+        dan pemain merasakan tanggapan yang terlambat satu bingkai.
+  \item \textbf{Penayangan dikerjakan terakhir} karena yang seharusnya terlihat
+        pemain adalah keadaan akhir setelah seluruh perhitungan selesai.
+        Menggambar di tengah perhitungan berarti menampilkan keadaan setengah
+        jadi.
+\end{itemize}
+
+Kedua alasan itu kedengaran sepele pada permainan sederhana, dan memang
+demikian. Namun ketika jumlah objek bertambah dan sebagian perhitungan saling
+bergantung, urutan yang tidak konsisten menimbulkan gejala yang sulit
+dilacak: objek yang tampak bergerak mendahului tabrakannya, atau skor yang
+bertambah sebelum kejadiannya sungguh terjadi.
+
+\begin{catatabox}
+Pada Bab~XIII, ketika Anda beralih ke Unity, ketiga tahap itu tetap ada
+walaupun sebagian dikelola mesin. Unity menyediakan tahap tersendiri untuk
+menjalankan perintah Anda setiap bingkai, dan tahap itu setara dengan tahap
+pembaruan di sini. Yang berubah hanyalah siapa yang menulis perulangannya.
+\end{catatabox}
+
+\subsection{Kerangka dalam Bentuk Kode}
+
+Kerangka siklus permainan, tanpa isi setiap tahapnya, berbentuk sesederhana
+berikut.
+
+\begin{kodekeluaran}
+running = True
+
+while running:
+    # Tahap 1: baca peristiwa masukan
+    # Tahap 2: perbarui keadaan permainan
+    # Tahap 3: gambar ulang seluruh jendela
+\end{kodekeluaran}
+
+Perhatikan tiga hal pada kerangka tersebut.
+
+\begin{enumerate}
+  \item \textbf{Perulangannya dikendalikan sebuah variabel}, pada contoh ini
+        \code{running}. Variabel itu diubah menjadi salah ketika pemain
+        meminta keluar, sehingga siklus berakhir dengan rapi. Perulangan tanpa
+        cara keluar hanya dapat dihentikan dengan mematikan program secara
+        paksa.
+  \item \textbf{Variabel keadaan berada di luar perulangan.} Keadaan permainan
+        harus tetap hidup dari satu bingkai ke bingkai berikutnya. Apabila
+        variabel keadaan dibuat di dalam perulangan, isinya kembali ke nilai
+        awal setiap bingkai dan permainan kehilangan ingatannya.
+  \item \textbf{Ketiga tahap berada di dalam satu perulangan yang sama.} Ketiga
+        tahap itu bukan tiga perulangan terpisah; pemisahan menjadi perulangan
+        tersendiri membuat tahap-tahap itu berjalan tidak serempak, dan
+        perilaku permainan menjadi sulit diperkirakan.
+\end{enumerate}
+
+Kerangka inilah yang akan Anda lengkapi pada bagian-bagian berikutnya,
+sehingga menjadi siklus permainan yang benar-benar berjalan
+\cite{nystrom-gameloop,sweigart-mg}.

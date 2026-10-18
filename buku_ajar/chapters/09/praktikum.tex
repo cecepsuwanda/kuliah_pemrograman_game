@@ -1,0 +1,84 @@
+% chapters/09/praktikum.tex
+\begin{praktikumbox}
+Praktikum ini mengikuti Tugas Praktikum 07 pada RPS: NPC berpatroli di antara
+titik-titik tertentu, beralih mengejar ketika pemain masuk jari-jari persepsi,
+dan kembali berdiam ketika pemain keluar dari jangkauan.
+
+\begin{langkah}
+  \item \textbf{Jalankan programnya.} Ketik ulang \code{ch09_fsm.py} dari
+        Daftar~\ref{lst:ch09-fsm} ke dalam folder \code{code}. Jalankan, lalu
+        amati warna NPC yang berubah menurut keadaannya dan jalur patroli yang
+        dilaluinya.
+
+  \item \textbf{Amati setiap keadaan secara terpisah.} Berdiamlah di jauh
+        sampai NPC menyelesaikan satu putaran patroli, lalu dekati sampai ia
+        mengejar, lalu berdirilah di dekatnya sampai ia menyerang. Catat
+        keadaan mana yang paling lama berlangsung.
+
+  \item \textbf{Jalankan skenario pengujian.} Jalankan program dengan pilihan
+        \code{--scenario}, lalu catat seluruh catatan perpindahan keadaan
+        beserta nomor bingkainya.
+\begin{kodekeluaran}
+python ch09_fsm.py --frames 900 --scenario
+\end{kodekeluaran}
+
+  \item \textbf{Gambarlah diagram keadaan Anda sendiri.} Gambarlah diagram
+        keadaan--transisi untuk NPC Anda, dengan empat keadaan dan syarat pada
+        setiap perpindahannya. Bandingkan dengan
+        Gambar~\ref{fig:diagram-keadaan}, lalu periksa apakah setiap syarat
+        pada diagram Anda benar-benar ada di dalam kode.
+
+  \item \textbf{Tambahkan satu keadaan baru.} Tambahkan keadaan menghindar,
+        yang dijalani NPC ketika nyawanya tinggal sedikit. Tentukan syarat
+        masuk dan syarat keluarnya, gambar pada diagram, lalu tambahkan pada
+        kode beserta catatan perpindahannya.
+
+  \item \textbf{Uji perpindahan yang tidak sah.} Tambahkan satu perpindahan
+        yang tidak ada pada diagram Anda, misalnya dari menyerang langsung ke
+        berpatroli, lalu jalankan skenario pengujian. Perhatikan laporan
+        pemeriksaan keabsahan pada terminal, lalu kembalikan program.
+
+  \item \textbf{Tulis catatan praktikum} yang memuat diagram keadaan Anda,
+        catatan perpindahan beserta nomor bingkainya, dan hasil pemeriksaan
+        keabsahan.
+
+  \item \textbf{Simpan pekerjaan} ke repositori Git dengan pesan penyimpanan
+        yang menerangkan isinya.
+\end{langkah}
+\end{praktikumbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Lembar kerja Praktikum 07}
+\label{tab:lembar-praktikum-07}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{3.4cm} C{2.6cm} C{2.6cm} Y@{}}
+\toprule
+\headrow \textbf{Keadaan} & \textbf{Lama berlangsung} & \textbf{Jumlah perpindahan} & \textbf{Catatan} \\
+\midrule
+berdiam & & & \\[1.2em]
+\addlinespace
+berpatroli & & & \\[1.2em]
+\addlinespace
+mengejar & & & \\[1.2em]
+\addlinespace
+menyerang & & & \\[1.2em]
+\addlinespace
+menghindar (keadaan tambahan) & & & \\[1.2em]
+\addlinespace
+\multicolumn{4}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Hasil pemeriksaan keabsahan perpindahan: \dotfill} \\[1.4em]
+\addlinespace
+\multicolumn{4}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Perpindahan yang dilaporkan tidak sah pada langkah keenam: \dotfill} \\[1.4em]
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Langkah kelima dan keenam saling melengkapi. Pada langkah kelima Anda
+menambahkan keadaan beserta perpindahannya, sedangkan pada langkah keenam Anda
+menambahkan perpindahan yang tidak ada pada diagram. Pemeriksaan keabsahan akan
+menangkap yang kedua dan tidak mengganggu yang pertama, asalkan diagramnya
+diperbarui lebih dahulu.
+\end{catatabox}

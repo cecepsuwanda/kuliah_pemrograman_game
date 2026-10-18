@@ -1,0 +1,40 @@
+% chapters/01/figures/peta-jalan.tikz
+% Peta jalan belajar: empat blok materi, dari Python/Pygame ke Unity.
+\begin{tikzpicture}[
+  blok/.style={
+    rectangle, rounded corners=3pt, draw=ubPrimary, thick, fill=ubAlt,
+    align=center, inner sep=4pt, minimum height=25mm, text width=26mm,
+    font=\footnotesize
+  },
+  blokunity/.style={blok, draw=ubAccent, fill=white},
+  panah/.style={-{Stealth[length=2.6mm]}, very thick, draw=ubAccent}
+]
+
+\node[blok] (b1) at (0,0)
+  {\textbf{Blok I}\\[2pt]\scriptsize Materi 1--5\\[3pt]\scriptsize \textbf{CPMK1}\\[2pt]\scriptsize \itshape game loop, gerak,\\fisika, collision};
+\node[blok, right=8mm of b1] (b2)
+  {\textbf{Blok II}\\[2pt]\scriptsize Materi 6--9\\[3pt]\scriptsize \textbf{CPMK2}\\[2pt]\scriptsize \itshape AI NPC, FSM,\\pathfinding A*};
+\node[blokunity, right=8mm of b2] (b3)
+  {\textbf{Blok III}\\[2pt]\scriptsize Materi 10--11\\[3pt]\scriptsize \textbf{CPMK3}\\[2pt]\scriptsize \itshape Unity, level,\\physics pemain};
+\node[blokunity, right=8mm of b3] (b4)
+  {\textbf{Blok IV}\\[2pt]\scriptsize Materi 12--14\\[3pt]\scriptsize \textbf{CPMK4}\\[2pt]\scriptsize \itshape aset visual, audio,\\playtesting};
+
+\draw[panah] (b1) -- (b2);
+\draw[panah] (b2) -- (b3);
+\draw[panah] (b3) -- (b4);
+
+% Keterangan teknologi di bawah blok
+\draw[decorate, decoration={brace, amplitude=4pt, raise=3pt}, thick, draw=ubPrimary]
+  (b1.south west) -- (b2.south east);
+\node[font=\scriptsize\bfseries\color{ubPrimary}, below=9mm of $(b1.south)!0.5!(b2.south)$]
+  {Python 3 + Pygame};
+\node[font=\scriptsize, below=13mm of $(b1.south)!0.5!(b2.south)$]
+  {mekanisme ditulis sendiri};
+
+\draw[decorate, decoration={brace, amplitude=4pt, raise=3pt}, thick, draw=ubAccent]
+  (b3.south west) -- (b4.south east);
+\node[font=\scriptsize\bfseries\color{ubAccent}, below=9mm of $(b3.south)!0.5!(b4.south)$]
+  {Unity};
+\node[font=\scriptsize, below=13mm of $(b3.south)!0.5!(b4.south)$]
+  {memanfaatkan \itshape engine};
+\end{tikzpicture}

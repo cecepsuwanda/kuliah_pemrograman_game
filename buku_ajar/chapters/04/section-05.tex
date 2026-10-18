@@ -1,0 +1,110 @@
+% chapters/04/section-05.tex
+\section{Mengukur dan Menyetel Laju}
+\label{sec:mengukur-laju}
+
+Pernyataan pada Bagian~\ref{sec:mengendalikan-laju} bahwa laju tanpa
+pembatasan memboroskan prosesor sebaiknya tidak diterima begitu saja.
+Bagian ini memakai program pengukuran untuk membuktikannya sendiri, sekaligus
+melatih kebiasaan yang penting sepanjang semester: mengukur, bukan menebak.
+
+\subsection{Program Pengukuran}
+
+Program berikut menjalankan siklus yang sama dengan program sebelumnya,
+tetapi tanpa jendela dan untuk jangka waktu yang tetap. Setiap batas laju
+diuji bergantian, lalu hasilnya ditampilkan sebagai tabel.
+
+\kodepython{python/ch04_ukur_laju.py}{Program pengukuran pengaruh batas laju bingkai}{lst:ch04-ukur-laju}
+
+Bagian yang menarik pada program tersebut adalah cara mengukur pemakaian
+prosesor. Pemakaian tidak diukur dengan alat luar, melainkan dari dua
+penghitung waktu yang disediakan Python.
+
+\begin{itemize}
+  \item \code{time.perf_counter()} mengukur \textbf{waktu berjalan}, yaitu lama
+        waktu yang dirasakan oleh jam dinding.
+  \item \code{time.process_time()} mengukur \textbf{waktu prosesor}, yaitu
+        lama prosesor benar-benar bekerja untuk program ini.
+\end{itemize}
+
+Perbandingan keduanya menghasilkan pemakaian prosesor. Apabila program
+memakai 0,06 detik waktu prosesor selama 2 detik waktu berjalan, pemakaiannya
+sekitar tiga persen. Apabila keduanya hampir sama, program memakai satu inti
+prosesor secara penuh.
+
+\subsection{Hasil Pengukuran}
+
+Tabel~\ref{tab:hasil-pengukuran-laju} memuat hasil pengukuran pada satu
+komputer contoh, dengan lama pengujian dua detik pada setiap konfigurasi.
+
+\begin{table}[htbp]
+\centering
+\caption{Hasil pengukuran pengaruh batas laju bingkai terhadap pemakaian prosesor}
+\label{tab:hasil-pengukuran-laju}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.6cm} C{1.8cm} C{2.2cm} C{2.6cm} Y@{}}
+\toprule
+\headrow \textbf{Batas laju} & \textbf{Bingkai} & \textbf{Laju tercapai} & \textbf{Waktu prosesor} & \textbf{Pemakaian prosesor} \\
+\midrule
+30 & 60 & 29,7 FPS & 0,02 detik & 0,8\% \\
+60 & 120 & 59,9 FPS & 0,06 detik & 3,1\% \\
+120 & 233 & 116,0 FPS & 0,09 detik & 4,7\% \\
+tanpa & 37.884 & 18.941 FPS & 1,94 detik & 96,9\% \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Pengukuran penulis pada lingkungan tanpa jendela, lama pengujian
+2 detik setiap konfigurasi. Angka pada komputer Anda akan berbeda; yang
+penting adalah hubungan antarbarisnya.}
+\end{table}
+
+Tiga hal dapat dibaca dari tabel tersebut.
+
+\begin{enumerate}
+  \item \textbf{Batas laju dipatuhi dengan tepat.} Ketika batasnya 30, laju
+        yang tercapai 29,7; ketika batasnya 60, lajunya 59,9. Siklus tidak
+        berjalan lebih cepat daripada yang diminta.
+  \item \textbf{Pemakaian prosesor tetap kecil pada semua batas yang wajar.}
+        Pada 30 sampai 120 bingkai per detik, pemakaiannya berada di bawah
+        lima persen. Bahkan pada 120 bingkai per detik, prosesor masih
+        menganggur hampir seluruh waktunya.
+  \item \textbf{Tanpa pembatasan, prosesor dipakai penuh hampir sepanjang
+        waktu.} Perhatikan baris terakhir: 18.941 bingkai per detik berarti
+        sekitar enam belas kali lebih banyak daripada yang dapat dilihat mata,
+        dan harganya adalah seluruh inti prosesor.
+\end{enumerate}
+
+Kesimpulannya sederhana: batas laju bukan pembatasan mutu, melainkan
+penghematan yang tidak mengurangi apa pun yang dapat dirasakan pemain.
+Permainan yang dibatasi 60 bingkai per detik terlihat sama dengan permainan
+yang berjalan ribuan bingkai per detik, tetapi jauh lebih ringan pada
+perangkat.
+
+\begin{catatabox}
+Angka pada tabel tersebut diukur pada lingkungan tanpa jendela, sehingga
+angkanya berbeda dari pengukuran pada jendela sungguhan. Pada jendela
+sungguhan, laju tanpa batas biasanya tidak setinggi itu karena menunggu
+layar selesai menampilkan gambar, dan pemakaian prosesor juga lebih besar
+pada semua baris karena penggambaran sesungguhnya lebih berat daripada
+penggambaran di memori. Yang tetap berlaku adalah hubungannya: tanpa batas
+laju, prosesor bekerja sekeras mungkin tanpa manfaat yang terlihat.
+\end{catatabox}
+
+\subsection{Pilihan Batas Laju}
+
+Dengan bekal pengukuran tersebut, batas laju dapat dipilih secara sadar.
+
+\begin{itemize}
+  \item \textbf{60 bingkai per detik} adalah pilihan bawaan yang baik untuk
+        sebagian besar permainan sederhana: cukup mulus, dan ringan.
+  \item \textbf{30 bingkai per detik} dipakai apabila program mulai berat atau
+        perangkatnya sederhana. Gerakannya masih dapat diterima untuk
+        permainan yang tidak menuntut ketepatan tinggi.
+  \item \textbf{120 bingkai per detik ke atas} hanya bermanfaat apabila
+        perangkatnya mendukung dan permainannya menuntut tanggapan yang sangat
+        cepat. Untuk keperluan pembelajaran, pilihan ini belum diperlukan.
+\end{itemize}
+
+Menariknya, keadaan sebenarnya sering kali berbeda dari dugaan. Batas yang
+tinggi tidak dengan sendirinya menghasilkan permainan yang lebih baik,
+terutama apabila pekerjaan satu bingkai ternyata memerlukan waktu lebih lama
+daripada jatahnya. Contoh pada Bagian~\ref{sec:contoh-bab-4} memperlihatkan
+hitungannya.

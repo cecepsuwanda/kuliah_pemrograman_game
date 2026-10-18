@@ -1,0 +1,84 @@
+% chapters/06/praktikum.tex
+\begin{praktikumbox}
+Praktikum ini mengikuti Tugas Praktikum 04 pada RPS: membuat prototipe
+\istilah{platformer} mini yang bendanya jatuh karena gravitasi, melompat sekali
+ketika berada di tanah, dan memantul secara mendatar. Isilah lembar kerja pada
+Tabel~\ref{tab:lembar-praktikum-04}.
+
+\begin{langkah}
+  \item \textbf{Jalankan program fisika.} Ketik ulang \code{ch06_fisika.py}
+        dari Daftar~\ref{lst:ch06-fisika} ke dalam folder \code{code}.
+        Jalankan, lalu amati perilaku kedua benda: pemain yang berhenti di
+        lantai dan bola yang memantul makin pendek.
+
+  \item \textbf{Uji lompatan.} Tekan tombol lompatan beberapa kali. Pastikan
+        pemain hanya melompat ketika menyentuh lantai, dan pastikan menahan
+        tombol tidak menghasilkan lompatan berulang.
+
+  \item \textbf{Bandingkan tinggi lompatan dengan hitungan.} Jalankan program
+        dengan perintah berikut pada tiga laju bingkai yang berbeda, lalu catat
+        tinggi terukur dan tinggi menurut hitungan.
+\begin{kodekeluaran}
+python ch06_fisika.py --frames 60 --auto-jump 1 --fps 30
+python ch06_fisika.py --frames 120 --auto-jump 1 --fps 60
+python ch06_fisika.py --frames 240 --auto-jump 1 --fps 120
+\end{kodekeluaran}
+
+  \item \textbf{Ubah rasa lompatan.} Jalankan program dengan tiga pasangan
+        nilai pada Tabel~\ref{tab:rasa-lompatan}, yaitu
+        \code{--gravity 1200 --jump-speed 600},
+        \code{--gravity 1800 --jump-speed 735}, dan
+        \code{--gravity 2400 --jump-speed 849}. Tingginya sama,
+        tetapi rasa geraknya berbeda.
+
+  \item \textbf{Ubah koefisien restitusi bola.} Jalankan program dengan
+        \code{--restitution 0.5}, lalu \code{--restitution 0.95}, lalu
+        \code{--restitution 1.0}. Amati lama bola memantul pada masing-masing
+        nilai, dan catat pengamatan Anda.
+
+  \item \textbf{Tambahkan satu bongkahan untuk dipijak.} Tambahkan satu persegi
+        panjang yang berfungsi sebagai lantai kedua pada ketinggian tertentu,
+        lalu atur agar pemain dapat mendarat di atasnya. Untuk tahap ini,
+        cukup periksa posisi pemain terhadap bongkahan itu secara langsung.
+
+  \item \textbf{Tulis catatan praktikum} yang memuat tabel pengukuran tinggi
+        lompatan, hasil percobaan koefisien restitusi, dan kendala yang Anda
+        hadapi pada langkah keenam.
+
+  \item \textbf{Simpan pekerjaan} ke repositori Git dengan pesan penyimpanan
+        yang menerangkan isinya.
+\end{langkah}
+\end{praktikumbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Lembar kerja Praktikum 04}
+\label{tab:lembar-praktikum-04}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.8cm} C{2.6cm} C{2.6cm} Y@{}}
+\toprule
+\headrow \textbf{Batas laju} & \textbf{Tinggi terukur} & \textbf{Tinggi menurut hitungan} & \textbf{Selisih} \\
+\midrule
+30 FPS & & & \\[1.4em]
+\addlinespace
+60 FPS & & & \\[1.4em]
+\addlinespace
+120 FPS & & & \\[1.4em]
+\addlinespace
+\multicolumn{4}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Gravitasi 1800 piksel/detik kuadrat, kecepatan lompatan 700 piksel/detik,
+sehingga tinggi menurut hitungan adalah 136,1 piksel.} \\
+\addlinespace
+\multicolumn{4}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Banyak pantulan bola pada restitusi 0,5: \dotfill \quad
+pada 0,95: \dotfill} \\[1.4em]
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Langkah keenam sengaja ditinggalkan tanpa petunjuk rinci. Pemeriksaan posisi
+terhadap bongkahan secara langsung memang terbatas: pemain hanya dapat mendarat
+di atasnya, tetapi tidak dapat menabraknya dari samping. Keterbatasan itulah
+yang menjadi titik tolak Bab~VII.
+\end{catatabox}

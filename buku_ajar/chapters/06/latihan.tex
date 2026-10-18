@@ -1,0 +1,54 @@
+% chapters/06/latihan.tex
+\bagian{Latihan dan Refleksi}
+
+\begin{enumerate}
+  \item Tuliskan dua baris perhitungan yang memperbarui kecepatan lalu posisi
+        pada integrasi Euler, dan jelaskan mengapa urutannya tidak boleh
+        dibalik.
+
+  \item Jelaskan mengapa percepatan gravitasi bernilai positif pada koordinat
+        layar, sedangkan kecepatan lompatan bernilai negatif.
+
+  \item Sebuah benda bergerak dengan kecepatan 300 piksel per detik ke bawah
+        dan gravitasi 1500 piksel per detik kuadrat pada laju 60 bingkai per
+        detik. Hitunglah kecepatannya pada bingkai berikutnya dan perpindahan
+        yang terjadi pada bingkai itu.
+
+  \item Jelaskan mengapa pemain sebaiknya diberi koefisien restitusi nol,
+        sedangkan bola tidak. Apa yang terjadi apabila keduanya ditukar?
+
+  \item Sebuah lompatan hendak dibuat setinggi 200 piksel. Hitunglah kecepatan
+        lompatan yang diperlukan apabila gravitasinya 1800 piksel per detik
+        kuadrat, lalu hitunglah lama benda berada di udara.
+
+  \item Jelaskan mengapa lompatan harus dibaca sebagai peristiwa
+        \code{KEYDOWN}, bukan sebagai keadaan tombol dengan
+        \code{key.get_pressed()}. Sebutkan gejala yang muncul apabila pilihan
+        itu tertukar.
+
+  \item Sebuah bola dijatuhkan dari ketinggian 100 piksel dengan koefisien
+        restitusi 0,7. Hitunglah tinggi pantulan pertama dan kedua, lalu
+        jelaskan mengapa tingginya menyusut secepat itu.
+
+  \item Perhatikan potongan kode berikut, lalu tentukan kesalahannya dan
+        perbaikannya.
+\begin{kodekeluaran}
+if position.y + half == floor_y:
+    velocity.y = -velocity.y * restitution
+    position.y = floor_y - half
+\end{kodekeluaran}
+\end{enumerate}
+
+\begin{refleksibox}
+\begin{enumerate}
+  \item Pada langkah keempat praktikum, pasangan nilai mana yang menurut Anda
+        paling enak dimainkan? Mengapa demikian, dan bagaimana jawaban Anda
+        berhubungan dengan lama benda berada di udara?
+  \item Ketika koefisien restitusi bola diubah menjadi 1,0, apa yang terjadi?
+        Adakah alasannya untuk memakai nilai itu pada permainan yang
+        sesungguhnya?
+  \item Pada langkah keenam praktikum, pemain hanya dapat mendarat di atas
+        bongkahan tetapi tidak dapat menabraknya dari samping. Menurut Anda,
+        pemeriksaan seperti apa yang diperlukan untuk menanganinya?
+\end{enumerate}
+\end{refleksibox}

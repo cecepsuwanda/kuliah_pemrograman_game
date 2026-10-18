@@ -1,0 +1,94 @@
+% chapters/06/evaluasi.tex
+\bagian{Asesmen dan Instrumen Penilaian}
+\label{sec:asesmen-fisika}
+
+\begin{asesmenbox}
+\textbf{Kedudukan asesmen bab ini.} Bab ini menuntaskan \SUBCPMK{1.3},
+sehingga ketiga indikatornya diperiksa melalui penilaian artefak program
+(Tugas Praktikum 04) dan soal konsep.
+
+\vspace{0.4em}
+Materi Bab~VI termasuk bahan \textbf{Kuis 1} pada minggu kelima (Materi 1--4),
+yang berarti bab ini adalah materi terakhir yang diujikan pada kuis tersebut,
+dan termasuk bahan \textbf{Ujian Tengah Semester} pada minggu kesepuluh.
+\end{asesmenbox}
+
+\subsection*{Instrumen 1: Rubrik Praktikum 04}
+
+\begin{table}[htbp]
+\centering
+\caption{Rubrik penilaian Praktikum 04 beserta indikator yang diukur}
+\label{tab:rubrik-praktikum-04}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.2cm} C{1.3cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{Kriteria} & \textbf{Bobot} & \textbf{Indikator} & \textbf{Deskripsi capaian} \\
+\midrule
+Integrasi Euler dan lantai & 35\% & \ind{a} &
+Kecepatan diperbarui sebelum posisi, benda berhenti di lantai tanpa terbenam
+maupun menembus, dan koefisien restitusi pemain bernilai nol. \\
+\addlinespace
+Lompatan & 35\% & \ind{b} &
+Lompatan hanya bekerja di tanah, menahan tombol tidak menghasilkan lompatan
+berulang, dan tinggi lompatan terukur sesuai dengan hitungan. \\
+\addlinespace
+Pantulan & 30\% & \ind{c} &
+Bola memantul di lantai dan di kedua dinding dengan tinggi yang menyusut,
+pantulan kecil dihentikan, dan hasil percobaan koefisien restitusi tercatat
+pada lembar kerja. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection*{Instrumen 2: Soal Konsep}
+
+Jawablah dengan singkat. Kunci jawaban beserta indikator yang diukur
+disajikan pada Tabel~\ref{tab:kunci-konsep-ch06}.
+
+\begin{enumerate}
+  \item Tuliskan dua baris integrasi Euler dan jelaskan urutan pengerjaannya.
+  \item Mengapa benda dapat menembus lantai apabila pemeriksaannya memakai
+        tanda kesamaan?
+  \item Sebuah lompatan hendak dibuat setinggi 180 piksel dengan gravitasi
+        2000 piksel per detik kuadrat. Hitunglah kecepatan lompatan yang
+        diperlukan.
+  \item Mengapa lompatan harus dibaca sebagai peristiwa, bukan sebagai keadaan
+        tombol?
+  \item Sebuah bola dijatuhkan dari ketinggian 120 piksel dengan koefisien
+        restitusi 0,6. Hitunglah tinggi pantulan pertamanya.
+\end{enumerate}
+
+\begin{table}[htbp]
+\centering
+\caption{Kunci soal konsep Bab VI beserta indikator yang diukur}
+\label{tab:kunci-konsep-ch06}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{0.8cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{No} & \textbf{Indikator} & \textbf{Pokok jawaban} \\
+\midrule
+1 & \ind{a} &
+\code{velocity.y += gravity * delta_seconds} lalu
+\code{position = position + velocity * delta_seconds}. Kecepatan diperbarui
+lebih dahulu agar posisi memakai kecepatan yang baru; apabila dibalik, benda
+tampak jatuh lebih cepat daripada seharusnya. \\
+\addlinespace
+2 & \ind{a} &
+Karena benda yang bergerak cepat melampaui lantai dalam satu bingkai, sehingga
+posisinya tidak pernah tepat sama dengan nilai lantai. Pemeriksaan harus
+memakai tanda ketidaksamaan, lalu posisinya dikembalikan ke permukaan lantai. \\
+\addlinespace
+3 & \ind{b} &
+$v_0 = \sqrt{2gh} = \sqrt{2 \times 2000 \times 180} = \sqrt{720000} \approx 849$
+piksel per detik. \\
+\addlinespace
+4 & \ind{b} &
+Karena peristiwa \code{KEYDOWN} hanya terjadi sekali pada setiap penekanan,
+sedangkan keadaan tombol bernilai benar selama tombol ditahan sehingga benda
+akan melompat berulang-ulang dan seolah-olah terbang. \\
+\addlinespace
+5 & \ind{c} &
+$h_1 = e^2 h = 0{,}6^2 \times 120 = 0{,}36 \times 120 = 43{,}2$ piksel. \\
+\bottomrule
+\end{tabularx}}
+\end{table}

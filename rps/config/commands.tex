@@ -1,0 +1,44 @@
+% =========================================================
+%  config/commands.tex
+%  Perintah khusus dokumen RPS
+%  Tujuan: mencegah definisi berulang yang tersebar di sections/.
+% =========================================================
+
+% --- Identitas mata kuliah -----------------------------
+\newcommand{\NamaMK}{Pengantar Pemrograman Game}
+\newcommand{\KodeMK}{MWCA009}
+\newcommand{\NamaProdi}{Teknik Informatika}
+\newcommand{\NamaFakultas}{Teknologi Informasi}
+\newcommand{\NamaPT}{Universitas Bale Bandung}
+\newcommand{\NamaDosen}{Cecep Suwanda, S.Si., M.Kom.}
+\newcommand{\SemesterMK}{Ganjil}
+\newcommand{\TahunAkademik}{2026/2027}
+
+% --- Kode capaian pembelajaran -------------------------
+\newcommand{\CPL}[1]{\textbf{CPL#1}}
+\newcommand{\CPMK}[1]{\textbf{CPMK#1}}
+\newcommand{\SUBCPMK}[1]{\textbf{Sub-CPMK#1}}
+
+% --- Istilah teknis ------------------------------------
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\istilah}[1]{\textit{#1}}
+
+% --- Penanda baris header tabel ------------------------
+% Tanpa colortbl, penanda header cukup berupa penebalan garis pemisah
+% (lihat \renewcommand{\toprule} pada config/styles.tex).
+\newcommand{\headrow}{}
+
+% --- Penanda status hubungan (matriks CPL--CPMK) -------
+\newcommand{\Utama}{\textbf{Utama}}
+\newcommand{\Pendukung}{Pendukung}
+\newcommand{\TidakAda}{---}
+
+% --- Opsi: mengaktifkan kembali latar baris tabel ------
+% Apabila colortbl dapat dipakai pada instalasi LaTeX yang digunakan
+% (yaitu array.sty sudah cukup baru), ganti \usepackage{xcolor} menjadi
+% \usepackage[table]{xcolor} pada config/packages.tex, lalu ganti
+% definisi di bawah ini:
+%
+%   \renewcommand{\headrow}{\rowcolor{ubHead}}
+%   \renewcommand{\Utama}{\cellcolor{ubHead}\textbf{Utama}}
+%   \renewcommand{\Pendukung}{\cellcolor{ubAlt}Pendukung}

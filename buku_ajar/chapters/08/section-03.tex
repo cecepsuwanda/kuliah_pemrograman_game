@@ -1,0 +1,99 @@
+% chapters/08/section-03.tex
+\section{Menormalkan Arah dan Membatasi Kecepatan}
+\label{sec:menormalkan}
+
+Setelah jarak dan arah diketahui, langkah berikutnya adalah mengubah keduanya
+menjadi kecepatan. Di sinilah terletak kesalahan yang paling sering terjadi
+pada perilaku mengejar.
+
+\subsection{Cara yang Salah}
+
+Cara yang paling mudah dipikirkan adalah memakai vektor jarak itu langsung
+sebagai kecepatan.
+
+\begin{kodekeluaran}
+self.velocity = to_player          # cara yang salah
+\end{kodekeluaran}
+
+Cara itu tampak masuk akal: vektornya memang menunjuk ke pemain, dan arahnya
+benar. Persoalannya terletak pada \textbf{besarnya}. Panjang vektor itu sama
+dengan jarak antara NPC dan pemain, sehingga kecepatannya ikut berubah
+menurut jarak: NPC bergerak lambat ketika pemain jauh, dan makin cepat ketika
+pemain mendekat. Pada jarak 400 piksel, kecepatannya 400 piksel per detik;
+pada jarak 75 piksel, kecepatannya 75 piksel per detik.
+
+\subsection{Cara yang Benar}
+
+Cara yang benar adalah memisahkan arah dari besar kecepatan. Arah diambil dari
+vektor itu, tetapi besarnya ditentukan oleh nilai kecepatan yang Anda pilih,
+bukan oleh jarak.
+
+\begin{kodekeluaran}
+self.velocity = to_player.normalize() * self.speed
+\end{kodekeluaran}
+
+Penormalan telah Anda pelajari pada Bagian~5.2 untuk keperluan yang berbeda,
+yaitu mencegah gerak diagonal yang terlalu cepat. Di sini penormalan dipakai
+untuk keperluan yang lebih mendasar: memisahkan arah dari besar.
+
+Tidak ada lagi nilai jarak pada perhitungan itu. Yang tersisa
+hanyalah arah dan kecepatan yang Anda tetapkan. Inilah jawaban atas indikator
+\ind{b} pada bab ini: besar kecepatan dibatasi oleh nilai yang Anda tentukan,
+bukan oleh keadaan pemain.
+
+\subsection{Perbandingan yang Dapat Diukur}
+
+Perbedaan kedua cara itu dapat dibuktikan dengan mengukur kecepatan NPC pada
+berbagai jarak. Program bab ini mencatat kecepatan NPC pertama setiap sepuluh
+bingkai, beserta jaraknya saat itu. Tabel~\ref{tab:kecepatan-kejar} memuat
+hasilnya pada satu komputer contoh.
+
+\begin{table}[htbp]
+\centering
+\caption{Kecepatan terukur NPC pada berbagai jarak, dengan kecepatan ditetapkan 150 piksel per detik}
+\label{tab:kecepatan-kejar}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.4cm} C{3.4cm} C{3.4cm} Y@{}}
+\toprule
+\headrow \textbf{Cara} & \textbf{Jarak saat diukur} & \textbf{Kecepatan terukur} & \textbf{Keterangan} \\
+\midrule
+Arah dinormalkan & 59--167 piksel & 150,0 piksel/detik & Tetap, tidak bergantung jarak. \\
+\addlinespace
+Vektor jarak dipakai langsung & 75--184 piksel & 75,2--184,0 piksel/detik &
+Kecepatan sama persis dengan jaraknya. \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Hasil pengukuran penulis pada 400 bingkai dengan masukan otomatis.
+Angka pada komputer Anda akan sedikit berbeda, tetapi polanya sama.}
+\end{table}
+
+Perhatikan baris kedua: kecepatannya sama persis dengan jaraknya. Itulah tanda
+khas cara yang salah. Pada baris pertama, kecepatannya tetap walaupun jaraknya
+berubah hampir tiga kali lipat.
+
+\subsection{Mengapa Kecepatan yang Tetap Itu Penting}
+
+Kecepatan yang bergantung pada jarak bukan sekadar kurang rapi; ia merusak
+permainan dengan tiga cara.
+
+\begin{enumerate}
+  \item \textbf{Perilaku NPC tidak dapat diramalkan pemain.} Pemain tidak dapat
+        belajar kapan ia aman dan kapan tidak, sebab kecepatan pengejar berubah
+        menurut jaraknya. Pada permainan yang adil, pemain harus dapat
+        memperkirakan akibat dari tindakannya.
+  \item \textbf{Tingkat kesulitan berubah tanpa disengaja.} Ruang permainan
+        yang luas membuat pemain lebih mudah lolos, sedangkan ruang yang sempit
+        membuatnya lebih sulit. Tingkat kesulitan menjadi bergantung pada
+        ukuran ruang, bukan pada rancangan Anda.
+  \item \textbf{Penghitungan waktu menjadi keliru.} Apabila Anda memperkirakan
+        NPC akan mencapai suatu tempat dalam dua detik, perkiraan itu hanya
+        benar pada satu jarak tertentu.
+\end{enumerate}
+
+\begin{catatabox}
+Sebagai pedoman yang berlaku umum: \textbf{arah dan besar kecepatan sebaiknya
+ditentukan secara terpisah}. Arah berasal dari keadaan permainan, sedangkan
+besarnya berasal dari rancangan Anda. Pedoman itu berlaku tidak hanya untuk
+mengejar, melainkan juga untuk berpatroli, menghindar, dan seluruh perilaku
+lain yang akan Anda susun pada bab-bab berikutnya.
+\end{catatabox}

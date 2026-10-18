@@ -1,0 +1,83 @@
+% chapters/17/section-03.tex
+\section{Satu Permainan, Banyak Kompetensi}
+\label{sec:lapisan-kompetensi}
+
+\subsection{Mengapa Menguasai Setiap Bab Belum Cukup}
+
+Seluruh bab pada buku ini dapat Anda tuntaskan satu per satu, dan tetap
+menghasilkan permainan yang tidak dapat dimainkan. Itu bukan kemungkinan yang
+jauh: ia adalah hasil yang paling sering terjadi pada proyek kelompok yang
+dikerjakan secara terpisah-pisah.
+
+Sebabnya ada pada cara kompetensi itu disusun. Setiap bab melatih satu
+kemampuan pada keadaan yang sudah disiapkan. Bab~VII melatih tabrakan pada dua
+benda; Bab~XIV melatih animasi pada satu pemain; Bab~XV melatih bunyi pada satu
+peristiwa. Ketika seluruhnya digabungkan, keadaan yang Anda hadapi berbeda:
+banyak benda bergerak sekaligus, peristiwa terjadi bersamaan, dan kesalahan
+pada satu bagian tampak sebagai kesalahan pada bagian lain.
+
+Gambar~\ref{fig:lapisan-permainan} memperlihatkan lapisan-lapisan yang menyusun
+sebuah permainan yang selesai, beserta bab tempat setiap lapisan dibangun.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/lapisan-permainan.tikz}
+\caption{Lapisan-lapisan yang menyusun satu permainan, dan bab tempat setiap lapisan dibangun}
+\label{fig:lapisan-permainan}
+\end{figure}
+
+Susunan itu bukan sekadar urutan pengerjaan. Setiap lapisan bergantung pada
+lapisan di bawahnya, dan ketergantungan itulah yang menentukan arah penelusuran
+ketika ada yang salah. Bunyi yang tidak terdengar pada Bab~XV dapat disebabkan
+oleh peristiwanya yang tidak pernah terjadi, dan peristiwa itu tidak terjadi
+karena benda yang seharusnya disentuh lolos dari pemeriksaan tabrakan pada
+Bab~VII.
+
+\subsection{Arah Penelusuran ketika Ada yang Salah}
+
+Karena lapisan di atas bergantung pada lapisan di bawah, penelusuran selalu
+bergerak ke bawah, tidak ke atas. Tiga contoh berikut memperlihatkan arah itu.
+
+\begin{enumerate}
+  \item \textbf{Skor tidak bertambah ketika benda diambil.} Jangan memeriksa
+        antarmuka terlebih dahulu. Periksa apakah sentuhannya terdeteksi
+        (Bab~VII), lalu apakah tanda bendanya benar, lalu apakah fungsinya
+        terpanggil, dan barulah periksa tulisannya (Bab~XIV).
+  \item \textbf{Pemain menembus lantai.} Jangan menyunting skrip antarmuka.
+        Periksa \istilah{Rigidbody} dan \istilah{Collider} (Bab~XIII), lalu
+        apakah geraknya dijalankan pada \code{FixedUpdate} (Bab~XIII), lalu
+        apakah \istilah{delta time} dipakai dengan benar (Bab~IV).
+  \item \textbf{Animasi tidak berganti.} Periksa dahulu apakah nilainya
+        berubah (Bab~XIV), lalu apakah nilai itu berasal dari keadaan pemain
+        yang benar (Bab~XIII), lalu apakah keadaan pemain itu sendiri benar
+        (Bab~IV--VI).
+\end{enumerate}
+
+\begin{tipsbox}
+Kebiasaan yang menghemat waktu: ketika ada yang salah, tanyakan ``lapisan
+paling bawah mana yang mungkin menyebabkan gejala ini'', lalu periksa dari
+bawah ke atas. Memeriksa dari atas ke bawah hampir selalu berakhir dengan
+memperbaiki tampilan dari masalah yang sebenarnya ada pada fisika.
+\end{tipsbox}
+
+\subsection{Integrasi sebagai Kompetensi Tersendiri}
+
+Kemampuan menggabungkan bagian-bagian itu sendiri adalah kompetensi, dan ia
+dinilai secara terpisah. Itulah sebabnya Proyek Akhir memiliki bobot terbesar,
+dan itulah sebabnya rubriknya memuat kriteria ``integrasi aset visual,
+animasi, dan UI'' serta ``integrasi audio dan umpan balik interaksi'' sebagai
+kriteria tersendiri, bukan sebagai bagian dari kriteria mekanik.
+
+Pekerjaan menggabungkan itu tidak dapat dibagi menjadi tugas-tugas kecil yang
+dikerjakan orang berbeda tanpa saling berbicara. Ia menuntut satu orang yang
+memahami seluruh lapisan. Yang juga diperlukan adalah satu keputusan bersama
+tentang hal-hal yang tampak sepele: siapa yang menyimpan skor, apa yang terjadi
+ketika
+nyawa habis, dan urutan apa yang harus dilalui pemain dari awal sampai tujuan.
+
+\begin{catatabox}
+Apabila kelompok Anda mengerjakan proyek secara terpisah lalu menggabungkannya
+pada hari terakhir, hampir pasti ada bagian yang tidak tersambung. Cara yang
+lebih baik adalah menyambungkan dua bagian setiap kali satu bagian selesai,
+sebagaimana siklus pada Gambar~\ref{fig:siklus-uji} pada Bab~XVI.
+\end{catatabox}

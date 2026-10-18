@@ -1,0 +1,112 @@
+% chapters/16/section-02.tex
+\section{Checklist Fungsional}
+\label{sec:checklist-fungsional}
+
+\subsection{Menurunkannya dari GDD}
+
+\istilah{Checklist} fungsional adalah daftar pernyataan yang harus bernilai
+benar sebelum \istilah{build} dianggap selesai. Ia bukan daftar keinginan,
+melainkan daftar janji: setiap butirnya berasal dari sesuatu yang sudah Anda
+tuliskan pada \istilah{Game Design Document} (GDD) Anda.
+
+Cara menyusunnya tidak menuntut pekerjaan baru, hanya ketelitian membaca
+kembali. Buka GDD Anda, lalu ubah setiap pernyataan menjadi satu butir yang
+dapat diperiksa benar atau salah. Tiga contoh penurunannya diperlihatkan pada
+Tabel~\ref{tab:turun-checklist}.
+
+\begin{table}[htbp]
+\centering
+\caption{Menurunkan butir \istilah{checklist} dari pernyataan GDD}
+\label{tab:turun-checklist}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{5.2cm} Y@{}}
+\toprule
+\headrow \textbf{Pernyataan pada GDD} & \textbf{Butir \istilah{checklist} yang dapat diperiksa} \\
+\midrule
+``Pemain mengumpulkan kunci untuk membuka pintu akhir.'' &
+Benda bertanda \code{Pickup} yang tersedia berjumlah sekurang-kurangnya tiga,
+dan pintu akhir benar-benar terbuka setelah ketiganya diambil. \\
+\addlinespace
+``Permainan dapat diselesaikan dalam lima sampai sepuluh menit.'' &
+Satu kali penyelesaian penuh berlangsung antara lima dan sepuluh menit pada
+permainan yang dijalankan pertama kali. \\
+\addlinespace
+``Pemain yang jatuh tidak langsung kehilangan seluruh kemajuannya.'' &
+Tidak ada tempat di level yang membuat pemain tidak dapat melanjutkan
+permainan, dan tidak ada kemajuan yang hilang lebih dari satu bagian. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Perhatikan butir ketiga. Pernyataan GDD-nya bernilai rancangan, sedangkan
+butir \istilah{checklist}-nya bernilai pemeriksaan, dan di situlah letak
+gunanya: ia mengubah niat menjadi syarat yang dapat diuji, termasuk oleh
+pemeriksaan otomatis pada Bagian~\ref{sec:uji-otomatis}.
+
+\subsection{Tiga Kelompok Butir}
+
+\istilah{Checklist} yang hanya memuat satu jenis butir akan meninggalkan
+bagian yang penting. Susunlah butirnya dalam tiga kelompok berikut.
+
+\begin{enumerate}
+  \item \textbf{Mekanik.} Apakah setiap mekanik yang dijanjikan GDD benar-benar
+        ada dan berjalan? Lompatan, pengambilan benda, kondisi menang,
+        kondisi kalah.
+  \item \textbf{Integrasi.} Apakah bagian-bagian yang dibuat pada bab yang
+        berbeda benar-benar tersambung? Bunyi terdengar pada peristiwanya,
+        animasi berganti menurut keadaannya, antarmuka menampilkan angka yang
+        benar.
+  \item \textbf{Keseluruhan.} Apakah permainannya dapat diselesaikan dari awal
+        sampai akhir, tanpa berhenti, tanpa jalan buntu, dan dalam waktu yang
+        Anda janjikan?
+\end{enumerate}
+
+Kelompok ketiga adalah yang paling sering terlewat, sebab ia tidak dapat
+diperiksa sambil membuat. Ia hanya dapat diperiksa dengan menjalankan
+permainannya dari awal sampai akhir, dan itulah sebabnya ia memerlukan
+\istilah{build}, bukan \istilah{scene} yang sedang Anda sunting. Kebiasaan
+menyusun daftar periksa seperti ini juga dipakai pada penyusunan kurikulum dan
+rencana pembelajaran bidang permainan \cite{polibatam-kurikulum}.
+
+\subsection{Checklist Fungsional sebagai Berkas}
+
+\istilah{Checklist} Anda sebaiknya berupa berkas, bukan hafalan atau ingatan.
+Berkas itu memudahkan Anda menjalankannya berulang kali dan mencatat hasilnya
+setiap kali, sehingga kemajuan antara satu putaran dan putaran berikutnya
+terlihat. Bentuknya diperlihatkan pada Tabel~\ref{tab:checklist-kosong}.
+
+\begin{table}[htbp]
+\centering
+\caption{Bentuk \istilah{checklist} fungsional yang diisi setiap putaran pengujian}
+\label{tab:checklist-kosong}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{0.8cm} L{3.0cm} Y C{1.6cm}@{}}
+\toprule
+\headrow \textbf{No} & \textbf{Kelompok} & \textbf{Butir pemeriksaan} & \textbf{Putaran 1 / 2 / 3} \\
+\midrule
+1 & Mekanik & & \\[1.3em]
+\midrule
+2 & Mekanik & & \\[1.3em]
+\midrule
+3 & Integrasi & & \\[1.3em]
+\midrule
+4 & Integrasi & & \\[1.3em]
+\midrule
+5 & Keseluruhan & & \\[1.3em]
+\midrule
+\addlinespace
+\multicolumn{4}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Jumlah butir yang lulus: \dotfill} \\[1.4em]
+\addlinespace
+\multicolumn{4}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Butir yang belum lulus dan alasan belum diperbaikinya: \dotfill} \\[1.8em]
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{tipsbox}
+Batasi \istilah{checklist} Anda pada sekitar dua puluh sampai tiga puluh butir.
+Daftar yang terlalu panjang tidak akan pernah dijalankan sampai selesai,
+sedangkan daftar yang terlalu pendek akan melewatkan hal yang penting. Butir
+yang paling berguna adalah butir yang pernah gagal pada putaran sebelumnya.
+\end{tipsbox}

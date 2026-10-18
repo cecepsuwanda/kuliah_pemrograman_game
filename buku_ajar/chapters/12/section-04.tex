@@ -1,0 +1,63 @@
+% chapters/12/section-04.tex
+\section{Scene, Project, dan Penyimpanan}
+\label{sec:scene-project}
+
+\subsection{Scene sebagai Satu Level}
+
+Sebuah \istilah{scene} adalah satu tingkat permainan, yaitu kumpulan benda
+beserta seluruh pengaturannya. Sebuah permainan dapat tersusun atas beberapa
+\istilah{scene}, misalnya satu \istilah{scene} untuk menu utama dan satu
+\istilah{scene} untuk setiap tingkat permainan.
+
+Pada Pygame, padanan \istilah{scene} adalah keadaan yang Anda susun sendiri di
+dalam kode: daftar objek, posisi awalnya, dan pengaturannya. Pada Unity, seluruh
+keadaan itu disimpan sebagai berkas, sehingga dapat dibuka, disunting, dan
+dijalankan tanpa menulis kode.
+
+\subsection{Struktur Berkas Project}
+
+Setiap \istilah{project} Unity memiliki struktur folder yang tetap. Tiga di
+antaranya perlu Anda ketahui.
+
+\begin{description}
+  \item[\code{Assets}] Memuat seluruh berkas yang Anda buat dan impor: scene,
+        \istilah{script}, gambar, bunyi, dan aset lainnya. Folder inilah yang
+        perlu Anda simpan pada repositori Git.
+  \item[\code{Library}] Memuat berkas sementara hasil pengolahan Unity. Folder
+        ini dapat dibangun ulang dan \textbf{tidak boleh} disimpan pada
+        repositori, sebab ukurannya besar dan isinya berbeda pada setiap
+        komputer.
+  \item[\code{ProjectSettings}] Memuat pengaturan project, misalnya nama
+        project, ukuran layar, dan \istilah{scene} mana yang dijalankan lebih
+        dahulu.
+\end{description}
+
+\begin{peringatanbox}
+Pada blok Python, berkas yang tidak perlu disimpan didaftarkan pada
+\code{.gitignore}. Kebiasaan yang sama berlaku di sini, dan bahkan lebih
+penting: folder \code{Library} pada project Unity dapat berukuran beberapa
+gigabita. Daftarkan folder \code{Library}, \code{Temp}, \code{Obj}, dan
+\code{Build} pada berkas \code{.gitignore}, sedangkan folder \code{Assets} dan
+\code{ProjectSettings} harus disimpan.
+\end{peringatanbox}
+
+\subsection{Menyimpan Pekerjaan}
+
+Unity menyimpan scene tidak secara otomatis, sehingga penyimpanan perlu
+dilakukan dengan sengaja. Dua hal perlu dibedakan.
+
+\begin{itemize}
+  \item \textbf{Menyimpan scene} menyimpan susunan benda beserta pengaturannya.
+        Perintahnya tersedia pada menu \istilah{File}.
+  \item \textbf{Menyimpan \istilah{script}} menyimpan kode Anda. Berkas skrip
+        disimpan oleh penyunting kode yang Anda pakai, bukan oleh Unity, dan
+        Unity akan memuat ulang skripnya ketika Anda kembali ke jendelanya.
+\end{itemize}
+
+\begin{tipsbox}
+Urutan yang menghemat waktu: simpan skrip lebih dahulu melalui penyunting kode,
+baru simpan scene melalui Unity, lalu tekan tombol jalankan. Urutan itu
+menghindarkan Anda dari menjalankan scene dengan skrip versi lama, suatu
+keadaan yang membingungkan karena perubahan Anda seolah-olah tidak
+berpengaruh.
+\end{tipsbox}

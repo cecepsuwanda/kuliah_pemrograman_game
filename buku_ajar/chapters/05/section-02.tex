@@ -1,0 +1,94 @@
+% chapters/05/section-02.tex
+\section{Membaca Masukan yang Berlangsung Terus}
+\label{sec:masukan-berlangsung}
+
+Bagian~4.2 telah menjelaskan perbedaan peristiwa dan keadaan tombol. Bagian
+ini memakai perbedaan itu untuk menghasilkan gerak yang berlangsung selama
+tombol ditahan.
+
+\subsection{Keadaan Seluruh Tombol}
+
+Perintah \code{pygame.key.get_pressed()} mengembalikan keadaan seluruh tombol
+pada saat itu, bukan peristiwa. Nilainya dapat ditanyakan untuk tombol mana
+pun.
+
+\begin{kodekeluaran}
+keys = pygame.key.get_pressed()
+
+if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+    direction.x -= 1
+\end{kodekeluaran}
+
+Perhatikan susunan kalimatnya: pemeriksaan dilakukan tanpa menunggu peristiwa,
+sehingga hasilnya selalu menggambarkan keadaan terkini. Apabila tombol masih
+ditahan pada bingkai ini, nilainya benar; apabila sudah dilepas, nilainya
+salah. Karena itu cara ini dipakai untuk gerak yang berlangsung terus.
+
+Perhatikan pula bahwa dua tombol dihubungkan dengan \code{or}, sehingga pemain
+dapat memakai tombol panah maupun huruf WASD. Kebiasaan menyediakan kedua
+pilihan itu penting untuk kenyamanan pemain, terutama pada komputer jinjing
+yang tidak selalu memiliki papan tombol angka dan panah yang nyaman dipakai.
+
+\subsection{Menyusun Vektor Arah}
+
+Keempat pemeriksaan tombol disatukan menjadi satu vektor arah. Apabila tidak
+ada tombol yang ditekan, vektornya bernilai nol. Apabila satu tombol ditekan,
+panjang vektornya satu. Akan tetapi, apabila dua tombol ditekan bersamaan,
+misalnya kanan dan bawah, vektornya bernilai (1, 1) dengan panjang
+$\sqrt{2} \approx 1{,}414$.
+
+Panjang yang lebih besar itu membawa akibat yang nyata: objek bergerak 41
+persen lebih cepat ketika menempuh arah diagonal daripada ketika bergerak
+lurus. Perbandingan keduanya diperlihatkan pada
+Gambar~\ref{fig:normalisasi-diagonal}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/normalisasi-diagonal.tikz}
+\caption{Akibat gerak diagonal tanpa dan dengan penormalan vektor arah}
+\label{fig:normalisasi-diagonal}
+\end{figure}
+
+Penanganannya sederhana: panjang vektor arah dipaksa menjadi satu sebelum
+dikalikan kecepatan.
+
+\begin{kodekeluaran}
+if direction.length_squared() > 0:
+    velocity = direction.normalize() * speed
+else:
+    velocity = pygame.Vector2(0, 0)
+\end{kodekeluaran}
+
+Pemeriksaan \code{length_squared() > 0} perlu dilakukan lebih dahulu karena
+menormalkan vektor bernilai nol tidak bermakna dan dapat menghasilkan nilai
+yang tidak diharapkan.
+
+\begin{tipsbox}
+Untuk memeriksa apakah vektor bernilai nol, pakailah
+\code{length_squared()}, bukan \code{length()}. Keduanya memberi jawaban yang
+sama untuk keperluan itu, tetapi \code{length_squared()} lebih murah dihitung
+karena tidak menuntut operasi akar. Selisih waktunya tidak terasa pada satu objek,
+tetapi menjadi berarti ketika diperiksa untuk ratusan objek setiap bingkai.
+\end{tipsbox}
+
+\subsection{Urutan Pembacaan yang Benar}
+
+Vektor arah dibaca \textbf{sekali} pada setiap bingkai, yaitu
+pada awal tahap pembaruan, lalu dipakai untuk menghitung kecepatan. Membaca
+tombol berulang kali di dalam satu bingkai tidak salah, tetapi tidak ada
+gunanya: keadaan tombol tidak berubah di tengah bingkai.
+
+Yang perlu dihindari adalah membaca tombol pada tahap penayangan, misalnya di
+dalam fungsi penggambaran. Akibatnya, keadaan yang digambar tidak selalu sama
+dengan keadaan yang dihitung, dan jumlah pembacaan bergantung pada berapa kali
+fungsi penggambaran dipanggil. Kebiasaan yang benar adalah: masukan dibaca di
+tahap masukan, disimpan pada variabel, lalu dipakai oleh tahap-tahap
+berikutnya.
+
+\begin{catatabox}
+Gerak yang dihasilkan cara ini disebut gerak langsung: objek bergerak dengan
+kecepatan penuh begitu tombol ditekan, dan langsung berhenti begitu dilepas.
+Permainan yang menghendaki percepatan dan perlambatan---misalnya objek yang
+bertambah cepat secara berangsur---menambahkan tahap tersendiri untuk
+menyesuaikan kecepatan. Tahap itu dibahas pada Bab~VI.
+\end{catatabox}

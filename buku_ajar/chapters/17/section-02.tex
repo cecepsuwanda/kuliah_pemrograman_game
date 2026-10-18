@@ -1,0 +1,159 @@
+% chapters/17/section-02.tex
+\section{Bobot, Ambang, dan Konversi Nilai}
+\label{sec:bobot-nilai}
+
+\subsection{Komponen Penilaian dan Bobotnya}
+
+Nilai akhir mata kuliah ini disusun dari enam komponen. Bobotnya tidak
+dibagi rata, dan pembagian itu mengikuti kedudukan setiap CPMK pada rantai
+capaian, bukan mengikuti banyaknya pertemuan.
+
+\begin{table}[htbp]
+\centering
+\caption{Komponen penilaian dan bobotnya}
+\label{tab:komponen-nilai}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.4cm} C{1.5cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{Komponen} & \textbf{Bobot} & \textbf{CPMK} & \textbf{Bentuk} \\
+\midrule
+Tugas praktikum dan portofolio & 25\% & \CPMK{1}--\CPMK{4} &
+Artefak praktikum mingguan pada repositori. \\
+\addlinespace
+Kuis & 10\% & \CPMK{1}, \CPMK{2} &
+Tes singkat dua kali, 15--20 menit. \\
+\addlinespace
+Ujian Tengah Semester & 20\% & \CPMK{1}, \CPMK{2} &
+Tes tulis konsep dan uji kode. \\
+\addlinespace
+Mini Proyek AI & 10\% & \CPMK{2} &
+Kode mesin keadaan dan A*, laporan \istilah{playtest}, dan presentasi. \\
+\addlinespace
+Proyek Akhir & 30\% & \CPMK{3}, \CPMK{4} &
+Prototipe Unity, laporan, presentasi, dan uji fungsional. \\
+\addlinespace
+Partisipasi dan kehadiran & 5\% & \CPMK{1}--\CPMK{4} &
+Kehadiran dan keaktifan pada praktikum serta \istilah{playtest}. \\
+\midrule
+\textbf{Total} & \textbf{100\%} & & \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Bobot terbesar ada pada Proyek Akhir, yaitu 30 persen. Alasannya bukan karena
+proyek itu paling melelahkan, melainkan karena ia satu-satunya instrumen yang
+mengukur kemampuan \emph{menggabungkan} bagian-bagian, dan penggabungan itulah
+yang menjadi inti \CPMK{3} dan \CPMK{4}.
+
+\subsection{Sumbangan Setiap Komponen kepada CPMK}
+
+Tabel~\ref{tab:matriks-bobot} memperlihatkan bagaimana setiap komponen
+menyumbang kepada setiap CPMK. Cara membacanya sederhana: jumlahkan angka pada
+satu baris, dan Anda memperoleh bobot komponen itu; jumlahkan angka pada satu
+kolom, dan Anda memperoleh bobot CPMK itu terhadap nilai akhir.
+
+\begin{table}[htbp]
+\centering
+\caption{Sumbangan setiap komponen penilaian kepada setiap CPMK (dalam persen nilai akhir)}
+\label{tab:matriks-bobot}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.4cm} C{1.5cm} C{1.7cm} C{1.7cm} C{1.7cm} C{1.7cm}@{}}
+\toprule
+\headrow \textbf{Komponen} & \textbf{Bobot} & \textbf{\CPMK{1}} & \textbf{\CPMK{2}} & \textbf{\CPMK{3}} & \textbf{\CPMK{4}} \\
+\midrule
+Tugas praktikum dan portofolio & 25\% & 8 & 6 & 6 & 5 \\
+Kuis & 10\% & 5 & 5 & --- & --- \\
+Ujian Tengah Semester & 20\% & 10 & 10 & --- & --- \\
+Mini Proyek AI & 10\% & --- & 10 & --- & --- \\
+Proyek Akhir & 30\% & --- & --- & 15 & 15 \\
+Partisipasi dan kehadiran & 5\% & 2 & 1 & 1 & 1 \\
+\midrule
+\textbf{Total per CPMK} & \textbf{100\%} & \textbf{25\%} & \textbf{32\%} & \textbf{22\%} & \textbf{21\%} \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection{Kontribusi CPMK kepada CPL}
+
+Kedua CPL yang dibebankan kepada mata kuliah ini memperoleh sumbangan yang
+tidak seimbang, dan ketidakseimbangan itu disengaja: mata kuliah ini lebih
+banyak membangun kemampuan algoritmik daripada kemampuan mendesain sistem.
+
+\begin{table}[htbp]
+\centering
+\caption{Kontribusi CPMK kepada pencapaian CPL}
+\label{tab:kontribusi-cpl}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.6cm} L{4.6cm} C{1.6cm} Y@{}}
+\toprule
+\headrow \textbf{CPL} & \textbf{CPMK penyusun} & \textbf{Bobot} & \textbf{Bukti ketercapaian} \\
+\midrule
+\CPL{03} & \CPMK{1} (25\%) dan \CPMK{2} (32\%) & 57\% &
+Kode Pygame, jawaban kuis, dan jawaban UTS yang menunjukkan kemampuan
+merancang serta menganalisis algoritma permainan. \\
+\addlinespace
+\CPL{04} & \CPMK{3} (22\%) dan \CPMK{4} (21\%) & 43\% &
+Level Unity, prototipe akhir beserta asetnya, laporan pengembangan, dan hasil
+uji fungsional serta \istilah{playtest}. \\
+\midrule
+\textbf{Total} & & \textbf{100\%} & \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection{Ambang Ketercapaian dan Kelulusan}
+
+Ketercapaian CPMK tidak dinilai dari satu mahasiswa, melainkan dari seluruh
+kelas. Sebuah CPMK dinyatakan tercapai apabila sekurang-kurangnya 75 persen
+mahasiswa memperoleh nilai 70 atau lebih pada instrumen yang mengukurnya.
+Apabila ambang itu tidak tercapai, yang diperbaiki bukan mahasiswanya,
+melainkan pelaksanaan perkuliahan pada semester berikutnya.
+
+\begin{table}[htbp]
+\centering
+\caption{Ambang ketercapaian setiap CPMK dan tindak lanjutnya}
+\label{tab:ambang-cpmk}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.7cm} L{5.4cm} Y@{}}
+\toprule
+\headrow \textbf{CPMK} & \textbf{Indikator ketercapaian} & \textbf{Instrumen pemantauan} \\
+\midrule
+\CPMK{1} & \istilah{Game loop}, gerak berbasis \istilah{delta time}, fisika
+sederhana, dan tabrakan & Praktikum 01--05, Kuis 1, UTS \\
+\addlinespace
+\CPMK{2} & Perilaku pengejar, mesin keadaan, A*, dan paduannya &
+Praktikum 06--09, Kuis 2, Mini Proyek AI \\
+\addlinespace
+\CPMK{3} & Level Unity yang dapat dimainkan dengan fisika yang benar &
+Praktikum 09--10, Proyek Akhir \\
+\addlinespace
+\CPMK{4} & Integrasi aset visual, antarmuka, dan audio, serta evaluasi
+prototipe & Praktikum 11--12, Proyek Akhir, UAS \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Pada tingkat mahasiswa, kelulusan ditentukan oleh tiga ketentuan: nilai akhir
+sekurang-kurangnya 60, kehadiran sekurang-kurangnya 75 persen, dan penyerahan
+seluruh kelengkapan Proyek Akhir. Nilai akhir itu kemudian dikonversi menurut
+Tabel~\ref{tab:konversi-nilai}.
+
+\begin{table}[htbp]
+\centering
+\caption{Konversi nilai akhir}
+\label{tab:konversi-nilai}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.4cm} C{2.4cm} C{2.0cm} Y@{}}
+\toprule
+\headrow \textbf{Huruf} & \textbf{Rentang nilai} & \textbf{Angka mutu} & \textbf{Kategori ketercapaian} \\
+\midrule
+A & 80--100 & 4,00 & Sangat baik; seluruh Sub-CPMK tercapai \\
+B & 70--79 & 3,00 & Baik; Sub-CPMK tercapai dengan sedikit kekurangan \\
+C & 60--69 & 2,00 & Cukup; Sub-CPMK tercapai pada tingkat minimal \\
+D & 50--59 & 1,00 & Kurang; sebagian Sub-CPMK belum tercapai \\
+E & $<$ 50 & 0,00 & Gagal; Sub-CPMK tidak tercapai \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Konversi nilai mengikuti Pedoman Akademik \NamaPT\ dan dapat
+disesuaikan apabila terdapat ketentuan berbeda pada program studi.}
+\end{table}

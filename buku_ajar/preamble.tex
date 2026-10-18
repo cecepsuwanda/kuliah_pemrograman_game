@@ -1,0 +1,20 @@
+% =========================================================
+%  preamble.tex
+%  Penghubung konfigurasi global buku ajar.
+%  Konten buku tidak boleh bercampur dengan konfigurasi teknis.
+% =========================================================
+
+\input{config/packages}
+\input{config/styles}
+\input{config/commands}
+\input{config/environments}
+\input{config/listings}
+
+% --- Rujukan silang antar-bab pada kompilasi bab mandiri --
+% Ketika sebuah bab dikompilasi sendiri (latexmk -pdf chapter.tex di
+% dalam chapters/XX), label bab lain tidak tersedia. Label tersebut
+% diimpor dari main.aux melalui paket xr sehingga \refbab tetap
+% menghasilkan nomor yang benar (Arsitektur §40).
+\ifSubfilesClassLoaded{%
+  \IfFileExists{../../main.aux}{\externaldocument{../../main}}{}%
+}{}

@@ -1,0 +1,61 @@
+% chapters/14/section-04.tex
+\section{Mengganti Greybox dengan Aset}
+\label{sec:ganti-aset}
+
+\subsection{Urutan Penggantian}
+
+Penggantian balok abu-abu dengan aset sebaiknya dilakukan menurut urutan yang
+tetap, agar tidak ada yang terlewat.
+
+\begin{langkah}
+  \item \textbf{Pastikan mekaniknya sudah selesai.} Seluruh ukuran pada
+        Bagian~13.1 telah ditetapkan, dan levelnya sudah dapat dimainkan
+        dengan lancar.
+  \item \textbf{Impor seluruh asetnya lebih dahulu}, lalu atur
+        \istilah{importer setting}-nya satu per satu. Mengatur pengaturan
+        sekaligus pada awal pekerjaan lebih cepat daripada mengaturnya
+        sambil mengganti benda.
+  \item \textbf{Ganti benda satu per satu}, mulai dari yang paling terlihat
+        pemain: pemain, lalu rintangan, lalu latar. Setelah setiap
+        penggantian, jalankan scene-nya dan pastikan mekaniknya tidak berubah.
+  \item \textbf{Periksa bentuk batas bendanya.} Mengganti gambar benda tidak
+        mengubah \istilah{Collider}-nya secara otomatis. Apabila ukuran
+        gambarnya berbeda dari balok sebelumnya, bentuk batasnya perlu
+        disesuaikan.
+\end{langkah}
+
+Langkah keempat itu paling sering terlewat, dan gejalanya khas: benda yang
+sudah bergambar rapi tetap bertabrakan seolah-olah masih berupa balok
+sebelumnya.
+
+\subsection{Membandingkan Sebelum dan Sesudah}
+
+Perbandingan sebelum dan sesudah penggantian aset merupakan bagian dari luaran
+praktikum pada RPS. Perbandingan itu berguna untuk dua hal.
+
+Pertama, untuk memastikan bahwa mekaniknya \textbf{tidak berubah}. Apabila
+pemain tiba-tiba tidak dapat melompati celah yang sebelumnya terjangkau,
+kemungkinan besar bentuk batas bendanya berubah bersama gambarnya.
+
+Kedua, untuk memeriksa keputusan perancangan Anda. Sering kali aset yang
+sesungguhnya menuntut penyesuaian pada levelnya: celah yang tadinya terasa
+wajar menjadi terasa terlalu sempit, atau warna latar yang tadinya netral
+menjadi bertabrakan dengan warna pemain. Temuan semacam itu wajar, dan justru
+merupakan alasan mengapa level disusun lebih dahulu secara
+\istilah{greyboxing}.
+
+\begin{tipsbox}
+Simpan tangkapan layar sebelum dan sesudah penggantian aset, dan letakkan
+keduanya berdampingan pada laporan praktikum. Kebiasaan mendokumentasikan
+perubahan semacam itu berguna juga pada proyek akhir nanti, sebab laporan
+pengembangan yang memuat bukti perubahan lebih meyakinkan daripada yang hanya
+menceritakannya.
+\end{tipsbox}
+
+\begin{peringatanbox}
+Apabila Anda memakai aset buatan orang lain, catatlah sumbernya beserta
+lisensinya sejak awal, ketika asetnya baru diimpor. Mencari kembali asal-usul
+ratusan berkas pada akhir semester jauh lebih melelahkan daripada mencatatnya
+satu per satu ketika diimpor. Cara memilih aset beserta kewajiban atribusinya
+dibahas pada Bagian~\ref{sec:hak-aset}.
+\end{peringatanbox}

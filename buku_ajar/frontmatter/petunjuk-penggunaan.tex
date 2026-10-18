@@ -1,0 +1,135 @@
+% =========================================================
+%  frontmatter/petunjuk-penggunaan.tex
+%  Cara menggunakan buku ajar
+% =========================================================
+
+\chapter*{Petunjuk Penggunaan Buku}
+\addcontentsline{toc}{chapter}{Petunjuk Penggunaan Buku}
+\thispagestyle{plain}
+
+Bagian ini menjelaskan bagaimana buku ini disusun dan bagaimana cara
+menggunakannya agar kegiatan belajar berjalan efektif.
+
+\section*{Hubungan Buku dengan Rencana Pembelajaran Semester}
+
+Buku ini bukan dokumen yang berdiri sendiri. Isinya mengikuti Rencana
+Pembelajaran Semester (RPS) mata kuliah \NamaMK\ (\KodeMK) yang berlaku di
+Program Studi \NamaProdi. Setiap bab inti pada buku ini setara dengan satu
+materi pembelajaran pada RPS, dan satu materi tersebut menopang satu atau
+beberapa Sub-CPMK. Keterkaitan lengkap antara CPL, CPMK, Sub-CPMK, bab, dan
+minggu perkuliahan disajikan pada bagian \istilah{Capaian Pembelajaran dan
+Peta Kompetensi} yang menyusul sebelum Bab I.
+
+Karena itu, urutan bab sebaiknya diikuti sebagaimana adanya. Materi
+Python/Pygame pada Bab III sampai Bab XI menjadi prasyarat bagi materi
+Unity pada Bab XII sampai Bab XVI, dan Bab XVII baru bermakna setelah
+seluruh bab sebelumnya dikerjakan.
+
+\section*{Struktur Setiap Bab}
+
+Bab inti pada buku ini selalu memuat bagian berikut dengan urutan yang
+tetap, sehingga pembaca dapat menemukan informasi tertentu dengan cepat.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}L{4.3cm} Y@{}}
+\toprule
+\headrow \textbf{Bagian} & \textbf{Fungsi} \\
+\midrule
+Sub-CPMK Bab Ini &
+Rumusan kompetensi yang harus dicapai beserta indikator dan tingkat
+\istilah{Taksonomi Bloom}-nya. Bagian ini menjadi dasar penilaian bab. \\
+\addlinespace
+Tujuan Pembelajaran &
+Uraian singkat apa yang mampu dilakukan pembaca setelah menuntaskan bab. \\
+\addlinespace
+Pendahuluan &
+Pengait dengan bab sebelumnya dan peta isi bab. \\
+\addlinespace
+Materi Pokok &
+Pembahasan utama, terbagi menjadi beberapa subbab bernomor. \\
+\addlinespace
+Contoh &
+Contoh kerja yang dapat diikuti langkah demi langkah. \\
+\addlinespace
+Praktikum &
+Lembar kerja yang harus dikerjakan pada komputer, memakai kode program
+yang tersedia pada lampiran daring dan repositori mata kuliah. \\
+\addlinespace
+Latihan &
+Soal latihan dan butir refleksi untuk menguji pemahaman sendiri. \\
+\addlinespace
+Rangkuman &
+Ringkasan butir-butir penting bab. \\
+\addlinespace
+Checklist Pencapaian Kompetensi &
+Daftar indikator yang dapat dicentang pembaca untuk menilai kesiapan
+sebelum asesmen. \\
+\addlinespace
+Asesmen dan Instrumen Penilaian &
+Bentuk asesmen bab beserta rubrik atau kunci penilaiannya. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section*{Kotak Informasi}
+
+Sepanjang buku ini dipakai beberapa kotak dengan makna yang tetap.
+
+\begin{itemize}
+  \item \textbf{Tujuan Pembelajaran} dan \textbf{Sub-CPMK Bab Ini}:
+        kompetensi dan indikator yang menjadi sasaran bab.
+  \item \textbf{Contoh}: contoh kerja yang sebaiknya diketik ulang, bukan
+        hanya dibaca.
+  \item \textbf{Catatan}: penjelasan tambahan atau pengait dengan konsep
+        lain.
+  \item \textbf{Perhatian}: kesalahan yang sering terjadi dan perlu
+        dihindari.
+  \item \textbf{Tip Praktik}: saran praktis yang mempercepat pekerjaan.
+  \item \textbf{Praktikum}: lembar kerja yang harus diselesaikan.
+  \item \textbf{Checklist Pencapaian Kompetensi}: daftar periksa mandiri.
+  \item \textbf{Refleksi}: pertanyaan untuk meninjau kembali cara belajar.
+\end{itemize}
+
+\section*{Konvensi Penulisan}
+
+\begin{itemize}
+  \item Istilah asing dicetak miring, misalnya \istilah{game loop} dan
+        \istilah{collision}.
+  \item Nama berkas, perintah, nama fungsi, dan potongan kode di dalam teks
+        dicetak dengan huruf mesin tik, misalnya \code{pygame.time.Clock}.
+  \item Kode program yang panjang disajikan sebagai daftar kode bernomor
+        dan disimpan sebagai berkas terpisah pada folder \code{code/} proyek
+        buku, sehingga dapat dijalankan langsung di komputer.
+  \item Rujukan pustaka ditandai nomor dalam kurung siku, misalnya
+        \mbox{[R3]}, dan dapat dicari pada Daftar Pustaka di bagian akhir
+        buku. Nomor rujukan ini sama dengan nomor rujukan pada RPS mata
+        kuliah, sehingga penelusuran antara kedua dokumen menjadi mudah.
+\end{itemize}
+
+\section*{Cara Belajar yang Disarankan}
+
+\begin{langkah}
+  \item Bacalah bagian \istilah{Sub-CPMK Bab Ini} dan \istilah{Tujuan
+        Pembelajaran} lebih dahulu untuk mengetahui sasaran bab.
+  \item Bacalah materi pokok secara aktif: ketik ulang setiap potongan kode
+        yang penting, lalu ubah nilainya untuk melihat pengaruhnya.
+  \item Kerjakan praktikum sampai program berjalan. Jika program gagal,
+        bandingkan kembali dengan daftar kode pada bab dan periksa pesan
+        kesalahan yang muncul.
+  \item Kerjakan latihan tanpa melihat jawaban terlebih dahulu, lalu
+        gunakan checklist kompetensi untuk menilai diri sendiri.
+  \item Simpan setiap hasil praktikum pada repositori pribadi. Artefak
+        inilah yang menjadi bukti capaian pembelajaran pada penilaian
+        portofolio.
+  \item Jawab butir refleksi pada akhir bab secara jujur. Bagian yang terasa
+        sulit menunjukkan apa yang perlu diulang.
+\end{langkah}
+
+\begin{catatabox}
+Buku ini menuntut pekerjaan pada komputer. Pastikan lingkungan
+pengembangan sudah siap sebelum memulai Bab III. Langkah pemasangan
+Python, Pygame, dan editor diuraikan pada bab tersebut, dan pemasangan
+Unity diuraikan pada Bab XII.
+\end{catatabox}
+
+\clearpage

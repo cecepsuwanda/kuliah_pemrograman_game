@@ -1,0 +1,170 @@
+% chapters/01/section-02.tex
+\section{Buku Ajar dan RPS Berbasis OBE}
+\label{sec:obe}
+
+Buku ini disusun mengikuti Rencana Pembelajaran Semester (RPS) mata kuliah
+\NamaMK\ yang menganut pendekatan \istilah{Outcome-Based Education} (OBE).
+Bagian ini menjelaskan apa arti pendekatan tersebut, bagaimana buku ini
+menerjemahkannya menjadi urutan bab, dan apa yang perlu Anda ketahui agar
+dapat membaca buku ini sebagaimana dimaksudkan penulisnya.
+
+\subsection{Prinsip \istilah{Outcome-Based Education}}
+
+\istilah{Outcome-Based Education} adalah pendekatan penyusunan pembelajaran
+yang menetapkan lebih dahulu apa yang harus mampu dilakukan mahasiswa,
+kemudian memilih materi, aktivitas, dan asesmen yang mengarah pada kemampuan
+tersebut. Urutan berpikirnya terbalik dibandingkan penyusunan mata kuliah
+tradisional yang sering berangkat dari daftar materi yang ingin diajarkan.
+
+Dua konsekuensi pendekatan ini penting bagi Anda sebagai mahasiswa.
+
+\begin{enumerate}
+  \item \textbf{Penilaian berbasis kriteria, bukan peringkat.} Nilai Anda
+        ditentukan oleh sejauh mana kriteria ketercapaian terpenuhi, bukan
+        oleh posisi Anda dibandingkan teman sekelas. Jika seluruh mahasiswa
+        memenuhi kriteria, seluruhnya memperoleh nilai yang baik; tidak ada
+        kuota nilai rendah yang harus dipenuhi.
+  \item \textbf{Capaian diumumkan sejak awal.} Tidak ada maksud tersembunyi di
+        balik penilaian. Setiap bab pada buku ini memuat Sub-CPMK, indikator
+        pencapaian, aktivitas yang harus dikerjakan, dan instrumen penilaian
+        yang dipakai. Anda berhak mengetahui ukuran keberhasilan sebelum
+        pekerjaan dinilai.
+\end{enumerate}
+
+Pendekatan ini juga diikuti oleh banyak program studi ilmu komputer di
+Indonesia yang merancang mata kuliah pemrograman permainan dengan cara
+serupa, walaupun cakupan dan urutan materinya berbeda-beda
+\cite{its-rps-game,unima-rps-game,polibatam-kurikulum}. Perbedaan tersebut
+wajar karena bergantung pada capaian pembelajaran lulusan yang dibebankan
+pada masing-masing program studi.
+
+\subsection{Penyelarasan Konstruktif}
+
+Pelaksanaan OBE menuntut apa yang disebut \istilah{constructive alignment},
+yaitu keadaan ketika capaian, materi, aktivitas belajar, dan asesmen menunjuk
+arah yang sama. Gambar~\ref{fig:alur-obe} memperlihatkan alur penyusunan
+yang dipakai pada buku ini.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/alur-obe.tikz}
+\caption{Alur penyelarasan konstruktif dari capaian lulusan sampai bukti belajar}
+\label{fig:alur-obe}
+\end{figure}
+
+Alur tersebut dapat dibaca sebagai berikut.
+
+\begin{langkah}
+  \item \textbf{CPL} ditetapkan pada tingkat program studi. Untuk mata kuliah
+        ini, dua capaian yang dibebankan adalah \CPL{03} tentang perancangan
+        dan analisis algoritma serta penerapannya pada bahasa pemrograman
+        tertentu, dan \CPL{04} tentang perancangan, implementasi, serta
+        evaluasi solusi berbasis \istilah{computing}.
+  \item \textbf{\CPMK} menjabarkan CPL menjadi empat kemampuan yang dapat
+        diuji pada akhir mata kuliah, sebagaimana ditampilkan pada
+        Tabel~\ref{tab:capaian-bukti}.
+  \item \textbf{Sub-CPMK} memecah setiap CPMK menjadi kemampuan yang lebih
+        spesifik dan terukur pada tingkat bab. Mata kuliah ini memiliki
+        tiga belas Sub-CPMK, dan setiap bab inti pada buku ini menopang satu
+        di antaranya.
+  \item \textbf{Materi} yang dipelajari dipilih agar kemampuan tersebut dapat
+        terbentuk, bukan karena materi itu menarik atau mudah diajarkan.
+  \item \textbf{Aktivitas} dirancang agar mahasiswa benar-benar berlatih
+        menggunakan kemampuan itu, bukan hanya mendengarnya dijelaskan.
+  \item \textbf{Asesmen} disusun mengukur kemampuan yang sama, dengan
+        indikator yang tampak pada pekerjaan mahasiswa.
+  \item \textbf{Bukti belajar} menjadi akhir alurnya: kode program, level
+        yang dapat dimainkan, laporan \istilah{playtest}, dan lembar refleksi.
+\end{langkah}
+
+Sebagai contoh, \SUBCPMK{1.2} menuntut kemampuan merancang dan
+mengimplementasikan gerak objek berbasis \istilah{delta time} dan vektor pada
+Pygame. Materi penopangnya adalah Bab~V. Aktivitasnya adalah praktikum
+menggerakkan karakter dengan kecepatan tetap pada 30 FPS dan 60 FPS.
+Asesmennya adalah penilaian artefak kode tersebut dengan rubrik, ditambah
+butir kuis yang menanyakan mengapa kecepatan harus dikalikan
+\istilah{delta time}. Ketiga unsur itu menunjuk kemampuan yang sama, yaitu
+\SUBCPMK{1.2} itu sendiri. Contoh pembacaan yang lebih rinci diberikan pada
+Bagian~\ref{sec:contoh-bab}.
+
+Penyelarasan semacam ini mencegah dua kesalahan yang sering terjadi pada
+mata kuliah pemrograman: mengajarkan banyak hal yang tidak pernah dinilai,
+dan menilai sesuatu yang tidak pernah dilatihkan.
+
+\subsection{Keterkaitan Buku Ajar dengan RPS}
+
+Buku ini bukan pengganti RPS, melainkan bahan belajar yang mengikuti RPS
+tersebut. Tiga hal perlu Anda ketahui tentang keterkaitannya.
+
+\begin{itemize}
+  \item \textbf{Satu bab setara dengan satu materi pembelajaran.} Bab III
+        sampai Bab XVI pada buku ini berpasangan satu-satu dengan Materi 1
+        sampai Materi 14 pada RPS. Bab I, Bab II, dan Bab XVII bersifat
+        pengantar dan penutup sehingga tidak memiliki pasangan materi.
+  \item \textbf{Nomor rujukan pustaka sama.} Rujukan pada buku ini bernomor
+        \mbox{[R1]} sampai \mbox{[R35]}, persis seperti penomoran pada RPS.
+        Jika dosen Anda menyebut rujukan \mbox{[R8]} di kelas, rujukan itu
+        menunjuk pustaka yang sama pada kedua dokumen.
+  \item \textbf{Peta pemetaan tersedia di bagian awal buku.} Tabel yang
+        menghubungkan bab, materi, Sub-CPMK, dan minggu perkuliahan diletakkan
+        pada bagian \istilah{Capaian Pembelajaran dan Peta Kompetensi}, bukan
+        diulang pada setiap bab. Gunakan tabel tersebut setiap kali Anda
+        ingin mengetahui mengapa sebuah bab dibahas pada minggu tertentu.
+\end{itemize}
+
+Apabila dosen pengampu menyesuaikan urutan atau penekanan materi sesuai
+kebutuhan kelas, urutan bab pada buku ini tetap dapat diikuti karena setiap
+bab dirancang sebagai kesatuan yang utuh: memiliki capaian, materi,
+praktikum, dan asesmennya sendiri.
+
+\subsection{Peran Setiap Dokumen Rujukan}
+
+Selain RPS dan buku ini, tersedia beberapa kelompok dokumen lain. Membedakan
+perannya akan menghemat waktu Anda, terutama ketika mencari jawaban atas
+persoalan teknis.
+
+\begin{table}[htbp]
+\centering
+\caption{Peran setiap dokumen rujukan}
+\label{tab:peran-dokumen}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.6cm} L{4.6cm} Y@{}}
+\toprule
+\headrow \textbf{Dokumen} & \textbf{Fungsi} & \textbf{Dipakai ketika} \\
+\midrule
+RPS mata kuliah &
+Rencana resmi: capaian, materi, metode, alokasi waktu, bobot penilaian, dan
+rubrik. &
+Anda ingin mengetahui kapan suatu materi dibahas, berapa bobotnya, atau apa
+kriteria kelulusan. \\
+\addlinespace
+Buku ajar ini &
+Bahan belajar dan lembar kerja: penjelasan materi, contoh, praktikum, latihan,
+dan instrumen asesmen per bab. &
+Anda sedang mempelajari materi atau mengerjakan praktikum. \\
+\addlinespace
+Dokumentasi resmi Python, Pygame, dan Unity \cite{pygame-docs,unity-learn} &
+Rujukan teknis terkini: daftar fungsi, parameter, dan perilaku pustaka. &
+Program Anda berjalan tidak seperti yang diharapkan dan Anda perlu memeriksa
+perilaku fungsi yang dipakai. \\
+\addlinespace
+Buku dan bahan kuliah rujukan \mbox{[R1]}--\mbox{[R11]} &
+Penjelasan tambahan, contoh permainan utuh, dan sudut pandang lain atas materi
+yang sama. &
+Anda ingin memperdalam suatu topik atau melihat contoh penerapan yang lebih
+besar. \\
+\addlinespace
+Repositori Git Anda &
+Bukti portofolio: riwayat pekerjaan praktikum mingguan beserta catatannya. &
+Sepanjang semester, mulai dari praktikum pertama. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Buku ini menjelaskan cara kerja dan alasan di balik setiap teknik, sedangkan
+dokumentasi resmi menjelaskan pilihan yang tersedia secara lengkap. Ketika
+keduanya berbeda karena pustaka diperbarui, dokumentasi resmi yang berlaku.
+Versi perkakas yang dipakai pada buku ini dicatat pada Bab~III untuk Python
+dan Pygame, serta pada Bab~XII untuk Unity.
+\end{catatabox}

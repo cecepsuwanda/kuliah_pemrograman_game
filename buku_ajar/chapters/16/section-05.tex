@@ -1,0 +1,102 @@
+% chapters/16/section-05.tex
+\section{Log Bug dan Perbaikan}
+\label{sec:log-bug}
+
+\subsection{Catatan yang Dapat Diulang}
+
+Sebuah temuan baru berguna apabila orang lain dapat mengulanginya kembali.
+``Bunyinya kadang tidak terdengar'' tidak dapat diperbaiki, sebab Anda tidak
+tahu kapan ia terjadi. ``Bunyi lompat tidak terdengar apabila pemain melompat
+kurang dari setengah detik sesudah mendarat'' dapat diperbaiki pada hari yang
+sama.
+
+Perbedaan keduanya terletak pada tiga hal yang harus ada pada setiap catatan
+\istilah{bug}: apa yang terjadi, apa yang seharusnya terjadi, dan urutan
+tindakan yang membuatnya terjadi. Ketiganya diperlihatkan pada
+Tabel~\ref{tab:log-bug}.
+
+\begin{table}[htbp]
+\centering
+\caption{Log \istilah{bug} beserta kolom yang harus diisi}
+\label{tab:log-bug}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{0.8cm} L{2.4cm} Y C{1.8cm} C{1.4cm}@{}}
+\toprule
+\headrow \textbf{No} & \textbf{Jenis} & \textbf{Urutan yang menyebabkannya, dan hasil yang salah} & \textbf{Berat} & \textbf{Status} \\
+\midrule
+1 & \istilah{Soft-lock} &
+Pemain berjalan ke kiri di ujung lorong, lalu jatuh ke lubang. Seluruh tombol
+tidak lagi mengeluarkan pemain dari lubang itu; permainan harus dimulai ulang.
+& Berat & Belum \\
+\addlinespace
+2 & Integrasi &
+Bunyi pengambilan benda tidak terdengar pada benda ketiga. Benda pertama dan
+kedua berbunyi. Skornya tetap bertambah pada ketiganya.
+& Sedang & Belum \\
+\addlinespace
+3 & Tampilan &
+Animasi diam tetap berjalan ketika pemain berlari, apabila berlari dimulai
+ketika pemain baru saja mendarat.
+& Ringan & Belum \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection{Menimbang Beratnya}
+
+Tidak semua temuan perlu diperbaiki, dan waktu yang tersisa menjelang
+pengumpulan selalu terbatas. Karena itu, setiap temuan sebaiknya ditimbang
+beratnya, dan penimbangan itu dilakukan atas dua pertanyaan.
+
+\begin{enumerate}
+  \item \textbf{Apakah permainannya masih dapat diselesaikan?} Temuan yang
+        menjawab ``tidak'' selalu paling berat, walaupun ia jarang terjadi.
+        Butir pertama pada Tabel~\ref{tab:log-bug} adalah contohnya.
+  \item \textbf{Berapa banyak pemain yang akan menemukannya?} Temuan yang
+        dialami setiap pemain pada menit pertama mendesak; temuan yang hanya
+        muncul pada keadaan yang jarang dapat ditunda.
+\end{enumerate}
+
+\begin{table}[htbp]
+\centering
+\caption{Skala berat temuan yang dipakai pada praktikum bab ini}
+\label{tab:berat-temuan}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{1.8cm} L{4.6cm} Y@{}}
+\toprule
+\headrow \textbf{Berat} & \textbf{Tandanya} & \textbf{Tindakan} \\
+\midrule
+Berat & Permainan tidak dapat diselesaikan, atau kemajuannya hilang. &
+Diperbaiki sebelum sesi \istilah{playtest} berikutnya. \\
+\addlinespace
+Sedang & Permainannya selesai, tetapi satu bagian yang dijanjikan GDD tidak
+bekerja. &
+Diperbaiki, dan diperiksa kembali pada putaran berikutnya. \\
+\addlinespace
+Ringan & Tampilan atau bunyi yang tidak sesuai, tanpa mengubah jalannya
+permainan. &
+Diperbaiki apabila waktu tersisa; dicatat sebagai kekurangan yang diketahui. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{tipsbox}
+Kebiasaan yang menghemat waktu: perbaiki temuan berat satu per satu, dan
+jalankan \istilah{checklist} fungsional sesudah setiap perbaikan. Menggabungkan
+beberapa perbaikan lalu menjalankan pemeriksaan sekali saja membuat Anda tidak
+tahu perbaikan mana yang bekerja, dan perbaikan mana yang justru menimbulkan
+temuan baru.
+\end{tipsbox}
+
+\subsection{Dari Temuan kembali ke GDD}
+
+Lingkaran pengujian belum selesai pada perbaikan. Temuan yang berulang pada
+beberapa sesi \istilah{playtest} biasanya bukan kesalahan pelaksanaan,
+melainkan tanda bahwa rancangannya memang belum jelas. Apabila setiap penguji
+melewati pintu yang belum terbuka, kemungkinan besar GDD Anda tidak pernah
+menjelaskan bahwa pintu itu terkunci, sehingga Anda sendiri tidak pernah
+memasang petunjuknya.
+
+Karena itu, temuan yang berulang perlu diperiksa terhadap GDD, dan GDD itu
+diperbarui. Dengan begitu, siklusnya benar-benar kembali ke awal, sebagaimana
+diperlihatkan pada Gambar~\ref{fig:siklus-uji}.

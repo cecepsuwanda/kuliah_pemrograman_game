@@ -1,0 +1,134 @@
+% chapters/01/section-01.tex
+\section{Ruang Lingkup dan Capaian Mata Kuliah}
+\label{sec:ruang-lingkup}
+
+Permainan digital yang tampak sederhana menyimpan satu kenyataan yang jarang
+disadari pemainnya. Di balik setiap lompatan karakter, setiap musuh yang
+mengejar, dan setiap efek suara ketika koin terambil, ada program yang terus
+berjalan dan mengambil keputusan puluhan kali setiap detik. Mata kuliah
+\NamaMK\ mengajak Anda membangun program semacam itu, bukan sekadar
+memainkannya.
+
+\subsection{Makna Memprogram Permainan}
+
+Memprogram permainan berarti menulis program yang menerima masukan pemain,
+memperbarui keadaan dunia permainan, lalu menampilkan hasilnya kembali kepada
+pemain, dan mengulangi ketiga langkah tersebut terus-menerus selama permainan
+berjalan \cite{nystrom-gameloop}. Pola kerja ini berbeda dari program yang
+biasa Anda tulis pada mata kuliah pemrograman dasar. Program penghitung nilai
+rata-rata berjalan sekali, mengeluarkan hasil, lalu berhenti. Program
+permainan tidak pernah berhenti sendiri; ia berhenti hanya ketika pemain
+memilih keluar atau permainan mencapai keadaan akhir.
+
+Perbedaan itu membawa konsekuensi teknis yang menjadi inti mata kuliah ini.
+Karena program berjalan terus, waktu menjadi unsur yang harus dikelola, bukan
+diabaikan. Karena pemain dapat menekan tombol kapan saja, masukan harus
+ditangani sebagai peristiwa, bukan sebagai urutan pertanyaan yang diajukan
+program. Karena objek bergerak, posisi harus diperbarui dengan memperhatikan
+selang waktu antar-bingkai agar kecepatan gerak tidak bergantung pada
+komputer yang dipakai. Karena objek dapat bertabrakan, perlu aturan yang
+menentukan kapan dua objek dianggap bersentuhan dan apa yang terjadi
+sesudahnya.
+
+Seluruh persoalan tersebut akan Anda selesaikan sendiri pada bagian pertama
+buku ini, dengan menulis kodenya dalam bahasa Python dan pustaka Pygame
+\cite{sweigart-mg}. Baru setelah mekanisme dasarnya dipahami, pekerjaan
+dipindahkan ke \istilah{game engine} Unity, tempat sebagian besar persoalan
+tersebut sudah ditangani oleh perkakas sehingga perhatian dapat dialihkan
+kepada desain level, penyajian aset, dan pengujian hasil \cite{unity-leveldesign}.
+
+\subsection{Kedudukan Mata Kuliah dan Pengetahuan Prasyarat}
+
+Mata kuliah ini berbobot \BobotSKS, diselenggarakan pada semester
+\SemesterMK, dan menuntut mata kuliah prasyarat \MataKuliahPrasyarat.
+Prasyarat tersebut bukan formalitas. Buku ini mengandaikan Anda sudah mampu
+menggunakan variabel dan tipe data, menulis percabangan dan perulangan,
+menyusun fungsi beserta parameternya, serta menggunakan struktur data dasar
+seperti daftar dan kamus. Kemampuan membaca pesan kesalahan dan menelusuri
+penyebab kegagalan program juga diandaikan sudah terbentuk.
+
+Materi prasyarat tersebut tidak diulang dalam buku ini. Ketika Bab IV
+memperkenalkan \istilah{game loop} berbentuk perulangan tanpa akhir,
+pembahasannya berpijak pada pemahaman Anda tentang perulangan, bukan
+mengajarkannya kembali. Jika ada bagian prasyarat yang sudah lama tidak Anda
+pakai, sebaiknya disegarkan lebih dahulu; Bab II memuat pengingat singkat
+mengenai konsep yang akan dipakai berulang kali.
+
+Capaian mata kuliah ini juga menjadi bekal bagi mata kuliah lanjutan dan
+tugas akhir yang menuntut pembangunan perangkat lunak interaktif. Alasannya,
+kompetensi yang dilatih di sini---mengelola siklus kerja yang berjalan terus,
+menangani masukan, dan menguji hasil secara sistematis---berlaku umum pada
+perangkat lunak yang berinteraksi langsung dengan penggunanya.
+
+\subsection{Ruang Lingkup dan Batasan Pembahasan}
+
+Agar jelas apa yang menjadi tanggung jawab buku ini, batasan berikut
+ditetapkan sejak awal.
+
+\begin{itemize}
+  \item \textbf{Sasaran utama adalah permainan dua dimensi} yang dibangun
+        dengan Python/Pygame dan dengan Unity. Permainan tiga dimensi dibahas
+        hanya sebatas konsep yang dipakai bersama, misalnya perbedaan
+        \istilah{Collider2D} dan \istilah{Collider3D} pada Bab XIII.
+  \item \textbf{Mekanisme internal permainan ditulis sendiri} pada Blok I dan
+        Blok II, tanpa memanfaatkan \istilah{engine}. Tujuannya agar Anda
+        mengenal cara kerja sistem permainan, bukan hanya cara memanggil
+        perkakas.
+  \item \textbf{Kecerdasan buatan yang dibahas terbatas pada AI dasar}: NPC
+        yang mengejar pemain, mesin keadaan (\istilah{Finite State Machine}),
+        dan pencarian jalur A*. Kecerdasan buatan berbasis pembelajaran mesin
+        berada di luar cakupan.
+  \item \textbf{Aset yang dipakai adalah aset siap pakai} yang boleh
+        digunakan secara bebas, dengan penekanan pada cara mengimpor dan
+        mengonfigurasinya. Pembuatan model dan animasi dari nol tidak dibahas.
+  \item \textbf{Aspek bisnis dan distribusi permainan tidak dibahas}:
+        monetisasi, penerbitan ke toko aplikasi, \istilah{multiplayer}
+        melalui jaringan, dan penyelenggaraan peladen berada di luar lingkup
+        mata kuliah ini.
+\end{itemize}
+
+\subsection{Capaian Akhir dan Bukti Belajarnya}
+
+Empat capaian pembelajaran mata kuliah (\CPMK) yang harus Anda kuasai
+dirumuskan pada Tabel~\ref{tab:capaian-bukti}. Perhatikan kolom terakhir:
+setiap capaian ditopang oleh artefak nyata yang dapat diperiksa, bukan oleh
+nilai ujian semata. Cara berpikir seperti ini akan Anda temui berulang kali
+sepanjang buku dan diuraikan lebih jauh pada
+Bagian~\ref{sec:kurikulum-obe}.
+
+\begin{table}[htbp]
+\centering
+\caption{Capaian akhir mata kuliah dan bukti belajarnya}
+\label{tab:capaian-bukti}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.7cm} L{4.6cm} L{3.6cm} Y@{}}
+\toprule
+\headrow \textbf{CPMK} & \textbf{Kemampuan akhir} & \textbf{Penopang} & \textbf{Bukti yang diperiksa} \\
+\midrule
+\CPMK{1} &
+Merancang \istilah{game loop} dan logika fisika sederhana. &
+Bab III--VII (Materi 1--5) &
+Prototipe permainan 2D berbasis Pygame; tugas praktikum 01--05; jawaban UTS. \\
+\addlinespace
+\CPMK{2} &
+Menerapkan algoritma kecerdasan buatan dasar untuk NPC. &
+Bab VIII--XI (Materi 6--9) &
+Mini proyek AI berisi NPC dengan mesin keadaan dan A*, beserta laporan
+\istilah{playtest}. \\
+\addlinespace
+\CPMK{3} &
+Menggunakan \istilah{game engine} Unity untuk membangun level. &
+Bab XII--XIII (Materi 10--11) &
+Level Unity yang dapat dimainkan beserta kontrol pemain dan konfigurasi
+fisikanya. \\
+\addlinespace
+\CPMK{4} &
+Mengintegrasikan aset audio dan visual ke dalam interaksi \istilah{game}. &
+Bab XIV--XVI (Materi 12--14) &
+Prototipe Unity lengkap dengan aset visual, animasi, antarmuka, dan audio;
+laporan \istilah{playtest}; presentasi demo. \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Sumber: disusun dari RPS mata kuliah \NamaMK\ (\KodeMK) dan pemetaan
+CPL--CPMK--Sub-CPMK.}
+\end{table}

@@ -1,0 +1,195 @@
+% =========================================================
+%  sections/08-penilaian.tex
+%  Bagian 8 — Kriteria, Indikator, dan Bobot Penilaian
+% =========================================================
+
+\section{Kriteria, Indikator, dan Bobot Penilaian}
+\label{sec:penilaian}
+
+\subsection{Prinsip Penilaian}
+
+\begin{itemize}
+  \item Penilaian berbasis kriteria (\istilah{criterion-referenced}), bukan
+        berdasarkan sebaran normal nilai kelas. Mahasiswa dinilai terhadap
+        kriteria ketercapaian Sub-CPMK yang telah ditetapkan, bukan terhadap
+        prestasi relatif teman sekelas.
+  \item Seluruh teknik dan alat asesmen dipetakan secara eksplisit ke Sub-CPMK
+        dan CPMK, sehingga setiap nilai yang diperoleh dapat ditelusuri
+        kontribusinya terhadap CPL.
+  \item Bobot penilaian ditentukan sesuai kontribusi komponen terhadap
+        pencapaian CPMK, bukan berdasarkan kemudahan pelaksanaannya.
+  \item Penilaian bersifat autentik: mahasiswa dinilai melalui artefak nyata
+        berupa kode program, level, \istilah{build}, dan laporan, bukan semata
+        melalui hafalan.
+  \item Umpan balik diberikan secara formatif pada setiap praktikum agar
+        mahasiswa dapat memperbaiki pekerjaannya sebelum asesmen sumatif.
+\end{itemize}
+
+\subsection{Komponen Penilaian dan Bobot}
+
+\begin{table}[htbp]
+\centering
+\caption{Komponen penilaian, instrumen, dan bobot}
+\label{tab:komponen-nilai}
+\begin{tabularx}{\textwidth}{@{}L{3.6cm} Y L{2.5cm} C{1.6cm}@{}}
+\toprule
+\headrow \textbf{Komponen} & \textbf{Bentuk Instrumen} & \textbf{CPMK yang Diukur} & \textbf{Bobot} \\
+\midrule
+Tugas Praktikum dan Portofolio &
+Penilaian artefak kode mingguan melalui repositori Git; enam sampel dinilai menggunakan rubrik kesesuaian fungsional, kualitas kode, dan kelengkapan dokumentasi. &
+\CPMK{1}--\CPMK{4} & 25\% \\
+\addlinespace
+Kuis &
+Tes singkat dua kali (15--20 menit) untuk mengukur pemahaman konsep secara formatif. &
+\CPMK{1}, \CPMK{2} & 10\% \\
+\addlinespace
+Ujian Tengah Semester (UTS) &
+Tes tulis konsep dan uji kode (\istilah{debugging} serta penyempurnaan kode Pygame dalam batas waktu). &
+\CPMK{1}, \CPMK{2} & 20\% \\
+\addlinespace
+Mini Proyek AI &
+Penilaian produk kelompok (kode FSM dan A*), laporan \istilah{playtest}, dan presentasi. &
+\CPMK{2} & 10\% \\
+\addlinespace
+Proyek Akhir &
+Penilaian prototipe Unity (level, aset visual, audio, UI), laporan pengembangan, presentasi, dan uji fungsional pada UAS. &
+\CPMK{3}, \CPMK{4} & 30\% \\
+\addlinespace
+Partisipasi dan Kehadiran &
+Observasi kehadiran dan keaktifan dalam praktikum, diskusi, serta kegiatan \istilah{playtest}. &
+\CPMK{1}--\CPMK{4} & 5\% \\
+\midrule
+\textbf{Total} & & & \textbf{100\%} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Matriks Bobot Komponen terhadap CPMK}
+
+\begin{table}[htbp]
+\centering
+\caption{Distribusi bobot setiap komponen penilaian pada CPMK (dalam persen nilai akhir)}
+\label{tab:matriks-bobot}
+\begin{tabularx}{\textwidth}{@{}L{4.6cm} C{1.8cm} C{1.7cm} C{1.7cm} C{1.7cm} C{1.7cm}@{}}
+\toprule
+\headrow \textbf{Komponen} & \textbf{Bobot} & \textbf{\CPMK{1}} & \textbf{\CPMK{2}} & \textbf{\CPMK{3}} & \textbf{\CPMK{4}} \\
+\midrule
+Tugas Praktikum dan Portofolio & 25\% & 8 & 6 & 6 & 5 \\
+Kuis                           & 10\% & 5 & 5 & --- & --- \\
+Ujian Tengah Semester          & 20\% & 10 & 10 & --- & --- \\
+Mini Proyek AI                 & 10\% & --- & 10 & --- & --- \\
+Proyek Akhir                   & 30\% & --- & --- & 15 & 15 \\
+Partisipasi dan Kehadiran      & 5\%  & 2 & 1 & 1 & 1 \\
+\midrule
+\textbf{Total per CPMK}        & \textbf{100\%} & \textbf{25\%} & \textbf{32\%} & \textbf{22\%} & \textbf{21\%} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Kontribusi CPMK terhadap CPL}
+
+\begin{table}[htbp]
+\centering
+\caption{Kontribusi CPMK terhadap pencapaian CPL pada mata kuliah ini}
+\label{tab:kontribusi-cpl}
+\begin{tabularx}{\textwidth}{@{}L{2.4cm} L{6.4cm} C{2.4cm} Y@{}}
+\toprule
+\headrow \textbf{CPL} & \textbf{CPMK Penyusun} & \textbf{Bobot} & \textbf{Bukti Ketercapaian} \\
+\midrule
+\CPL{03} & \CPMK{1} (25\%) dan \CPMK{2} (32\%) & 57\% &
+Kode program Pygame mahasiswa, hasil kuis, dan jawaban UTS yang menunjukkan kemampuan merancang serta menganalisis algoritma permainan. \\
+\addlinespace
+\CPL{04} & \CPMK{3} (22\%) dan \CPMK{4} (21\%) & 43\% &
+Level Unity, prototipe akhir beserta asetnya, laporan pengembangan, dan hasil uji fungsional serta \istilah{playtest}. \\
+\midrule
+\textbf{Total} & & \textbf{100\%} & \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Rubrik Penilaian}
+
+\subsubsection{Rubrik Mini Proyek AI}
+
+\begin{table}[htbp]
+\centering
+\caption{Rubrik penilaian mini proyek AI}
+\label{tab:rubrik-miniproyek}
+\begin{tabularx}{\textwidth}{@{}L{4.4cm} C{1.6cm} Y@{}}
+\toprule
+\headrow \textbf{Kriteria} & \textbf{Bobot} & \textbf{Deskripsi Capaian} \\
+\midrule
+Implementasi FSM & 25\% &
+NPC memiliki \istilah{state} yang jelas dan transisi yang berjalan sesuai kondisi jarak serta \istilah{cooldown}; tidak terjadi kebuntuan \istilah{state}. \\
+\addlinespace
+Implementasi A* & 25\% &
+A* menghasilkan jalur yang benar pada peta berhalangan, menggunakan struktur data antrean prioritas, dan heuristik yang dapat dipertanggungjawabkan. \\
+\addlinespace
+Integrasi FSM dan A* & 20\% &
+Pencarian jalur dipicu tepat pada \istilah{state chase}, \istilah{repath} dilakukan secara berkala, dan kinerja tetap terjaga. \\
+\addlinespace
+Pengujian dan laporan \istilah{playtest} & 20\% &
+Terdapat minimal tiga skenario uji, hasil pengamatan yang objektif, dan rumusan perbaikan yang ditindaklanjuti. \\
+\addlinespace
+Presentasi dan kerja sama & 10\% &
+Demonstrasi jelas, setiap anggota memahami bagiannya, serta mampu menjawab pertanyaan penguji. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{Rubrik Proyek Akhir}
+
+\begin{table}[htbp]
+\centering
+\caption{Rubrik penilaian proyek akhir}
+\label{tab:rubrik-proyekakhir}
+\begin{tabularx}{\textwidth}{@{}L{4.4cm} C{1.6cm} Y@{}}
+\toprule
+\headrow \textbf{Kriteria} & \textbf{Bobot} & \textbf{Deskripsi Capaian} \\
+\midrule
+Fungsionalitas mekanik inti dan level & 30\% &
+Level dapat dimainkan dari awal hingga selesai tanpa penghambat; mekanik inti bekerja sesuai rancangan; kontrol pemain responsif. \\
+\addlinespace
+Integrasi aset visual, animasi, dan UI & 25\% &
+Aset visual terpasang rapi, animasi berjalan sesuai keadaan, dan elemen UI menampilkan informasi permainan secara benar. \\
+\addlinespace
+Integrasi audio dan umpan balik interaksi & 15\% &
+BGM dan SFX terpicu pada peristiwa yang tepat dengan volume dan \istilah{timing} yang wajar. \\
+\addlinespace
+Kualitas kode dan struktur \istilah{project} & 15\% &
+\istilah{Project} tersusun rapi, \istilah{script} terorganisasi, penamaan konsisten, dan bebas dari kode mati yang tidak perlu. \\
+\addlinespace
+\istilah{Playtest}, laporan, dan presentasi & 15\% &
+Lembar \istilah{playtest} terisi, \istilah{log bug} lengkap dengan status penanganan, laporan jelas, dan presentasi tepat waktu. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Kriteria Ketuntasan dan Konversi Nilai}
+
+\begin{table}[htbp]
+\centering
+\caption{Konversi nilai akhir}
+\label{tab:konversi-nilai}
+\begin{tabularx}{\textwidth}{@{}C{2.0cm} C{3.0cm} C{2.4cm} Y@{}}
+\toprule
+\headrow \textbf{Huruf} & \textbf{Rentang Nilai} & \textbf{Angka Mutu} & \textbf{Kategori Ketercapaian} \\
+\midrule
+A & 80--100 & 4,00 & Sangat baik; seluruh Sub-CPMK tercapai \\
+B & 70--79  & 3,00 & Baik; Sub-CPMK tercapai dengan sedikit kekurangan \\
+C & 60--69  & 2,00 & Cukup; Sub-CPMK tercapai pada tingkat minimal \\
+D & 50--59  & 1,00 & Kurang; sebagian Sub-CPMK belum tercapai \\
+E & $<$ 50  & 0,00 & Gagal; Sub-CPMK tidak tercapai \\
+\bottomrule
+\end{tabularx}
+\tabsource{Konversi nilai mengikuti Pedoman Akademik \NamaPT\ dan dapat disesuaikan apabila terdapat ketentuan berbeda pada program studi.}
+\end{table}
+
+Mahasiswa dinyatakan \textbf{lulus} mata kuliah ini apabila memenuhi seluruh
+ketentuan berikut.
+
+\begin{enumerate}
+  \item Memperoleh nilai akhir minimal \textbf{60} (huruf C).
+  \item Memiliki tingkat kehadiran minimal \textbf{75\%} dari total pertemuan.
+  \item Menyerahkan seluruh keluaran wajib, yaitu mini proyek AI dan proyek akhir.
+\end{enumerate}

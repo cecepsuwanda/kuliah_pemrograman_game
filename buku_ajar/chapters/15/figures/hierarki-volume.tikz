@@ -1,0 +1,32 @@
+% chapters/15/figures/hierarki-volume.tikz
+% Susunan tingkat kekuatan bunyi: satu induk, dua cabang, dan nilai yang
+% biasanya dipakai pada setiap tingkat.
+\begin{tikzpicture}[
+  tingkat/.style={
+    rectangle, rounded corners=5pt, draw=ubPrimary, thick, fill=ubAlt,
+    align=center, text width=26mm, inner sep=4pt, minimum height=11mm,
+    font=\footnotesize
+  },
+  panah/.style={-{Stealth[length=2.2mm]}, thick, draw=ubAccent},
+  nilai/.style={font=\scriptsize, ubPrimary},
+  catatan/.style={font=\scriptsize\itshape, align=left}
+]
+
+\node[tingkat] (master) at (3.5,1.5) {\code{Master}\\{\scriptsize\itshape seluruh bunyi}};
+\node[tingkat] (musik)  at (0.6,-0.9) {\code{Musik}\\{\scriptsize\itshape BGM}};
+\node[tingkat] (efek)   at (6.4,-0.9) {\code{Efek}\\{\scriptsize\itshape SFX}};
+
+\draw[panah] (master) -- (musik);
+\draw[panah] (master) -- (efek);
+
+\node[nilai, right=1pt] at (master.east) {0 dB};
+\node[nilai, below=0.5pt] at (musik.south) {$-12$ dB};
+\node[nilai, below=0.5pt] at (efek.south) {$-6$ dB};
+
+\node[catatan, anchor=north west, text width=78mm] at (-0.9,-2.2)
+  {Angka pada \istilah{AudioMixer} memakai satuan desibel, yang naik secara
+   berlipat, bukan secara lurus. Menurunkan 6 dB berarti mengurangi
+   kekuatannya menjadi kira-kira separuh. Karena itu, penggeser pada menu
+   pengaturan sebaiknya tetap bernilai lurus dari 0 sampai 1, lalu diubah ke
+   desibel melalui perhitungan.};
+\end{tikzpicture}

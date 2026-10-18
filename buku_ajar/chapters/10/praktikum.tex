@@ -1,0 +1,79 @@
+% chapters/10/praktikum.tex
+\begin{praktikumbox}
+Praktikum ini mengikuti Tugas Praktikum 08 pada RPS: memvisualisasikan A* pada
+peta berpetak, dengan titik awal, titik tujuan, dan dinding yang ditandai,
+serta jalur yang dianimasikan.
+
+\begin{langkah}
+  \item \textbf{Jalankan programnya.} Ketik ulang \code{ch10_astar.py} dari
+        Daftar~\ref{lst:ch10-astar} ke dalam folder \code{code}. Jalankan, lalu
+        amati penyebaran pencarian dari titik awal menuju titik tujuan.
+
+  \item \textbf{Bandingkan ketiga heuristik.} Jalankan program dengan pilihan
+        \code{--bandingkan}, lalu catat tabel yang dihasilkan.
+\begin{kodekeluaran}
+python ch10_astar.py --bandingkan
+\end{kodekeluaran}
+
+  \item \textbf{Amati perbedaan penyebarannya.} Jalankan program dengan
+        \code{--heuristic manhattan}, lalu tekan tombol H untuk berganti
+        heuristik. Amati bagaimana bentuk penyebaran pencarian berubah, dan
+        bagaimana jumlah petak yang diperiksa bertambah.
+
+  \item \textbf{Ubah petanya.} Pindahkan huruf \code{G} ke tempat lain, lalu
+        tambahkan beberapa dinding. Perhatikan bagaimana jalurnya berubah.
+        Buatlah satu keadaan yang membuat tujuan tidak dapat dicapai, lalu
+        amati keluaran program pada terminal.
+
+  \item \textbf{Simpan tangkapan layar.} Jalankan program dengan pilihan
+        \code{--simpan-gambar} untuk menyimpan keadaan pencarian sebagai
+        berkas gambar, lalu sertakan gambar itu pada laporan praktikum Anda.
+\begin{kodekeluaran}
+python ch10_astar.py --heuristic manhattan --simpan-gambar hasil.png
+\end{kodekeluaran}
+
+  \item \textbf{Uji heuristik yang melebihkan jarak.} Gandakan hasil
+        \code{jarak_manhattan} pada fungsi heuristiknya. Jalankan
+        \code{--bandingkan}, lalu bandingkan biaya jalur dengan hasil
+        sebelumnya. Jelaskan apa yang terjadi.
+
+  \item \textbf{Tulis catatan praktikum} yang memuat tabel perbandingan
+        heuristik, tangkapan layar pencarian, dan analisis pengaruh heuristik
+        terhadap kinerja dan terhadap mutu jalur.
+
+  \item \textbf{Simpan pekerjaan} ke repositori Git dengan pesan penyimpanan
+        yang menerangkan isinya.
+\end{langkah}
+\end{praktikumbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Lembar kerja Praktikum 08}
+\label{tab:lembar-praktikum-08}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{3.0cm} C{2.6cm} C{2.4cm} Y@{}}
+\toprule
+\headrow \textbf{Heuristik} & \textbf{Petak diperiksa} & \textbf{Biaya jalur} & \textbf{Bentuk penyebaran pencarian} \\
+\midrule
+Manhattan & & & \\[1.4em]
+\addlinespace
+Euclidean & & & \\[1.4em]
+\addlinespace
+Tanpa perkiraan & & & \\[1.4em]
+\addlinespace
+\multicolumn{4}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Hasil pada heuristik yang digandakan (langkah keenam): biaya jalur \dotfill} \\[1.4em]
+\addlinespace
+\multicolumn{4}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Keadaan ketika tujuan tidak dapat dicapai: \dotfill} \\[1.4em]
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Langkah keenam adalah langkah yang paling penting bagi pemahaman indikator
+\ind{b}. Heuristik yang digandakan akan membuat pencarian tampak lebih cepat,
+padahal jalur yang dihasilkannya dapat lebih panjang. Program
+tidak akan melaporkan kesalahan apa pun; hanya angka biaya jalur yang
+menunjukkan adanya masalah.
+\end{catatabox}

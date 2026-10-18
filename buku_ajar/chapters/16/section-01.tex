@@ -1,0 +1,81 @@
+% chapters/16/section-01.tex
+\section{Mengapa Prototipe Harus Diuji}
+\label{sec:mengapa-diuji}
+
+\subsection{Pembuat Tidak Dapat Menilai Karyanya Sendiri}
+
+Sepanjang Bab~III sampai Bab~XV, Anda menguji permainan Anda dengan satu cara
+saja: menjalankannya, lalu memeriksa apakah perilakunya sesuai dengan yang Anda
+maksudkan. Cara itu berhasil untuk menemukan kesalahan yang Anda sendiri sudah
+tahu jawabannya, tetapi ia gagal pada hal yang paling penting.
+
+Kegagalan itu terjadi karena Anda sudah tahu terlalu banyak. Anda tahu tombol
+mana yang harus ditekan, tahu jalur mana yang harus dilewati, dan tahu ke mana
+tujuan yang sebenarnya. Pengetahuan itu tidak dimiliki pemain baru, dan justru
+pengetahuan itulah yang menutupi masalah. Sebuah level yang tampak jelas bagi
+pembuatnya dapat membingungkan pemain lain selama beberapa menit pertama
+\cite{unity-leveldesign}.
+
+Karena itu, pengujian bukan pekerjaan yang dapat diselesaikan sendirian. Ia
+menuntut orang lain yang belum pernah melihat karya Anda, dan menuntut Anda
+menahan diri untuk tidak menolong mereka.
+
+\begin{peringatanbox}
+Kesalahan yang paling sering dilakukan mahasiswa pada sesi
+\istilah{playtest} pertama: memberi petunjuk ketika pengujinya kebingungan.
+Kalimat seperti ``tekan tombol spasi untuk lompat'' tampak seperti bantuan,
+padahal ia menghapus satu-satunya keterangan yang paling Anda butuhkan.
+Apabila penguji tidak menemukan sendiri caranya, itu bukan kesalahan penguji,
+melainkan temuan.
+\end{peringatanbox}
+
+\subsection{Dua Jenis Pengujian yang Saling Melengkapi}
+
+Ada dua jalan untuk memeriksa sebuah prototipe, dan keduanya menemukan hal yang
+berbeda.
+
+\begin{description}
+  \item[\textbf{Pemeriksaan otomatis}] dijalankan oleh komputer, tanpa pemain,
+        dan berulang-ulang. Ia menemukan hal yang bersifat pasti: petak yang
+        tidak dapat dicapai, lompatan yang melebihi jangkauan, berkas yang
+        gagal dimuat. Ia cepat, dan hasilnya sama setiap kali dijalankan.
+  \item[\textbf{\istilah{Playtest}}] dijalankan oleh orang lain yang memainkan
+        prototipe Anda. Ia menemukan hal yang tidak dapat dihitung: bagian yang
+        membingungkan, bagian yang membosankan, dan bagian yang membuat pemain
+        berhenti bermain.
+\end{description}
+
+Keduanya diperlukan, dan urutannya penting. Pemeriksaan otomatis dijalankan
+lebih dahulu, sebab tidak ada gunanya meminta orang lain menguji level yang
+belum dapat diselesaikan. Sekaligus, pemeriksaan otomatis tidak dapat
+menggantikan \istilah{playtest}: mesin dapat memberi tahu Anda bahwa levelnya
+\emph{mungkin} diselesaikan, tetapi tidak dapat memberi tahu apakah levelnya
+\emph{menyenangkan} diselesaikan.
+
+\begin{catatabox}
+Pemeriksaan otomatis pada bab ini dijalankan dengan perkakas yang sudah Anda
+miliki sendiri: Python, dan peta level yang Anda susun pada Bab~X. Tidak ada
+perkakas tambahan yang perlu dipasang, dan hasilnya dapat diperiksa ulang.
+\end{catatabox}
+
+\subsection{Pengujian sebagai Siklus, Bukan sebagai Langkah Terakhir}
+
+Kebiasaan yang perlu Anda tinggalkan adalah memandang pengujian sebagai
+pekerjaan terakhir sebelum pengumpulan. Pengujian adalah siklus: setiap
+perbaikan menuntut pemeriksaan ulang, dan setiap pemeriksaan ulang menuntut
+daftar periksa yang diperbarui. Siklus itu diperlihatkan pada
+Gambar~\ref{fig:siklus-uji}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/siklus-uji.tikz}
+\caption{Pengujian sebagai siklus: setiap perbaikan menuntut pemeriksaan ulang}
+\label{fig:siklus-uji}
+\end{figure}
+
+Gambar itu tidak berakhir pada \istilah{build} akhir,
+melainkan kembali ke daftar periksa. Alasannya sederhana: perbaikan yang Anda
+lakukan atas satu temuan berpotensi menimbulkan temuan baru. Menambahkan
+pijakan agar pemain tidak terjebak dapat membuat bagian lain menjadi terlalu
+mudah; menggeser letak tujuan dapat membuat satu bagian level tidak lagi
+terjangkau. Tanpa pemeriksaan ulang, perbaikan justru menambah masalah.

@@ -1,0 +1,72 @@
+% chapters/03/section-01.tex
+\section{Dari Teori ke Praktik}
+\label{sec:teori-ke-praktik}
+
+Bab~II membekali Anda dengan kerangka berpikir tentang waktu, ruang, fisika,
+dan pengendalian objek. Bab ini memindahkan kerangka itu ke atas meja kerja:
+menyiapkan perkakas, menyusun tempat bekerja, dan menulis program permainan
+pertama yang benar-benar berjalan.
+
+\subsection{Tiga Hasil yang Harus Anda Peroleh}
+
+Bab ini selesai apabila tiga hal berikut sudah ada, bukan sekadar dipahami.
+
+\begin{enumerate}
+  \item \textbf{Lingkungan kerja yang siap.} Python beserta Pygame terpasang
+        dan dapat dipanggil, dan Anda mampu memeriksa kesiapannya sendiri
+        tanpa bantuan orang lain.
+  \item \textbf{Program pertama yang berjalan.} Sebuah program Pygame yang
+        membuka jendela, menampilkan teks informasi versi, dan menunggu sampai
+        jendela ditutup.
+  \item \textbf{Tempat kerja yang tertata.} Folder proyek dengan struktur yang
+        jelas dan sebuah repositori Git yang menyimpan riwayat pekerjaan Anda
+        dari minggu pertama.
+\end{enumerate}
+
+Ketiga hasil tersebut akan dipakai terus sampai akhir semester. Praktikum pada
+minggu-minggu berikutnya menumpuk berkas baru pada struktur folder yang sama,
+dan seluruh nilai portofolio diambil dari repositori yang Anda buat sekarang.
+Karena itu, mengerjakan bagian ini dengan rapi jauh lebih menguntungkan
+daripada mengerjakannya sekadar agar lewat.
+
+\subsection{Konvensi Penulisan Kode pada Buku Ini}
+
+Sebelum menulis kode pertama, ada satu konvensi yang perlu Anda ketahui agar
+tidak membingungkan.
+
+\begin{itemize}
+  \item \textbf{Nama variabel, fungsi, dan kelas ditulis dalam bahasa Inggris},
+        misalnya \code{screen}, \code{check_pygame}, atau \code{parse_arguments}.
+        Pilihan ini diambil agar kode pada buku ini sejalan dengan dokumentasi
+        resmi Pygame \mbox{[R3]} dan buku rujukan \mbox{[R1]}, \mbox{[R2]} yang
+        seluruhnya berbahasa Inggris. Anda akan sering berpindah antara kode
+        dan dokumentasi, dan kesamaan penamaan mempercepat pekerjaan itu.
+  \item \textbf{Komentar, keterangan fungsi, dan keluaran program ditulis dalam
+        bahasa Indonesia}, agar maksud setiap bagian kode dapat dipahami tanpa
+        penerjemahan.
+  \item \textbf{Istilah konsep pada teks buku ditulis dalam bahasa Indonesia},
+        dan istilah asingnya dicetak miring pada kemunculan pertama. Jadi teks
+        menyebut \istilah{selang waktu}, sedangkan kode memakai nama
+        \code{delta_time} atau menampilkan kata yang sama pada keluaran
+        program.
+\end{itemize}
+
+Konvensi penamaan ini berlaku pada seluruh buku, termasuk pada skrip C\# untuk
+Unity nanti. Menurut pengalaman, kebiasaan ini juga berguna di luar
+perkuliahan: kode yang dibaca orang lain---termasuk dosen, tim, atau
+pewawancara kerja---lazim memakai penamaan berbahasa Inggris.
+
+\subsection{Batas Pembahasan Bab Ini}
+
+Bab ini tidak membahas tiga hal berikut, dan mengetahuinya akan mencegah Anda
+mencari-cari bagian yang memang belum ada.
+
+\begin{itemize}
+  \item \textbf{Siklus permainan.} Program pada bab ini menggambar sekali lalu
+        menunggu peristiwa. Perulangan yang memperbarui keadaan dan menggambar
+        ulang secara terus-menerus baru dibahas pada Bab~IV.
+  \item \textbf{Gerak dan fisika.} Objek yang bergerak, gravitasi, dan tabrakan
+        mulai dibahas pada Bab~V sampai Bab~VII.
+  \item \textbf{Pemasangan Unity.} Perkakas Blok~III dipasang tersendiri pada
+        Bab~XII, karena kebutuhan perangkatnya berbeda dari Python.
+\end{itemize}

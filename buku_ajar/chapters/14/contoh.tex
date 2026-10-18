@@ -1,0 +1,66 @@
+% chapters/14/contoh.tex
+\section{Dua Contoh Terapan}
+\label{sec:contoh-bab-14}
+
+\subsection{Contoh Pertama: Menghitung Ukuran Gambar pada Scene}
+
+\begin{contohbox}
+Sebuah gambar pemain berukuran 128 kali 128 piksel diimpor dengan
+\istilah{Pixels Per Unit} bernilai 100. Tinggi pemain pada scene adalah
+
+\[
+128 \div 100 = 1{,}28 \text{ satuan}.
+\]
+
+Apabila tinggi pemain yang dikehendaki adalah 2 satuan, maka nilai
+\istilah{Pixels Per Unit} yang diperlukan adalah
+
+\[
+128 \div 2 = 64 .
+\]
+\end{contohbox}
+
+Perhitungan itu menjelaskan mengapa \istilah{Pixels Per Unit} perlu diatur
+sebelum levelnya disusun. Ukuran gambar pada layar tidak ditentukan oleh
+berkasnya, melainkan oleh perbandingan antara ukuran berkas dan nilai
+pengaturan itu.
+
+Perhatikan pula bahwa seluruh aset sebaiknya memakai nilai yang sama. Apabila
+gambar pemain bernilai 64 sedangkan gambar rintangan bernilai 100, maka ukuran
+keduanya tidak dapat dibandingkan secara langsung, dan Anda akan menghabiskan
+waktu untuk menyesuaikan ukurannya satu per satu.
+
+\subsection{Contoh Kedua: Menelusuri Animasi yang Tidak Berganti}
+
+\begin{contohbox}
+Seorang mahasiswa melaporkan bahwa animasi pemainnya tidak pernah berganti
+dari diam menjadi berlari, walaupun pemainnya sudah bergerak. Program berjalan
+tanpa pesan kesalahan apa pun.
+\end{contohbox}
+
+Penelusurannya dilakukan menurut urutan berikut.
+
+\begin{langkah}
+  \item \textbf{Periksa jendela \istilah{Animator}.} Apakah kedua keadaannya
+        ada, dan apakah transisinya tergambar? Ternyata keduanya ada, sehingga
+        masalahnya bukan pada pengaturan animasinya.
+  \item \textbf{Periksa nilainya pada jendela \istilah{Animator} ketika scene
+        berjalan.} Jendela itu menampilkan nilai setiap parameter pada saat
+        itu. Ternyata nilai kecepatannya tetap nol, walaupun pemainnya
+        bergerak.
+  \item \textbf{Periksa kode yang menetapkan nilainya.} Ternyata nama parameter
+        pada kode, yaitu \code{speed}, berbeda dari nama pada
+        \istilah{Animator}, yaitu \code{Speed}. Perbedaan besar-kecil huruf
+        itu tidak diperiksa, dan nilainya ditetapkan pada parameter yang tidak
+        ada.
+  \item \textbf{Perbaiki, lalu jalankan kembali.} Animasinya berganti
+        sebagaimana mestinya.
+\end{langkah}
+
+Tiga hal dapat dipetik dari penelusuran itu. Pertama, jendela
+\istilah{Animator} dapat menampilkan nilai parameter ketika scene berjalan,
+dan itulah alat pemeriksa yang paling berguna di sini. Kedua, kesalahan
+penamaan tidak menimbulkan pesan apa pun, sehingga hanya dapat ditemukan
+dengan memeriksa nilainya. Ketiga, memakai peubah tetap untuk nama parameter,
+sebagaimana pada skrip Daftar~\ref{lst:ch14-animasi}, mencegah kesalahan itu
+sejak awal.

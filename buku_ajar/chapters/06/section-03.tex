@@ -1,0 +1,127 @@
+% chapters/06/section-03.tex
+\section{Lompatan sebagai Impuls}
+\label{sec:lompatan}
+
+Lompatan adalah perubahan kecepatan yang terjadi seketika, bukan gaya yang
+bekerja selama beberapa waktu. Bagian ini membahas cara menerapkannya, kapan
+boleh diterapkan, dan bagaimana memilih nilainya.
+
+\subsection{Perubahan Kecepatan Seketika}
+
+Melompat berarti memberikan kecepatan awal yang mengarah ke atas, lalu
+membiarkan gravitasi memperlambatnya sampai berhenti di titik tertinggi dan
+menariknya kembali ke bawah. Karena pada koordinat layar gerak ke atas berarti
+pengurangan nilai tegak, kecepatan lompatan diberikan sebagai nilai negatif.
+
+\begin{kodekeluaran}
+player_velocity.y = -jump_speed
+\end{kodekeluaran}
+
+Kecepatannya \textbf{diganti}, bukan ditambahkan, dan hanya
+satu baris. Inilah yang membedakan impuls dari gaya: gaya bekerja terus-menerus
+sehingga pengaruhnya ditambahkan setiap bingkai, sedangkan impuls bekerja
+sekali sehingga nilainya langsung ditetapkan.
+
+Setelah baris itu dijalankan, gravitasi bekerja seperti biasa pada bingkai
+berikutnya, sehingga benda melambat naik, berhenti di puncak, lalu jatuh
+kembali. Lintasan yang dihasilkan diperlihatkan pada
+Gambar~\ref{fig:gravitasi-lompatan}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/gravitasi-lompatan.tikz}
+\caption{Lintasan lompatan: kecepatan awal, puncak, dan jatuh}
+\label{fig:gravitasi-lompatan}
+\end{figure}
+
+\subsection{Mengapa Lompatan Dibaca sebagai Peristiwa}
+
+Bagian~4.2 telah membedakan peristiwa dari keadaan tombol. Perbedaan itu di
+sini menjadi penentu benar atau salahnya program.
+
+Bayangkan lompatan dibaca memakai \code{pygame.key.get_pressed()}. Selama
+tombol lompatan ditahan, keadaannya selalu benar, sehingga pada setiap bingkai
+syarat lompatan terpenuhi. Akibatnya benda akan melompat berulang-ulang tanpa
+henti selama tombol ditahan, dan pemain dapat terbang ke atas jendela.
+
+Karena itu, lompatan dibaca dari peristiwa \code{KEYDOWN} yang hanya terjadi
+sekali pada setiap penekanan.
+
+\begin{kodekeluaran}
+elif event.key in (pygame.K_SPACE, pygame.K_UP, pygame.K_w):
+    if on_ground:
+        player_velocity.y = -jump_speed
+        on_ground = False
+\end{kodekeluaran}
+
+\begin{catatabox}
+Sebagai pedoman yang berlaku umum: \textbf{keadaan tombol} dipakai untuk
+tindakan yang berlangsung selama tombol ditahan (berjalan, mengarahkan),
+sedangkan \textbf{peristiwa} dipakai untuk tindakan yang terjadi sekali
+(melompat, menembak, membuka menu). Membedakan keduanya mencegah dua
+kekeliruan yang berlawanan: karakter yang hanya bergerak satu langkah ketika
+tombol ditahan, dan karakter yang melompat berkali-kali dari satu penekanan.
+\end{catatabox}
+
+\subsection{Syarat Menyentuh Lantai}
+
+Perhatikan syarat \code{if on_ground} pada potongan kode di atas. Tanpa syarat
+itu, pemain dapat melompat di udara berkali-kali dan seolah-olah terbang.
+Cara mengenali keadaan menyentuh lantai telah dijelaskan pada
+Bagian~\ref{sec:gravitasi-lantai}.
+
+Perhatikan pula bahwa variabel \code{on_ground} ditandai salah segera sesudah
+lompatan dilakukan. Penandaan itu mencegah lompatan kedua pada bingkai
+berikutnya, sebab posisi benda belum berubah dan pemeriksaan lantai mungkin
+masih menganggapnya bersandar pada lantai.
+
+\subsection{Memilih Nilai Gravitasi dan Kecepatan Lompatan}
+
+Kedua nilai itu tidak dipilih secara sembarang. Tinggi lompatan ditentukan
+oleh keduanya, dan hubungannya dapat dihitung. Pada titik tertinggi, kecepatan
+tegak benda bernilai nol. Dengan menggunakan hubungan antara kecepatan dan
+tinggi pada gerak berubah beraturan, diperoleh
+
+\begin{equation}
+\label{eq:tinggi-lompat}
+h = \frac{v_0^2}{2g},
+\end{equation}
+
+dengan $h$ tinggi lompatan, $v_0$ kecepatan lompatan, dan $g$ percepatan
+gravitasi. Lama benda berada di udara, yaitu dari menjejak lantai sampai
+kembali menyentuhnya, adalah
+
+\begin{equation}
+\label{eq:lama-di-udara}
+t = \frac{2v_0}{g} .
+\end{equation}
+
+Kedua rumus itu dapat dibalik untuk keperluan perancangan: apabila Anda
+menginginkan tinggi lompatan tertentu, kecepatan lompatannya adalah
+$v_0 = \sqrt{2gh}$. Tabel~\ref{tab:rasa-lompatan} memuat tiga pasangan nilai
+yang menghasilkan tinggi lompatan yang sama, tetapi dengan rasa yang berbeda.
+
+\begin{table}[htbp]
+\centering
+\caption{Tiga pasangan nilai gravitasi dan kecepatan lompatan yang menghasilkan tinggi 150 piksel}
+\label{tab:rasa-lompatan}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.8cm} C{2.2cm} C{2.0cm} C{2.0cm} Y@{}}
+\toprule
+\headrow \textbf{Gravitasi} & \textbf{Kecepatan lompatan} & \textbf{Tinggi} & \textbf{Lama di udara} & \textbf{Rasa gerak} \\
+\midrule
+1200 & 600 piksel/detik & 150 piksel & 1,00 detik & Melayang, seperti di bulan. \\
+\addlinespace
+1800 & 735 piksel/detik & 150 piksel & 0,82 detik & Sedang, banyak dipakai pada permainan platform. \\
+\addlinespace
+2400 & 849 piksel/detik & 150 piksel & 0,71 detik & Gesit dan tegas, cocok untuk permainan yang cepat. \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Dihitung dengan $v_0 = \sqrt{2gh}$ dan $t = 2v_0/g$ untuk $h = 150$
+piksel.}
+\end{table}
+
+Tabel tersebut memperlihatkan sesuatu yang penting bagi perancangan: tinggi
+lompatan saja tidak menentukan rasa geraknya. Yang menentukan rasa adalah
+perbandingan antara gravitasi dan kecepatan lompatan, yaitu lama benda berada
+di udara.

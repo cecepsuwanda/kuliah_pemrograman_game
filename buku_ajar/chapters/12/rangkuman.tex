@@ -1,0 +1,42 @@
+% chapters/12/rangkuman.tex
+\bagian{Rangkuman}
+
+\begin{rangkumanbox}
+\begin{itemize}
+  \item Mesin permainan mengambil alih siklus permainan, perhitungan fisika,
+        deteksi tabrakan, penayangan, dan penyuntingan level. Kode Anda
+        berpindah menjadi mengisi tahap yang disediakan mesin.
+  \item Unity dipasang melalui dua program: \istilah{Unity Hub} untuk mengurus
+        versi dan \istilah{project}, serta \istilah{Unity Editor} sebagai tempat
+        bekerja. Versi \istilah{LTS} dipilih karena lebih stabil dan lebih
+        banyak dipakai.
+  \item Empat panel utama: \istilah{Hierarchy} memuat benda yang ada di dalam
+        scene, \istilah{Scene} menampilkan susunan ruangnya, \istilah{Inspector}
+        menampilkan komponen benda yang dipilih, dan \istilah{Project window}
+        memuat seluruh berkas project.
+  \item \istilah{GameObject} adalah wadah kosong yang menjadi berguna karena
+        komponen yang menempel padanya. Komponen \istilah{Transform} wajib ada;
+        komponen lain ditambahkan sesuai keperluan, termasuk skrip C\# Anda.
+  \item Skrip C\# menjadi komponen yang menempel pada benda. Satu skrip dapat
+        dipakai oleh banyak benda, dan masing-masing menjalankannya sendiri.
+  \item Fungsi skrip dipanggil mesin pada waktu yang telah ditentukan:
+        \code{Awake} dan \code{Start} sekali di awal, \code{Update} setiap
+        bingkai, \code{FixedUpdate} berlangsung dengan selang tetap untuk
+        fisika, dan \code{OnDisable} ketika skrip dimatikan.
+  \item \istilah{Scene} adalah satu tingkat permainan yang disimpan sebagai
+        berkas. Folder \code{Assets} dan \code{ProjectSettings} disimpan pada
+        repositori, sedangkan \code{Library}, \code{Temp}, \code{Obj}, dan
+        \code{Build} tidak.
+  \item Konsep yang tetap sama persis: kecepatan dinyatakan dalam satuan per
+        detik dan dikalikan selang waktu, arah dinormalkan sebelum dikalikan
+        kecepatan, posisi disimpan sebagai pecahan, deteksi tabrakan berbeda
+        dari penyelesaiannya, dan perhitungan yang mahal sebaiknya disebar.
+  \item \code{Time.deltaTime} menggantikan \code{delta_seconds}, dan
+        \code{Debug.Log} beserta panel \istilah{Console} menggantikan
+        \code{print} beserta terminal.
+  \item Pengetahuan tentang cara kerja permainan tidak dapat dipelajari dari
+        panduan Unity, sebab panduan itu membahas cara memakai perkakasnya.
+        Pengetahuan itulah yang diperoleh dengan menulis seluruh mekanismenya
+        sendiri pada blok Python.
+\end{itemize}
+\end{rangkumanbox}

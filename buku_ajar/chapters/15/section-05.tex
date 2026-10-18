@@ -1,0 +1,71 @@
+% chapters/15/section-05.tex
+\section{Partikel Sederhana}
+\label{sec:partikel}
+
+\subsection{Pasangan yang Terlihat bagi Bunyi}
+
+Bagian ini bersifat pilihan menurut RPS, tetapi ia melengkapi gagasan yang
+dibahas sepanjang bab ini. Setiap bunyi sebaiknya memiliki pasangan yang
+terlihat. Untuk beberapa peristiwa, pasangannya sudah ada: skor bertambah
+ketika benda diambil, nyawa berkurang ketika pemain terluka. Untuk peristiwa
+lain, terutama yang berlangsung sekejap, pasangannya belum ada. Di situlah
+partikel berguna.
+
+Partikel adalah kumpulan gambar kecil yang muncul, bergerak, lalu menghilang.
+Satu ledakan kecil, satu kepulan debu ketika pemain mendarat, atau satu kilau
+ketika benda diambil. Ketiganya berlangsung kurang dari satu detik, dan
+ketiganya memberi pemain bukti yang terlihat bahwa sesuatu benar-benar terjadi.
+
+\subsection{Memasang Sistem Partikel}
+
+Komponen \istilah{Particle System} diambil dari menu \istilah{Component}, lalu
+\istilah{Effects}, lalu \istilah{Particle System}. Susunan bawaannya sudah
+memperlihatkan sekumpulan partikel yang menyembur ke atas. Empat pengaturan
+berikut yang paling perlu Anda sesuaikan.
+
+\begin{description}
+  \item[\istilah{Duration} dan \istilah{Looping}] Lama satu putaran partikel
+        dan apakah ia diulang. Untuk bunyi yang dipicu peristiwa, nilai
+        \istilah{Looping} dimatikan, sebab partikelnya diputar sekali saja.
+  \item[\istilah{Start Lifetime}] Lama setiap partikel hidup sebelum hilang.
+        Untuk percikan kecil, nilai seperlima sampai setengah detik sudah
+        cukup.
+  \item[\istilah{Start Speed}] Kecepatan awal partikel meninggalkan pusatnya.
+        Nilai besar memberi kesan ledakan; nilai kecil memberi kesan kepulan.
+  \item[\istilah{Emission}] Jumlah partikel yang dikeluarkan setiap satuan
+        waktu. \istilah{Bursts} dipakai untuk mengeluarkan sekumpulan partikel
+        sekaligus pada satu saat, dan itulah yang sesuai untuk peristiwa
+        sekejap.
+\end{description}
+
+\subsection{Memanggil Partikel pada Peristiwa yang Sama}
+
+Partikel dipanggil pada peristiwa yang sama dengan bunyinya, sehingga
+keduanya muncul bersamaan. Caranya melalui \code{ParticleSystem.Play()},
+sebagaimana bunyi dipanggil melalui \code{AudioSource}.
+
+\begin{kodekeluaran}
+// Ditambahkan pada PemicuBunyi, disimpan pada peubah partikel.
+public ParticleSystem partikelAmbil;
+
+void OnTriggerEnter2D(Collider2D lain)
+{
+    if (!lain.CompareTag("Pickup")) return;
+
+    if (manajer != null) manajer.BunyiAmbil();
+    if (partikelAmbil != null) partikelAmbil.Play();
+    ...
+}
+\end{kodekeluaran}
+
+Partikelnya dipanggil pada tempat yang sama persis dengan
+bunyinya. Itu bukan kebetulan, melainkan akibat dari cara kerja yang sama:
+keduanya adalah tanggapan atas satu peristiwa, dan keduanya sebaiknya
+diurus pada satu tempat agar tidak ada yang tertinggal.
+
+\begin{peringatanbox}
+Jangan memakai partikel untuk menutupi masalah. Apabila sebuah mekanik tidak
+terasa jelas tanpa partikel, kemungkinan besar mekaniknya sendiri belum jelas.
+Partikel ditambahkan setelah mekaniknya bekerja dan terasa benar, bukan sebagai
+tambalan atas mekanik yang membingungkan.
+\end{peringatanbox}

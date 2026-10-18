@@ -1,0 +1,85 @@
+% chapters/08/section-05.tex
+\section{Program Perilaku Mengejar}
+\label{sec:program-chase}
+
+Bagian ini menyatukan seluruh unsur menjadi program yang memuat beberapa NPC
+yang mengejar seorang pemain pada ruang terbuka.
+
+\subsection{Kode Lengkap}
+
+\kodepython{python/ch08_chase.py}{Perilaku mengejar pada beberapa NPC sekaligus}{lst:ch08-chase}
+
+\subsection{Membedah Keputusan NPC}
+
+Seluruh keputusan NPC terletak pada satu fungsi, yaitu \code{Npc.update}.
+Susunannya mengikuti tiga langkah pada Bagian~\ref{sec:bergerak-sendiri}.
+
+\begin{description}
+  \item[Persepsi] Dua baris pertama menghitung vektor menuju pemain dan
+        jaraknya. Keduanya dihitung dari satu pengurangan yang
+        sama, sehingga tidak ada perhitungan yang berulang.
+  \item[Keputusan] Rangkaian pemeriksaan jarak menentukan kecepatan. Urutan
+        pemeriksaan penting: jarak henti diperiksa lebih dahulu, baru jari-jari
+        persepsi, sebab jarak henti selalu lebih kecil daripada jari-jari.
+  \item[Tindakan] Posisi diperbarui dengan kecepatan tersebut, dibatasi agar
+        tidak keluar jendela, lalu \code{rect} diselaraskan sebagaimana biasa.
+\end{description}
+
+Kelas \code{Npc} tidak menerima arah dari luar, berbeda dari
+kelas \code{Player} pada bab ini dan pada bab-bab sebelumnya. Itulah perbedaan
+yang paling mendasar antara benda yang diperintah dan benda yang memutuskan.
+
+\subsection{Mengamati Keputusan melalui Gambar}
+
+Program ini menggambar empat hal untuk memperlihatkan keputusan NPC, sesuai
+uraian pada Bagian~\ref{sec:persepsi}: lingkaran jari-jari persepsi, lingkaran
+jarak henti, garis arah menuju pemain, dan warna NPC yang berubah menurut
+keputusannya.
+
+Ketika pemain bergerak menjauh, warna NPC berubah menjadi abu-abu dan lingkaran
+persepsinya tidak lagi memuat pemain. Ketika pemain mendekat, NPC berubah warna
+dan mulai bergerak. Garis arahnya selalu menunjuk ke pemain, dan panjangnya
+tidak mempengaruhi kecepatan NPC---itulah wujud indikator \ind{b} pada layar.
+
+\subsection{Percobaan yang Disarankan}
+
+\begin{table}[htbp]
+\centering
+\caption{Percobaan pada program perilaku mengejar}
+\label{tab:percobaan-ch08}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{5.6cm} Y@{}}
+\toprule
+\headrow \textbf{Yang diubah dan caranya} & \textbf{Yang sebaiknya Anda amati} \\
+\midrule
+Jari-jari persepsi, melalui pilihan \code{--radius}. &
+Pada jari-jari kecil, pemain dapat berlalu-lalang dekat NPC tanpa dikejar. Pada
+jari-jari besar, NPC mulai bergerak bahkan ketika pemain berada jauh. \\
+\addlinespace
+Kecepatan NPC, melalui pilihan \code{--speed}. &
+Pada kecepatan yang jauh lebih rendah daripada pemain, NPC tidak pernah
+menangkap pemain. Pada kecepatan yang lebih tinggi, pemain selalu tertangkap,
+dan NPC berhenti pada jarak hentinya. \\
+\addlinespace
+Jarak henti, dengan mengubah \code{DEFAULT_STOP} menjadi nilai yang sangat
+kecil, misalnya 2. &
+NPC bergetar di sekitar pemain, karena perpindahan setiap bingkainya lebih
+besar daripada jarak henti. \\
+\addlinespace
+Cara menghitung kecepatan, dengan menjalankan program memakai pilihan
+\code{--naive}. &
+Kecepatan NPC berubah menurut jarak: lambat ketika jauh, cepat ketika dekat.
+Bandingkan dengan keluaran pengukuran pada terminal. \\
+\addlinespace
+Banyaknya NPC, melalui pilihan \code{--npc}. &
+Dengan banyak NPC, gerombolan akan mengelilingi pemain. Perhatikan pula beban
+perhitungan ketika jumlahnya bertambah besar. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Pilihan \code{--naive} sengaja disediakan untuk memperlihatkan cara yang salah.
+Jalankan program dengan dan tanpa pilihan itu, lalu bandingkan kecepatan
+terukur pada terminal. Perbedaan itulah bukti indikator \ind{b} pada bab ini.
+\end{catatabox}

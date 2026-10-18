@@ -1,0 +1,89 @@
+% chapters/11/section-04.tex
+\section{Menilai Mutu Perilaku}
+\label{sec:menilai-mutu}
+
+Inilah inti bab ini, yaitu menilai, bukan menulis. Mutu perilaku NPC dinilai
+dari tiga segi, dan ketiganya diukur, bukan dikira-kira.
+
+\subsection{Tiga Segi Penilaian}
+
+\begin{description}
+  \item[Kelancaran] Seberapa lancar permainannya berjalan. Ukurannya laju
+        bingkai yang benar-benar tercapai. Apabila laju bingkai turun ketika
+        jumlah NPC bertambah, beban perhitungannya sudah melampaui batas.
+  \item[Daya tanggap] Seberapa cepat NPC menyesuaikan diri terhadap perpindahan
+        pemain. Ukurannya jarak rata-rata NPC terhadap pemain selama permainan:
+        jarak yang lebih kecil berarti NPC lebih rapat mendekati pemain.
+  \item[Beban komputasi] Seberapa banyak pekerjaan yang diperlukan untuk
+        menghasilkan perilaku itu. Ukurannya banyaknya pencarian jalur dan
+        banyaknya petak yang diperiksa.
+\end{description}
+
+Ketiga segi itu saling bertentangan. Menambah daya tanggap berarti menambah
+beban komputasi, dan beban yang berlebihan mengurangi kelancaran. Tugas
+perancang adalah mencari titik keseimbangan, dan titik itu hanya dapat
+ditemukan dengan mengukur.
+
+\subsection{Hasil Pengukuran}
+
+Program bab ini menyediakan pilihan \code{--evaluasi} yang menjalankan
+permainan yang sama beberapa kali dengan selang hitung ulang yang berbeda, lalu
+membandingkan hasilnya. Tabel~\ref{tab:evaluasi-selang} memuat hasilnya untuk
+tiga NPC selama 900 bingkai.
+
+\begin{table}[htbp]
+\centering
+\caption{Penilaian perilaku NPC pada beberapa selang hitung ulang jalur}
+\label{tab:evaluasi-selang}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{2.0cm} C{2.4cm} C{2.6cm} Y@{}}
+\toprule
+\headrow \textbf{Selang} & \textbf{Hitung ulang} & \textbf{Petak diperiksa} & \textbf{Jarak rata-rata ke pemain} \\
+\midrule
+0,00 detik (setiap bingkai) & 2.700 & 251.463 & 35 piksel \\
+\addlinespace
+0,15 detik & 942 & 236.940 & 34 piksel \\
+\addlinespace
+0,30 detik & 858 & 240.582 & 34 piksel \\
+\addlinespace
+0,60 detik & 636 & 201.051 & 38 piksel \\
+\addlinespace
+1,20 detik & 594 & 189.237 & 40 piksel \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Pengukuran penulis: tiga NPC selama 900 bingkai dengan jalur pemain
+yang tetap, sehingga seluruh baris dapat dibandingkan secara adil.}
+\end{table}
+
+\subsection{Menafsirkan Hasilnya}
+
+Tiga hal dapat dibaca dari tabel tersebut, dan ketiganya merupakan hasil
+penilaian yang sesungguhnya.
+
+\begin{enumerate}
+  \item \textbf{Pencarian setiap bingkai sangat boros.} Baris pertama
+        menjalankan 2.700 pencarian, yaitu sekitar tiga kali lipat baris
+        ketiga, tetapi jarak rata-ratanya hampir sama, yaitu 35 berbanding 34
+        piksel. Pekerjaan tambahan sebesar tiga kali lipat itu tidak membawa
+        perbaikan perilaku yang dapat dirasakan. Dengan kata lain,
+        \textbf{sepertiga pekerjaan sudah cukup}.
+  \item \textbf{Selang yang terlalu panjang mulai merugikan.} Pada selang 1,20
+        detik, beban perhitungannya paling ringan, tetapi jarak rata-ratanya
+        membesar menjadi 40 piksel. Artinya NPC mulai tertinggal, sebab
+        jalurnya terlalu lama menuju tempat pemain berada sebelumnya.
+  \item \textbf{Titik keseimbangannya berada di sekitar 0,30 detik.} Pada
+        selang itu, beban perhitungannya tinggal sepertiga dibandingkan
+        pencarian setiap bingkai, sedangkan jarak rata-ratanya justru yang
+        terkecil. Inilah nilai yang dipakai sebagai bawaan pada program bab
+        ini.
+\end{enumerate}
+
+\begin{peringatanbox}
+Kesimpulan di atas berlaku untuk \textbf{peta, jumlah NPC, dan
+jalur pemain yang diuji}, bukan untuk segala keadaan. Pada peta yang lebih
+luas, pencariannya menjadi lebih mahal sehingga selang yang lebih panjang
+mungkin lebih menguntungkan. Pada jalur pemain yang lebih berkelok, selang yang
+lebih pendek mungkin diperlukan. Kesimpulan sebuah pengukuran selalu terikat
+pada keadaan pengukurannya, dan menyebutkan keadaan itu merupakan bagian dari
+laporan yang jujur.
+\end{peringatanbox}

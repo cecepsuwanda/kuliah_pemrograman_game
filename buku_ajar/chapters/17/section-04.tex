@@ -1,0 +1,108 @@
+% chapters/17/section-04.tex
+\section{Lembar Refleksi Akhir Semester}
+\label{sec:refleksi-akhir}
+
+\subsection{Tiga Pertanyaan yang Harus Dijawab}
+
+Lembar refleksi akhir semester memuat tiga pertanyaan. Ketiganya tampak
+sederhana, dan ketiganya sering dijawab dengan kalimat umum yang tidak
+mengandung apa pun. Bagian ini menjelaskan apa yang dicari dari setiap
+jawaban, agar Anda dapat menjawabnya dengan berguna.
+
+\begin{enumerate}
+  \item \textbf{Konsep apa yang paling sulit dipahami pada blok Python/Pygame
+        dan blok Unity, dan bagaimana usaha yang dilakukan untuk
+        mengatasinya?}
+        \emph{Yang dicari:} konsep yang spesifik, bukan ``Unity itu sulit''.
+        Sebutkan konsepnya, sebutkan gejala salah pahamnya, dan sebutkan
+        tindakan yang Anda lakukan beserta hasilnya.
+  \item \textbf{Apa perbedaan pengalaman bekerja dengan Python/Pygame
+        dibandingkan dengan Unity, ditinjau dari kemudahan, kendali atas
+        algoritma, dan kecepatan pengembangan?}
+        \emph{Yang dicari:} jawaban yang memakai ketiga tinjauan itu secara
+        terpisah, disertai contoh dari pekerjaan Anda sendiri. Sebuah jawaban
+        yang menyatakan salah satu lebih baik tanpa memisahkan tinjauannya
+        belum menjawab pertanyaan ini.
+  \item \textbf{Kompetensi apa yang ingin dikembangkan setelah mata kuliah
+        ini, dan bagaimana rencana untuk mencapainya?}
+        \emph{Yang dicari:} satu atau dua kompetensi yang nyata, beserta
+        langkah pertama yang dapat Anda mulai dalam sebulan ke depan.
+\end{enumerate}
+
+\subsection{Menjawab dengan Bukti, Bukan dengan Kesan}
+
+Refleksi yang dinilai tinggi memiliki satu ciri yang sama: setiap pernyataannya
+dapat ditelusuri ke sesuatu yang benar-benar terjadi. Perbandingan keduanya
+diperlihatkan pada Tabel~\ref{tab:refleksi-bukti}.
+
+\begin{table}[htbp]
+\centering
+\caption{Jawaban berdasarkan kesan dan jawaban berdasarkan bukti}
+\label{tab:refleksi-bukti}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.2cm} Y Y@{}}
+\toprule
+\headrow \textbf{Pertanyaan} & \textbf{Jawaban berdasarkan kesan} & \textbf{Jawaban berdasarkan bukti} \\
+\midrule
+Konsep tersulit &
+``\istilah{Delta time} agak membingungkan.'' &
+``Pada Bab~IV, pemain saya bergerak lebih cepat ketika jendelanya diperbesar,
+sebab saya memakai jumlah bingkai, bukan \istilah{delta time}. Saya
+memperbaikinya dengan mengalikan kecepatan dengan selisih waktu, dan
+mengujinya pada dua ukuran jendela.'' \\
+\addlinespace
+Perbedaan Pygame dan Unity &
+``Unity lebih mudah.'' &
+``Di Pygame saya menulis sendiri pemeriksaan tabrakan per sumbu, sehingga saya
+tahu persis mengapa pemain berhenti di dinding. Di Unity saya tidak menulisnya,
+dan ketika pemain tersangkut di sudut, saya perlu membuka panel
+\istilah{Physics Debug} untuk memahami sebabnya.'' \\
+\addlinespace
+Rencana lanjutan &
+``Ingin belajar lebih banyak tentang game.'' &
+``Saya ingin memahami animasi yang digerakkan kerangka, sebab karakter saya
+sekarang hanya memakai potongan gambar. Langkah pertama: mengerjakan satu
+tutorial karakter berkerangka pada bulan depan, lalu membandingkannya dengan
+animasi potongan gambar yang sudah saya buat.'' \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Jawaban pada kolom ketiga selalu memuat tiga hal: keadaan
+yang konkret, tindakan yang diambil, dan hasil atau rencana yang dapat
+diperiksa. Ketiga hal itu pula yang membuat refleksi berguna bagi Anda
+sendiri, bukan hanya bagi penilaian.
+
+\subsection{Lembar yang Dipakai}
+
+Bentuk lembar refleksi yang dipakai pada bab ini diperlihatkan pada
+Tabel~\ref{tab:lembar-refleksi}. Isilah dengan tangan atau pada berkas, dan
+serahkan bersama kelengkapan Proyek Akhir.
+
+\begin{table}[htbp]
+\centering
+\caption{Lembar refleksi akhir semester}
+\label{tab:lembar-refleksi}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.0cm} Y@{}}
+\toprule
+\headrow \textbf{Bagian} & \textbf{Isi} \\
+\midrule
+Konsep tersulit di blok Python & \\[1.6em]
+\midrule
+Konsep tersulit di blok Unity & \\[1.6em]
+\midrule
+Usaha yang dilakukan, dan hasilnya & \\[1.6em]
+\midrule
+Perbedaan ditinjau dari kemudahan & \\[1.4em]
+\midrule
+Perbedaan ditinjau dari kendali algoritma & \\[1.4em]
+\midrule
+Perbedaan ditinjau dari kecepatan pengembangan & \\[1.4em]
+\midrule
+Kompetensi yang ingin dikembangkan & \\[1.4em]
+\midrule
+Langkah pertama dan waktunya & \\[1.8em]
+\bottomrule
+\end{tabularx}}
+\end{table}

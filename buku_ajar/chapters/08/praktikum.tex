@@ -1,0 +1,79 @@
+% chapters/08/praktikum.tex
+\begin{praktikumbox}
+Praktikum ini mengikuti Tugas Praktikum 06 pada RPS: NPC mengejar pemain di
+ruang terbuka, dengan garis arah yang divisualisasikan agar keputusannya dapat
+diamati.
+
+\begin{langkah}
+  \item \textbf{Jalankan programnya.} Ketik ulang \code{ch08_chase.py} dari
+        Daftar~\ref{lst:ch08-chase} ke dalam folder \code{code}. Jalankan, lalu
+        gerakkan pemain dengan WASD. Amati perubahan warna NPC dan garis arah
+        yang menunjuk ke pemain.
+
+  \item \textbf{Amati batas persepsi.} Berjalanlah menjauh sampai seluruh NPC
+        berhenti, lalu dekati kembali. Catat jarak ketika NPC mulai bergerak,
+        dan bandingkan dengan nilai jari-jari yang dipakai.
+
+  \item \textbf{Ukur kecepatan pada berbagai jarak.} Jalankan program dengan
+        masukan otomatis, lalu catat kecepatan terukur pada terminal.
+\begin{kodekeluaran}
+python ch08_chase.py --frames 400 --auto-run
+\end{kodekeluaran}
+
+  \item \textbf{Bandingkan dengan cara yang salah.} Jalankan kembali dengan
+        pilihan \code{--naive}, lalu catat kecepatan terukurnya. Bandingkan
+        kedua hasil dan jelaskan perbedaannya.
+\begin{kodekeluaran}
+python ch08_chase.py --frames 400 --auto-run --naive
+\end{kodekeluaran}
+
+  \item \textbf{Bandingkan jari-jari persepsi.} Jalankan program tiga kali
+        dengan jari-jari 120, 240, dan 400 piksel. Catat kesan Anda mengenai
+        tingkat kesulitan pada masing-masing nilai.
+
+  \item \textbf{Amati kelemahan AI reaktif.} Tambahkan satu bongkahan tegak di
+        tengah ruang permainan, lalu atur agar pemain dapat bersembunyi di
+        baliknya. Perhatikan perilaku NPC selama pemain berada di balik
+        bongkahan itu, dan catat pengamatan Anda.
+
+  \item \textbf{Tulis catatan praktikum} yang memuat kedua tabel pengukuran,
+        hasil pengamatan pada langkah keenam, dan kesimpulan mengenai kapan
+        perilaku reaktif tidak lagi memadai.
+
+  \item \textbf{Simpan pekerjaan} ke repositori Git dengan pesan penyimpanan
+        yang menerangkan isinya.
+\end{langkah}
+\end{praktikumbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Lembar kerja Praktikum 06}
+\label{tab:lembar-praktikum-06}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{4.0cm} C{3.2cm} C{3.2cm} Y@{}}
+\toprule
+\headrow \textbf{Cara dan pengukuran} & \textbf{Jarak saat diukur} & \textbf{Kecepatan terukur} & \textbf{Catatan} \\
+\midrule
+Arah dinormalkan & & & \\[1.4em]
+\addlinespace
+Vektor jarak dipakai langsung & & & \\[1.4em]
+\addlinespace
+\multicolumn{4}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Jarak ketika NPC mulai bergerak (langkah 2): \dotfill} \\[1.4em]
+\addlinespace
+\multicolumn{4}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Kesan tingkat kesulitan pada jari-jari 120, 240, dan 400 piksel: \dotfill}
+\\[1.4em]
+\addlinespace
+\multicolumn{4}{@{}p{\textwidth}@{}}{\footnotesize\itshape
+Perilaku NPC ketika pemain bersembunyi di balik bongkahan: \dotfill} \\[2.0em]
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Langkah keenam adalah langkah yang paling penting bagi bab berikutnya. Gejala
+yang Anda catat di sana---NPC yang menekan bongkahan tanpa berusaha
+mengelilinginya---merupakan titik tolak mesin keadaan pada Bab~IX dan pencarian
+jalur pada Bab~X.
+\end{catatabox}

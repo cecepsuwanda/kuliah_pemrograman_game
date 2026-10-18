@@ -1,0 +1,55 @@
+% chapters/07/figures/tabrakan-per-sumbu.tikz
+% Penyelesaian tabrakan sumbu demi sumbu: gerak mendatar diperiksa lebih
+% dahulu, baru gerak tegak.
+\begin{tikzpicture}[
+  bongkah/.style={rectangle, draw=ubLine, thick, fill=ubGray},
+  pemain/.style={rectangle, draw=ubPrimary, thick, fill=ubPrimary!25},
+  pemainlama/.style={rectangle, draw=ubPrimary, dashed, thin},
+  panah/.style={-{Stealth[length=2.2mm]}, thick, draw=ubAccent},
+  judul/.style={font=\footnotesize\bfseries, ubPrimary, align=center},
+  label/.style={font=\scriptsize, align=left}
+]
+
+% ---------- Panel A: sumbu mendatar ----------
+\begin{scope}
+  \node[judul, anchor=south] at (2.4,2.15)
+    {1. Sumbu mendatar diperiksa lebih dahulu};
+
+  % Bongkahan
+  \draw[bongkah] (3.2,0) rectangle (5.6,2.0);
+  \node[label, anchor=north] at (4.4,-0.15) {bongkahan};
+
+  % Posisi sebelum dan sesudah penyelesaian
+  \draw[pemainlama] (2.55,0.55) rectangle (3.05,1.45);
+  \draw[pemain] (2.7,0.55) rectangle (3.2,1.45);
+
+  \draw[panah] (2.2,1.7) -- (3.0,1.7);
+  \node[label, anchor=south west] at (2.25,1.75)
+    {bergerak ke kanan};
+
+  % Tanda sisi yang ditempelkan
+  \draw[ubRed, very thick] (3.2,0.4) -- (3.2,1.6);
+  \node[label, ubRed, anchor=north east] at (3.15,0.35)
+    {badan ditempelkan\\pada sisi kiri bongkahan};
+\end{scope}
+
+% ---------- Panel B: sumbu tegak ----------
+\begin{scope}[xshift=8.4cm]
+  \node[judul, anchor=south] at (2.4,2.15)
+    {2. Sumbu tegak diperiksa kemudian};
+
+  \draw[bongkah] (0.6,0) rectangle (4.4,0.9);
+  \node[label, anchor=north] at (2.5,-0.15) {bongkahan};
+
+  % Posisi sebelum dan sesudah penyelesaian
+  \draw[pemainlama] (1.75,0.9) rectangle (2.45,1.8);
+  \draw[pemain] (1.75,0.45) rectangle (2.45,1.35);
+
+  \draw[panah] (2.85,1.9) -- (2.85,1.3);
+  \node[label, anchor=west] at (2.95,1.6) {jatuh};
+
+  \draw[ubGreen, very thick] (0.6,0.9) -- (4.4,0.9);
+  \node[label, ubGreen, anchor=south west] at (2.6,0.95)
+    {kaki diletakkan\\pada permukaan};
+\end{scope}
+\end{tikzpicture}

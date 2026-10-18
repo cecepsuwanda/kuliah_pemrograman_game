@@ -1,0 +1,102 @@
+% chapters/10/section-05.tex
+\section{Program Pencarian Jalur Lengkap}
+\label{sec:program-astar}
+
+Bagian ini menyatukan seluruh unsur menjadi program pencarian jalur yang dapat
+diamati dan diukur.
+
+\subsection{Kode Lengkap}
+
+\kodepython{python/ch10_astar.py}{Pencarian jalur A* pada peta berpetak beserta visualisasinya}{lst:ch10-astar}
+
+\subsection{Membedah Susunan Programnya}
+
+Program itu tersusun atas lima bagian yang jelas terpisah.
+
+\begin{description}
+  \item[Pembacaan peta] Fungsi \code{baca_peta} mengubah gambar huruf menjadi
+        himpunan dinding, titik awal, dan titik tujuan. Fungsi itu juga
+        memeriksa panjang baris yang harus sama.
+  \item[Penentuan tetangga] Fungsi \code{tetangga} mengembalikan petak yang
+        bersebelahan dan dapat dilalui, yaitu indikator \ind{a}.
+  \item[Ukuran heuristik] Tiga fungsi kecil, yaitu \code{jarak_manhattan},
+        \code{jarak_euclidean}, dan \code{tanpa_perkiraan}.
+  \item[Pencarian] Fungsi \code{cari_jalur} menjalankan algoritma A* dengan
+        antrean prioritas, lalu merekonstruksi jalurnya.
+  \item[Pemeriksaan dan penggambaran] Fungsi \code{periksa_jalur} memeriksa
+        keabsahan jalur, sedangkan fungsi \code{gambar_peta} menampilkan
+        keadaan pencarian.
+\end{description}
+
+Pemisahan itu membuat setiap bagian dapat diganti tanpa mengganggu yang lain.
+Mengubah bentuk peta, misalnya dari empat arah menjadi delapan arah, hanya
+menuntut perubahan pada fungsi \code{tetangga}. Mengganti heuristik hanya
+menuntut penambahan satu fungsi kecil.
+
+\subsection{Keluaran Pengukuran}
+
+Ketika program dijalankan dengan pilihan \code{--bandingkan}, terminal
+menampilkan perbandingan ketiga heuristik pada peta yang sama.
+
+\begin{kodekeluaran}
+  Heuristik  Diperiksa   Jalur   Biaya  Temuan
+--------------------------------------------------------------
+  manhattan        274      51      50       0
+  euclidean        353      51      50       0
+      tanpa        437      51      50       0
+--------------------------------------------------------------
+Biaya jalur sama pada ketiga heuristik, sehingga ketiganya
+menghasilkan jalur terpendek.
+\end{kodekeluaran}
+
+Kolom \istilah{Temuan} menyatakan banyaknya masalah yang ditemukan oleh
+pemeriksaan jalur. Nilainya nol pada ketiga baris, yang berarti ketiga jalur
+itu bersambung, dimulai dari titik awal, berakhir di titik tujuan, dan tidak
+melewati dinding.
+
+\subsection{Percobaan yang Disarankan}
+
+\begin{table}[htbp]
+\centering
+\caption{Percobaan pada program pencarian jalur}
+\label{tab:percobaan-ch10}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{5.6cm} Y@{}}
+\toprule
+\headrow \textbf{Yang diubah dan caranya} & \textbf{Yang sebaiknya Anda amati} \\
+\midrule
+Heuristik, melalui pilihan \code{--heuristic}, atau dengan menekan tombol H
+ketika program berjalan. &
+Bentuk penyebaran pencarian berubah: pada Manhattan penyebarannya sempit, pada
+Euclidean lebih lebar, dan tanpa perkiraan menyebar ke segala arah. Jumlah
+petak yang diperiksa bertambah, sedangkan biaya jalurnya tidak berubah. \\
+\addlinespace
+Titik tujuan, dengan memindahkan huruf \code{G} pada peta. &
+Pencarian menyesuaikan arahnya. Apabila tujuannya terkurung dinding, jalur
+kosong dan pemeriksaan melaporkan bahwa tujuan tidak dapat dicapai. \\
+\addlinespace
+Bentuk peta, dengan menambahkan dinding. &
+Jalur berbelok mengelilinginya. Apabila dindingnya menutup seluruh jalan,
+jalur menjadi kosong. \\
+\addlinespace
+Kecepatan penyajian, melalui pilihan \code{--langkah}. &
+Nilai kecil membuat penyebaran pencarian lebih mudah diamati, sedangkan nilai
+besar membuatnya selesai lebih cepat. \\
+\addlinespace
+Heuristik yang melebihkan jarak, yaitu dengan mengalikan hasil
+\code{jarak_manhattan} dengan dua. &
+Pencarian menjadi sangat cepat, tetapi biaya jalurnya dapat menjadi lebih besar
+daripada 50. Inilah contoh heuristik yang tidak memenuhi syarat, dan
+akibatnya terhadap optimalitas. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{peringatanbox}
+Percobaan terakhir adalah yang paling berharga. Dengan mengalikan heuristik
+dengan dua, pencarian berhenti lebih cepat dan memeriksa lebih sedikit petak,
+tetapi jalur yang dihasilkan dapat lebih panjang. Program
+tidak melaporkan kesalahan apa pun; satu-satunya tanda bahwa ada yang keliru
+adalah angka biaya jalur yang lebih besar. Karena itu, biasakan memeriksa biaya
+jalur, bukan hanya kecepatan pencarian.
+\end{peringatanbox}

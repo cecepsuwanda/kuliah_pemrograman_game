@@ -1,0 +1,30 @@
+% chapters/04/figures/siklus-dengan-pengendali-waktu.tikz
+% Siklus lengkap: tiga tahap pekerjaan ditambah pengendali waktu yang
+% mengukur selang waktu dan menahan laju bingkai.
+\begin{tikzpicture}[
+  tahap/.style={
+    rectangle, rounded corners=2pt, draw=ubPrimary, thick, fill=ubAlt,
+    align=center, text width=25mm, inner sep=3.5pt, minimum height=18mm,
+    font=\footnotesize
+  },
+  waktu/.style={tahap, draw=ubAccent, fill=white},
+  panah/.style={-{Stealth[length=2.4mm]}, thick, draw=ubAccent}
+]
+
+\node[tahap] (input) at (0,0)
+  {\textbf{1. Masukan}\\[2pt]\scriptsize peristiwa dari\\pemain};
+\node[tahap, right=7mm of input] (update)
+  {\textbf{2. Pembaruan}\\[2pt]\scriptsize keadaan\\permainan};
+\node[tahap, right=7mm of update] (render)
+  {\textbf{3. Penayangan}\\[2pt]\scriptsize gambar ulang\\seluruh jendela};
+\node[waktu, right=7mm of render] (clock)
+  {\textbf{4. Pengendali waktu}\\[2pt]\scriptsize ukur selang,\\tahan laju bingkai};
+
+\draw[panah] (input) -- (update);
+\draw[panah] (update) -- (render);
+\draw[panah] (render) -- (clock);
+\draw[panah] (clock.south) -- ++(0,-8mm) -| (input.south);
+
+\node[font=\scriptsize\itshape, ubPrimary, anchor=north] at (4.8,-2.2)
+  {diulang selama permainan berjalan};
+\end{tikzpicture}

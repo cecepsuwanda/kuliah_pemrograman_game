@@ -1,0 +1,102 @@
+% chapters/04/section-03.tex
+\section{Mengendalikan Laju dengan \istilah{Clock}}
+\label{sec:mengendalikan-laju}
+
+Siklus permainan yang berjalan tanpa pengendali waktu akan memakai seluruh
+kemampuan prosesor untuk menghasilkan bingkai sebanyak mungkin. Cara itu
+merugikan, dan bagian ini menjelaskan perangkat yang mencegahnya.
+
+\subsection{Dua Pekerjaan \code{pygame.time.Clock}}
+
+Pygame menyediakan perkakas pengendali waktu bernama \code{Clock}. Satu
+pemanggilan perintahnya, yaitu \code{clock.tick()}, mengerjakan dua hal
+sekaligus.
+
+\begin{enumerate}
+  \item \textbf{Mengukur selang waktu} yang benar-benar berlangsung sejak
+        pemanggilan sebelumnya, dan mengembalikan nilainya dalam milidetik.
+        Nilai inilah yang pada Bab~V dipakai untuk menghitung gerak.
+  \item \textbf{Menahan laju} dengan menunggu sampai selang waktu satu bingkai
+        terpenuhi, apabila batas laju diberikan sebagai argumen. Apabila
+        seluruh pekerjaan satu bingkai selesai lebih cepat daripada jatah
+        waktunya, \code{tick()} menunda sisa waktunya.
+\end{enumerate}
+
+Karena kedua pekerjaan itu digabung dalam satu perintah, \code{tick()} selalu
+diletakkan pada akhir setiap putaran siklus, yaitu setelah tahap penayangan.
+Peletakan itu penting: selang waktu yang diukur harus mencakup seluruh
+pekerjaan satu bingkai, bukan sebagiannya.
+
+\begin{kodekeluaran}
+delta_seconds = clock.tick(60) / 1000.0
+\end{kodekeluaran}
+
+Batas laju dinyatakan dalam bingkai per detik. Nilai 60 berarti paling banyak
+60 bingkai setiap detik. Perhatikan pembagian dengan 1000: \code{tick()}
+mengembalikan milidetik, sedangkan seluruh perhitungan gerak nanti memakai
+satuan detik. Kebiasaan mengubahnya menjadi detik sejak awal mencegah
+kekeliruan satuan yang sulit dilacak.
+
+\begin{catatabox}
+Batas laju bersifat pilihan, bukan keharusan. Memanggil
+\code{clock.tick()} tanpa argumen tidak menahan laju sama sekali, sedangkan
+\code{clock.tick(0)} berarti hal yang sama. Cara itu hanya berguna untuk
+mengukur seberapa cepat sebenarnya komputer Anda menyelesaikan satu bingkai.
+\end{catatabox}
+
+\subsection{Mengukur Laju yang Benar-Benar Tercapai}
+
+Batas laju menyatakan keinginan, bukan kenyataan. Apabila pekerjaan satu
+bingkai memerlukan waktu lebih lama daripada jatahnya, laju yang tercapai
+akan lebih rendah daripada batas yang diminta. Karena itu Pygame menyediakan
+cara mengukur laju yang benar-benar terjadi.
+
+\begin{kodekeluaran}
+measured_fps = clock.get_fps()
+\end{kodekeluaran}
+
+Nilai \code{clock.get_fps()} dihitung dari rata-rata selang waktu beberapa
+bingkai terakhir, sehingga angkanya tidak melompat-lompat. Nilai itu berguna
+untuk dua hal: menampilkan keadaan program kepada pemain, dan menolong Anda
+sebagai penulis program. Perbedaan yang besar antara batas laju dan laju
+terukur merupakan tanda paling awal bahwa program Anda terlalu berat.
+
+Pada program bab ini, nilai tersebut ditampilkan pada judul jendela setiap
+bingkai. Cara itu dipilih karena judul jendela selalu terlihat, tidak
+memakan ruang gambar permainan, dan dapat dibaca walaupun jendela sedang
+tidak difokuskan.
+
+\subsection{Mengapa Laju Bingkai Perlu Dibatasi}
+
+Pertanyaan yang wajar muncul: bukankah permainan yang lebih cepat lebih baik?
+Jawabannya tidak, dan alasannya ada tiga.
+
+\begin{enumerate}
+  \item \textbf{Perilaku permainan menjadi tidak seragam.} Apabila gerak
+        bergantung pada jumlah bingkai, permainan berjalan lebih sulit pada
+        komputer yang lebih cepat. Batas laju membuat seluruh komputer
+        menghasilkan jumlah bingkai yang sama setiap detik, sehingga
+        permainan terasa sama di mana pun.
+  \item \textbf{Beban prosesor dan panas berlebihan.} Prosesor yang dipakai
+        penuh tanpa manfaat menaikkan suhu, mempercepat pemakaian baterai pada
+        komputer jinjing, dan memperpendek usia perangkat. Angka pengukuran
+        pada Bagian~\ref{sec:mengukur-laju} memperlihatkan besarnya
+        perbedaan itu.
+  \item \textbf{Tidak ada manfaat yang sepadan.} Mata manusia tidak dapat
+        membedakan dua ribu bingkai per detik, dan layar hanya dapat
+        menampilkan sejumlah gambar terbatas setiap detik. Bingkai di atas
+        batas kemampuan layar terbuang percuma.
+\end{enumerate}
+
+Sebagai gambaran awal, siklus yang dibatasi pada 60 bingkai per detik memakai
+sekitar tiga persen dari satu inti prosesor, sedangkan siklus yang sama tanpa
+pembatasan memakai hampir seratus persen untuk pekerjaan yang tidak terlihat
+pemain. Perbandingan lengkapnya beserta cara mengukurnya sendiri dibahas pada
+Bagian~\ref{sec:mengukur-laju}.
+
+\begin{tipsbox}
+Nilai batas laju yang wajar untuk pembelajaran adalah 60 bingkai per detik,
+karena nilai itu mulus bagi mata dan cukup ringan bagi sebagian besar
+komputer. Turunkan menjadi 30 apabila program Anda mulai berat, dan
+naikkan hanya apabila Anda mengetahui alasan yang jelas untuk itu.
+\end{tipsbox}

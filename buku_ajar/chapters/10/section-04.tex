@@ -1,0 +1,110 @@
+% chapters/10/section-04.tex
+\section{Merekonstruksi dan Memvisualisasikan Jalur}
+\label{sec:rekonstruksi}
+
+Pencarian yang berhasil menemukan tujuan baru menyelesaikan separuh pekerjaan.
+Bagian ini menyelesaikan separuhnya lagi, sesuai indikator \ind{c}.
+
+\subsection{Menyimpan Asal Setiap Petak}
+
+Selama pencarian, program menyimpan dari petak mana setiap petak ditemukan.
+Simpanan itu disebut tabel asal (\istilah{came\_from}), dan bentuknya kamus
+yang memetakan sebuah petak ke petak sebelumnya.
+
+\begin{kodekeluaran}
+asal[tetangga_petak] = sekarang
+\end{kodekeluaran}
+
+Satu baris itu cukup untuk merekonstruksi jalur, sebab setiap petak hanya
+memiliki satu asal: yaitu petak yang dilalui untuk mencapainya dengan biaya
+termurah. Apabila jalur yang lebih murah ditemukan kemudian, nilai asalnya
+ditimpa. Dengan begitu, tabel itu selalu menyatakan jalur termurah yang
+diketahui saat itu.
+
+\subsection{Menelusuri Kembali dari Tujuan}
+
+Jalur diperoleh dengan menelusuri tabel asal dari titik tujuan mundur ke titik
+awal, lalu membalik urutannya.
+
+\begin{kodekeluaran}
+jalur = []
+if tujuan in asal:
+    petak = tujuan
+    while petak is not None:
+        jalur.append(petak)
+        petak = asal[petak]
+    jalur.reverse()
+\end{kodekeluaran}
+
+Penelusuran itu berhenti ketika asalnya bernilai \code{None}, yaitu tanda
+bahwa petak itu adalah titik awal. Jalur yang dihasilkan
+berupa daftar petak dari titik awal ke titik tujuan, sehingga dapat langsung
+dipakai NPC sebagai rangkaian tujuan yang harus dilaluinya satu per satu.
+
+\begin{peringatanbox}
+Pemeriksaan \code{if tujuan in asal} perlu dilakukan lebih dahulu. Apabila
+tujuan tidak dapat dicapai---misalnya karena terkurung dinding---tabel asal
+tidak memuat tujuan, dan penelusuran tanpa pemeriksaan itu akan berputar tanpa
+henti atau menimbulkan kesalahan. Keadaan tidak dapat dicapai itu wajar terjadi
+pada permainan, sehingga harus ditangani, bukan diabaikan.
+\end{peringatanbox}
+
+\subsection{Memeriksa Jalur sebelum Dipakai}
+
+Jalur yang dihasilkan sebaiknya diperiksa lebih dahulu, walaupun pencariannya
+sudah benar. Pemeriksaan itu murah, dan menangkap kesalahan yang berasal dari
+peta atau dari rekonstruksi.
+
+\begin{kodekeluaran}
+def periksa_jalur(peta, awal, tujuan, jalur):
+    temuan = []
+    if not jalur:
+        temuan.append("jalur kosong: tujuan tidak dapat dicapai")
+    if jalur and jalur[0] != awal:
+        temuan.append("jalur tidak dimulai dari titik awal")
+    if jalur and jalur[-1] != tujuan:
+        temuan.append("jalur tidak berakhir di titik tujuan")
+    for petak in jalur:
+        if petak in dinding:
+            temuan.append("jalur melewati dinding")
+    for sebelum, sesudah in zip(jalur, jalur[1:]):
+        if jarak_manhattan(sebelum, sesudah) != 1:
+            temuan.append("jalur melompat")
+    return temuan
+\end{kodekeluaran}
+
+Pemeriksaan itu menjawab empat pertanyaan: apakah jalurnya ada, apakah mulainya
+benar, apakah akhirnya benar, apakah petaknya bersambung dan tidak menembus
+dinding. Pada program bab ini, hasil pemeriksaan ditampilkan pada terminal
+setiap kali pencarian dijalankan.
+
+\subsection{Memvisualisasikan Pencarian}
+
+Visualisasi pencarian berguna bukan hanya untuk laporan, melainkan juga untuk
+memahami cara kerja algoritmanya. Program bab ini menggambar empat hal.
+
+\begin{itemize}
+  \item \textbf{Petak yang telah diperiksa}, berwarna biru gelap. Kumpulan
+        petak itu memperlihatkan ke arah mana pencarian menyebar.
+  \item \textbf{Petak yang menunggu diperiksa}, berwarna biru terang. Petak itu
+        disebut tepi pencarian, dan bentuknya memperlihatkan di mana pencarian
+        akan berlanjut.
+  \item \textbf{Petak yang sedang diperiksa}, ditandai bingkai kuning. Tanda itu
+        memperlihatkan urutan pemeriksaan langkah demi langkah.
+  \item \textbf{Jalur yang ditemukan}, berupa bulatan kuning. Jalur itu baru
+        digambar setelah pencarian selesai.
+\end{itemize}
+
+Pencarian diperlihatkan langkah demi langkah, beberapa petak setiap bingkai,
+sehingga penyebarannya dapat diamati. Jumlah petak yang diperiksa setiap
+bingkai dapat diubah melalui pilihan \code{--langkah}; nilai besar membuat
+pencarian selesai lebih cepat tetapi penyebarannya kurang terlihat.
+
+\begin{tipsbox}
+Visualisasi semacam ini juga berguna untuk memeriksa heuristik. Apabila
+pencarian menyebar ke arah yang salah---misalnya ke arah yang menjauhi
+tujuan---kemungkinan besar heuristiknya keliru. Pada peta yang mengizinkan
+delapan arah, penyebaran yang berbentuk bintang menandakan bahwa heuristiknya
+melebihkan jarak, dan itulah tanda bahwa jalur yang dihasilkan mungkin bukan
+yang terpendek.
+\end{tipsbox}

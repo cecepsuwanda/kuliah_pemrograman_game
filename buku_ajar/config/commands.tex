@@ -1,0 +1,97 @@
+% =========================================================
+%  config/commands.tex
+%  Perintah khusus buku ajar.
+%  Tujuan: mencegah definisi berulang yang tersebar di chapters/.
+%  Perintah \CPL, \CPMK, \SUBCPMK, \code, \istilah, \headrow,
+%  \Utama, \Pendukung, \TidakAda, \tabsource diambil dari
+%  rps/config/commands.tex dan rps/config/styles.tex agar
+%  penulisan buku ajar dan RPS konsisten.
+% =========================================================
+
+% --- Kode capaian pembelajaran --------------------------
+\newcommand{\CPL}[1]{\textbf{CPL#1}}
+\newcommand{\CPMK}[1]{\textbf{CPMK#1}}
+\newcommand{\SUBCPMK}[1]{\textbf{Sub-CPMK#1}}
+
+% --- Istilah teknis -------------------------------------
+% \istilah  : istilah asing (miring)
+% \code     : potongan kode, nama berkas, atau nama fungsi di dalam teks
+%
+% \code memakai \detokenize sehingga garis bawah dan karakter khusus lain
+% boleh ditulis APA ADANYA tanpa perlu di-escape:
+%     benar : \code{pygame.key.get_pressed}   \code{code/python/uji_gerak.py}
+%     salah : \code{pygame.key.get\_pressed}  (akan tercetak "\_")
+\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
+\newcommand{\istilah}[1]{\textit{#1}}
+
+% --- Penanda baris header tabel -------------------------
+\newcommand{\headrow}{}
+
+% --- Penanda status hubungan (matriks CPL--CPMK) --------
+\newcommand{\Utama}{\textbf{Utama}}
+\newcommand{\Pendukung}{Pendukung}
+\newcommand{\TidakAda}{---}
+
+% --- Penanda indikator pencapaian -----------------------
+% Dipakai pada tabel Sub-CPMK: \ind{a}, \ind{b}, \ind{c}
+\newcommand{\ind}[1]{\textbf{(#1)}}
+
+% --- Keterangan sumber gambar ---------------------------
+% Contoh: \sumber{[R12] hal. 24}
+\newcommand{\sumber}[1]{%
+  \par\vspace{2pt}{\footnotesize\itshape Sumber: #1\par}%
+}
+
+% --- Akar direktori yang bergantung pada cara kompilasi ----
+% Ketika sebuah bab dikompilasi mandiri (misalnya latexmk -pdf chapter.tex
+% di dalam chapters/05), direktori kerjanya adalah direktori bab sehingga
+% akar buku berada dua tingkat di atas. Ketika seluruh buku dikompilasi,
+% direktori kerjanya adalah akar buku.
+%
+% Kondisi \ifSubfilesClassLoaded dievaluasi SEKALI di sini, yaitu ketika
+% berkas ini dibaca sebagai bagian dari preamble.
+%
+% PENTING: \ifSubfilesClassLoaded BUKAN kondisional gaya \if...\else...\fi.
+% Perintah ini menerima DUA argumen dalam kurung kurawal, seperti
+% \@ifundefined: \ifSubfilesClassLoaded{<bila mandiri>}{<bila seluruh buku>}.
+% Menulisnya sebagai \if...\else...\fi menyebabkan galat "Extra \else" dan
+% menghasilkan nama berkas yang kacau.
+%
+% Kondisi juga tidak boleh diletakkan di dalam argumen nama berkas
+% (\includegraphics, \lstinputlisting) karena argumen tersebut diproses
+% ulang oleh \edef.
+\ifSubfilesClassLoaded{%
+  \newcommand{\coderoot}{../../code/}%
+  \newcommand{\assetroot}{../../assets/}%
+}{%
+  \newcommand{\coderoot}{code/}%
+  \newcommand{\assetroot}{assets/}%
+}
+
+% Dipakai sebagai: \lstinputlisting{\codefile{python/ch04_game_loop.py}}
+\newcommand{\codefile}[1]{\coderoot#1}
+
+% Dipakai sebagai: \includegraphics{\assetfile{images/tangkapan.png}}
+\newcommand{\assetfile}[1]{\assetroot#1}
+
+% --- Rujukan ke bab lain ---------------------------------
+% \refbab{chap:game-loop}{Bab tentang Game Loop}
+% Mencetak nomor bab bila label tersedia (kompilasi seluruh buku atau
+% label diimpor melalui paket xr-hyper); bila tidak, mencetak teks
+% cadangan sehingga bab tetap dapat dikompilasi mandiri (Arsitektur §40).
+\makeatletter
+\newcommand{\refbab}[2]{%
+  \@ifundefined{r@#1}{#2}{Bab~\ref{#1}}%
+}
+\makeatother
+
+% --- Penanda bagian yang belum selesai (hanya untuk penyusunan) --
+% Tidak boleh dipakai pada versi terbit.
+\newcommand{\todo}[1]{%
+  \begin{tcolorbox}[
+    breakable, sharp corners, boxrule=0.5pt,
+    colframe=ubRed, colback=ubRedBg, coltitle=white,
+    fonttitle=\bfseries\small, title={Belum selesai}]
+  \footnotesize #1
+  \end{tcolorbox}%
+}

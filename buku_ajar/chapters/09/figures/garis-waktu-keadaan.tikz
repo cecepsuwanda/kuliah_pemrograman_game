@@ -1,0 +1,37 @@
+% chapters/09/figures/garis-waktu-keadaan.tikz
+% Garis waktu keadaan NPC pada skenario pengujian, memakai catatan perpindahan
+% yang sesungguhnya: setiap pita menyatakan lama sebuah keadaan berlangsung.
+\begin{tikzpicture}[
+  pita/.style={rectangle, draw=ubLine, thick, minimum height=9mm,
+               align=center, font=\scriptsize},
+  label/.style={font=\scriptsize, align=center},
+  penanda/.style={draw=ubLine, thin}
+]
+
+% Pita keadaan. Lebar sebanding dengan lama keadaan berlangsung.
+\node[pita, fill=ubGray, minimum width=1.42cm] (a) at (0.71,0) {berdiam};
+\node[pita, fill=ubGreenBg, minimum width=0.93cm, right=0cm of a] (b) {patroli};
+\node[pita, fill=ubRedBg, minimum width=1.03cm, right=0cm of b] (c) {kejar};
+\node[pita, fill=ubWarnBg, minimum width=3.17cm, right=0cm of c] (d) {menyerang};
+\node[pita, fill=ubRedBg, minimum width=0.95cm, right=0cm of d] (e) {kejar};
+\node[pita, fill=ubGray, minimum width=1.42cm, right=0cm of e] (f) {berdiam};
+\node[pita, fill=ubGreenBg, minimum width=5.09cm, right=0cm of f] (g) {berpatroli};
+
+% Nomor bingkai pada setiap batas keadaan.
+\foreach \titik/\bingkai in {a.west/0, a.east/91, b.east/151, c.east/217,
+                             d.east/421, e.east/482, f.east/573, g.east/900} {
+  \draw[penanda] (\titik) ++(0,0.75) -- ++(0,0.25);
+  \node[label, anchor=south] at ($(\titik) + (0,1.0)$) {\bingkai};
+}
+
+% Sumbu waktu.
+\draw[-{Stealth[length=2mm]}, thick, draw=ubLine] (-0.3,-0.9) -- (14.6,-0.9);
+\node[label, anchor=north west] at (0,-1.1)
+  {bingkai (900 bingkai setara 15 detik pada 60 bingkai per detik)};
+
+\node[label, anchor=north west, text width=140mm] at (-0.3,-1.9)
+  {Pita berwarna menyatakan keadaan yang sedang aktif, dan lebarnya sebanding
+   dengan lama keadaan itu berlangsung. Perhatikan bahwa keadaan menyerang
+   berlangsung paling lama, yaitu 204 bingkai, sebab pemain berdiri di dalam
+   jangkauan serang selama 3,4 detik.};
+\end{tikzpicture}

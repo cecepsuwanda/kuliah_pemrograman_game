@@ -1,0 +1,222 @@
+% appendices/appendix-b-tugas-portofolio.tex
+\chapter{Contoh Tugas, Portofolio, dan Lembar Kerja}
+\label{app:lembar-kerja}
+
+Lampiran ini memuat bentuk-bentuk yang dipakai sepanjang perkuliahan dalam
+keadaan siap dicetak. Berkas aslinya tersedia pada repositori mata kuliah
+dalam bentuk yang dapat disunting; yang disajikan di sini adalah bentuk dan
+isinya, agar Anda mengetahui apa yang diharapkan sebelum mengerjakannya.
+
+\section{Format Laporan Praktikum}
+
+Setiap praktikum pada Bab~III sampai Bab~XV menghasilkan satu berkas laporan.
+Laporan itu tidak perlu panjang; satu halaman sudah cukup, asalkan memuat
+keempat bagian pada Tabel~\ref{tab:format-laporan}.
+
+\begin{table}[htbp]
+\centering
+\caption{Format laporan praktikum satu halaman}
+\label{tab:format-laporan}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.0cm} Y@{}}
+\toprule
+\headrow \textbf{Bagian} & \textbf{Isi, dan mengapa diperlukan} \\
+\midrule
+Tujuan & Satu atau dua kalimat yang menyebut Sub-CPMK dan hasil yang hendak
+dicapai. Bagian ini memudahkan Anda memeriksa sendiri apakah praktikumnya
+berhasil. \\
+\addlinespace
+Yang dikerjakan & Uraian singkat langkah yang diambil, termasuk perubahan yang
+tidak ada pada petunjuk. Bagian ini yang membedakan laporan hasil kerja dari
+salinan petunjuk. \\
+\addlinespace
+Keluaran & Tangkapan layar atau cuplikan keluaran program, beserta angkanya
+apabila ada. Keluaran yang disertai angka dapat diperiksa ulang. \\
+\addlinespace
+Catatan & Masalah yang ditemui, dugaan penyebabnya, dan cara mengatasinya.
+Bagian ini yang paling berguna bagi Anda pada praktikum berikutnya. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\section{Format Portofolio}
+
+Portofolio adalah kumpulan seluruh artefak praktikum pada satu repositori.
+Susunan yang dianjurkan diperlihatkan pada Tabel~\ref{tab:format-portofolio}.
+Susunan ini meniru susunan sumber buku ini, sehingga mahasiswa yang mengikuti
+seluruh praktikum akan memperoleh kebiasaan yang sama.
+
+\begin{table}[htbp]
+\centering
+\caption{Susunan direktori portofolio}
+\label{tab:format-portofolio}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.4cm} Y@{}}
+\toprule
+\headrow \textbf{Direktori} & \textbf{Isi} \\
+\midrule
+\code{code/python/} & Seluruh berkas Python dari Bab~III sampai Bab~XI, dengan
+nama yang menyebut babnya. \\
+\addlinespace
+\code{code/unity/} & Seluruh berkas C\# dari Bab~XII sampai Bab~XVI. \\
+\addlinespace
+\code{laporan/} & Laporan praktikum satu halaman untuk setiap pertemuan. \\
+\addlinespace
+\code{aset/} & Aset yang dipakai, beserta berkas \code{SUMBER.md} yang memuat
+sumber dan lisensi setiap aset. \\
+\addlinespace
+\code{proyek/} & Proyek akhir: \istilah{build}, kode sumber, laporan
+pengembangan, lembar \istilah{playtest}, dan \istilah{log bug}. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Aset berukuran besar sebaiknya tidak disimpan langsung di dalam repositori.
+Simpanlah pada tempat penyimpanan berkas, lalu catat alamatnya pada berkas
+\code{SUMBER.md}.
+
+\section{Lembar \istilah{Playtest} Siap Cetak}
+
+Lembar pada Tabel~\ref{tab:lembar-playtest-cetak} dipakai pada sesi
+\istilah{playtest} antar kelompok. Isilah satu lembar untuk setiap penguji.
+
+\begin{table}[htbp]
+\centering
+\caption{Lembar \istilah{playtest} siap cetak}
+\label{tab:lembar-playtest-cetak}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.0cm} Y@{}}
+\toprule
+\headrow \textbf{Butir} & \textbf{Isian} \\
+\midrule
+Nama penguji dan kelompok & \\[1.3em]
+\midrule
+Pengalaman bermain sejenis & \\[1.3em]
+\midrule
+Nama \istilah{build} dan tanggalnya & \\[1.3em]
+\midrule
+Waktu mulai dan waktu selesai & \\[1.3em]
+\midrule
+Tujuan sesi (bagian yang diragukan) & \\[1.3em]
+\midrule
+Titik berhenti lebih dari 10 detik & \\[2.0em]
+\midrule
+Keadaan yang tidak seharusnya terjadi & \\[2.0em]
+\midrule
+Pendapat penguji, dicatat apa adanya & \\[2.0em]
+\midrule
+Catatan pengamat sendiri & \\[2.0em]
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\section{Log \istilah{Bug} Siap Cetak}
+
+Log pada Tabel~\ref{tab:log-bug-cetak} memuat kolom yang sama dengan
+Tabel~\ref{tab:log-bug} pada Bab~XVI, dalam bentuk yang dapat diisi langsung.
+
+\begin{table}[htbp]
+\centering
+\caption{Log \istilah{bug} siap cetak}
+\label{tab:log-bug-cetak}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{0.7cm} C{1.6cm} Y C{1.3cm} C{1.4cm}@{}}
+\toprule
+\headrow \textbf{No} & \textbf{Jenis} & \textbf{Urutan yang menyebabkannya, dan hasil yang salah} & \textbf{Berat} & \textbf{Status} \\
+\midrule
+1 & & & & \\[2.2em]
+\midrule
+2 & & & & \\[2.2em]
+\midrule
+3 & & & & \\[2.2em]
+\midrule
+4 & & & & \\[2.2em]
+\midrule
+5 & & & & \\[2.2em]
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Jenis temuan yang dipakai adalah mekanik, integrasi, tampilan, dan
+\istilah{soft-lock}. Beratnya adalah berat, sedang, atau ringan, menurut
+Tabel~\ref{tab:berat-temuan}. Statusnya adalah belum, sedang dikerjakan, atau
+selesai beserta tanggalnya.
+
+\section{Daftar Periksa Penyerahan Proyek Akhir}
+
+Serahkan seluruh butir pada Tabel~\ref{tab:penyerahan} dalam satu
+\istilah{build} dan satu repositori. Berkas yang hilang pada hari penyerahan
+tidak dapat disusulkan tanpa persetujuan dosen pengampu.
+
+\begin{table}[htbp]
+\centering
+\caption{Daftar periksa penyerahan Proyek Akhir}
+\label{tab:penyerahan}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{0.8cm} L{6.2cm} Y@{}}
+\toprule
+\headrow \textbf{No} & \textbf{Kelengkapan} & \textbf{Keterangan} \\
+\midrule
+1 & \istilah{Build} yang dapat dijalankan & Diuji pada komputer lain, bukan
+pada komputer pembuatnya. \\
+\addlinespace
+2 & Kode sumber \istilah{project} & Seluruh berkas yang diperlukan untuk
+membangun ulang. \\
+\addlinespace
+3 & Ringkasan desain (GDD) & Beserta catatan perubahan yang disengaja. \\
+\addlinespace
+4 & Laporan pengembangan & Memuat keadaan sebelum dan sesudah setiap
+perbaikan. \\
+\addlinespace
+5 & Lembar \istilah{playtest} terisi & Sekurang-kurangnya dua penguji dari
+kelompok lain. \\
+\addlinespace
+6 & \istilah{Log bug} & Beserta status penanganan setiap temuan. \\
+\addlinespace
+7 & Daftar aset dan lisensinya & Memuat sumber setiap aset yang bukan karya
+sendiri. \\
+\addlinespace
+8 & Lembar refleksi akhir semester & Menurut Bagian~\ref{sec:refleksi-akhir}. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\section{Contoh Tugas yang Dapat Diberikan Dosen}
+
+Tabel~\ref{tab:contoh-tugas} memuat contoh tugas tambahan yang dapat dipakai
+apabila suatu CPMK belum mencapai ambang batas. Setiap tugas menunjuk pada
+bagian buku yang menjadi sumbernya, sehingga mahasiswa dapat mengerjakannya
+tanpa bahan tambahan.
+
+\begin{table}[htbp]
+\centering
+\caption{Contoh tugas tambahan dan bagian buku yang menjadi sumbernya}
+\label{tab:contoh-tugas}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{2.0cm} L{4.6cm} Y@{}}
+\toprule
+\headrow \textbf{CPMK} & \textbf{Bentuk tugas} & \textbf{Sumber} \\
+\midrule
+\CPMK{1} & Mengukur laju bingkai pada tiga nilai pembatas, lalu menjelaskan
+hubungannya dengan beban kerja & Bab~IV, dan \code{ch04_ukur_laju.py} \\
+\addlinespace
+\CPMK{1} & Membandingkan gerak berbasis jumlah bingkai dengan gerak berbasis
+\istilah{delta time} pada dua ukuran jendela & Bab~IV dan Bab~V \\
+\addlinespace
+\CPMK{2} & Menelusuri urutan keadaan NPC pada satu skenario, dan menunjukkan
+transisi yang tidak sah & Bab~IX, dan \code{ch09_fsm.py} \\
+\addlinespace
+\CPMK{2} & Membandingkan banyak petak yang diperiksa oleh dua heuristik pada
+peta yang sama & Bab~X, dan \code{ch10_astar.py} \\
+\addlinespace
+\CPMK{3} & Menjelaskan gejala fisika pada sebuah \istilah{scene}, dan
+menentukan komponen penyebabnya & Bab~XIII \\
+\addlinespace
+\CPMK{4} & Menyusun daftar peristiwa permainan beserta bunyi yang seharusnya
+memicunya & Bab~XV \\
+\addlinespace
+\CPMK{4} & Menjalankan \code{ch16_uji_mandiri.py} atas level sendiri, lalu
+memperbaiki tempat yang dilaporkan & Bab~XVI \\
+\bottomrule
+\end{tabularx}}
+\end{table}

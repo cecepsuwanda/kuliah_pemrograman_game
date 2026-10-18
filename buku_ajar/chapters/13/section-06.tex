@@ -1,0 +1,94 @@
+% chapters/13/section-06.tex
+\section{Kamera, Rasa Gerak, dan Penutup}
+\label{sec:kamera-rasa}
+
+\subsection{Kamera yang Mengikuti Pemain}
+
+Kamera pada permainan platformer biasanya mengikuti pemain, dan cara
+mengikutinya menentukan sebagian besar rasa gerak permainannya. Skripnya
+singkat, tetapi satu hal perlu diperhatikan dengan saksama.
+
+\begin{kodekeluaran}
+void LateUpdate()
+{
+    Vector3 target = new Vector3(pemain.position.x, pemain.position.y,
+                                 transform.position.z);
+    transform.position = Vector3.Lerp(transform.position, target,
+                                      followSpeed * Time.deltaTime);
+}
+\end{kodekeluaran}
+
+Kamera dipindahkan pada fungsi \code{LateUpdate}, yaitu fungsi
+yang dipanggil mesin \textbf{setelah} seluruh \code{Update} dan
+\code{FixedUpdate} selesai. Urutan itu penting: kamera harus dipindahkan
+berdasarkan letak pemain yang sudah diperbarui pada bingkai itu, bukan letak
+pemain pada awal bingkai.
+
+Perhatikan pula pemakaian \code{Vector3.Lerp}, yaitu pengambilan nilai antara
+dua letak menurut satu angka. Cara itu membuat kamera menyusul pemain secara
+berangsur, bukan mengikutinya dengan tepat. Nilai pengali yang kecil
+menghasilkan kamera yang lebih lambat menyusul, dan itulah salah satu pengatur
+rasa gerak yang paling berpengaruh.
+
+\subsection{Mengatur Rasa Gerak}
+
+Rasa gerak permainan platformer sebagian besar ditentukan oleh lima nilai, dan
+seluruhnya dapat diatur tanpa mengubah kode.
+
+\begin{itemize}
+  \item \textbf{Kecepatan mendatar} menentukan seberapa gesit pemain
+        berpindah.
+  \item \textbf{Kecepatan lompatan} menentukan tinggi lompatan, sebagaimana
+        dijelaskan pada Bagian~6.3.
+  \item \textbf{\istilah{Gravity Scale}} menentukan seberapa cepat pemain
+        jatuh kembali, dan bersama kecepatan lompatan menentukan lama pemain
+        berada di udara.
+  \item \textbf{Kelambatan kamera} menentukan seberapa jauh kamera tertinggal
+        dari pemain.
+  \item \textbf{Daerah pemeriksaan tanah} menentukan seberapa mudah pemain
+        dapat melompat, khususnya di tepi bongkahan.
+\end{itemize}
+
+\begin{tipsbox}
+Kelima nilai itu seluruhnya merupakan pilihan perancang, dan
+tidak satu pun berasal dari perhitungan. Inilah yang dimaksud dengan
+perancangan rasa gerak pada Bagian~6.3: yang menentukan rasa permainan bukan
+tinggi lompatan itu sendiri, melainkan perbandingan antara nilai-nilai
+tersebut.
+\end{tipsbox}
+
+\subsection{Mengakhiri Blok III}
+
+Bab ini menutup \CPMK{3}, yaitu kemampuan menggunakan \istilah{game engine}
+untuk membangun level. Tabel~\ref{tab:perkakas-unity} memuat perkakas yang
+telah lengkap pada dua bab terakhir.
+
+\begin{table}[htbp]
+\centering
+\caption{Perkakas Unity yang telah lengkap beserta bab yang membahasnya}
+\label{tab:perkakas-unity}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.4cm} L{2.4cm} Y@{}}
+\toprule
+\headrow \textbf{Perkakas} & \textbf{Dibahas pada} & \textbf{Kegunaan} \\
+\midrule
+Antarmuka dan penyusunan benda & Bab~XII &
+Mengelola project, scene, dan benda beserta komponennya. \\
+\addlinespace
+Skrip dan urutan pemanggilannya & Bab~XII &
+Menempatkan pekerjaan pada fungsi yang tepat. \\
+\addlinespace
+Penyusunan level & Bab~XIII &
+Menyusun ruang permainan secara \istilah{greyboxing} dan dengan
+\istilah{tilemap}. \\
+\addlinespace
+Fisika dan tabrakan & Bab~XIII &
+Mengonfigurasi \istilah{Collider}, \istilah{Rigidbody}, dan
+\istilah{trigger}, serta memperbaiki masalahnya. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Bab~XIV sampai Bab~XVI melengkapi level itu dengan aset visual, antarmuka,
+audio, dan pengujian prototipe. Seluruhnya berpijak pada level yang baru saja
+Anda bangun.

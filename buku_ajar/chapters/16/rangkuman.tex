@@ -1,0 +1,53 @@
+% chapters/16/rangkuman.tex
+\bagian{Rangkuman}
+
+\begin{rangkumanbox}
+\begin{itemize}
+  \item Pembuat permainan tidak dapat menilai karyanya sendiri dengan baik,
+        sebab ia sudah tahu tombol mana yang harus ditekan dan jalur mana yang
+        harus dilewati. Pengetahuan itu justru menutupi masalah.
+  \item Ada dua jenis pengujian yang saling melengkapi. Pemeriksaan otomatis
+        menemukan hal yang bersifat pasti dan cepat; \istilah{playtest}
+        menemukan hal yang tidak dapat dihitung.
+  \item Pemeriksaan otomatis dijalankan lebih dahulu, sebab tidak ada gunanya
+        meminta orang lain menguji level yang belum dapat diselesaikan. Namun
+        ia tidak dapat menggantikan \istilah{playtest}.
+  \item Pengujian adalah siklus, bukan langkah terakhir. Setiap perbaikan
+        menuntut pemeriksaan ulang, sebab perbaikan dapat menimbulkan temuan
+        baru.
+  \item \istilah{Checklist} fungsional diturunkan dari GDD, dan butirnya
+        sebaiknya terbagi menjadi tiga kelompok: mekanik, integrasi, dan
+        keseluruhan. Kelompok ketiga hanya dapat diperiksa pada
+        \istilah{build}.
+  \item \istilah{Soft-lock} adalah keadaan ketika pemain tidak dapat
+        melanjutkan dan tidak dapat kembali, walaupun programnya masih
+        berjalan dan tidak ada pesan kesalahan.
+  \item Jangkauan lompatan dapat dihitung dari besaran fisika, bukan ditebak.
+        Dengan $v_0 = 700$ dan $g = 1800$ piksel, tinggi lompatannya 4,25
+        petak dan jarak mendatar terjauhnya 7,29 petak pada ketinggian yang
+        sama.
+  \item Algoritma pemeriksaan level sama dengan algoritma pencarian jalur pada
+        Bab~X. Yang berbeda hanya aturan tetangganya: dari empat petak
+        bersebelahan menjadi pijakan mana pun yang dapat dicapai dengan
+        berjalan, jatuh, atau melompat.
+  \item Pemeriksaan keterjangkauan dan simulasi dapat memberi jawaban yang
+        sangat berbeda. Pada level contoh, keduanya mengembalikan 15,6 persen
+        dan 82,0 persen. Angka yang tinggi menyesatkan, sebab ia hanya
+        menyentuh keadaan yang kebetulan terpilih.
+  \item Pemeriksaan otomatis tidak dapat menilai apakah levelnya menyenangkan,
+        tidak memeriksa bunyi maupun animasi, dan hanya memeriksa level yang
+        tertulis pada berkasnya.
+  \item Lembar \istilah{playtest} memuat waktu dan tempat, bukan hanya kesan.
+        Waktu yang tercatat memudahkan Anda menyempitkan dugaan atas temuan
+        yang tidak dapat diulang.
+  \item Catatan \istilah{bug} yang berguna memuat tiga hal: apa yang terjadi,
+        apa yang seharusnya terjadi, dan urutan tindakan yang menyebabkannya.
+  \item Temuan ditimbang atas dua pertanyaan: apakah permainannya masih dapat
+        diselesaikan, dan berapa banyak pemain yang akan menemukannya.
+  \item Temuan yang berulang pada beberapa sesi biasanya menandakan GDD yang
+        belum jelas, bukan kesalahan pelaksanaan.
+  \item Bab ini menuntaskan \SUBCPMK{4.3}, dan dengannya seluruh materi
+        mata kuliah ini selesai. Yang tersisa adalah menilai kembali seluruh
+        capaian Anda pada Bab~XVII.
+\end{itemize}
+\end{rangkumanbox}

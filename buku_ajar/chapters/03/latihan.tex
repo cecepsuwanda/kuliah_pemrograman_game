@@ -1,0 +1,55 @@
+% chapters/03/latihan.tex
+\bagian{Latihan dan Refleksi}
+
+\begin{enumerate}
+  \item Jelaskan perbedaan kedudukan Pygame dan SDL pada
+        Gambar~\ref{fig:lapisan-perkakas}. Mengapa program Anda tidak perlu
+        memanggil SDL secara langsung?
+
+  \item Mengapa perintah pemasangan ditulis \code{python -m pip install pygame}
+        dan bukan sekadar \code{pip install pygame}? Kaitkan jawaban Anda
+        dengan masalah ``Pygame tidak ditemukan'' yang dibahas pada
+        Bagian~\ref{sec:memasang-pygame}.
+
+  \item Sebutkan kelima langkah kerangka program Pygame dan jelaskan pekerjaan
+        yang dilakukan pada masing-masing langkah.
+
+  \item Apa yang terjadi apabila \code{pygame.display.flip()} dihapus dari
+        program, padahal seluruh penggambaran tetap dijalankan? Jelaskan
+        dengan merujuk pada perbedaan antara menggambar dan menayangkan.
+
+  \item Perulangan pada program jendela pertama disebut perulangan peristiwa,
+        bukan siklus permainan. Jelaskan perbedaannya dan sebutkan dua
+        pekerjaan yang belum dilakukan oleh perulangan tersebut.
+
+  \item Salin dan perbaiki potongan kode berikut, lalu jelaskan kesalahannya.
+\begin{kodekeluaran}
+import pygame
+pygame.init()
+screen = pygame.display.set_mode((640, 480)
+screen.fill((31, 56, 100))
+\end{kodekeluaran}
+
+  \item Perhatikan pesan berikut, lalu tentukan penyebab dan perbaikannya
+        beserta alasan Anda.
+\begin{kodekeluaran}
+NameError: name 'screen' is not defined
+\end{kodekeluaran}
+
+  \item Tuliskan tiga berkas atau folder yang sebaiknya tidak ikut disimpan
+        pada repositori Git beserta alasan masing-masing.
+\end{enumerate}
+
+\begin{refleksibox}
+\begin{enumerate}
+  \item Apakah Anda mengetik ulang program jendela, atau menyalinnya?
+        Apabila menyalin, ulangi sekali lagi dengan mengetik ulang, lalu
+        tuliskan perbedaan yang Anda rasakan ketika memahami kodenya.
+  \item Kendala apa yang paling lama Anda hadapi pada praktikum ini, dan
+        bagian mana dari pesan kesalahan yang akhirnya menuntun Anda ke
+        penyelesaiannya?
+  \item Periksa kembali repositori Anda. Apakah struktur foldernya sudah
+        sesuai, dan apakah tersedia catatan praktikum? Bagian mana yang masih
+        perlu dirapikan?
+\end{enumerate}
+\end{refleksibox}

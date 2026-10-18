@@ -1,0 +1,73 @@
+% chapters/14/section-05.tex
+\section{Program Animasi dan Antarmuka}
+\label{sec:program-aset}
+
+Dua skrip berikut melengkapi level pada Bab~XIII: satu menghubungkan keadaan
+pemain dengan animasinya, dan satu menampilkan skor serta nyawa.
+
+\subsection{Skrip Animasi}
+
+\kodecsharp{unity/ch14_kontrol_animasi.cs}{Menghubungkan keadaan pemain dengan animasinya}{lst:ch14-animasi}
+
+Skrip itu tidak memutar animasi apa pun. Ia hanya menetapkan
+nilai parameter, sedangkan peralihan animasinya dikerjakan mesin menurut
+transisi yang Anda gambar pada jendela \istilah{Animator}. Pembagian pekerjaan
+itu sama dengan pembagian pada Bab~IX: kode menentukan keadaan, sedangkan
+peralihannya ditentukan oleh aturan yang telah Anda susun.
+
+Perhatikan pula cara arah hadap gambar dibalik, yaitu dengan mengubah
+\code{transform.localScale}. Cara itu dipakai alih-alih memutar bendanya,
+sebab memutar gambar dua dimensi sebesar 180 derajat akan membuatnya terbalik
+atas-bawah.
+
+\subsection{Skrip Antarmuka}
+
+\kodecsharp{unity/ch14_tampilan_hud.cs}{Menampilkan skor dan nyawa pada antarmuka}{lst:14}
+
+Skrip itu memuat dua hal yang telah Anda kenal: fungsi publik yang dipanggil
+dari skrip lain, sebagaimana fungsi \code{TambahSkor}, dan pemeriksaan rujukan
+yang belum dihubungkan.
+
+Perhatikan pemakaian \code{enabled = false} ketika rujukan antarmukanya belum
+dihubungkan. Cara itu mematikan skripnya, sehingga kesalahan yang sama tidak
+terulang pada setiap bingkai. Kebiasaan menghentikan pekerjaan yang tidak
+dapat dilanjutkan lebih baik daripada membiarkannya berjalan dan
+menghasilkan kesalahan berulang.
+
+\subsection{Percobaan yang Disarankan}
+
+\begin{table}[htbp]
+\centering
+\caption{Percobaan pada animasi dan antarmuka}
+\label{tab:percobaan-ch14}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{5.4cm} Y@{}}
+\toprule
+\headrow \textbf{Yang diubah dan caranya} & \textbf{Yang sebaiknya Anda amati} \\
+\midrule
+\istilah{Pixels Per Unit} pada aset pemain, diubah dari 100 menjadi 50. &
+Gambar pemain menjadi dua kali lebih besar pada scene, sedangkan bentuk
+batasnya tidak ikut berubah. Sesuaikan bentuk batasnya sesudah percobaan. \\
+\addlinespace
+Nama parameter pada kode, diubah sehingga tidak sama dengan yang ada pada
+jendela \istilah{Animator}. &
+Animasi tidak pernah berganti, dan program tetap berjalan tanpa satu pun pesan
+kesalahan. Kembalikan sesudah percobaan. \\
+\addlinespace
+Nilai ambang kecepatan pada transisi, dinaikkan menjadi 5. &
+Animasi berlari baru muncul ketika pemain benar-benar cepat. Perhatikan
+perbedaan rasa geraknya. \\
+\addlinespace
+Rujukan teks pada antarmuka, diputus dari \istilah{Inspector}. &
+Pesan peringatan muncul pada panel \istilah{Console}, dan antarmukanya tidak
+diperbarui. Kembalikan sesudah percobaan. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{catatabox}
+Percobaan kedua adalah yang paling penting untuk dicoba, sebab kesalahannya
+\textbf{tidak menimbulkan pesan apa pun}. Kebiasaan memakai peubah tetap untuk
+nama parameter, sebagaimana pada skrip di atas, mencegah kesalahan itu sejak
+awal.
+\end{catatabox}

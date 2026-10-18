@@ -1,0 +1,38 @@
+% chapters/08/rangkuman.tex
+\bagian{Rangkuman}
+
+\begin{rangkumanbox}
+\begin{itemize}
+  \item Pada bab ini benda menjadi agen: kecepatannya tidak lagi berasal dari
+        tombol atau dari gravitasi, melainkan dari keputusannya sendiri.
+  \item Susunan keputusan sebuah agen terdiri atas tiga langkah, yaitu
+        persepsi, keputusan, dan tindakan. Susunan itu tetap sama dari agen
+        yang paling sederhana sampai yang paling rumit.
+  \item Persepsi menghasilkan dua hal dari satu perhitungan: vektor menuju
+        pemain dan jaraknya. Jarak dipakai untuk memutuskan, arah dipakai untuk
+        bergerak.
+  \item Jari-jari persepsi membatasi jangkauan pengamatan NPC. Nilainya
+        merupakan pilihan perancang, bukan hasil perhitungan.
+  \item Kecepatan dihitung dengan menormalkan vektor arah lalu mengalikannya
+        dengan kecepatan yang ditetapkan, sehingga besarnya tetap berapa pun
+        jaraknya.
+  \item Memakai vektor jarak secara langsung sebagai kecepatan merupakan cara
+        yang salah, sebab kecepatannya menjadi sama dengan jaraknya. Pengukuran
+        pada program memperlihatkan kecepatan tetap 150,0 piksel per detik pada
+        cara yang benar, dan 75,2 sampai 184,0 piksel per detik pada cara yang
+        salah.
+  \item Jarak henti diperlukan agar NPC tidak bergetar di atas pemain. Jarak
+        henti harus lebih besar daripada perpindahan satu bingkai, yaitu
+        kecepatan dibagi laju bingkai.
+  \item \istilah{Hysteresis} pada batas persepsi---memakai dua nilai batas yang
+        berbeda untuk mulai dan berhenti mengejar---mencegah pergantian
+        keputusan yang berlebihan ketika pemain berada tepat pada batas.
+  \item AI reaktif hanya memakai keadaan saat itu, sehingga murah dan mudah
+        diperiksa, tetapi tidak mengetahui adanya rintangan. AI berbasis
+        perencanaan memperhitungkan lebih banyak keterangan, dengan biaya
+        perhitungan yang lebih besar.
+  \item NPC pada bab ini tidak melakukan kesalahan ketika menekan dinding; yang
+        kurang adalah keterangan yang tersedia baginya. Menambah keterangan
+        itulah yang menjadi pekerjaan Bab~IX dan Bab~X.
+\end{itemize}
+\end{rangkumanbox}

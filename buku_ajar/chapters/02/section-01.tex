@@ -1,0 +1,133 @@
+% chapters/02/section-01.tex
+\section{Permainan sebagai Sistem Waktu Nyata}
+\label{sec:permainan-sistem}
+
+Sebelum menulis satu baris kode pun, ada gunanya menyepakati apa yang
+sebenarnya sedang dibangun. Bab ini dimulai dari pertanyaan paling dasar:
+apa yang membuat sesuatu disebut permainan, dan apa yang membedakan program
+permainan dari program lain yang juga berinteraksi dengan penggunanya.
+
+\subsection{Unsur Pembentuk Permainan}
+
+Dalam kajian desain permainan, sebuah permainan dipandang sebagai sistem
+buatan tempat pemain terlibat dalam konflik yang diatur oleh aturan dan
+menghasilkan keluaran yang dapat diukur. Rumusan itu memuat empat unsur yang
+selalu hadir, bahkan pada permainan yang paling sederhana.
+
+\begin{description}
+  \item[Pemain] Pihak yang mengambil keputusan. Tanpa pemain, yang ada hanyalah
+        simulasi yang berjalan sendiri.
+  \item[Aturan] Batas tindakan yang boleh dilakukan pemain dan akibat dari
+        setiap tindakan. Aturan inilah yang membedakan permainan dari
+        sekadar mainan bebas.
+  \item[Konflik atau tantangan] Hambatan yang membuat tujuan tidak dapat
+        dicapai secara langsung, misalnya rintangan, lawan, atau keterbatasan
+        sumber daya.
+  \item[Keluaran terukur] Hasil yang dapat dinyatakan, misalnya menang atau
+        kalah, skor, atau waktu penyelesaian.
+\end{description}
+
+Keempat unsur tersebut menjadi dasar pertanyaan desain yang akan Anda hadapi
+berulang kali: tindakan apa yang boleh diambil pemain, apa akibatnya, dan
+bagaimana keberhasilan dinyatakan. Pada tataran yang lebih teknis, keputusan
+desain semacam itu diterjemahkan menjadi mekanik permainan, yaitu aturan yang
+dijalankan oleh program \cite{unity-leveldesign}.
+
+\subsection{Permainan Digital sebagai Sistem Waktu Nyata}
+
+Yang membedakan program permainan dari program lain bukanlah grafisnya,
+melainkan tuntutan waktu. Program pengolah data berjalan menurut urutan
+perintah: membaca, menghitung, menulis, selesai. Program permainan tidak
+memiliki akhir yang wajar seperti itu. Ia berjalan terus, bereaksi terhadap
+masukan pemain dengan segera, dan menyajikan keadaan dunia yang terus berubah.
+
+Tuntutan ``segera'' inilah yang dalam ilmu komputer disebut sistem waktu
+nyata (\istilah{real-time system}): batas waktu tanggapan ditentukan oleh
+kenyamanan orang yang memakainya, bukan oleh kecepatan mesin. Apabila
+permainan membalas masukan setelah setengah detik, pemain merasakannya sebagai
+kendali yang lambat dan tidak nyaman. Karena itu program permainan harus
+menyelesaikan seluruh pekerjaannya dalam jangka waktu yang cukup pendek dan
+mengulanginya terus-menerus.
+
+Struktur pengulangan itulah yang disebut siklus permainan
+(\istilah{game loop}), yaitu rangkaian tiga tahap---membaca masukan,
+memperbarui keadaan, dan menayangkan hasilnya---yang dijalankan berulang
+selama permainan berlangsung \cite{nystrom-gameloop}. Siklus tersebut menjadi
+kerangka kerja seluruh bab selanjutnya, dan pada Bab~IV Anda akan menulisnya
+sendiri baris demi baris.
+
+\subsection{Subsistem Pembentuk Program Permainan}
+
+Meskipun permainan terlihat sebagai satu kesatuan, programnya tersusun dari
+beberapa subsistem yang tugasnya berbeda. Memisahkan pekerjaan menurut
+subsistem sejak awal membuat program lebih mudah diperiksa dan diperbaiki
+ketika jumlah kodenya bertambah. Tabel~\ref{tab:subsistem} memperlihatkan
+pembagian tersebut beserta bab yang membahasnya.
+
+\begin{table}[htbp]
+\centering
+\caption{Subsistem program permainan dan bab yang membahasnya}
+\label{tab:subsistem}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.0cm} L{4.4cm} Y@{}}
+\toprule
+\headrow \textbf{Subsistem} & \textbf{Pekerjaan} & \textbf{Dibahas pada} \\
+\midrule
+Masukan &
+Membaca peristiwa dari papan tombol, tetikus, atau peranti lain, lalu
+menerjemahkannya menjadi tindakan yang bermakna. &
+Bab~IV (peristiwa), Bab~V (papan tombol), Bab~XIII (kontrol pemain di Unity). \\
+\addlinespace
+Pengendali waktu &
+Menjaga agar laju permainan konsisten, mengukur selang waktu antar-bingkai, dan
+menentukan panjang langkah simulasi. &
+Bab~IV (pembatasan laju bingkai), Bab~V (\istilah{delta time}). \\
+\addlinespace
+Simulasi &
+Memperbarui keadaan dunia: posisi, kecepatan, keadaan NPC, skor, dan fase
+permainan. &
+Bab~V--VI (gerak dan fisika), Bab~VII (tabrakan), Bab~VIII--XI (pengendalian
+NPC). \\
+\addlinespace
+Aturan dan tabrakan &
+Menentukan kapan dua objek bersentuhan dan apa akibatnya bagi keadaan
+permainan. &
+Bab~VII (deteksi tabrakan), Bab~XIII (fisika mesin). \\
+\addlinespace
+Penyajian &
+Mengubah keadaan permainan menjadi gambar di layar. &
+Bab~IV (jendela dan penayangan), Bab~XIV (aset visual, animasi, antarmuka). \\
+\addlinespace
+Audio &
+Membangkitkan bunyi sebagai tanggapan atas peristiwa permainan. &
+Bab~XV. \\
+\addlinespace
+Data dan penyimpanan &
+Menyimpan peta, pengaturan, dan kemajuan permainan. &
+Bab~IX--X (data peta), Bab~XIV (aset), Bab~XVI (berkas terpasang). \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Sumber: disusun dari RPS mata kuliah \NamaMK\ dan sumber \mbox{[R1]},
+\mbox{[R5]}, \mbox{[R12]}.}
+\end{table}
+
+\subsection{Peta Konsep Bab Ini}
+
+Gambar~\ref{fig:peta-konsep} memetakan keenam tema landasan teori pada bab ini
+beserta bab yang menerapkannya. Gambar tersebut dapat dipakai sebagai
+penunjuk arah: apabila pada bab praktik Anda menemui istilah yang terasa asing,
+tempat pertama yang sebaiknya dibuka adalah bagian teori yang bersangkutan di
+bab ini.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/peta-konsep.tikz}
+\caption{Peta konsep landasan teori dan bab yang menerapkannya}
+\label{fig:peta-konsep}
+\end{figure}
+
+Tema \textbf{2.2} sampai \textbf{2.4} menopang Blok~I dan
+Blok~III sekaligus, sedangkan tema \textbf{2.5} khusus menopang pengendalian
+NPC pada Blok~II. Susunan itu sejalan dengan urutan mata kuliah: pemahaman
+tentang waktu, ruang, dan fisika dipakai kembali ketika Anda bekerja dengan
+mesin permainan, dengan tingkat tanggung jawab yang berbeda.

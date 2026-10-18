@@ -1,0 +1,65 @@
+% chapters/13/section-04.tex
+\section{Trigger Volume dan Interaksi}
+\label{sec:trigger}
+
+\subsection{Kode Lengkap}
+
+\kodecsharp{unity/ch13_trigger_pintu.cs}{Trigger volume yang menandai pemain telah mencapai suatu tempat}{lst:ch13-trigger}
+
+\subsection{Fungsi yang Dipanggil Ketika Terjadi Tabrakan}
+
+Skrip itu tidak memeriksa tabrakan sendiri. Ia hanya
+menyediakan dua fungsi, yaitu \code{OnTriggerEnter2D} dan
+\code{OnTriggerExit2D}, yang akan dipanggil mesin ketika peristiwanya terjadi.
+
+Cara itu berbeda dari yang Anda lakukan pada Bab~VII, tempat Anda memeriksa
+tabrakan sendiri melalui \code{spritecollide}. Pada Unity, pemeriksaannya
+diserahkan kepada mesin, dan kode Anda hanya menanggapi hasilnya. Inilah
+padanan dari pembedaan ``mendeteksi'' dan ``menyelesaikan'' yang telah
+dijelaskan pada Bagian~7.2: mesin mendeteksi, sedangkan Anda menentukan apa
+yang terjadi.
+
+\subsection{Syarat agar Trigger Bekerja}
+
+Tiga syarat berikut harus dipenuhi agar fungsi trigger dipanggil. Ketiganya
+sering terlupakan, dan gejalanya sama, yaitu fungsi yang tidak pernah
+dijalankan.
+
+\begin{enumerate}
+  \item \textbf{\istilah{Collider} benda itu harus ditandai sebagai
+        \istilah{Is Trigger} pada \istilah{Inspector}.}
+  \item \textbf{Sekurang-kurangnya satu dari kedua benda harus memiliki
+        \istilah{Rigidbody}.} Pemain biasanya sudah memilikinya, sehingga
+        syarat ini jarang menjadi penyebab.
+  \item \textbf{Kedua benda harus berada pada \istilah{layer} yang saling
+        diperiksa.} Pengaturan \istilah{layer} menentukan pasangan benda mana
+        yang tabrakannya diperiksa mesin, dan sering dipakai untuk
+        menghemat perhitungan.
+\end{enumerate}
+
+\begin{catatabox}
+Perhatikan pemakaian peubah \code{alreadyTriggered} pada skrip di atas. Peubah
+itu mencegah pesan tercetak berulang kali selama pemain berada di dalam daerah
+trigger. Tanpa peubah itu, fungsinya tetap dipanggil sekali saja, tetapi isinya
+dapat dijalankan berkali-kali apabila terdapat beberapa \istilah{Collider} pada
+benda yang sama. Kebiasaan memeriksa keadaan sebelum bertindak berlaku juga di
+sini.
+\end{catatabox}
+
+\subsection{Tag dan Layer}
+
+Dua pengaturan yang berkaitan dengan pengelompokan benda perlu Anda kenal.
+
+\begin{description}
+  \item[\istilah{Tag}] Penanda pada sebuah benda, misalnya \code{Player} atau
+        \code{Enemy}. Dipakai oleh kode Anda untuk mengenali benda, misalnya
+        pada baris \code{other.CompareTag(playerTag)}.
+  \item[\istilah{Layer}] Pengelompokan benda untuk keperluan pemeriksaan
+        tabrakan oleh mesin. Dipakai untuk menentukan pasangan benda mana yang
+        diperiksa, misalnya agar peluru tidak memeriksa tabrakan dengan sesama
+        peluru.
+\end{description}
+
+Perbedaan keduanya mudah dikacaukan. Cara mengingatnya: \istilah{tag} dipakai
+oleh \textbf{kode Anda}, sedangkan \istilah{layer} dipakai oleh
+\textbf{mesin}.

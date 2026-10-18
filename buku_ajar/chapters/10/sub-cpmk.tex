@@ -1,0 +1,34 @@
+% chapters/10/sub-cpmk.tex
+\begin{subcpmkbox}
+Bab ini menuntaskan \SUBCPMK{2.3} secara utuh. Ketiga indikatornya diperiksa,
+dan buktinya berupa program pencarian jalur beserta visualisasinya.
+
+\vspace{0.5em}
+\textbf{\SUBCPMK{2.3} Menerapkan \istilah{pathfinding} berbasis grid dengan
+algoritma A* untuk navigasi NPC} --- ranah C4, \CPMK{2}, \CPL{03}.
+
+\vspace{0.5em}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.9cm} L{4.0cm} L{2.5cm} Y@{}}
+\toprule
+\headrow \textbf{Indikator} & \textbf{Rumusan} & \textbf{Dibahas pada} & \textbf{Bukti} \\
+\midrule
+\ind{a} & Membangun representasi grid/graf berbiaya dari peta berhalangan &
+Bagian~\ref{sec:peta-graf} &
+Kode pembacaan peta dan penentuan tetangga, beserta pemeriksaan otomatis yang
+menunjukkan jalur tidak pernah melewati dinding. \\
+\addlinespace
+\ind{b} & Menganalisis pengaruh heuristik terhadap optimalitas dan kinerja
+pencarian &
+Bagian~\ref{sec:heuristik} &
+Tabel perbandingan tiga heuristik pada peta yang sama, beserta penjelasan
+mengapa biaya jalurnya sama sedangkan banyaknya petak yang diperiksa
+berbeda. \\
+\addlinespace
+\ind{c} & Merekonstruksi dan memvisualisasikan jalur hasil A* &
+Bagian~\ref{sec:rekonstruksi} &
+Kode rekonstruksi jalur, tangkapan layar pencarian, dan catatan pengamatan
+pada lembar kerja praktikum. \\
+\bottomrule
+\end{tabularx}}
+\end{subcpmkbox}

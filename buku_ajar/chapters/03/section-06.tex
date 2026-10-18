@@ -1,0 +1,169 @@
+% chapters/03/section-06.tex
+\section{Menjalankan, Memeriksa, dan Menelusuri Kesalahan}
+\label{sec:menelusuri-kesalahan}
+
+Kemampuan menelusuri kesalahan sama pentingnya dengan kemampuan menulis kode.
+Bagian ini melatih dua hal yang akan Anda pakai setiap hari: menjalankan
+program dan membaca pesan kesalahan.
+
+\subsection{Alur Kerja Harian}
+
+Menulis program bukan kegiatan sekali jadi. Pekerjaan berlangsung sebagai
+perulangan pendek: tulis, jalankan, amati, perbaiki bila perlu, lalu simpan
+hasilnya. Perulangan tersebut diperlihatkan pada Gambar~\ref{fig:alur-kerja}.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/alur-kerja.tikz}
+\caption{Alur kerja harian dari menulis kode sampai menyimpan hasil}
+\label{fig:alur-kerja}
+\end{figure}
+
+Perulangan itu sebaiknya dipendekkan sebanyak mungkin. Perubahan kecil yang
+langsung dijalankan lebih mudah dilacak daripada perubahan besar yang
+melibatkan puluhan baris sekaligus, karena apabila terjadi kesalahan Anda
+masih mengingat bagian mana yang baru saja disentuh.
+
+\subsection{Cara Menjalankan Program}
+
+Program dijalankan dari terminal, tepatnya dari folder tempat berkas program
+berada.
+
+\begin{kodekeluaran}
+cd proyek-pygame\code
+python ch03_jendela.py
+\end{kodekeluaran}
+
+Untuk mengubah ukuran jendela tanpa menyunting kode, tambahkan pilihan pada
+perintah.
+
+\begin{kodekeluaran}
+python ch03_jendela.py --width 800 --height 600
+\end{kodekeluaran}
+
+Apabila program dijalankan melalui tombol pada editor, pastikan editor
+menjalankan berkas dengan penafsir Python yang sama dengan yang dipakai pada
+pemeriksaan lingkungan. Perbedaan penafsir merupakan penyebab paling sering
+munculnya pesan bahwa Pygame tidak ditemukan, walaupun Pygame sudah terpasang.
+
+\subsection{Membaca Pesan Kesalahan}
+
+Pesan kesalahan Python berupa \istilah{traceback}, yaitu jejak urutan
+pemanggilan yang berakhir pada baris penyebab kesalahan. Kebiasaan yang paling
+menghemat waktu adalah \textbf{membaca dari baris terakhir ke atas}, bukan dari
+atas ke bawah.
+
+Perhatikan dua contoh nyata berikut.
+
+\begin{kodekeluaran}
+File "proyek-pygame\code\galat1.py", line 3
+    screen = pygame.display.set_mode((640, 480)
+                                    ^
+SyntaxError: '(' was never closed
+\end{kodekeluaran}
+
+Pesan tersebut memuat tiga keterangan yang cukup untuk menemukan penyebabnya:
+jenis kesalahan (\code{SyntaxError}), nomor baris (3), dan penunjuk berupa tanda
+\code{\^{}} pada posisi yang bermasalah. Di sini kurung pembuka
+\code{set_mode(} tidak pernah ditutup.
+
+\begin{kodekeluaran}
+Traceback (most recent call last):
+  File "proyek-pygame\code\galat2.py", line 5, in <module>
+    screen.fill(WARNA_LATAR)
+                ^^^^^^^^^^^
+NameError: name 'WARNA_LATAR' is not defined
+\end{kodekeluaran}
+
+Baris terakhir menyatakan bahwa nama \code{WARNA_LATAR} belum dikenal.
+Penyebabnya ada dua kemungkinan: nama itu belum pernah dibuat, atau dibuat
+dengan ejaan yang berbeda. Pada pemeriksaan lebih lanjut, kemungkinan kedua
+yang berlaku---nama yang benar adalah \code{WARNA_LATAR} dengan huruf besar
+seluruhnya, sedangkan pada baris sebelumnya tertulis dengan huruf kecil.
+
+Pada contoh kedua, program sudah sempat berjalan sampai baris
+kelima. Kesalahan nama seperti itu tidak dapat dideteksi sebelum barisnya
+dieksekusi. Karena itu, cara paling andal menemukan kesalahan adalah
+menjalankan programnya, bukan membacanya berulang kali.
+
+\subsection{Peringatan Bukan Kesalahan}
+
+Terminal sering menampilkan pesan yang tampak mengkhawatirkan tetapi bukan
+kesalahan. Perbedaan keduanya penting, karena mengejar peringatan yang tidak
+perlu hanya membuang waktu.
+
+\begin{description}
+  \item[Kesalahan (\istilah{error})] Menghentikan program, atau membuat
+        program tidak dapat dijalankan sama sekali. Selama masih ada pesan
+        kesalahan, program tidak akan berjalan.
+  \item[Peringatan (\istilah{warning})] Memberitahukan sesuatu yang sebaiknya
+        diketahui, tetapi program tetap berjalan. Peringatan boleh diabaikan
+        apabila Anda memahami maksudnya.
+\end{description}
+
+Ketika program jendela pertama dijalankan, muncul tiga pesan yang semuanya
+termasuk peringatan, bukan kesalahan.
+
+\begin{kodekeluaran}
+pygame 2.6.1 (SDL 2.28.4, Python 3.11.9)
+Hello from the pygame community. https://www.pygame.org/contribute.html
+.../pygame/pkgdata.py:25: UserWarning: pkg_resources is deprecated ...
+\end{kodekeluaran}
+
+Dua baris pertama adalah sambutan Pygame yang menampilkan versi beserta ajakan
+mengunjungi laman komunitas. Baris ketiga adalah peringatan bahwa Pygame masih
+memakai bagian pustaka yang sudah usang. Ketiganya berasal dari Pygame, bukan
+dari program Anda, dan tidak memengaruhi jalannya program.
+
+Yang menandakan berjalannya program dengan baik adalah keluaran dari program
+Anda sendiri, yaitu baris seperti \code{Jendela 640x480 dibuka.} dan
+\code{Program selesai.} Sesudah jendela ditutup. Apabila kedua baris itu
+muncul, program Anda bekerja sebagaimana mestinya.
+
+\subsection{Kesalahan yang Sering Terjadi}
+
+Tabel~\ref{tab:galat-umum} memuat kesalahan yang paling sering muncul pada
+tahap ini beserta cara menanganinya. Simpan tabel ini; hampir semua masalah
+yang Anda hadapi pada minggu-minggu pertama ada di dalamnya.
+
+\begin{table}[htbp]
+\centering
+\caption{Kesalahan yang sering terjadi pada tahap penyiapan dan penanganannya}
+\label{tab:galat-umum}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{4.4cm} L{4.0cm} Y@{}}
+\toprule
+\headrow \textbf{Pesan atau gejala} & \textbf{Penyebab} & \textbf{Perbaikan} \\
+\midrule
+\code{SyntaxError: '(' was never closed} &
+Ada kurung, tanda kutip, atau tanda kurung siku yang belum ditutup. &
+Periksa baris yang ditunjuk tanda panah; hitung pasangan kurung buka dan
+tutupnya. \\
+\addlinespace
+\code{IndentationError: unexpected indent} &
+Indentasi tidak konsisten, misalnya bercampur tab dan spasi. &
+Pakai empat spasi untuk setiap tingkat. Atur editor agar mengubah tab menjadi
+spasi secara otomatis. \\
+\addlinespace
+\code{NameError: name 'X' is not defined} &
+Nama dipakai sebelum dibuat, atau ejaannya berbeda dengan yang dibuat. &
+Periksa ejaan dan perhatikan besar-kecil huruf; pastikan baris pembuatan
+variabel berada lebih dahulu. \\
+\addlinespace
+\code{ModuleNotFoundError: No module named 'pygame'} &
+Pygame belum terpasang pada penafsir yang sedang dipakai. &
+Jalankan skrip pemeriksaan lingkungan, lalu pasang dengan
+\code{python -m pip install pygame}. \\
+\addlinespace
+\code{pygame.error: No available video device} &
+Program dijalankan pada lingkungan tanpa layar. &
+Kerjakan pada komputer laboratorium; untuk pengujian tanpa layar, setel
+\code{SDL_VIDEODRIVER} bernilai \code{dummy}. \\
+\addlinespace
+\code{FileNotFoundError: [Errno 2] No such file or directory} &
+Folder kerja terminal bukan folder tempat berkas berada. &
+Jalankan \code{cd} ke folder yang benar, lalu periksa isinya dengan \code{dir}
+atau \code{ls}. \\
+\bottomrule
+\end{tabularx}}
+\end{table}

@@ -1,0 +1,61 @@
+% chapters/14/section-03.tex
+\section{Canvas: Skor dan Nyawa}
+\label{sec:canvas-ui}
+
+\subsection{Mengapa Antarmuka Memerlukan Wadah Tersendiri}
+
+Elemen antarmuka pengguna---teks skor, ikon nyawa, tombol---berbeda sifatnya
+dari benda permainan. Ia tidak berada pada ruang permainan, tidak terpengaruh
+kamera, dan tidak bergerak ketika pemain berpindah. Karena itu, ia ditempatkan
+pada wadah tersendiri yang disebut \istilah{Canvas}.
+
+Susunan antarmuka pada bab ini diperlihatkan pada panel kanan
+Gambar~\ref{fig:animator-canvas}. Seluruh elemen berada di
+bawah satu \istilah{Canvas}, dan itulah yang membuat susunannya tetap sama
+pada setiap ukuran layar \cite{unity-leveldesign}.
+
+\subsection{Tiga Elemen yang Dipakai}
+
+\begin{description}
+  \item[\istilah{Text}] Menampilkan tulisan, misalnya skor dan jumlah nyawa.
+        Ukuran dan jenis hurufnya diatur pada \istilah{Inspector}.
+  \item[\istilah{Image}] Menampilkan gambar, misalnya ikon nyawa atau bingkai
+        antarmuka.
+  \item[\istilah{Panel}] Wadah untuk mengelompokkan elemen, sehingga
+        susunannya dapat dipindahkan bersama-sama.
+\end{description}
+
+\subsection{Menghubungkan Antarmuka dengan Keadaan Permainan}
+
+Antarmuka tidak menyimpan keadaan permainan; ia hanya \textbf{menampilkannya}.
+Keadaan yang sebenarnya tetap disimpan pada kode Anda, dan antarmuka
+diperbarui ketika keadaannya berubah.
+
+\begin{kodekeluaran}
+public void TambahSkor(int nilai)
+{
+    score += nilai;
+    scoreText.text = $"Skor: {score}";
+}
+\end{kodekeluaran}
+
+Cara itu dipilih dengan sengaja. Apabila skor disimpan pada tulisan di layar
+saja, maka keadaan permainannya menjadi bergantung pada tampilannya, dan
+penyimpanan keadaan menjadi sulit. Aturan yang berlaku sama dengan yang telah
+Anda pelajari pada Bagian~3.4: keadaan permainan disimpan pada satu tempat
+yang jelas, sedangkan tampilannya hanya mengikuti.
+
+\begin{tipsbox}
+Perhatikan pemakaian \code{Mathf.Max(0, lives - nilai)} pada skrip Daftar~\ref{lst:14}: nyawa tidak boleh bernilai negatif, sebab angka negatif pada
+antarmuka terlihat janggal. Kebiasaan membatasi nilai pada rentang yang masuk
+akal mencegah gejala yang serupa pada banyak hal lain, misalnya skor, waktu,
+dan isi persediaan.
+\end{tipsbox}
+
+\begin{catatabox}
+Rujukan ke elemen antarmuka dihubungkan melalui \istilah{Inspector}, bukan
+melalui kode. Apabila rujukan itu belum dihubungkan, program tetap berjalan
+tetapi antarmukanya tidak diperbarui, dan kesalahannya muncul sebagai pesan
+peringatan pada panel \istilah{Console}. Periksa panel itu setiap kali
+antarmuka Anda tidak berubah seperti yang diharapkan.
+\end{catatabox}

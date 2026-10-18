@@ -1,0 +1,89 @@
+% chapters/02/contoh.tex
+\section{Dua Contoh Terapan}
+\label{sec:contoh-bab-2}
+
+Konsep-konsep pada bab ini akan lebih mudah dicerna apabila dilihat dalam
+keadaan nyata. Dua contoh berikut memperlihatkan bagaimana konsep tersebut
+bekerja pada satu bingkai permainan dan pada satu perhitungan sederhana.
+
+\subsection{Contoh Pertama: Membaca Satu Bingkai Permainan}
+
+\begin{contohbox}
+Sebuah permainan dua dimensi berjalan pada 60 bingkai per detik. Pada awal
+bingkai, seorang pemain berada pada posisi $(100, 300)$ dan bergerak ke kanan
+dengan kecepatan 200 piksel per detik. Seekor musuh berada pada posisi
+$(400, 300)$ dan berada pada keadaan mengejar. Sebuah koin berada pada posisi
+$(160, 300)$.
+
+\vspace{0.4em}
+\textbf{Tahap 1: membaca masukan.} Program memeriksa peristiwa yang terjadi
+sejak bingkai sebelumnya. Ternyata pemain menekan tombol panah kanan, sehingga
+program mencatat bahwa arah gerak pemain adalah ke kanan. Penekanan tombol ini
+tidak langsung memindahkan pemain; ia hanya mengubah keadaan yang akan dipakai
+pada tahap berikutnya.
+
+\vspace{0.4em}
+\textbf{Tahap 2: memperbarui keadaan.} Program menghitung lama bingkai, yaitu
+sekitar $0{,}0167$ detik. Dengan kecepatan 200 piksel per detik, pemain
+berpindah sejauh $200 \times 0{,}0167 \approx 3{,}3$ piksel, sehingga posisinya
+menjadi sekitar $(103{,}3, 300)$. Musuh menghitung arah menuju pemain, yaitu
+ke kiri, lalu berpindah dengan cara yang sama. Setelah posisi keduanya
+diperbarui, program memeriksa apakah persegi pembatas pemain beririsan dengan
+persegi pembatas koin. Jarak keduanya masih sekitar 57 piksel, sehingga belum
+bersentuhan dan skor belum bertambah.
+
+\vspace{0.4em}
+\textbf{Tahap 3: menayangkan.} Program menggambar latar, koin, musuh, dan
+pemain pada posisi terbarunya, lalu menampilkan hasilnya di layar.
+
+\vspace{0.4em}
+Ketiga tahap itu berlangsung dalam waktu kurang dari 16,7 milidetik, kemudian
+diulang dari awal. Skor, keadaan musuh, dan posisi seluruh
+objek merupakan bagian dari satu kumpulan keadaan permainan yang dibawa dari
+satu bingkai ke bingkai berikutnya.
+\end{contohbox}
+
+Contoh di atas memperlihatkan dua hal penting. Pertama, masukan tidak
+mengubah posisi secara langsung, melainkan mengubah keadaan yang dipakai pada
+perhitungan berikutnya. Kedua, urutan tahapannya tetap: masukan dibaca, keadaan
+diperbarui, baru digambar. Menukar urutan tahapan itu menghasilkan perilaku
+yang berbeda, misalnya gerak yang terasa tertinggal satu bingkai.
+
+\subsection{Contoh Kedua: Menghitung Perpindahan pada Beberapa Laju Bingkai}
+
+Bagian~\ref{sec:model-waktu} menyatakan bahwa kecepatan harus dinyatakan dalam
+satuan per detik dan dikalikan dengan selang waktu. Contoh berikut menunjukkan
+angka nyatanya.
+
+\begin{table}[htbp]
+\centering
+\caption{Perpindahan objek berkecepatan 200 piksel per detik pada beberapa cara perhitungan}
+\label{tab:contoh-dt}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.6cm} C{2.2cm} C{2.6cm} Y@{}}
+\toprule
+\headrow \textbf{Cara perhitungan} & \textbf{Lama bingkai} & \textbf{Perpindahan per bingkai} & \textbf{Jarak dalam satu detik} \\
+\midrule
+Selang waktu, 120 FPS & $8{,}3$ ms & $1{,}7$ piksel & 200 piksel \\
+Selang waktu, 60 FPS & $16{,}7$ ms & $3{,}3$ piksel & 200 piksel \\
+Selang waktu, 30 FPS & $33{,}3$ ms & $6{,}7$ piksel & 200 piksel \\
+Tanpa selang waktu (ditambah tetap 5 piksel) & tidak dipakai &
+5 piksel & 150 piksel pada 30 FPS; 300 piksel pada 60 FPS \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Tiga baris pertama pada Tabel~\ref{tab:contoh-dt} memperlihatkan sifat yang
+diinginkan: perpindahan pada setiap bingkai berbeda, tetapi jarak yang ditempuh
+dalam satu detik selalu sama, yaitu 200 piksel. Baris terakhir
+memperlihatkan akibat apabila selang waktu diabaikan. Pada 30 FPS objek
+bergerak sejauh 150 piksel dalam satu detik, sedangkan pada 60 FPS ia bergerak
+sejauh 300 piksel, dua kali lebih cepat. Permainan menjadi jauh lebih sulit
+pada komputer yang lebih cepat, dan perilakunya berubah setiap kali perkakas
+atau beban kerjanya berubah.
+
+Keadaan sebaliknya juga perlu diperhatikan. Apabila kecepatan dinyatakan
+dalam satuan per bingkai, penambahan beban kerja pada tahap penyajian akan
+memperlambat laju bingkai, dan seluruh permainan ikut melambat. Pemain melihat
+gerak yang tersendat, dan menganggap programnya berat, padahal yang terjadi
+adalah perhitungan yang mengaitkan gerak pada bingkai, bukan pada waktu.

@@ -1,0 +1,47 @@
+% chapters/09/figures/diagram-keadaan.tikz
+% Diagram keadaan-transisi NPC: empat keadaan dan tujuh perpindahan yang sah.
+% Keterangan pada anak panah dibuat singkat; syarat lengkapnya ada pada tabel
+% di dalam teks. Keterangan disusun bertingkat agar tidak saling bertumpuk.
+\begin{tikzpicture}[
+  keadaan/.style={
+    rectangle, rounded corners=4pt, draw=ubPrimary, thick, fill=ubAlt,
+    align=center, text width=24mm, inner sep=4pt, minimum height=12mm,
+    font=\footnotesize\bfseries
+  },
+  serang/.style={keadaan, draw=ubRed, fill=ubRed!12},
+  panah/.style={-{Stealth[length=2.2mm]}, thick, draw=ubAccent},
+  panahbalik/.style={-{Stealth[length=2.2mm]}, thick, draw=ubWarn},
+  label/.style={font=\scriptsize, align=center},
+  labelbalik/.style={font=\scriptsize, align=center, text=ubWarn}
+]
+
+\node[keadaan] (diam) at (0,0) {berdiam};
+\node[keadaan] (patrol) at (3.6,0) {berpatroli};
+\node[keadaan] (kejar) at (7.2,0) {mengejar};
+\node[serang] (serang) at (10.8,0) {menyerang};
+
+% Perpindahan maju, keterangannya disusun bertingkat.
+\draw[panah] (diam) -- (patrol);
+\node[label, anchor=south] at (1.8,0.78) {1,5 detik};
+
+\draw[panah] (patrol) -- (kejar);
+\node[label, anchor=south] at (5.4,1.75) {pemain terlihat};
+
+\draw[panah] (kejar) -- (serang);
+\node[label, anchor=south, text width=34mm] at (9.0,0.78)
+  {dalam jangkauan serang};
+
+% Perpindahan kembali.
+\draw[panahbalik] (serang.south) .. controls (10.8,-1.0) and (7.2,-1.0) ..
+  (kejar.south);
+\node[labelbalik, anchor=north, text width=34mm] at (9.0,-1.15)
+  {keluar dari jangkauan serang};
+
+\draw[panahbalik] (kejar.south) .. controls (7.2,-2.4) and (0,-2.4) ..
+  (diam.south);
+\node[labelbalik, anchor=north] at (3.6,-2.55) {hilang 1 detik};
+
+\draw[panahbalik] (patrol.north) .. controls (3.6,2.4) and (0,2.4) ..
+  (diam.north);
+\node[labelbalik, anchor=south] at (1.8,2.55) {putaran selesai};
+\end{tikzpicture}

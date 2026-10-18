@@ -1,0 +1,106 @@
+% chapters/16/evaluasi.tex
+\bagian{Asesmen dan Instrumen Penilaian}
+\label{sec:asesmen-playtest}
+
+\begin{asesmenbox}
+\textbf{Kedudukan asesmen bab ini.} Bab ini menuntaskan \SUBCPMK{4.3} pada
+ranah C5, dan merupakan bab terakhir yang dinilai pada \CPMK{4}. Pengujian dan
+presentasi pada bab ini termasuk bagian dari \textbf{Proyek Akhir}.
+
+\vspace{0.4em}
+Materi Bab~XVI termasuk bahan \textbf{Ujian Akhir Semester} pada minggu keenam
+belas, dan seluruh keluarannya diserahkan sebagai \istilah{build},
+\istilah{project source}, laporan pengembangan, serta lembar \istilah{playtest}
+yang telah diisi penguji. Rubrik lengkap Proyek Akhir disajikan pada
+Lampiran~A.
+\end{asesmenbox}
+
+\subsection*{Instrumen 1: Rubrik Bagian Pengujian dan Presentasi}
+
+\begin{table}[htbp]
+\centering
+\caption{Rubrik penilaian pengujian dan presentasi beserta indikator yang diukur}
+\label{tab:rubrik-praktikum-16}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}L{3.2cm} C{1.3cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{Kriteria} & \textbf{Bobot} & \textbf{Indikator} & \textbf{Deskripsi capaian} \\
+\midrule
+\istilah{Checklist} fungsional & 25\% & \ind{a} &
+Butirnya diturunkan dari GDD, mencakup ketiga kelompok, dapat diperiksa benar
+atau salah, dan hasil setiap putaran tercatat. \\
+\addlinespace
+Pemeriksaan otomatis & 20\% & \ind{b} &
+Level diperiksa dengan \code{ch16_uji_mandiri.py}; tempat yang terjebak
+diperbaiki; jangkauan lompatan dihitung dari besaran levelnya sendiri. \\
+\addlinespace
+\istilah{Playtest} dan \istilah{log bug} & 30\% & \ind{a}, \ind{b} &
+Lembar \istilah{playtest} terisi oleh penguji lain; setiap temuan dapat
+diulang; berat setiap temuan ditimbang; temuan berat sudah diperbaiki. \\
+\addlinespace
+Laporan dan presentasi & 25\% & \ind{c} &
+Demo disampaikan dalam waktu yang ditentukan; laporan memuat keadaan sebelum
+dan sesudah; refleksi teknologi disertai contoh dari pekerjaan sendiri. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\subsection*{Instrumen 2: Soal Konsep}
+
+Jawablah dengan singkat. Kunci jawaban beserta indikator yang diukur disajikan
+pada Tabel~\ref{tab:kunci-konsep-ch16}.
+
+\begin{enumerate}
+  \item Sebuah level memakai $v_0 = 640$ piksel per detik dan
+        $g = 1600$ piksel per detik kuadrat, dengan petak berukuran 32 piksel.
+        Hitunglah tinggi lompatan tertinggi dalam satuan petak.
+  \item Jelaskan perbedaan \istilah{soft-lock} dan kegagalan program yang
+        menghentikan permainan. Mengapa \istilah{soft-lock} lebih sulit
+        ditemukan?
+  \item Mengapa pemeriksaan yang memeriksa setiap tempat berdiri lebih dapat
+        dipercaya daripada simulasi dengan titik awal acak?
+  \item Sebuah catatan \istilah{bug} berbunyi ``musiknya berhenti sendiri''.
+        Sebutkan dua keterangan yang perlu ditambahkan agar catatan itu dapat
+        diulang.
+  \item Kelompok Anda memutuskan untuk tidak mengerjakan sebuah mekanik yang
+        sudah dijanjikan pada GDD. Apa yang sebaiknya dilakukan, dan mengapa?
+\end{enumerate}
+
+\begin{table}[htbp]
+\centering
+\caption{Kunci soal konsep Bab XVI beserta indikator yang diukur}
+\label{tab:kunci-konsep-ch16}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{0.8cm} C{2.1cm} Y@{}}
+\toprule
+\headrow \textbf{No} & \textbf{Indikator} & \textbf{Pokok jawaban} \\
+\midrule
+1 & \ind{b} &
+$h = 640^2 \div (2 \times 1600) = 409\,600 \div 3200 = 128$ piksel. Dalam
+satuan petak, $128 \div 32 = 4{,}00$ petak. \\
+\addlinespace
+2 & \ind{b} &
+\istilah{Soft-lock} membuat pemain tidak dapat melanjutkan walaupun programnya
+masih berjalan dan tidak mencetak kesalahan apa pun. Ia lebih sulit ditemukan
+sebab tidak ada tanda apa pun pada \istilah{Console}, dan hanya dialami oleh
+pemain yang kebetulan berada di tempat yang salah. \\
+\addlinespace
+3 & \ind{b} &
+Sebab pemeriksaan menyeluruh memeriksa seluruh keadaan, sedangkan simulasi
+hanya menyentuh keadaan yang kebetulan terpilih. Kesalahan yang jarang muncul
+dapat lolos sepenuhnya dari simulasi. Contohnya pada peta ketiga: simulasi
+mengembalikan 82,0 persen, sedangkan pemeriksaan menyeluruh menemukan 15,6
+persen tempat yang terjebak. \\
+\addlinespace
+4 & \ind{a}, \ind{b} &
+Waktu kejadiannya, dan urutan tindakan yang mendahuluinya. Keterangan lain yang
+berguna: tempat pemain berada, dan apakah kejadian itu dapat diulang. \\
+\addlinespace
+5 & \ind{c} &
+Mekaniknya tetap dicantumkan pada GDD sebagai kekurangan yang diketahui,
+disertai alasan mengapa tidak dikerjakan. Menghapusnya dari GDD agar hasilnya
+tampak sesuai adalah ketidakjujuran akademik, dan sekaligus menghilangkan
+bukti kemampuan menilai karya sendiri. \\
+\bottomrule
+\end{tabularx}}
+\end{table}

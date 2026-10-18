@@ -1,0 +1,97 @@
+% chapters/06/contoh.tex
+\section{Dua Contoh Terapan}
+\label{sec:contoh-bab-6}
+
+\subsection{Contoh Pertama: Melacak Jatuh Bebas Bingkai demi Bingkai}
+
+\begin{contohbox}
+Sebuah benda dilepaskan tanpa kecepatan awal dengan gravitasi 1800 piksel per
+detik kuadrat pada laju 60 bingkai per detik. Karena percepatan gravitasi
+dikalikan selang waktu bernilai
+
+\[
+1800 \times \frac{1}{60} = 30 \text{ piksel per detik},
+\]
+
+kecepatan benda bertambah 30 piksel per detik pada setiap bingkai. Perpindahan
+pada setiap bingkai adalah kecepatan pada bingkai itu dikalikan selang waktu.
+\end{contohbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Posisi benda yang jatuh bebas, bingkai demi bingkai}
+\label{tab:jatuh-bebas}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{1.6cm} C{3.0cm} C{3.4cm} Y@{}}
+\toprule
+\headrow \textbf{Bingkai} & \textbf{Kecepatan (piksel/detik)} & \textbf{Perpindahan bingkai itu} & \textbf{Posisi kumulatif (piksel)} \\
+\midrule
+1 & 30 & 0,5 piksel & 0,5 \\
+\addlinespace
+2 & 60 & 1,0 piksel & 1,5 \\
+\addlinespace
+3 & 90 & 1,5 piksel & 3,0 \\
+\addlinespace
+4 & 120 & 2,0 piksel & 5,0 \\
+\addlinespace
+5 & 150 & 2,5 piksel & 7,5 \\
+\addlinespace
+6 & 180 & 3,0 piksel & 10,5 \\
+\bottomrule
+\end{tabularx}}
+\tabsource{Pada kolom ketiga, perpindahan bertambah 0,5 piksel setiap bingkai;
+itulah wujud percepatan pada perhitungan yang terputus.}
+\end{table}
+
+Perhatikan pola pada kolom ketiga: perpindahannya bertambah 0,5 piksel setiap
+bingkai. Itulah cara percepatan bekerja pada simulasi yang terputus: bukan
+dengan mengubah posisi secara langsung, melainkan dengan menambah kecepatan
+yang kemudian mengubah posisi.
+
+Satu hal yang perlu dicatat sebagai perbandingan: menurut perhitungan yang
+berlaku pada gerak bersinambung, benda itu seharusnya baru jatuh sejauh
+$\frac{1}{2} \times 1800 \times (0{,}1)^2 = 9{,}0$ piksel setelah enam bingkai.
+Simulasi menghasilkan 10,5 piksel, yaitu sedikit lebih cepat. Selisih itu
+adalah galat integrasi Euler yang telah dibahas pada Bagian~2.4 dan diukur
+pada Bagian~\ref{sec:program-fisika}: simulasi cenderung bergerak sedikit lebih
+cepat daripada lintasan sebenarnya.
+
+\subsection{Contoh Kedua: Menyusutkan Tinggi Pantulan}
+
+\begin{contohbox}
+Sebuah bola menumbuk lantai dengan kecepatan 700 piksel per detik dan
+koefisien restitusi 0,8. Kecepatan setelah setiap pantulan menjadi 0,8 kali
+kecepatan sebelumnya, sedangkan tinggi yang dicapai menjadi
+$0{,}8^2 = 0{,}64$ kali tinggi sebelumnya, sebab tinggi sebanding dengan
+kuadrat kecepatan.
+\end{contohbox}
+
+\begin{table}[htbp]
+\centering
+\caption{Kecepatan dan tinggi bola pada setiap pantulan}
+\label{tab:pantulan-bertahap}
+{\setlength{\tabcolsep}{4pt}\footnotesize%
+\begin{tabularx}{\textwidth}{@{}C{2.2cm} C{3.0cm} C{2.8cm} Y@{}}
+\toprule
+\headrow \textbf{Pantulan} & \textbf{Kecepatan} & \textbf{Tinggi} & \textbf{Keterangan} \\
+\midrule
+Sebelum pertama & 700 piksel/detik & 136 piksel & Jatuh dari ketinggian ini. \\
+\addlinespace
+Pertama & 560 piksel/detik & 87 piksel & Kecepatan tinggal 0,8 kali. \\
+\addlinespace
+Kedua & 448 piksel/detik & 56 piksel & Tinggi tinggal 0,64 kali. \\
+\addlinespace
+Ketiga & 358 piksel/detik & 36 piksel & Tinggi tinggal seperempat tinggi semula. \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+Setelah tiga pantulan, bola hanya mencapai ketinggian sekitar 36 piksel,
+walaupun kecepatannya baru berkurang menjadi sekitar setengah. Perbandingan
+itu menjelaskan mengapa pantulan pada permainan terasa cepat mereda: yang
+menyusut adalah tinggi, dan tinggi menyusut secepat kuadrat kecepatan.
+
+Apabila Anda menghendaki bola pantulan yang tetap terasa hidup lebih lama,
+naikkan koefisien restitusinya, misalnya menjadi 0,9. Akan tetapi, ingatlah
+bahwa benda dengan koefisien 1 tidak akan pernah berhenti, dan permainan
+menjadi tidak pernah tenang.
