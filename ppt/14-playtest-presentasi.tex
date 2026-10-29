@@ -1,0 +1,670 @@
+% =========================================================
+%  ppt/14-playtest-presentasi.tex
+%  Materi 14 — Evaluasi Prototipe, Playtesting, dan Presentasi
+%  Bab XVI buku ajar
+% =========================================================
+\documentclass[aspectratio=169,10pt]{beamer}
+\input{config/packages}
+\input{config/theme}
+
+\renewcommand{\materino}{14}
+
+\begin{document}
+
+\deckcover{14}{15}
+  {Evaluasi Prototipe, Playtesting, dan Presentasi}
+  {4.3}
+  {Unity}
+  {Bab XVI buku ajar}
+  {Blok IV \textperiodcentered\ Materi 12--14}
+
+% --------------------------------------------------------- capaian
+\begin{frame}{Capaian Pertemuan}
+\setbeamerfont{itemize/enumerate body}{size=\scriptsize}
+\awalan{Sub-CPMK dan indikator dari RPS, serta tujuan Bab XVI buku ajar. Bab ini
+menutup \emph{prototipe} sekaligus menutup seluruh rangkaian materi.}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.52\textwidth}
+    \begin{beamercolorbox}[wd=\linewidth,sep=5pt,rounded=true]{block title}
+      {\fontsize{6.8}{8}\selectfont\color{ubHead}SUB-CPMK 4.3 \textperiodcentered\ RANAH C5}\\[2pt]
+      {\footnotesize Mengevaluasi prototipe \emph{game} melalui
+       \emph{playtesting} dan memperbaiki integrasi level serta aset.}
+    \end{beamercolorbox}
+    \vspace{0.16cm}
+
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}INDIKATOR}\par
+    \vspace{0.06cm}
+    \begin{itemize}
+      \item Menyusun \emph{checklist fungsional} dan lembar \emph{playtest}.
+      \item Mengidentifikasi \emph{bug} dan masalah integrasi dari hasil
+            \emph{playtest}.
+      \item Menyajikan laporan perbaikan dan refleksi pemilihan teknologi.
+    \end{itemize}
+  \end{column}
+  \begin{column}{0.45\textwidth}
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}TUJUAN BAB XVI}\par
+    \vspace{0.08cm}
+    \begin{itemize}
+      \item Menjelaskan mengapa pembuat tidak dapat menilai karyanya sendiri.
+      \item Menyusun \emph{checklist fungsional} dari GDD sendiri.
+      \item Menjalankan pemeriksaan otomatis untuk \emph{soft-lock} dan jalan
+            yang hanya menurun.
+      \item Menyusun lembar \emph{playtest} dan melaksanakannya antar
+            kelompok.
+      \item Mencatat \emph{bug} yang dapat diulang dan menimbang beratnya.
+      \item Menyajikan demo 5--10 menit dan menyusun refleksi teknologi.
+    \end{itemize}
+  \end{column}
+\end{columns}
+\end{frame}
+
+% --------------------------------------------------------- peta
+\petapertemuan{4}
+  {Materi 13 \textperiodcentered\ Integrasi Audio dan \emph{Trigger} Interaksi}
+  {Materi 14 \textperiodcentered\ Evaluasi Prototipe, \emph{Playtesting}, dan
+   Presentasi}
+  {UAS (Minggu 16)}
+  {Prototipe teruji: \emph{checklist} fungsional terisi, \emph{log bug} beserta
+   status penanganannya, demo 5--10 menit, laporan perbaikan, dan refleksi
+   teknologi.}
+
+% ========================================================= bagian 1
+\section{Mengapa Prototipe Harus Diuji}
+\sectionframe{01}{Mengapa Prototipe Harus Diuji}
+  {Pembuat tidak dapat menilai karyanya sendiri}
+
+\begin{frame}{Pembuat Tidak Dapat Menilai Karyanya Sendiri}
+\awalan{Selama ini Anda menguji permainan dengan satu cara: menjalankannya,
+lalu memeriksa apakah perilakunya sesuai maksud Anda. Cara itu gagal pada hal
+yang paling penting.}
+\begin{itemize}
+  \item Anda sudah tahu tombol mana yang harus ditekan, jalur mana yang harus
+        dilewati, dan ke mana tujuan yang sebenarnya.
+  \item Pengetahuan itu tidak dimiliki pemain baru, dan justru pengetahuan
+        itulah yang menutupi masalah.
+  \item Level yang tampak jelas bagi pembuatnya dapat membingungkan pemain
+        lain selama beberapa menit pertama.
+  \item Karena itu pengujian menuntut orang lain yang belum pernah melihat
+        karya Anda, dan menuntut Anda menahan diri untuk tidak menolongnya.
+\end{itemize}
+\vspace{0.12cm}
+\begin{peringatan}
+Kesalahan yang paling sering terjadi pada sesi \emph{playtest} pertama adalah
+memberi petunjuk ketika penguji kebingungan. Kalimat ``tekan tombol spasi untuk
+lompat'' tampak seperti bantuan, padahal ia menghapus satu-satunya keterangan
+yang paling Anda butuhkan. Apabila penguji tidak menemukan sendiri caranya, itu
+temuan, bukan kesalahan penguji.
+\end{peringatan}
+\end{frame}
+
+\begin{frame}{Dua Jenis Pengujian yang Saling Melengkapi}
+\setbeamerfont{itemize/enumerate body}{size=\scriptsize}
+\awalan{Keduanya menemukan hal yang berbeda, dan urutannya penting.}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.48\textwidth}
+    \begin{block}{Pemeriksaan otomatis}
+      \begin{itemize}
+        \item Dijalankan komputer, tanpa pemain, dan berulang-ulang.
+        \item Menemukan hal yang bersifat pasti: petak yang tidak dapat
+              dicapai, lompatan yang melebihi jangkauan, berkas yang gagal
+              dimuat.
+        \item Cepat, dan hasilnya sama setiap kali dijalankan.
+      \end{itemize}
+    \end{block}
+  \end{column}
+  \begin{column}{0.48\textwidth}
+    \begin{exampleblock}{\emph{Playtest}}
+      \begin{itemize}
+        \item Dijalankan oleh orang lain yang memainkan prototipe Anda.
+        \item Menemukan hal yang tidak dapat dihitung: bagian yang
+              membingungkan, membosankan, dan membuat pemain berhenti.
+        \item Menuntut penguji yang belum pernah melihat karya Anda.
+      \end{itemize}
+    \end{exampleblock}
+  \end{column}
+\end{columns}
+\vspace{0.16cm}
+\begin{kotak}
+Pemeriksaan otomatis dijalankan lebih dahulu, sebab tidak ada gunanya meminta
+orang lain menguji level yang belum dapat diselesaikan. Namun ia tidak dapat
+menggantikan \emph{playtest}: mesin dapat memberitahu bahwa levelnya
+\emph{mungkin} diselesaikan, tetapi tidak dapat memberitahu apakah levelnya
+\emph{menyenangkan} diselesaikan.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Pengujian sebagai Siklus, Bukan Langkah Terakhir}
+\centering
+\adjustbox{max width=0.98\linewidth,max height=0.55\textheight}{%
+  \input{../buku_ajar/chapters/16/figures/siklus-uji.tikz}}\par
+\vspace{0.12cm}
+\begin{kotak}
+Perbaikan atas satu temuan berpotensi menimbulkan temuan baru: menambah pijakan
+agar pemain tidak terjebak dapat membuat bagian lain terlalu mudah, dan
+menggeser letak tujuan dapat membuat satu bagian tidak lagi terjangkau. Karena
+itu siklusnya kembali ke daftar periksa, bukan berhenti pada \emph{build} akhir.
+\end{kotak}
+\end{frame}
+
+% ========================================================= bagian 2
+\section{Checklist Fungsional}
+\sectionframe{02}{Checklist Fungsional}
+  {Daftar janji yang diturunkan dari GDD}
+
+\begin{frame}{Menurunkan Checklist dari GDD}
+\awalan{\emph{Checklist} fungsional bukan daftar keinginan, melainkan daftar
+janji: setiap butirnya berasal dari sesuatu yang sudah Anda tuliskan.}
+\begin{itemize}
+  \item \emph{Checklist} fungsional adalah daftar pernyataan yang harus
+        bernilai benar sebelum \emph{build} dianggap selesai.
+  \item Sumbernya adalah \emph{Game Design Document} (GDD), yaitu rancangan
+        tertulis yang Anda susun pada awal pengerjaan proyek.
+  \item Cara menyusunnya tidak menuntut pekerjaan baru, hanya ketelitian
+        membaca kembali: buka GDD, lalu ubah setiap pernyataan menjadi satu
+        butir yang dapat diperiksa benar atau salah.
+  \item Pernyataan GDD bernilai rancangan, sedangkan butir \emph{checklist}
+        bernilai pemeriksaan. Di situlah gunanya: niat berubah menjadi syarat
+        yang dapat diuji, termasuk oleh program.
+\end{itemize}
+\vspace{0.14cm}
+\begin{kiat}
+Butir yang baik dapat dijawab ``ya'' atau ``tidak'' oleh orang lain tanpa
+bertanya kepada Anda. Butir yang masih memuat kata ``menarik'' atau ``cukup''
+belum dapat diperiksa, dan karena itu belum berguna.
+\end{kiat}
+\end{frame}
+
+\begin{frame}{Tiga Kelompok Butir}
+\awalan{\emph{Checklist} yang hanya memuat satu jenis butir akan meninggalkan
+bagian yang penting.}
+\begin{enumerate}
+  \item \textbf{Mekanik.} Apakah setiap mekanik yang dijanjikan GDD benar-benar
+        ada dan berjalan? Lompatan, pengambilan benda, kondisi menang, dan
+        kondisi kalah.
+  \item \textbf{Integrasi.} Apakah bagian-bagian yang dibuat pada bab yang
+        berbeda benar-benar tersambung? Bunyi terdengar pada peristiwanya,
+        animasi berganti menurut keadaannya, antarmuka menampilkan angka yang
+        benar.
+  \item \textbf{Keseluruhan.} Apakah permainannya dapat diselesaikan dari awal
+        sampai akhir, tanpa berhenti, tanpa jalan buntu, dan dalam waktu yang
+        Anda janjikan?
+\end{enumerate}
+\vspace{0.14cm}
+\begin{kotak}
+Kelompok ketiga paling sering terlewat, sebab ia tidak dapat diperiksa sambil
+membuat. Ia hanya dapat diperiksa dengan menjalankan permainan dari awal sampai
+akhir, dan itulah sebabnya ia memerlukan \emph{build}, bukan \emph{scene} yang
+sedang Anda sunting.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Checklist sebagai Berkas}
+\awalan{Simpan \emph{checklist} sebagai berkas, bukan hafalan atau ingatan,
+sehingga hasil setiap putaran dapat dibandingkan.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.55cm}
+    >{\raggedright\arraybackslash}p{1.50cm}
+    >{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}p{2.00cm}@{}}
+\toprule
+\textbf{No} & \textbf{Kelompok} & \textbf{Butir pemeriksaan} &
+  \textbf{Putaran 1/2} \\
+\midrule
+1 & Mekanik & Pemain dapat melompat hanya dari tanah; tidak ada lompatan di
+  udara. & Lulus / Lulus \\
+2 & Mekanik & Tiga benda \texttt{Pickup} tersedia dan pintu akhir terbuka
+  setelah ketiganya diambil. & Gagal / Lulus \\
+3 & Integrasi & Bunyi pengambilan terdengar pada setiap benda, termasuk benda
+  ketiga. & Gagal / Lulus \\
+4 & Integrasi & Animasi diam dan berlari berganti sesuai gerak pemain. &
+  Lulus / Lulus \\
+5 & Keseluruhan & Satu penyelesaian penuh berlangsung 5--10 menit tanpa jalan
+  buntu. & Gagal / Lulus \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.12cm}
+\begin{itemize}
+  \item Batasi pada sekitar dua puluh sampai tiga puluh butir: daftar yang
+        terlalu panjang tidak akan pernah dijalankan sampai selesai, sedangkan
+        yang terlalu pendek melewatkan hal penting.
+  \item Butir yang paling berguna adalah butir yang pernah gagal pada putaran
+        sebelumnya.
+\end{itemize}
+\end{frame}
+
+% ========================================================= bagian 3
+\section{Pemeriksaan Otomatis Tanpa Pemain}
+\sectionframe{03}{Pemeriksaan Otomatis Tanpa Pemain}
+  {\emph{Soft-lock}, jangkauan lompatan, dan pencarian jalur}
+
+\begin{frame}{\emph{Soft-lock}: Kegagalan yang Tidak Terlihat}
+\awalan{Satu jenis kesalahan tidak menimbulkan pesan apa pun, tidak
+menghentikan program, dan tidak terlihat pada satu kali percobaan.}
+\begin{itemize}
+  \item \emph{Soft-lock} adalah keadaan ketika pemain tidak dapat melanjutkan
+        dan tidak dapat kembali, walaupun permainannya sendiri masih berjalan.
+  \item Program tidak berhenti, jendela \emph{Console} tidak mencetak kesalahan,
+        dan penguji yang mencoba satu kali mungkin tidak menemukannya.
+  \item Contohnya pemain terjatuh ke dalam lubang yang terlalu tinggi untuk
+        ditinggalkan.
+  \item Hanya sebagian pemain mengalaminya, dan itulah yang membuat kesalahan
+        ini mahal.
+\end{itemize}
+\vspace{0.14cm}
+\begin{kotak}
+Karena kesalahan ini bersifat pasti, bukan soal selera, ia dapat diperiksa
+secara pasti pula: periksa setiap tempat pemain dapat berdiri, lalu tanyakan
+apakah dari sana titik tujuan masih dapat dicapai.
+\end{kotak}
+\end{frame}
+
+\begin{frame}[fragile]{Jangkauan Lompatan, Dihitung lalu Diputuskan}
+\lstinputlisting[language=Python,firstline=65,lastline=78]
+  {../buku_ajar/code/python/ch16_uji_mandiri.py}
+\kodejelas{Dengan $v_0=700$ piksel per detik, $g=1800$ piksel per detik
+kuadrat, dan kecepatan jalan 300 piksel per detik, tinggi lompatan 136,1 piksel
+(4,25 petak) dan jarak mendatar 233,3 piksel (7,29 petak) pada petak 32 piksel.
+Melompat ke tempat yang lebih rendah memberi waktu di udara lebih lama,
+sehingga jangkauannya lebih jauh; karena itu jangkauan dihitung untuk setiap
+pasangan tempat berdiri.}
+\end{frame}
+
+\begin{frame}[fragile]{Memeriksa Setiap Tempat Berdiri}
+\lstinputlisting[language=Python,firstline=277,lastline=286]
+  {../buku_ajar/code/python/ch16_uji_mandiri.py}
+\kodejelas{Setiap pijakan memanggil \texttt{cari\_jalur}; pijakan yang tidak
+menemukan jalur dicatat sebagai calon \emph{soft-lock}. Algoritmanya sama
+dengan Bab X, dan yang berbeda hanya aturan tetangganya: berjalan, jatuh, atau
+melompat.}
+\vspace{0.12cm}
+\begin{kotak}
+Pada peta ketiga, simulasi 200 titik awal berhasil 82,0\%,
+sedangkan pemeriksaan menyeluruh menemukan 15,6\% tempat terjebak. Simulasi
+hanya menyentuh keadaan yang kebetulan terpilih; yang menyingkap
+\emph{soft-lock} adalah pemeriksaan atas \emph{setiap} tempat berdiri.
+\end{kotak}
+\end{frame}
+
+% ========================================================= bagian 4
+\section{Lembar dan Pelaksanaan Playtest}
+\sectionframe{04}{Lembar dan Pelaksanaan \emph{Playtest}}
+  {Mengamati, mencatat, dan bertukar peran}
+
+\begin{frame}{Mengamati, Bukan Bertanya}
+\awalan{Pertanyaan ``apakah permainannya bagus'' tidak berguna, sebab
+jawabannya sopan dan tidak dapat ditindaklanjuti.}
+\begin{itemize}
+  \item Yang berguna adalah pengamatan atas apa yang benar-benar dilakukan
+        penguji, bukan pendapatnya tentang karya Anda.
+  \item Ketika penguji berhenti dua puluh detik di depan pintu yang belum
+        terbuka lalu berjalan ke arah yang salah, Anda memperoleh satu temuan
+        yang dapat langsung diperbaiki.
+  \item Catat waktu, bukan hanya kejadian: ``berhenti 20 detik'' jauh lebih
+        berguna daripada ``sempat bingung''.
+  \item Angka waktu memudahkan Anda membandingkan hasil perbaikan dengan hasil
+        sebelumnya.
+\end{itemize}
+\vspace{0.14cm}
+\begin{kiat}
+Menit pertama adalah menit yang paling banyak memuat temuan, dan menit itu pula
+yang paling cepat Anda lupakan. Amati dan catat sejak awal, lalu kumpulkan
+kesan sesudah permainan selesai, bukan di tengah jalan.
+\end{kiat}
+\end{frame}
+
+\begin{frame}{Isi Lembar \emph{Playtest}}
+\awalan{Lembar \emph{playtest} memuat keterangan tentang penguji dan catatan
+atas apa yang diamati selama permainan berlangsung.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.5cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Bagian} & \textbf{Isi} \\
+\midrule
+Keterangan penguji & Nama atau kelompok, dan pengalaman bermain permainan
+  sejenis. \\
+\addlinespace
+Berkas yang diuji & Nama \emph{build} beserta tanggalnya. \\
+\addlinespace
+Waktu penyelesaian & Lama permainan dari awal sampai tujuan, atau keterangan
+  bahwa pemain berhenti sebelum selesai. \\
+\addlinespace
+Titik berhenti & Tempat dan waktu ketika penguji berhenti lebih lama dari
+  sepuluh detik, beserta apa yang tampak ia cari. \\
+\addlinespace
+Kesalahan yang terlihat & Setiap keadaan yang tidak seharusnya terjadi,
+  beserta urutan tindakan yang menyebabkannya. \\
+\addlinespace
+Masukan penguji & Pendapat penguji, dicatat apa adanya, tanpa dibantah. \\
+\addlinespace
+Catatan penguji sendiri & Hal yang Anda amati tetapi tidak disebutkan
+  penguji. \\
+\bottomrule
+\end{tabularx}}
+\end{frame}
+
+\begin{frame}{\emph{Playtest} antar Kelompok: Enam Langkah}
+\awalan{Keuntungannya berjalan dua arah: kelompok Anda memperoleh penguji yang
+belum pernah melihat karya Anda, dan Anda memperoleh pengalaman menguji karya
+orang lain.}
+\begin{enumerate}
+  \item \textbf{Siapkan \emph{build} yang dapat dijalankan} pada komputer lain,
+        bukan pada komputer Anda. Berkas yang hanya berjalan di komputer
+        pembuatnya bukan \emph{build}.
+  \item \textbf{Tuliskan tujuan sesi}: bagian mana yang paling Anda ragukan.
+        Pengujian yang diarahkan menemukan lebih banyak daripada yang
+        dibiarkan bebas.
+  \item \textbf{Serahkan kendali tanpa memberi petunjuk.} Jawablah pertanyaan
+        dengan ``apa yang Anda duga seharusnya terjadi''.
+  \item \textbf{Amati dan catat}, terutama menit pertama; kumpulkan kesan
+        sesudah permainan selesai.
+  \item \textbf{Tukar peran.} Uji karya kelompok lain dengan cara yang sama,
+        agar Anda memahami bagaimana rasanya diamati.
+  \item \textbf{Ringkas temuan segera}, lalu pindahkan temuan yang dapat diulang
+        ke \emph{log bug}.
+\end{enumerate}
+\begin{peringatan}
+Jangan membela karya Anda selama sesi berlangsung. Penguji yang merasa
+pendapatnya diperdebatkan akan berhenti memberi masukan, dan sesi berikutnya
+menjadi sia-sia.
+\end{peringatan}
+\end{frame}
+
+% ========================================================= bagian 5
+\section{Log Bug dan Perbaikan}
+\sectionframe{05}{Log \emph{Bug} dan Perbaikan}
+  {Catatan yang dapat diulang dan beratnya}
+
+\begin{frame}{Catatan yang Dapat Diulang}
+\awalan{``Bunyinya kadang tidak terdengar'' tidak dapat diperbaiki, sebab Anda
+tidak tahu kapan ia terjadi. Setiap catatan harus memuat tiga hal.}
+\begin{itemize}
+  \item Apa yang terjadi, apa yang seharusnya terjadi, dan urutan tindakan yang
+        membuatnya terjadi.
+  \item Catatan baru boleh dipindahkan ke \emph{log bug} setelah ada urutan
+        yang dapat diulang oleh orang lain.
+\end{itemize}
+\vspace{0.10cm}
+{\scriptsize
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.55cm}
+    >{\raggedright\arraybackslash}p{1.55cm}
+    >{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}p{1.15cm}
+    >{\raggedright\arraybackslash}p{1.10cm}@{}}
+\toprule
+\textbf{No} & \textbf{Jenis} & \textbf{Urutan penyebab dan hasil yang salah} &
+  \textbf{Berat} & \textbf{Status} \\
+\midrule
+1 & \emph{Soft-lock} & Pemain berjalan ke kiri di ujung lorong, lalu jatuh ke
+  lubang. Seluruh tombol tidak lagi mengeluarkan pemain; permainan harus dimulai
+  ulang. & Berat & Belum \\
+\addlinespace
+2 & Integrasi & Bunyi pengambilan tidak terdengar pada benda ketiga. Benda
+  pertama dan kedua berbunyi; skornya tetap bertambah. & Sedang & Belum \\
+\addlinespace
+3 & Tampilan & Animasi diam tetap berjalan ketika pemain berlari, apabila
+  berlari dimulai ketika pemain baru saja mendarat. & Ringan & Belum \\
+\bottomrule
+\end{tabularx}}
+\end{frame}
+
+\begin{frame}{Menimbang Beratnya}
+\awalan{Tidak semua temuan perlu diperbaiki, dan waktu menjelang pengumpulan
+selalu terbatas. Setiap temuan ditimbang atas dua pertanyaan.}
+\begin{enumerate}
+  \item \textbf{Apakah permainannya masih dapat diselesaikan?} Temuan yang
+        menjawab ``tidak'' selalu paling berat, walaupun ia jarang terjadi.
+  \item \textbf{Berapa banyak pemain yang akan menemukannya?} Temuan yang
+        dialami setiap pemain pada menit pertama mendesak; temuan yang hanya
+        muncul pada keadaan jarang dapat ditunda.
+\end{enumerate}
+\vspace{0.10cm}
+{\scriptsize
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{1.55cm}
+    >{\raggedright\arraybackslash}p{5.20cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Berat} & \textbf{Tandanya} & \textbf{Tindakan} \\
+\midrule
+Berat & Permainan tidak dapat diselesaikan, atau kemajuannya hilang. &
+  Diperbaiki sebelum sesi \emph{playtest} berikutnya. \\
+\addlinespace
+Sedang & Permainan selesai, tetapi satu bagian yang dijanjikan GDD tidak
+  bekerja. & Diperbaiki, dan diperiksa kembali pada putaran berikutnya. \\
+\addlinespace
+Ringan & Tampilan atau bunyi yang tidak sesuai, tanpa mengubah jalannya
+  permainan. & Diperbaiki apabila waktu tersisa; dicatat sebagai kekurangan
+  yang diketahui. \\
+\bottomrule
+\end{tabularx}}
+\begin{kiat}
+Perbaiki temuan berat satu per satu, lalu jalankan \emph{checklist} fungsional
+sesudah setiap perbaikan. Menggabungkan beberapa perbaikan membuat Anda tidak
+tahu mana yang bekerja.
+\end{kiat}
+\end{frame}
+
+\begin{frame}{Dari Temuan kembali ke GDD}
+\awalan{Lingkaran pengujian belum selesai pada perbaikan. Temuan yang berulang
+perlu diperiksa terhadap rancangannya.}
+\begin{itemize}
+  \item Temuan yang berulang pada beberapa sesi biasanya bukan kesalahan
+        pelaksanaan, melainkan tanda bahwa rancangan pada GDD memang belum
+        jelas.
+  \item Apabila setiap penguji melewati pintu yang belum terbuka, kemungkinan
+        besar GDD tidak pernah menjelaskan bahwa pintu itu terkunci, sehingga
+        petunjuknya juga tidak pernah dipasang.
+  \item Temuan yang berulang diperiksa terhadap GDD, lalu GDD diperbarui.
+  \item Dengan begitu siklusnya benar-benar kembali ke awal: perbaikan menuntut
+        \emph{checklist} yang diperbarui, dan \emph{checklist} yang diperbarui
+        menuntut pemeriksaan ulang.
+\end{itemize}
+\vspace{0.14cm}
+\begin{kotak}
+Jangan menghapus janji dari GDD agar hasilnya tampak sesuai. Itu bentuk
+ketidakjujuran akademik, dan sekaligus menghapus bukti bahwa Anda mampu menilai
+karya sendiri.
+\end{kotak}
+\end{frame}
+
+% ========================================================= bagian 6
+\section{Presentasi Demo, Kesesuaian GDD, dan Refleksi Teknologi}
+\sectionframe{06}{Presentasi Demo dan Refleksi Teknologi}
+  {Demo, kesesuaian rancangan, dan pilihan perkakas}
+
+\begin{frame}{Demo Lima sampai Sepuluh Menit}
+\awalan{Waktu sependek itu menuntut pilihan. Kesalahan yang paling sering
+adalah menceritakan seluruh proses pembuatan; yang perlu diperlihatkan bukan
+perjalanan Anda, melainkan hasilnya.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{1.55cm}
+    >{\raggedright\arraybackslash}p{2.60cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Waktu} & \textbf{Bagian} & \textbf{Isi} \\
+\midrule
+1 menit & Pembukaan & Nama permainan, jenisnya, dan satu kalimat tentang apa
+  yang pemain lakukan di dalamnya. \\
+\addlinespace
+4--6 menit & Demo langsung & Permainan dijalankan dari awal sampai tujuan, atau
+  sampai bagian yang paling Anda banggakan. Tidak ada penjelasan bertele-tele
+  di tengah demo. \\
+\addlinespace
+1--2 menit & Temuan pengujian & Satu atau dua temuan terpenting dari
+  \emph{playtest} antar kelompok, beserta perbaikan yang Anda lakukan. \\
+\addlinespace
+1 menit & Penutup & Kekurangan yang Anda ketahui, dan satu hal yang akan Anda
+  kerjakan apabila waktunya bertambah. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.08cm}
+\begin{kiat}
+Siapkan demo cadangan: rekam permainan sebagai video pendek, dan bawa salinan
+\emph{build} pada dua tempat. Kegagalan teknis saat presentasi adalah hal yang
+biasa, dan cara menghadapinya dinilai.
+\end{kiat}
+\end{frame}
+
+\begin{frame}{Kesesuaian GDD dengan \emph{Build}}
+\awalan{GDD ditulis ketika sebagian besar hal belum diketahui. Perbedaan antara
+GDD dan \emph{build} hampir pasti ada; yang salah adalah perbedaan yang tidak
+Anda sadari.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.75cm}
+    >{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Keadaan} & \textbf{Artinya} & \textbf{Tindakan} \\
+\midrule
+Sesuai & Yang dijanjikan GDD benar-benar ada di dalam \emph{build}. &
+  Tidak ada yang perlu dikerjakan; cantumkan sebagai bukti pada laporan. \\
+\addlinespace
+GDD diperbarui & Rancangannya berubah ketika dikerjakan, dan perubahan itu
+  disengaja. & Perbarui GDD dan tuliskan alasan perubahannya. Yang dinilai
+  adalah kesadaran Anda atas perubahan itu. \\
+\addlinespace
+Belum dikerjakan & Yang dijanjikan GDD belum ada, dan tidak akan ada. &
+  Cantumkan sebagai kekurangan yang diketahui. Jangan menghapusnya dari GDD
+  agar laporannya tampak lengkap. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.12cm}
+\begin{itemize}
+  \item Baris ketiga adalah yang paling penting untuk dihindari, sebab
+        menghapus janji dari GDD menghilangkan bukti kemampuan menilai karya
+        sendiri.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Refleksi Pemilihan Teknologi}
+\awalan{Refleksi bukan penilaian mana yang lebih baik, melainkan keterangan
+tentang mana yang cocok untuk keperluan apa.}
+\begin{itemize}
+  \item \textbf{Pada bagian mana Pygame mempercepat pekerjaan Anda?} Jawaban
+        yang umum: bagian yang perhitungannya perlu Anda kuasai sendiri, dan
+        permainan yang aturannya sederhana.
+  \item \textbf{Pada bagian mana Unity mempercepat pekerjaan Anda?} Jawaban
+        yang umum: penyusunan level, pengaturan fisika, animasi, dan bunyi,
+        sebab pekerjaan itu diurus mesin.
+  \item \textbf{Bagian mana yang paling Anda kuasai sekarang, dan bagian mana
+        yang masih perlu dipelajari?} Jawaban atas pertanyaan ini menjadi
+        rencana belajar Anda sesudah mata kuliah ini berakhir.
+  \item Setiap jawaban sebaiknya disertai contoh dari pekerjaan kelompok Anda
+        sendiri, bukan dari buku ini.
+\end{itemize}
+\vspace{0.14cm}
+\begin{kotak}
+Refleksi yang jujur akan memuat hal yang tidak Anda kuasai. Menyebutkannya bukan
+pengakuan kelemahan, melainkan bukti bahwa Anda mampu menilai kemampuan sendiri
+dengan tepat. Itulah bagian tertinggi ranah C5 yang dinilai pada Sub-CPMK 4.3:
+menilai berdasarkan bukti, bukan berdasarkan kesan.
+\end{kotak}
+\end{frame}
+
+% --------------------------------------------------------- ketentuan proyek
+\begin{frame}{Ketentuan Proyek Akhir (Minggu 15)}
+\setbeamerfont{itemize/enumerate body}{size=\scriptsize}
+\awalan{Seluruh ketentuan berikut diambil dari RPS dan diperiksa pada presentasi
+Minggu 15.}
+\begin{itemize}
+  \item \textbf{Persiapan pengujian.} \emph{Checklist} fungsional dan lembar
+        \emph{playtest} terstruktur telah disusun sebelum sesi.
+  \item \textbf{\emph{Playtest} antar kelompok} dilaksanakan pada Minggu 15;
+        seluruh \emph{bug} yang ditemukan dicatat pada \emph{log bug} beserta
+        status penanganannya.
+  \item \textbf{Kesesuaian GDD dengan \emph{build}} yang benar-benar dijalankan
+        diperiksa dan dilaporkan, termasuk perbedaan yang disengaja.
+  \item \textbf{Demo 5--10 menit} disajikan menurut susunan pembukaan, demo
+        langsung, temuan pengujian, dan penutup.
+  \item \textbf{Refleksi pemilihan teknologi}: Python/Pygame dibandingkan
+        dengan Unity, disertai contoh dari pekerjaan sendiri.
+  \item \textbf{Keluaran proyek}: \emph{build}, \emph{project source}, ringkasan
+        desain, laporan pengembangan, dan lembar \emph{playtest} terisi; uji
+        fungsional oleh dosen pada Minggu 16 (UAS).
+\end{itemize}
+\vspace{0.12cm}
+\begin{kotak}
+Yang dinilai bukan permainan yang tampak tanpa cacat, melainkan kemampuan
+menemukan masalah pada karya sendiri, memperbaikinya, dan
+mempertanggungjawabkan pilihan teknologi.
+\end{kotak}
+\end{frame}
+
+% --------------------------------------------------------- aktivitas
+\begin{frame}{Aktivitas di Kelas \textperiodcentered\ Playtest}
+\setbeamerfont{itemize/enumerate body}{size=\scriptsize}
+\awalan{Pengalaman belajar minggu 15 pada RPS, dikerjakan berurutan di kelas
+sebagai bagian pengujian Proyek Akhir.}
+\begin{enumerate}
+  \item Turunkan \emph{checklist} fungsional 20--30 butir dari GDD kelompok
+        Anda, mencakup mekanik, integrasi, dan keseluruhan.
+  \item Salin peta level ke \texttt{ch16\_uji\_mandiri.py}, jalankan
+        \texttt{python -I ch16\_uji\_mandiri.py --peta namapeta}, lalu perbaiki
+        tempat yang dilaporkan terjebak atau hanya dapat menurun.
+  \item Bungkus \emph{build} dan ujilah pada komputer lain, bukan komputer
+        tempat Anda mengembangkan permainan.
+  \item Susun lembar \emph{playtest}; tuliskan bagian yang paling Anda ragukan
+        sebagai tujuan sesi.
+  \item Laksanakan \emph{playtest} dengan sekurang-kurangnya dua penguji baru;
+        jangan memberi petunjuk, dan catat waktu serta tempat berhentinya.
+  \item Pindahkan temuan yang dapat diulang ke \emph{log bug}, timbang beratnya,
+        perbaiki yang berat, lalu jalankan kembali \emph{checklist} fungsional.
+\end{enumerate}
+\vspace{0.06cm}
+{\footnotesize\color{ubAccent}\itshape Rincian lengkap: bagian praktikum Bab XVI
+buku ajar; keluarannya adalah Proyek Akhir. Kumpulkan melalui repositori Git
+kelompok.}
+\end{frame}
+
+% --------------------------------------------------------- rangkuman
+\begin{frame}{Rangkuman}
+\begin{itemize}
+  \item Pembuat tidak dapat menilai karyanya sendiri; \emph{playtest} menuntut
+        penguji yang belum pernah melihat karya, dan Anda tidak boleh
+        menolongnya.
+  \item Pemeriksaan otomatis dan \emph{playtest} saling melengkapi. Otomatis
+        dijalankan lebih dahulu, tetapi tidak dapat menggantikan
+        \emph{playtest}.
+  \item Pengujian adalah siklus: setiap perbaikan menuntut pemeriksaan ulang dan
+        \emph{checklist} yang diperbarui.
+  \item \emph{Checklist} fungsional diturunkan dari GDD dan terbagi menjadi
+        mekanik, integrasi, serta keseluruhan; kelompok terakhir hanya dapat
+        diperiksa pada \emph{build}.
+  \item \emph{Soft-lock} tidak menimbulkan pesan kesalahan. Pemeriksaan setiap
+        tempat berdiri menemukannya, sedangkan simulasi acak dapat menyesatkan.
+  \item Catatan \emph{bug} harus dapat diulang dan ditimbang beratnya; demo
+        5--10 menit menampilkan hasil, temuan, dan refleksi teknologi.
+\end{itemize}
+\end{frame}
+
+% --------------------------------------------------------- cek
+\begin{frame}{Cek Pemahaman}
+\begin{enumerate}
+  \item Mengapa pembuat tidak dapat menilai karyanya sendiri, dan mengapa
+        memberi petunjuk saat \emph{playtest} justru menghapus temuan?
+  \item Sebuah level memakai $v_0=640$ piksel per detik, $g=1600$ piksel per
+        detik kuadrat, dan petak 32 piksel. Hitunglah tinggi lompatan tertinggi
+        dalam satuan petak.
+  \item Mengapa pemeriksaan setiap tempat berdiri lebih dapat dipercaya daripada
+        simulasi 200 titik awal acak? Sebutkan pula dua hal yang tidak dapat
+        diperiksa secara otomatis.
+\end{enumerate}
+\vspace{0.35cm}
+{\footnotesize\color{ubMuted}\itshape Jawab tanpa membuka catatan, lalu
+bandingkan dengan pasangan di sebelah Anda.}
+\end{frame}
+
+% --------------------------------------------------------- penutup
+\penutup{Presentasi Proyek Akhir}
+  {Minggu 16 adalah UAS: tidak ada materi baru dan tidak ada berkas materi UAS.
+   Yang berlangsung adalah uji fungsional dosen atas \emph{build} dan
+   \emph{project source} yang telah diserahkan, menggunakan \emph{checklist}
+   penilaian, disertai laporan pengembangan dan lembar refleksi pembelajaran.}
+
+\end{document}

@@ -1,0 +1,607 @@
+% =========================================================
+%  ppt/06-ai-npc-chase.tex
+%  Materi 6 — Pengantar AI NPC dan Perilaku Chase
+%  Bab VIII buku ajar
+% =========================================================
+\documentclass[aspectratio=169,10pt]{beamer}
+\input{config/packages}
+\input{config/theme}
+
+\renewcommand{\materino}{06}
+
+\begin{document}
+
+\deckcover{06}{6}
+  {Pengantar AI NPC dan Perilaku Chase}
+  {2.1}
+  {Python / Pygame}
+  {Bab VIII buku ajar}
+  {Blok II \textperiodcentered\ Materi 6--9}
+
+% --------------------------------------------------------- capaian
+\begin{frame}{Capaian Pertemuan}
+\setbeamerfont{itemize/enumerate body}{size=\scriptsize}
+\awalan{Sub-CPMK dan indikator dari RPS, serta tujuan Bab VIII buku ajar tentang
+perilaku mengejar.}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.52\textwidth}
+    \begin{beamercolorbox}[wd=\linewidth,sep=5pt,rounded=true]{block title}
+      {\fontsize{6.8}{8}\selectfont\color{ubHead}SUB-CPMK 2.1}\\[2pt]
+      {\footnotesize Merancang perilaku \emph{NPC} sederhana (misalnya
+       \emph{chase}) berdasarkan posisi pemain.}
+    \end{beamercolorbox}
+    \vspace{0.16cm}
+
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}INDIKATOR}\par
+    \vspace{0.06cm}
+    \begin{itemize}
+      \item Menghitung \emph{vektor arah} NPC menuju pemain dan
+            menormalisasinya.
+      \item Membatasi besar kecepatan agar gerak NPC konsisten.
+      \item Menjelaskan perbedaan \emph{AI reaktif} dan
+            \emph{AI berbasis perencanaan}.
+    \end{itemize}
+  \end{column}
+  \begin{column}{0.45\textwidth}
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}TUJUAN BAB VIII}\par
+    \vspace{0.08cm}
+    \begin{itemize}
+      \item Menjelaskan susunan keputusan agen: persepsi, keputusan, dan
+            tindakan.
+      \item Menghitung vektor arah dan jarak dari NPC menuju pemain.
+      \item Menormalkan vektor arah lalu mengalikannya dengan kecepatan.
+      \item Menjelaskan mengapa vektor jarak langsung sebagai kecepatan itu
+            salah.
+      \item Menentukan jari-jari persepsi dan jarak henti beserta alasannya.
+      \item Membedakan AI reaktif dan AI berbasis perencanaan beserta
+            kelemahannya.
+    \end{itemize}
+  \end{column}
+\end{columns}
+\end{frame}
+
+% --------------------------------------------------------- peta
+\petapertemuan{2}
+  {Materi 5 \textperiodcentered\ Sprite, Group, dan Collision Detection}
+  {Materi 6 \textperiodcentered\ Pengantar AI NPC dan Perilaku Chase}
+  {Materi 7 \textperiodcentered\ Finite State Machine untuk NPC}
+  {NPC mengejar pemain di ruang terbuka; garis arah, lingkaran persepsi, dan
+   warna NPC memperlihatkan keputusannya; kecepatan terukur tetap pada berbagai
+   jarak.}
+
+% ========================================================= bagian 1
+\section{Dari yang Digerakkan Menjadi yang Bergerak Sendiri}
+\sectionframe{01}{Dari yang Digerakkan Menjadi yang Bergerak Sendiri}
+  {Dari benda pasif menjadi agen yang mengamati, memutuskan, dan bertindak}
+
+\begin{frame}{Tiga Asal Kecepatan yang Sudah Dikenal}
+\awalan{Sampai bab sebelumnya, kecepatan setiap benda ditentukan dari luar
+dirinya. Bab ini mengubah asal kecepatan itu.}
+\begin{itemize}
+  \item \textbf{Bab V: tombol.} Kecepatan pemain berasal dari tombol yang
+        ditekan. Bendanya pasif: ia bergerak hanya karena diperintah.
+  \item \textbf{Bab VI: gravitasi.} Kecepatan tegak berubah karena percepatan
+        gravitasi. Perubahannya tetap dan sama untuk semua benda; tidak ada
+        keputusan di dalamnya.
+  \item \textbf{Bab VII: tabrakan.} Kecepatan berubah karena tabrakan.
+        Perubahan itu juga bukan keputusan, melainkan akibat dari keadaan.
+\end{itemize}
+\vspace{0.16cm}
+\begin{kotak}
+Pada bab ini kecepatan berasal dari \textbf{keputusan benda itu sendiri}
+berdasarkan keadaan di sekitarnya. Bendanya menjadi agen, yaitu sesuatu yang
+mengamati, memutuskan, dan bertindak. Pandangan permainan pun berganti menjadi
+pandangan atas, sehingga gravitasi tidak diperlukan.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Susunan Keputusan Sebuah Agen}
+\awalan{Tiga langkah berikut selalu ada pada agen mana pun, dari yang paling
+sederhana sampai yang paling rumit.}
+\begin{enumerate}
+  \item \textbf{Persepsi.} Mengumpulkan keterangan tentang keadaan di
+        sekitarnya. Pada bab ini keterangan itu hanya satu: di mana pemain
+        berada sekarang.
+  \item \textbf{Keputusan.} Menentukan tindakan yang dipilih. Pada bab ini
+        hanya ada dua pilihan, yaitu mengejar atau berdiam.
+  \item \textbf{Tindakan.} Melaksanakan keputusan itu dengan mengubah
+        kecepatan, lalu posisi.
+\end{enumerate}
+\vspace{0.16cm}
+\begin{kotak}
+Keluwesan susunan itu yang menarik: menambahkan perilaku baru berarti
+menambahkan pilihan pada langkah kedua, sedangkan langkah pertama dan ketiga
+tidak perlu berubah. Sifat itulah yang membuat susunan ini dapat dikembangkan
+menjadi mesin keadaan pada Materi 7 dan dilengkapi pencarian jalur pada
+Materi 8.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Perilaku yang Dibangun dan yang Sengaja Belum Ada}
+\awalan{Perilaku yang dibangun sederhana dan sengaja demikian: NPC mengejar
+apabila pemain di dalam jangkauannya, dan berdiam apabila pemain di luar
+jangkauan.}
+\begin{itemize}
+  \item \textbf{Keadaan lebih dari dua}, misalnya berpatroli dan menyerang.
+        Dibahas pada Materi 7 melalui mesin keadaan.
+  \item \textbf{Pengetahuan tentang rintangan}, sehingga NPC dapat mencari
+        jalan memutar. Dibahas pada Materi 8 melalui pencarian jalur A*.
+  \item \textbf{Pertimbangan biaya perhitungan} ketika jumlah NPC bertambah.
+        Dibahas pada Materi 9.
+\end{itemize}
+\vspace{0.16cm}
+\begin{kotak}
+Walaupun sederhana, perilaku ini sudah memuat seluruh persoalan penting:
+bagaimana jarak dihitung, bagaimana arah ditentukan, bagaimana kecepatan
+dibatasi, dan kapan berhenti.
+\end{kotak}
+\end{frame}
+
+% ========================================================= bagian 2
+\section{Persepsi Jarak dan Arah}
+\sectionframe{02}{Persepsi Jarak dan Arah}
+  {Satu pengurangan menghasilkan dua keterangan yang berbeda perannya}
+
+\begin{frame}{Jarak untuk Memutuskan, Arah untuk Bergerak}
+\awalan{Persepsi adalah langkah pertama. Yang diamati hanya posisi pemain, dan
+yang dihitung dari keterangan itu ada dua: jarak dan arah.}
+\begin{center}
+\adjustbox{max width=0.92\linewidth,max height=0.53\textheight}{%
+  \input{../buku_ajar/chapters/08/figures/persepsi-npc.tikz}}
+\end{center}
+\vspace{-0.02cm}
+\begin{itemize}
+  \item Jarak dan arah diperoleh dari satu perhitungan yang sama, yaitu selisih
+        kedua posisi: $\vec{u} = \vec{p} - \vec{n}$.
+  \item Jarak dipakai untuk memutuskan, sedangkan vektor itu dipakai untuk
+        bergerak.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Satu Pengurangan, Dua Hasil}
+\awalan{Dua baris pertama \texttt{Npc.update} menghasilkan jarak dan arah
+sekaligus.}
+\lstinputlisting[language=Python,firstline=124,lastline=125]
+  {../buku_ajar/code/python/ch08_chase.py}
+\kodejelas{Baris pertama menghasilkan vektor yang menunjuk dari NPC ke pemain.
+Perhatikan urutan pengurangannya: yang dikurangi adalah posisi NPC, sehingga
+vektornya menunjuk \textbf{dari NPC menuju pemain}. Baris kedua menghitung
+panjang vektor itu, yaitu jaraknya dalam piksel.}
+\vspace{0.15cm}
+\begin{peringatan}
+Bila urutannya dibalik, vektornya menunjuk arah sebaliknya dan NPC justru
+menjauh. Kekeliruan itu sering terjadi karena kedua urutan sama-sama masuk
+akal ketika ditulis.
+\end{peringatan}
+\end{frame}
+
+\begin{frame}{Jari-jari Persepsi sebagai Batas Keputusan}
+\awalan{NPC tidak seharusnya mengetahui keberadaan pemain di mana pun.
+Jangkauan penglihatannya dibatasi sebuah nilai yang disebut jari-jari
+persepsi.}
+\begin{itemize}
+  \item Nilai itu dibandingkan dengan jarak: bila jarak tidak lebih besar
+        daripada jari-jari, pemain terlihat dan keputusan berikutnya adalah
+        mengejar.
+  \item Nilainya urusan perancangan, bukan urusan teknis. Jari-jari terlalu
+        besar membuat NPC terasa mengetahui segala hal; jari-jari terlalu kecil
+        membuat NPC mudah dihindari sehingga tantangan hilang.
+  \item Pada program bab ini nilainya dapat diubah melalui baris perintah agar
+        pengaruhnya dapat dirasakan langsung.
+  \item Program menggambar empat hal agar keputusan terlihat: lingkaran
+        jari-jari persepsi, lingkaran jarak henti, garis arah menuju pemain,
+        dan warna NPC yang berubah menurut keputusannya.
+\end{itemize}
+\vspace{0.12cm}
+\begin{kotak}
+Tanpa gambar itu, Anda hanya melihat NPC yang bergerak atau tidak bergerak,
+dan tidak dapat membedakan ``berdiam karena memutuskan berdiam'' dari
+``berdiam karena kesalahan perhitungan''.
+\end{kotak}
+\end{frame}
+
+% ========================================================= bagian 3
+\section{Menormalkan Arah dan Membatasi Kecepatan}
+\sectionframe{03}{Menormalkan Arah dan Membatasi Kecepatan}
+  {Memisahkan arah dari besar kecepatan}
+
+\begin{frame}{Dua Cara Mengubah Arah Menjadi Kecepatan}
+\awalan{Dengan $\vec{u} = \vec{p} - \vec{n}$ sebagai selisih posisi pemain dan
+NPC, serta $s$ sebagai kecepatan yang Anda tetapkan, ada dua cara yang perlu
+dibandingkan.}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.47\textwidth}
+    \begin{block}{Cara yang salah}
+      \[
+        \vec{v} = \vec{u},
+        \qquad \lVert \vec{v} \rVert = d
+      \]
+      {\scriptsize Arahnya benar, tetapi besarnya ikut berubah menurut jarak:
+       pada 400 piksel kecepatannya 400 piksel per detik; pada 75 piksel,
+       75 piksel per detik.}
+    \end{block}
+  \end{column}
+  \begin{column}{0.49\textwidth}
+    \begin{exampleblock}{Cara yang benar}
+      \[
+        \hat{u} = \frac{\vec{u}}{\lVert \vec{u} \rVert},
+        \qquad \vec{v} = \hat{u}\, s
+      \]
+      {\scriptsize Tidak ada lagi nilai jarak pada perhitungan itu. Yang
+       tersisa hanyalah arah dan kecepatan yang Anda tetapkan.}
+    \end{exampleblock}
+  \end{column}
+\end{columns}
+\vspace{0.10cm}
+\begin{kotak}
+\emph{Normalisasi} memisahkan arah dari besar kecepatan. Arah berasal dari
+keadaan permainan, sedangkan besarnya berasal dari rancangan Anda.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Mengapa Kecepatan yang Tetap Itu Penting}
+\awalan{Kecepatan yang bergantung pada jarak bukan sekadar kurang rapi; ia
+merusak permainan dengan tiga cara.}
+\begin{enumerate}
+  \item \textbf{Perilaku NPC tidak dapat diramalkan pemain.} Pemain tidak dapat
+        belajar kapan ia aman dan kapan tidak, sebab kecepatan pengejar berubah
+        menurut jaraknya. Pada permainan yang adil, pemain harus dapat
+        memperkirakan akibat dari tindakannya.
+  \item \textbf{Tingkat kesulitan berubah tanpa disengaja.} Ruang yang luas
+        membuat pemain lebih mudah lolos, sedangkan ruang yang sempit membuatnya
+        lebih sulit. Tingkat kesulitan menjadi bergantung pada ukuran ruang,
+        bukan pada rancangan Anda.
+  \item \textbf{Penghitungan waktu menjadi keliru.} Perkiraan bahwa NPC akan
+        mencapai suatu tempat dalam dua detik hanya benar pada satu jarak
+        tertentu.
+\end{enumerate}
+\vspace{0.12cm}
+\begin{kotak}
+Sebagai pedoman yang berlaku umum: \textbf{arah dan besar kecepatan sebaiknya
+ditentukan secara terpisah}. Pedoman itu berlaku juga untuk berpatroli,
+menghindar, dan seluruh perilaku lain pada bab-bab berikutnya.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Perbandingan yang Dapat Diukur}
+\awalan{Perbedaan kedua cara dibuktikan dengan mengukur kecepatan NPC pada
+berbagai jarak, dengan kecepatan ditetapkan 150 piksel per detik.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.16}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.7cm}
+    >{\raggedright\arraybackslash}p{2.5cm}
+    >{\raggedright\arraybackslash}p{3.5cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Cara} & \textbf{Jarak saat diukur} & \textbf{Kecepatan terukur} &
+\textbf{Keterangan} \\
+\midrule
+Arah dinormalkan & 59--167 piksel & 150,0 piksel/detik &
+  Tetap, tidak bergantung jarak. \\
+\addlinespace
+Vektor jarak dipakai langsung & 75--184 piksel & 75,2--184,0 piksel/detik &
+  Kecepatan sama persis dengan jaraknya. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.18cm}
+\begin{kotak}
+Perhatikan baris kedua: kecepatannya sama persis dengan jaraknya. Itulah tanda
+khas cara yang salah. Pada baris pertama, kecepatannya tetap walaupun jaraknya
+berubah hampir tiga kali lipat.
+\end{kotak}
+\end{frame}
+
+% ========================================================= bagian 4
+\section{Kapan Mengejar dan Kapan Berhenti}
+\sectionframe{04}{Kapan Mengejar dan Kapan Berhenti}
+  {Dua batas, satu getaran yang harus dicegah}
+
+\begin{frame}{Getaran di Atas Pemain}
+\awalan{Perilaku mengejar memerlukan dua batas, bukan satu. Batas pertama
+adalah jari-jari persepsi; batas kedua adalah jarak henti.}
+\begin{itemize}
+  \item Bila NPC terus mengejar sampai jaraknya nol, ia tidak dapat berhenti
+        tepat pada posisi pemain: ia melampauinya, berbalik, lalu melampauinya
+        lagi.
+  \item Pada kecepatan 150 piksel per detik dan laju 60 bingkai per detik,
+        perpindahan setiap bingkainya 2,5 piksel. NPC bergetar di sekitar
+        pemain, tampak menempel padanya, dan mengganggu pemeriksaan tabrakan.
+\end{itemize}
+\[
+  \Delta = \frac{v}{\text{laju bingkai}} = \frac{150}{60} = 2{,}5\
+  \text{piksel},
+  \qquad d_{\text{henti}} > \Delta
+\]
+\begin{kiat}
+Agar getaran tidak terjadi, jarak henti harus lebih besar daripada perpindahan
+satu bingkai. Bila kecepatan dinaikkan menjadi 3.000 piksel per detik,
+perpindahannya menjadi 50 piksel dan melampaui jarak henti, sehingga NPC
+melewati daerah henti tanpa pernah berhenti di dalamnya.
+\end{kiat}
+\end{frame}
+
+\begin{frame}[fragile]{Urutan Pemeriksaan Jarak}
+\awalan{Jarak henti diperiksa lebih dahulu, baru jari-jari persepsi, sebab jarak
+henti selalu lebih kecil daripada jari-jari.}
+\lstinputlisting[language=Python,firstline=127,lastline=130]
+  {../buku_ajar/code/python/ch08_chase.py}
+\kodejelas{Bila jarak sudah tidak lebih besar daripada jarak henti, kecepatan
+dinolkan dan penanda \texttt{chasing} dimatikan. Cabang berikutnya baru
+menangani pengejaran. Membalik urutan ini membuat cabang jari-jari menelan
+daerah henti, sehingga NPC tidak pernah berhenti.}
+\vspace{0.15cm}
+\begin{kotak}
+Pemeriksaan dilakukan berurutan, bukan sekaligus: cabang pertama yang cocok
+yang menentukan keputusan pada bingkai itu.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Hysteresis pada Batas Persepsi}
+\awalan{Persoalan kecil muncul tepat pada batas jari-jari persepsi. Bila pemain
+berjalan mengelilingi NPC pada jarak itu, keputusan NPC berganti-ganti pada
+setiap bingkai karena jaraknya naik turun di sekitar nilai batas.}
+\begin{itemize}
+  \item Gejalanya terlihat sebagai NPC yang bergetar dan berkedip warnanya.
+  \item Penanganannya: pakai \textbf{dua nilai batas}, bukan satu. NPC mulai
+        mengejar ketika jaraknya kurang dari jari-jari persepsi, tetapi tidak
+        berhenti mengejar sebelum jaraknya melampaui nilai yang sedikit lebih
+        besar.
+  \item Cara itu disebut \emph{hysteresis}, dan dipakai pada banyak alat
+        pengatur untuk mencegah pergantian keadaan yang berlebihan.
+  \item Variabel \texttt{self.chasing} mengingat keputusan pada bingkai
+        sebelumnya, sehingga keputusan kini bergantung juga pada keadaan
+        sebelumnya. Itulah keadaan pertama yang dimiliki sebuah NPC.
+\end{itemize}
+\vspace{0.12cm}
+\begin{kotak}
+Menambah keadaan lain, misalnya berpatroli dan menyerang, beserta aturan
+perpindahan di antaranya, akan menghasilkan mesin keadaan yang dibahas pada
+Materi 7.
+\end{kotak}
+\end{frame}
+
+% ========================================================= bagian 5
+\section{Program Perilaku Mengejar}
+\sectionframe{05}{Program Perilaku Mengejar}
+  {Tiga langkah keputusan di dalam satu fungsi}
+
+\begin{frame}{Seluruh Keputusan pada Satu Fungsi}
+\awalan{Seluruh keputusan NPC terletak pada satu fungsi, yaitu
+\texttt{Npc.update}. Susunannya mengikuti tiga langkah pada bagian pertama.}
+\begin{itemize}
+  \item \textbf{Persepsi.} Dua baris pertama menghitung vektor menuju pemain
+        dan jaraknya. Keduanya dihitung dari satu pengurangan yang sama,
+        sehingga tidak ada perhitungan yang berulang.
+  \item \textbf{Keputusan.} Rangkaian pemeriksaan jarak menentukan kecepatan.
+        Urutannya penting: jarak henti diperiksa lebih dahulu, baru jari-jari
+        persepsi.
+  \item \textbf{Tindakan.} Posisi diperbarui dengan kecepatan tersebut,
+        dibatasi agar tidak keluar jendela, lalu \texttt{rect} diselaraskan
+        sebagaimana biasa.
+\end{itemize}
+\vspace{0.16cm}
+\begin{kotak}
+Kelas \texttt{Npc} tidak menerima arah dari luar, berbeda dari kelas
+\texttt{Player} pada bab ini dan pada bab-bab sebelumnya. Itulah perbedaan yang
+paling mendasar antara benda yang diperintah dan benda yang memutuskan.
+\end{kotak}
+\end{frame}
+
+\begin{frame}[fragile]{Arah Dinormalkan, Besar Kecepatan Tetap}
+\awalan{Cabang pengejaran memuat kedua cara perhitungan; pilihan
+\texttt{--naive} menentukan cabang mana yang dipakai.}
+\lstinputlisting[language=Python,firstline=133,lastline=141]
+  {../buku_ajar/code/python/ch08_chase.py}
+\kodejelas{Cabang \texttt{naive} memakai vektor jarak langsung, sehingga
+kecepatan sama dengan jarak. Cabang yang benar menormalkan vektor lebih dahulu,
+lalu mengalikannya dengan \texttt{self.speed}, sehingga besarnya tetap berapa
+pun jaraknya.}
+\vspace{0.12cm}
+\begin{kotak}
+Jalankan program dengan dan tanpa \texttt{--naive}, lalu bandingkan kecepatan
+terukur pada terminal. Perbedaan itulah bukti indikator (b) pada bab ini.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Percobaan yang Disarankan}
+\awalan{Setiap nilai yang Anda tetapkan dapat diubah dari baris perintah, dan
+pengaruhnya dapat langsung diamati.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.10}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{4.6cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Yang diubah dan caranya} & \textbf{Yang sebaiknya Anda amati} \\
+\midrule
+Jari-jari persepsi, melalui \texttt{--radius}. &
+  Pada jari-jari kecil, pemain dapat berlalu-lalang dekat NPC tanpa dikejar.
+  Pada jari-jari besar, NPC mulai bergerak bahkan ketika pemain jauh. \\
+\addlinespace
+Kecepatan NPC, melalui \texttt{--speed}. &
+  Bila jauh lebih rendah daripada pemain, NPC tidak pernah menangkap. Bila
+  lebih tinggi, pemain selalu tertangkap dan NPC berhenti pada jarak
+  hentinya. \\
+\addlinespace
+Jarak henti, dengan mengubah \texttt{DEFAULT\_STOP} menjadi 2. &
+  NPC bergetar di sekitar pemain, karena perpindahan setiap bingkainya lebih
+  besar daripada jarak henti. \\
+\addlinespace
+Cara menghitung kecepatan, melalui \texttt{--naive}. &
+  Kecepatan berubah menurut jarak: lambat ketika jauh, cepat ketika dekat. \\
+\addlinespace
+Banyaknya NPC, melalui \texttt{--npc}. &
+  Gerombolan mengelilingi pemain; perhatikan pula beban perhitungan ketika
+  jumlahnya bertambah besar. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.12cm}
+\begin{kotak}
+Pilihan \texttt{--naive} sengaja disediakan untuk memperlihatkan cara yang
+salah. Perbedaan kecepatan terukur itulah bukti indikator (b).
+\end{kotak}
+\end{frame}
+
+% ========================================================= bagian 6
+\section{AI Reaktif dan AI Berbasis Perencanaan}
+\sectionframe{06}{AI Reaktif dan AI Berbasis Perencanaan}
+  {Kecukupan, bukan mana yang lebih baik}
+
+\begin{frame}{Ketika Ada Rintangan di Antara Mereka}
+\awalan{NPC pada bab ini disebut reaktif karena seluruh keputusannya diambil
+dari keadaan yang teramati saat itu.}
+\begin{center}
+\adjustbox{max width=0.86\linewidth,max height=0.43\textheight}{%
+  \input{../buku_ajar/chapters/08/figures/reaktif-vs-perencanaan.tikz}}
+\end{center}
+\vspace{-0.02cm}
+\begin{itemize}
+  \item AI reaktif hanya mengetahui arah menuju pemain. Dinding tidak termasuk
+        dalam persepsinya, sehingga NPC bergerak lurus dan menekan dinding
+        selama pemain berada di baliknya.
+  \item AI berbasis perencanaan memeriksa apakah jalan lurusnya terhalang,
+        lalu mencari jalan memutar.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Kelebihan dan Kelemahan AI Reaktif}
+\awalan{Kesederhanaan AI reaktif membawa tiga keuntungan, tetapi juga satu
+kelemahan yang langsung terasa.}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.47\textwidth}
+    \begin{exampleblock}{Keuntungan}
+      \begin{itemize}
+        \item Kodenya pendek dan mudah diperiksa.
+        \item Perhitungannya murah, sehingga jumlah NPC dapat banyak.
+        \item Perilakunya mudah diramalkan oleh perancang, sehingga mudah
+              diatur.
+      \end{itemize}
+    \end{exampleblock}
+  \end{column}
+  \begin{column}{0.49\textwidth}
+    \begin{block}{Kelemahan}
+      \begin{itemize}
+        \item Begitu ada rintangan di antara NPC dan pemain, NPC tidak
+              mengetahuinya.
+        \item Ia bergerak lurus ke arah pemain, menabrak dinding, dan tetap
+              menekan dinding itu.
+        \item Dari sisi pemain, NPC tampak bodoh: ia berhenti di depan dinding
+              tanpa berusaha mencari jalan lain.
+      \end{itemize}
+    \end{block}
+  \end{column}
+\end{columns}
+\vspace{0.12cm}
+\begin{kotak}
+NPC itu tidak melakukan kesalahan. Ia melaksanakan keputusannya dengan benar.
+Yang kurang adalah \textbf{\mbox{keterangan}}---data yang tersedia baginya
+untuk mengambil keputusan.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Kapan Masing-Masing Dipakai}
+\awalan{Pilihan di antara keduanya bukan soal mana yang lebih baik, melainkan
+soal kecukupan.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.10}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{4.6cm}
+    >{\raggedright\arraybackslash}p{3.4cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Keadaan permainan} & \textbf{Cara yang memadai} & \textbf{Alasan} \\
+\midrule
+Ruang terbuka tanpa rintangan & Reaktif &
+  Tidak ada yang menghalangi, sehingga arah menuju pemain selalu dapat
+  ditempuh. Inilah keadaan pada bab ini. \\
+\addlinespace
+Rintangan kecil yang mudah dihindari & Reaktif, ditambah penghindaran
+  sederhana &
+  Perencanaan penuh terlalu mahal untuk rintangan yang jarang. \\
+\addlinespace
+Labirin atau banyak rintangan & Berbasis perencanaan &
+  Jalan lurus hampir selalu terhalang, sehingga diperlukan pencarian rute.
+  Dibahas pada Materi 8. \\
+\addlinespace
+Banyak NPC yang berpindah secara terkoordinasi & Berbasis perencanaan dengan
+  penghematan &
+  Biaya pencarian jalur menjadi pertimbangan utama. Dibahas pada Materi 9. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.14cm}
+\begin{kotak}
+Kedua kekurangan NPC pada bab ini berbeda jenisnya: yang pertama berkaitan
+dengan \textbf{kualitas keputusan}, sedangkan yang kedua berkaitan dengan
+\textbf{biaya keputusan}.
+\end{kotak}
+\end{frame}
+
+% --------------------------------------------------------- aktivitas
+\begin{frame}{Aktivitas di Kelas \textperiodcentered\ Praktikum 06}
+\awalan{Pengalaman belajar minggu 6 pada RPS: NPC mengejar pemain di ruang
+terbuka, dengan garis arah yang divisualisasikan agar keputusannya dapat
+diamati.}
+\begin{enumerate}
+  \item Ketik ulang \texttt{ch08\_chase.py} ke folder \texttt{code}, jalankan,
+        lalu gerakkan pemain dengan WASD. Amati warna NPC dan garis arah yang
+        menunjuk ke pemain.
+  \item Amati batas persepsi: berjalanlah menjauh sampai seluruh NPC berhenti,
+        lalu dekati kembali. Catat jarak ketika NPC mulai bergerak.
+  \item Ukur kecepatan pada berbagai jarak dengan
+        \texttt{python ch08\_chase.py --frames 400 --auto-run}, lalu catat
+        kecepatan terukur pada terminal.
+  \item Jalankan kembali dengan \texttt{--naive}, catat kecepatan terukurnya,
+        dan jelaskan perbedaan kedua hasil.
+  \item Jalankan program dengan jari-jari 120, 240, dan 400 piksel; catat kesan
+        tingkat kesulitan pada masing-masing nilai.
+  \item Tambahkan bongkahan tegak di tengah ruang agar pemain dapat
+        bersembunyi, catat perilaku NPC, lalu simpan pekerjaan ke repositori
+        Git.
+\end{enumerate}
+\vspace{0.10cm}
+{\footnotesize\color{ubAccent}\itshape Rincian lengkap: Praktikum 06 pada
+Bab VIII buku ajar. Kumpulkan melalui repositori Git pribadi.}
+\end{frame}
+
+% --------------------------------------------------------- rangkuman
+\begin{frame}{Rangkuman}
+\begin{itemize}
+  \item Benda menjadi agen: kecepatannya tidak lagi berasal dari tombol atau
+        gravitasi, melainkan dari keputusannya sendiri.
+  \item Susunan keputusan agen terdiri atas persepsi, keputusan, dan tindakan;
+        susunan itu tetap sama dari agen paling sederhana sampai paling rumit.
+  \item Persepsi menghasilkan dua hal dari satu perhitungan: vektor menuju
+        pemain dan jaraknya. Jarak dipakai untuk memutuskan, arah untuk
+        bergerak.
+  \item Kecepatan dihitung dengan menormalkan vektor arah lalu mengalikannya
+        dengan kecepatan yang ditetapkan; vektor jarak langsung sebagai
+        kecepatan adalah cara yang salah.
+  \item Jarak henti mencegah getaran di atas pemain dan harus lebih besar
+        daripada perpindahan satu bingkai; \emph{hysteresis} mencegah
+        pergantian keputusan pada batas persepsi.
+  \item AI reaktif murah dan mudah diperiksa tetapi tidak mengetahui rintangan;
+        AI berbasis perencanaan menuntut perhitungan yang lebih besar.
+\end{itemize}
+\end{frame}
+
+% --------------------------------------------------------- cek
+\begin{frame}{Cek Pemahaman}
+\begin{enumerate}
+  \item Mengapa urutan pengurangan pada perhitungan vektor tidak boleh dibalik,
+        dan apa akibatnya bila dibalik?
+  \item Mengapa vektor jarak tidak boleh dipakai langsung sebagai kecepatan?
+        Sertakan satu contoh angkanya.
+  \item Sebuah NPC reaktif menekan dinding selama pemain berada di baliknya.
+        Apakah itu kesalahan NPC? Jelaskan.
+\end{enumerate}
+\vspace{0.35cm}
+{\footnotesize\color{ubMuted}\itshape Jawab tanpa membuka catatan, lalu
+bandingkan dengan pasangan di sebelah Anda.}
+\end{frame}
+
+% --------------------------------------------------------- penutup
+\penutup{Tugas Praktikum 06}
+  {Materi 7 menyusun \emph{Finite State Machine} untuk NPC: keadaan
+   \emph{idle}, \emph{patrol}, dan \emph{chase} beserta aturan perpindahannya,
+   sehingga NPC dapat berpatroli dan mengelak, bukan hanya mengejar atau
+   berdiam.}
+
+\end{document}

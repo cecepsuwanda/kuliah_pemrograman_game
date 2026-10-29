@@ -1,0 +1,514 @@
+% =========================================================
+%  ppt/05-sprite-group-collision.tex
+%  Materi 5 — Sprite, Group, dan Collision Detection
+%  Bab VII buku ajar
+% =========================================================
+\documentclass[aspectratio=169,10pt]{beamer}
+\input{config/packages}
+\input{config/theme}
+
+\renewcommand{\materino}{05}
+
+\begin{document}
+
+\deckcover{05}{5}
+  {Sprite, Group, dan Collision Detection}
+  {1.4}
+  {Python / Pygame}
+  {Bab VII buku ajar}
+  {Blok I \textperiodcentered\ Materi 1--5}
+
+% --------------------------------------------------------- capaian
+\begin{frame}{Capaian Pertemuan}
+\setbeamerfont{itemize/enumerate body}{size=\scriptsize}
+\awalan{Sub-CPMK dan indikator dari RPS, serta tujuan Bab VII buku ajar tentang
+\emph{collision detection}.}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.52\textwidth}
+    \begin{beamercolorbox}[wd=\linewidth,sep=5pt,rounded=true]{block title}
+      {\fontsize{6.8}{8}\selectfont\color{ubHead}SUB-CPMK 1.4}\\[2pt]
+      {\footnotesize Mendeteksi dan menangani \emph{collision} menggunakan
+       \texttt{Rect} dan/atau \emph{mask} pada \emph{sprite}.}
+    \end{beamercolorbox}
+    \vspace{0.16cm}
+
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}INDIKATOR}\par
+    \vspace{0.06cm}
+    \begin{itemize}
+      \item Memilih metode \emph{collision} yang tepat sesuai kebutuhan.
+      \item Menyelesaikan tabrakan per sumbu sehingga objek tidak menembus
+            dinding.
+      \item Menganalisis dan memperbaiki kasus tabrakan yang salah
+            (tumpang tindih atau lolos deteksi).
+    \end{itemize}
+  \end{column}
+  \begin{column}{0.45\textwidth}
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}TUJUAN BAB VII}\par
+    \vspace{0.08cm}
+    \begin{itemize}
+      \item Menyusun benda sebagai kelas turunan
+            \texttt{pygame.sprite.Sprite} dan mengelolanya dengan
+            \texttt{Group}.
+      \item Memilih di antara \texttt{colliderect}, \texttt{spritecollide},
+            dan \texttt{groupcollide}.
+      \item Menyelesaikan tabrakan sumbu demi sumbu sehingga benda dapat
+            mendarat sekaligus terhalang.
+      \item Menjelaskan kapan persegi pembatas tidak memadai dan bagaimana
+            \emph{mask} dipakai.
+      \item Menganalisis tiga gejala tabrakan yang salah.
+      \item Memeriksa kebenaran penanganan tabrakan secara otomatis.
+    \end{itemize}
+  \end{column}
+\end{columns}
+\end{frame}
+
+% --------------------------------------------------------- peta
+\petapertemuan{1}
+  {Materi 4 \textperiodcentered\ Fisika Sederhana}
+  {Materi 5 \textperiodcentered\ Sprite, Group, dan Collision Detection}
+  {Materi 6 \textperiodcentered\ Pengantar AI NPC dan Perilaku Chase}
+  {Prototipe permainan yang pemainnya mendarat, terhalang, mengumpulkan
+   kepingan, dan menghindari rintangan; penghitung tumpang tindih bernilai nol.}
+
+% ========================================================= bagian 1
+\section{Kelas Sprite dan Wadah Group}
+\sectionframe{01}{Kelas Sprite dan Wadah Group}
+  {Satu kelas menghasilkan banyak benda, satu wadah mengurus semuanya}
+
+\begin{frame}{Mengapa Benda Perlu Menjadi Satu Kesatuan}
+\awalan{Pada akhir Bab VI, setiap benda masih disimpan pada beberapa variabel
+terpisah. Cara itu tidak lagi memadai ketika jumlah benda bertambah.}
+\begin{itemize}
+  \item Pemain disimpan pada empat variabel: posisi, kecepatan, \texttt{rect},
+        dan penanda menyentuh lantai; bola pada tiga variabel serupa.
+  \item Menambah benda ketiga berarti menambah tiga atau empat variabel lagi,
+        beserta baris pembaruannya.
+  \item Tiga kesulitan muncul: jumlah variabel bertambah secepat jumlah benda;
+        mudah keliru memasangkan variabel; dan perintah untuk seluruh benda
+        harus ditulis berulang.
+\end{itemize}
+\vspace{0.16cm}
+\begin{kotak}
+Pemrograman berorientasi objek mengumpulkan data dan perilaku sebuah benda
+menjadi satu objek, dengan kelas sebagai resep pembuatnya. Fungsi
+\texttt{\_\_init\_\_} dijalankan sekali saat objek dibuat, dan \texttt{self}
+menunjuk objek yang sedang dikerjakan.
+\end{kotak}
+\end{frame}
+
+\begin{frame}[fragile]{Pola Kelas \emph{Sprite} pada Pygame}
+\awalan{Pygame menyediakan kelas dasar \texttt{pygame.sprite.Sprite}. Tugas Anda
+menurunkannya dan mengisi gambar serta persegi pembatasnya.}
+\lstinputlisting[language=Python,firstline=81,lastline=88]
+  {../buku_ajar/code/python/ch07_tabrakan.py}
+\kodejelas{\texttt{super().\_\_init\_\_()} menjalankan penyiapan kelas dasar dan
+wajib ada. Nama \texttt{self.image} dan \texttt{self.rect} bukan pilihan Anda,
+melainkan kesepakatan Pygame: perkakas penggambaran dan pemeriksaan tabrakan
+mencari kedua nama itu.}
+\vspace{0.15cm}
+\begin{peringatan}
+Bila keduanya diberi nama lain, program tetap berjalan tetapi benda tidak
+tergambar atau tidak pernah dianggap bertabrakan. Gejalanya membingungkan
+karena tidak disertai pesan kesalahan.
+\end{peringatan}
+\end{frame}
+
+\begin{frame}{Wadah \emph{Group}}
+\begin{center}
+\adjustbox{max width=0.74\linewidth,max height=0.43\textheight}{%
+  \input{../buku_ajar/chapters/07/figures/sprite-group.tikz}}
+\end{center}
+\vspace{-0.06cm}
+\begin{itemize}
+  \item \texttt{pygame.sprite.Group} menyimpan sekumpulan benda dan
+        mengerjakan \texttt{update} serta \texttt{draw} untuk seluruhnya
+        sekaligus.
+  \item Satu benda boleh berada pada beberapa wadah; wadah hanyalah kumpulan
+        rujukan, bukan salinan.
+  \item \texttt{group.add(benda)} memasukkan anggota, \texttt{sprite.kill()}
+        mengeluarkannya dari seluruh wadah, dan \texttt{for benda in group:}
+        menelusuri isinya seperti daftar biasa.
+\end{itemize}
+\end{frame}
+
+% ========================================================= bagian 2
+\section{Deteksi Tabrakan dengan Persegi Pembatas}
+\sectionframe{02}{Deteksi Tabrakan dengan Persegi Pembatas}
+  {Tiga perintah, tiga keperluan yang berbeda}
+
+\begin{frame}{Tiga Perintah Pemeriksaan Tabrakan}
+\awalan{Seluruh perintah berikut disediakan Pygame dan bekerja pada persegi
+pembatas (\emph{AABB}) yang disimpan pada \texttt{rect}.}
+\begin{itemize}
+  \item \texttt{rect.colliderect(other)} memeriksa satu persegi terhadap satu
+        persegi. Dua persegi yang hanya bersentuhan pada tepinya dinilai
+        \textbf{tidak} beririsan.
+  \item \texttt{spritecollide(benda, wadah, dokill)} memeriksa satu benda
+        terhadap sekumpulan benda dan mengembalikan daftar.
+  \item \texttt{groupcollide(wadah1, wadah2, kill1, kill2)} memeriksa dua
+        kumpulan dan mengembalikan kamus, bukan daftar.
+\end{itemize}
+\vspace{0.16cm}
+\begin{kotak}
+Sifat ``tepi yang bersentuhan tidak beririsan'' berguna: benda yang sudah
+ditempelkan pada tepi bongkahan tidak dianggap bertabrakan lagi pada bingkai
+berikutnya.
+\end{kotak}
+\end{frame}
+
+\begin{frame}[fragile]{Memakainya pada Program}
+\lstinputlisting[language=Python,firstline=249,lastline=262]
+  {../buku_ajar/code/python/ch07_tabrakan.py}
+\kodejelas{Argumen ketiga \texttt{spritecollide} menentukan apakah benda yang
+tersentuh langsung dikeluarkan dari wadah. Nilai benar dipakai untuk kepingan
+yang diambil; nilai salah dipakai untuk rintangan yang harus tetap di
+tempatnya. Jumlah kepingan dihitung dengan \texttt{len(hit\_items)}, sebab satu
+bingkai dapat menyentuh lebih dari satu kepingan.}
+\end{frame}
+
+\begin{frame}{Mendeteksi Bukan Menyelesaikan}
+\begin{itemize}
+  \item Seluruh perintah pada bagian sebelumnya hanya menjawab pertanyaan
+        ``apakah kedua benda bersentuhan?''.
+  \item Pertanyaan berikutnya---``dari sisi mana tabrakan terjadi, dan apa yang
+        harus dilakukan?''---belum terjawab.
+  \item Jawaban itu bergantung pada aturan permainan Anda, bukan pada pustaka:
+        pada satu permainan menyentuh kepingan menambah skor, pada permainan
+        lain menyentuh benda yang sama mengurangi nyawa.
+\end{itemize}
+\vspace{0.2cm}
+\begin{kotak}
+Mendeteksi tabrakan dan menyelesaikannya adalah dua pekerjaan yang berbeda.
+Pustaka menjawab yang pertama; aturan permainan Anda menentukan yang kedua.
+Bagian berikutnya membahas pekerjaan kedua itu.
+\end{kotak}
+\end{frame}
+
+% ========================================================= bagian 3
+\section{Menyelesaikan Tabrakan Sumbu demi Sumbu}
+\sectionframe{03}{Menyelesaikan Tabrakan Sumbu demi Sumbu}
+  {Satu sumbu diselesaikan tuntas sebelum sumbu berikutnya disentuh}
+
+\begin{frame}{Mengapa Perlu Dipisah per Sumbu}
+\begin{center}
+\adjustbox{max width=0.88\linewidth,max height=0.42\textheight}{%
+  \input{../buku_ajar/chapters/07/figures/tabrakan-per-sumbu.tikz}}
+\end{center}
+\vspace{-0.04cm}
+\begin{itemize}
+  \item Bila seluruh perpindahan diperiksa sekaligus, program hanya tahu kedua
+        persegi beririsan, tidak tahu dari sisi mana benda datang.
+  \item Akibatnya muncul dua kesalahan khas: benda yang menabrak sisi
+        bongkahan terangkat ke atasnya, atau benda yang jatuh di atasnya
+        tertahan di udara.
+  \item Penyelesaiannya: pindahkan pada sumbu mendatar saja lalu periksa dan
+        perbaiki; setelah tuntas, baru pindahkan pada sumbu tegak.
+  \item Sisi tabrakan dapat dipastikan dari arah gerak: bergerak ke kanan
+        berarti menabrak dari kiri, dan sebaliknya.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Sumbu Mendatar Lebih Dahulu}
+\lstinputlisting[language=Python,firstline=133,lastline=142]
+  {../buku_ajar/code/python/ch07_tabrakan.py}
+\kodejelas{Bila bergerak ke kanan, \texttt{rect.right} ditempelkan pada
+\texttt{platform.rect.left}; bila bergerak ke kiri, \texttt{rect.left}
+ditempelkan pada sisi kanannya. Perbaikan dilakukan pada \texttt{rect}, lalu
+nilainya disalin kembali ke \texttt{position} agar posisi pecahan tetap menjadi
+sumber kebenaran.}
+\end{frame}
+
+\begin{frame}[fragile]{Sumbu Tegak Sesudahnya}
+\lstinputlisting[language=Python,firstline=144,lastline=156]
+  {../buku_ajar/code/python/ch07_tabrakan.py}
+\kodejelas{Saat jatuh, \texttt{rect.bottom} diletakkan pada permukaan bongkahan,
+kecepatan tegak dinolkan, dan \texttt{on\_ground} diatur benar. Tanpa penolan
+kecepatan, benda terus tertekan ke dalam bongkahan dan bergetar halus di
+permukaannya. Gravitasi ditambahkan sebelum gerak tegak, mengikuti kaidah Euler
+semi-implisit.}
+\end{frame}
+
+% ========================================================= bagian 4
+\section{Kapan Persegi Pembatas Tidak Cukup}
+\sectionframe{04}{Kapan Persegi Pembatas Tidak Cukup}
+  {Ketelitian sampai titik gambar, dan harga yang harus dibayar}
+
+\begin{frame}{Keterbatasan Persegi Pembatas}
+\begin{center}
+\adjustbox{max width=0.80\linewidth,max height=0.40\textheight}{%
+  \input{../buku_ajar/chapters/07/figures/aabb-mask.tikz}}
+\end{center}
+\vspace{-0.02cm}
+\begin{itemize}
+  \item Persegi pembatas selalu lebih besar daripada gambarnya, kecuali untuk
+        benda yang memang berbentuk persegi.
+  \item Pada benda miring atau berlubang, selisihnya dapat cukup besar sehingga
+        dua benda dinilai bersentuhan padahal gambarnya masih berjarak.
+  \item Gejalanya mudah dikenali: pemain merasa ``kena'' oleh sesuatu yang
+        belum menyentuhnya, dan pada permainan yang menuntut ketepatan selisih
+        beberapa piksel menentukan berhasil atau gagalnya percobaan.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Pemeriksaan dengan \emph{Mask}}
+\begin{itemize}
+  \item Sebuah \emph{mask} adalah gambaran hitam-putih yang menyatakan titik
+        mana saja pada permukaan yang benar-benar terisi.
+  \item Mask dibuat dengan \texttt{pygame.mask.from\_surface(image)}, lalu
+        dibandingkan melalui \texttt{overlap} dengan argumen kedua berupa
+        \textbf{selisih letak} kedua benda, bukan letak salah satunya.
+  \item Salah menentukan selisih letak itu merupakan sumber kekeliruan yang
+        paling sering terjadi pada pemakaian mask.
+  \item Buat mask sekali ketika benda dibuat, lalu simpan pada benda itu;
+        membuatnya setiap bingkai membuang waktu karena menuntut pemeriksaan
+        seluruh titik gambar.
+\end{itemize}
+\vspace{0.16cm}
+\begin{kotak}
+Pemeriksaan sampai titik gambar seperti ini disebut \emph{pixel-perfect}.
+Namun pada program bab ini seluruh benda berbentuk persegi, sehingga persegi
+pembatas sudah memadai dan mask hanya akan memperberat perhitungan.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Memilih Metode yang Tepat}
+{\scriptsize
+\renewcommand{\arraystretch}{1.14}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{4.5cm}
+    >{\raggedright\arraybackslash}p{3.3cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Keadaan} & \textbf{Metode yang dianjurkan} & \textbf{Alasan} \\
+\midrule
+Benda berbentuk persegi atau hampir persegi &
+  Persegi pembatas (\emph{AABB}) &
+  Selisih dengan bentuk sebenarnya kecil, sedangkan perhitungannya paling
+  murah. \\
+Banyak benda dan bergerak cepat &
+  Persegi pembatas, dengan penyelesaian per sumbu &
+  Ketelitian beberapa piksel tidak terasa, sedangkan mask memperberat setiap
+  bingkai. \\
+Benda miring, berlubang, atau bergerigi &
+  \emph{Mask} &
+  Persegi pembatasnya jauh lebih besar daripada gambar, sehingga tabrakan
+  palsu sering terjadi. \\
+Permainan yang menuntut ketepatan tinggi &
+  \emph{Mask}, setelah pemeriksaan persegi pembatas &
+  Persegi pembatas dipakai sebagai penyaring, lalu mask memeriksa hanya benda
+  yang hampir bersentuhan. \\
+\bottomrule
+\end{tabularx}}
+\vspace{-1.5cm}
+\begin{kotak}
+Cara yang paling sering dipakai pada permainan sungguhan adalah menggabungkan
+keduanya: persegi pembatas diperiksa lebih dahulu karena murah, dan mask yang
+mahal hanya dijalankan pada beberapa benda yang memang berdekatan.
+\end{kotak}
+\end{frame}
+
+% ========================================================= bagian 5
+\section{Program Tabrakan Lengkap}
+\sectionframe{05}{Program Tabrakan Lengkap}
+  {Tiga pemakaian tabrakan dalam satu prototipe yang dapat dimainkan}
+
+\begin{frame}{Tiga Pemakaian Tabrakan di Dalamnya}
+\awalan{Prototipe menyatukan gerak, jatuh, lompat, mendarat, terhalang,
+mengumpulkan kepingan, dan kehilangan nyawa.}
+\begin{itemize}
+  \item \textbf{Bongkahan, dengan \texttt{colliderect} dan penyelesaian per
+        sumbu.} Diperiksa di dalam \texttt{Player.update}; pemeriksaan ini
+        bukan sekadar mengetahui, melainkan memperbaiki posisi dan kecepatan.
+  \item \textbf{Kepingan, dengan \texttt{spritecollide} bernilai benar.}
+        Kepingan yang tersentuh langsung dikeluarkan dari wadahnya, dan
+        jumlahnya dihitung dari panjang daftar yang dikembalikan.
+  \item \textbf{Rintangan, dengan \texttt{spritecollide} bernilai salah.}
+        Rintangan tidak dikeluarkan karena harus tetap di tempatnya; sentuhan
+        mengurangi satu nyawa dan mengembalikan pemain ke titik awal.
+\end{itemize}
+\vspace{0.16cm}
+\begin{kotak}
+Ketiganya memakai perintah dari bagian 2, tetapi dengan aturan permainan yang
+berbeda. Inilah pekerjaan kedua yang tidak dapat dijawab oleh pustaka.
+\end{kotak}
+\end{frame}
+
+\begin{frame}[fragile]{Pemeriksa Mandiri di Dalam Program}
+\awalan{Penanganan tabrakan yang salah jarang menimbulkan pesan kesalahan.
+Karena itu, kebenarannya diperiksa sendiri oleh program.}
+\lstinputlisting[language=Python,firstline=186,lastline=193]
+  {../buku_ajar/code/python/ch07_tabrakan.py}
+\kodejelas{Fungsi menghitung berapa bongkahan yang badannya bertumpang tindih
+dengan pemain. Nilainya seharusnya selalu nol: sesudah penyelesaian tabrakan,
+pemain tidak boleh berada di dalam bongkahan mana pun. Nilai selain nol pada
+suatu bingkai berarti penanganan tabrakan belum benar.}
+\end{frame}
+
+\begin{frame}[fragile]{Hasil Pemeriksaan Otomatis}
+\begin{lstlisting}[language={},numbers=none]
+Bingkai dijalankan       : 239
+Kepingan terkumpul       : 1 dari 5
+Skor                     : 10
+Tersentuh rintangan      : 3
+Bingkai bertumpang tindih: 0
+\end{lstlisting}
+\kodejelas{Baris terakhir adalah yang paling penting. Nilai nol menunjukkan
+bahwa pada seluruh bingkai yang dijalankan, pemain tidak pernah berada di dalam
+bongkahan---penanganan tabrakannya benar, walaupun pemain bergerak cepat,
+melompat, dan terhalang berkali-kali.}
+\vspace{0.12cm}
+\begin{kotak}
+Dengan pilihan \texttt{--auto-run}, program berjalan tanpa sentuhan manusia.
+Ratusan bingkai dapat diperiksa dalam beberapa detik, pada beberapa laju
+bingkai, tanpa harus memainkannya sendiri.
+\end{kotak}
+\end{frame}
+
+% ========================================================= bagian 6
+\section{Menganalisis Tabrakan yang Salah}
+\sectionframe{06}{Menganalisis Tabrakan yang Salah}
+  {Gejala, penyebab, perbaikan, dan kebiasaan yang mencegahnya}
+
+\begin{frame}{Cara Menelusuri}
+\awalan{Empat langkah berikut berlaku umum untuk kesalahan yang tidak
+menimbulkan pesan kesalahan, bukan hanya untuk tabrakan.}
+\begin{enumerate}
+  \item \textbf{Dapatkan gejala yang dapat diulang.} Tentukan posisi awal, arah
+        gerak, dan kecepatannya; gejala yang tidak dapat diulang tidak dapat
+        diperbaiki.
+  \item \textbf{Persempit wilayahnya.} Bila gejala hanya muncul ketika
+        menyentuh bongkahan, pemeriksaan bongkahanlah yang diperiksa lebih
+        dahulu.
+  \item \textbf{Pasang alat ukur.} Tampilkan posisi sebelum dan sesudah
+        pembaruan, nilai \texttt{rect}, dan kecepatan pada kedua sumbu.
+  \item \textbf{Ubah satu hal pada satu waktu.} Mengubah dua hal sekaligus
+        membuat Anda tidak tahu mana yang berpengaruh.
+\end{enumerate}
+\vspace{0.12cm}
+\begin{kotak}
+Pada program bab ini, penghitung tumpang tindih memainkan peran alat ukur itu.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Tiga Gejala yang Paling Sering}
+{\scriptsize
+\renewcommand{\arraystretch}{1.10}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.9cm}
+    >{\raggedright\arraybackslash}p{5.0cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Gejala} & \textbf{Penyebab} & \textbf{Perbaikan} \\
+\midrule
+Benda menembus bongkahan tipis, terutama saat bergerak cepat &
+  Pada satu bingkai perpindahan melampaui tebal bongkahan, sehingga keduanya
+  tidak pernah beririsan saat diperiksa (\emph{tunneling}). &
+  Batasi panjang langkah, bagi perpindahan menjadi beberapa langkah kecil, atau
+  tebalkan bongkahan. \\
+Benda yang menabrak sisi bongkahan terangkat ke atasnya &
+  Kedua sumbu diperiksa sekaligus, sehingga program tidak tahu sisi yang
+  ditabrak dan selalu menyelesaikan pada sumbu tegak. &
+  Pisahkan pemeriksaan menjadi dua tahap, mendahulukan sumbu mendatar. \\
+Benda bergetar halus di permukaan bongkahan &
+  Kecepatan tegak tidak dinolkan saat tabrakan diselesaikan, sehingga benda
+  terus tertekan dan posisinya diperbaiki setiap bingkai. &
+  Nolkan kecepatan pada sumbu yang diselesaikan. \\
+Benda dinilai bersentuhan padahal gambarnya berjarak &
+  Benda miring atau berlubang, sehingga persegi pembatasnya jauh lebih besar
+  daripada gambarnya. &
+  Pakai \emph{mask}, dengan persegi pembatas sebagai penyaring lebih dahulu. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.12cm}
+\begin{kotak}
+Ketiga gejala itu akibat pilihan cara, bukan kesalahan penulisan, sehingga
+tidak dapat ditemukan oleh pemeriksa sintaksis. Kemampuan menganalisis seperti
+ini membedakan program yang ``berjalan'' dari program yang ``benar''.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Kebiasaan yang Mencegahnya}
+\begin{itemize}
+  \item \textbf{Selesaikan satu sumbu sampai tuntas} sebelum menyentuh sumbu
+        berikutnya. Ini kebiasaan yang paling banyak mencegah kesalahan.
+  \item \textbf{Tampilkan keadaan yang Anda curigai} pada layar atau terminal;
+        angka yang terlihat menjawab pertanyaan yang tidak dapat dijawab oleh
+        gambar.
+  \item \textbf{Sediakan pemeriksa mandiri di dalam program}, yang menjawab
+        ``apakah keadaan terlarang sedang terjadi?'' pada setiap bingkai.
+  \item \textbf{Jalankan program pada beberapa kecepatan}; kesalahan
+        \emph{tunneling} dan pembulatan hanya muncul pada kecepatan tertentu.
+\end{itemize}
+\vspace{0.14cm}
+\begin{kotak}
+Bab ini menutup CPMK 1: perkakas Blok I---lingkungan kerja, siklus permainan,
+gerak, fisika, dan tabrakan---telah lengkap.
+\end{kotak}
+\end{frame}
+
+% --------------------------------------------------------- aktivitas
+\begin{frame}{Aktivitas di Kelas \textperiodcentered\ Praktikum 05}
+\awalan{Pengalaman belajar minggu 5 pada RPS: mengumpulkan kepingan dan
+menghindari rintangan, dengan skor yang bertambah setiap kali kepingan
+tersentuh.}
+\begin{enumerate}
+  \item Ketik ulang \texttt{ch07\_tabrakan.py} ke folder \texttt{code}, lalu
+        mainkan sampai seluruh kepingan terkumpul.
+  \item Jalankan dengan \texttt{--frames 300 --auto-run --fps 30}, \texttt{60},
+        dan \texttt{120}; catat jumlah bingkai bertumpang tindih pada tiap laju.
+  \item Rusak dengan sengaja: satukan kedua sumbu pada \texttt{update} pemain,
+        lalu amati apa yang terjadi saat menabrak sisi bongkahan.
+  \item Kembalikan program, lalu hapus penolan kecepatan tegak sesudah
+        mendarat; perhatikan perilaku pemain di atas bongkahan.
+  \item Perbaiki kembali, ubah \texttt{MOVE\_SPEED} menjadi 1500, dan periksa
+        apakah penghitung tumpang tindih masih nol.
+  \item Tambahkan satu bongkahan dan dua kepingan, tulis catatan ketiga gejala
+        beserta perbaikannya, lalu simpan ke repositori Git.
+\end{enumerate}
+\vspace{0.10cm}
+{\footnotesize\color{ubAccent}\itshape Rincian lengkap: Praktikum 05 pada Bab VII
+buku ajar. Kumpulkan melalui repositori Git pribadi.}
+\end{frame}
+
+% --------------------------------------------------------- rangkuman
+\begin{frame}{Rangkuman}
+\begin{itemize}
+  \item Kelas turunan \texttt{pygame.sprite.Sprite} menyatukan gambar, persegi
+        pembatas, dan perilaku benda; \texttt{image} dan \texttt{rect} wajib
+        bernama demikian.
+  \item \texttt{pygame.sprite.Group} mengerjakan \texttt{update} dan
+        \texttt{draw} untuk seluruh anggotanya; satu benda boleh berada pada
+        beberapa wadah.
+  \item Tiga perintah: \texttt{colliderect} untuk dua persegi,
+        \texttt{spritecollide} untuk satu benda terhadap wadah, dan
+        \texttt{groupcollide} untuk dua wadah.
+  \item Mendeteksi dan menyelesaikan adalah dua pekerjaan berbeda; tabrakan
+        diselesaikan sumbu demi sumbu, mendahulukan sumbu mendatar.
+  \item Persegi pembatas kurang teliti untuk benda miring atau berlubang;
+        \emph{mask} dipakai setelah persegi pembatas menyaring kandidat.
+  \item Kesalahan tabrakan tidak menimbulkan pesan kesalahan; pemeriksa mandiri
+        yang selalu bernilai nol menemukannya lebih cepat daripada mata.
+\end{itemize}
+\end{frame}
+
+% --------------------------------------------------------- cek
+\begin{frame}{Cek Pemahaman}
+\begin{enumerate}
+  \item Mengapa dua persegi yang hanya bersentuhan pada tepinya dinilai tidak
+        beririsan, dan mengapa sifat itu berguna bagi benda yang telah
+        ditempelkan pada bongkahan?
+  \item Mengapa sumbu mendatar harus diselesaikan lebih dahulu, dan gejala apa
+       yang muncul bila kedua sumbu diperiksa sekaligus?
+  \item Kapan persegi pembatas tidak memadai sehingga \emph{mask} diperlukan,
+        dan mengapa persegi pembatas tetap dipakai lebih dahulu?
+\end{enumerate}
+\vspace{0.35cm}
+{\footnotesize\color{ubMuted}\itshape Jawab tanpa membuka catatan, lalu
+bandingkan dengan pasangan di sebelah Anda.}
+\end{frame}
+
+% --------------------------------------------------------- penutup
+\penutup{Tugas Praktikum 05\\ Kuis 1 (Materi 1--4)}
+  {Materi 6 membuka Blok II: NPC yang mengambil keputusan sendiri. Anda akan
+   menghitung vektor arah menuju pemain, menormalisasinya, membatasi besar
+   kecepatan, dan membandingkan AI reaktif dengan AI berbasis perencanaan.}
+
+\end{document}

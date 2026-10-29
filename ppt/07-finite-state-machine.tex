@@ -1,0 +1,566 @@
+% =========================================================
+%  ppt/07-finite-state-machine.tex
+%  Materi 7 — Finite State Machine untuk NPC
+%  Bab IX buku ajar
+% =========================================================
+\documentclass[aspectratio=169,10pt]{beamer}
+\input{config/packages}
+\input{config/theme}
+
+\renewcommand{\materino}{07}
+
+\begin{document}
+
+\deckcover{07}{7}
+  {Finite State Machine untuk NPC}
+  {2.2}
+  {Python / Pygame}
+  {Bab IX buku ajar}
+  {Blok II \textperiodcentered\ Materi 6--9}
+
+% --------------------------------------------------------- capaian
+\begin{frame}{Capaian Pertemuan}
+\setbeamerfont{itemize/enumerate body}{size=\scriptsize}
+\awalan{Sub-CPMK dan indikator dari RPS, serta tujuan Bab IX buku ajar tentang
+\emph{Finite State Machine}.}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.52\textwidth}
+    \begin{beamercolorbox}[wd=\linewidth,sep=5pt,rounded=true]{block title}
+      {\fontsize{6.8}{8}\selectfont\color{ubHead}SUB-CPMK 2.2}\\[2pt]
+      {\footnotesize Mengimplementasikan \emph{Finite State Machine}
+       (idle, \emph{patrol}, chase, attack/flee) untuk NPC.}
+    \end{beamercolorbox}
+    \vspace{0.16cm}
+
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}INDIKATOR}\par
+    \vspace{0.06cm}
+    \begin{itemize}
+      \item Menggambar diagram \emph{state}--transisi NPC.
+      \item Mengimplementasikan transisi berbasis jarak dan \emph{cooldown}.
+      \item Menguji setiap \emph{state} dan transisinya secara terpisah.
+    \end{itemize}
+  \end{column}
+  \begin{column}{0.45\textwidth}
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}TUJUAN BAB IX}\par
+    \vspace{0.08cm}
+    \begin{itemize}
+      \item Menjelaskan mengapa dua keadaan tidak lagi mencukupi.
+      \item Menggambar diagram keadaan--transisi dengan syarat yang dapat
+            diperiksa.
+      \item Memisahkan keputusan dari tindakan di dalam kode.
+      \item Menerapkan transisi berdasarkan jarak dan berdasarkan pewaktu.
+      \item Mencatat dan memeriksa perpindahan keadaan secara otomatis.
+      \item Menjelaskan gejala syarat perpindahan yang kurang lengkap atau
+            saling bertentangan.
+    \end{itemize}
+  \end{column}
+\end{columns}
+\end{frame}
+
+% --------------------------------------------------------- peta
+\petapertemuan{2}
+  {Materi 6 \textperiodcentered\ Pengantar AI NPC dan Perilaku Chase}
+  {Materi 7 \textperiodcentered\ Finite State Machine untuk NPC}
+  {Materi 8 \textperiodcentered\ Pathfinding Grid: dari BFS/Dijkstra ke A*}
+  {NPC yang berpatroli, mengejar, dan menyerang menurut diagram keadaan;
+   catatan perpindahan dan pemeriksaan keabsahan bersih.}
+
+% ========================================================= bagian 1
+\section{Dari Dua Keadaan Menjadi Mesin Keadaan}
+\sectionframe{01}{Dari Dua Keadaan Menjadi Mesin Keadaan}
+  {Keadaan yang lebih banyak, syarat yang tersendiri, dan penyiapan saat masuk}
+
+\begin{frame}{Dua Keadaan Sudah Merupakan Mesin Keadaan}
+\awalan{Variabel \texttt{self.chasing} pada Bab VIII hanya bernilai benar atau
+salah. Ia membagi seluruh perilaku NPC menjadi dua golongan: mengejar dan tidak
+mengejar.}
+\begin{itemize}
+  \item Variabel itu sesungguhnya sudah merupakan mesin keadaan dua keadaan.
+        Yang belum ada hanyalah nama dan susunannya.
+  \item Mesin keadaan yang sesungguhnya menambahkan tiga unsur:
+        \begin{itemize}
+          \item \textbf{keadaan} (\emph{state}) yang lebih dari dua,
+                masing-masing dengan perilaku berbeda;
+          \item \textbf{perpindahan} (\emph{transition}) dengan syarat
+                tersendiri untuk setiap pasangan keadaan;
+          \item \textbf{pekerjaan penyiapan} ketika sebuah keadaan dimasuki.
+        \end{itemize}
+  \item Setiap perpindahan dipicu \emph{event} yang dapat diperiksa program:
+        perbandingan jarak, keadaan tombol, atau pewaktu.
+\end{itemize}
+\vspace{0.12cm}
+\begin{kotak}
+NPC yang berpatroli berperilaku berbeda dari NPC yang berdiam, walaupun keduanya
+bukan sedang mengejar. Perbedaan itulah yang menuntut keadaan ketiga.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Empat Keadaan pada Bab Ini}
+\awalan{NPC pada bab ini memiliki empat keadaan, sesuai urutan yang disebut pada
+RPS.}
+\begin{itemize}
+  \item \textbf{berdiam} (\emph{idle}) --- berdiri tidak bergerak sambil
+        menghitung lama ia berdiam. Setelah 1,5 detik, ia mulai berpatroli.
+  \item \textbf{berpatroli} (\emph{patrol}) --- berpindah dari satu titik
+        patroli ke titik berikutnya. Apabila pemain memasuki jari-jari persepsi,
+        ia beralih mengejar.
+  \item \textbf{mengejar} (\emph{chase}) --- bergerak menuju pemain dengan
+        kecepatan tetap. Apabila pemain sudah cukup dekat, ia menyerang.
+  \item \textbf{menyerang} (\emph{attack}) --- berhenti dan menyerang secara
+        berkala. Apabila pemain menjauh melampaui jangkauan serang, ia kembali
+        mengejar.
+\end{itemize}
+\vspace{0.14cm}
+\begin{kotak}
+Keempat keadaan dihubungkan oleh tujuh perpindahan yang sah. Tidak ada
+perpindahan lain yang diperbolehkan.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Mengapa Tidak Cukup Rangkaian Pemeriksaan}
+\awalan{Pertanyaan yang wajar: mengapa tidak menuliskan seluruh perilaku sebagai
+rangkaian pemeriksaan bersarang, tanpa mesin keadaan sama sekali?}
+\begin{itemize}
+  \item Cara bersarang berfungsi untuk empat keadaan, tetapi
+        \textbf{pekerjaan penyiapan sulit ditempatkan}: menentukan titik
+        patroli berikutnya atau mengembalikan pewaktu ke nol harus ditulis di
+        dalam cabang, lalu disalin ke cabang lain.
+  \item \textbf{Keputusan dan tindakan tercampur}: syarat perpindahan dan
+        perilaku keadaan berada di satu tempat, sehingga syarat tidak dapat
+        diperiksa tanpa menjalankan perilakunya.
+  \item Akibatnya pengujian menjadi sulit, dan cabang-cabang memanjang ketika
+        jumlah keadaan bertambah.
+  \item Mesin keadaan memisahkan keduanya: syarat perpindahan dikumpulkan di
+        satu tempat, perilaku keadaan di tempat lain.
+\end{itemize}
+\vspace{0.12cm}
+\begin{kotak}
+Pemisahan itulah yang menjadi pokok dua bagian berikutnya, dan yang membuat
+pengujian pada Bagian 4 menjadi mungkin.
+\end{kotak}
+\end{frame}
+
+% ========================================================= bagian 2
+\section{Menggambar Diagram Keadaan--Transisi}
+\sectionframe{02}{Menggambar Diagram Keadaan--Transisi}
+  {Tiga lambang, tujuh perpindahan, dan tiga jenis pewaktu}
+
+\begin{frame}{Tiga Lambang Diagram Keadaan--Transisi}
+\awalan{Diagram digambar sebelum mesin keadaan ditulis sebagai kode. Gambar itu
+adalah rancangan, bukan hiasan: kesalahan pada gambar akan menjadi kesalahan
+pada program.}
+\begin{center}
+\adjustbox{max width=0.98\linewidth,max height=0.44\textheight}{%
+  \input{../buku_ajar/chapters/09/figures/diagram-keadaan.tikz}}
+\end{center}
+\vspace{-0.04cm}
+\begin{itemize}
+  \item \textbf{Kotak bersudut tumpul} menyatakan sebuah keadaan; isinya nama
+        keadaan itu.
+  \item \textbf{Anak panah} menyatakan perpindahan yang mungkin terjadi, dari
+        keadaan asal menuju keadaan tujuan.
+  \item \textbf{Keterangan pada anak panah} menyatakan syarat perpindahan,
+        yang harus dapat diperiksa program.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Tujuh Perpindahan yang Sah}
+\awalan{Diagram tersebut memuat tujuh perpindahan. Tabel berikut memuatnya
+beserta syarat masing-masing, sehingga dapat diperiksa satu per satu.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.35cm}
+    >{\raggedright\arraybackslash}p{2.35cm}
+    >{\raggedright\arraybackslash}p{1.95cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Dari} & \textbf{Ke} & \textbf{Jenis syarat} & \textbf{Syarat} \\
+\midrule
+berdiam & berpatroli & pewaktu & Telah berdiam selama 1,5 detik. \\
+\addlinespace
+berdiam & mengejar & jarak & Pemain berada di dalam jari-jari persepsi. \\
+\addlinespace
+berpatroli & berdiam & peristiwa & Satu putaran patroli telah selesai. \\
+\addlinespace
+berpatroli & mengejar & jarak & Pemain berada di dalam jari-jari persepsi. \\
+\addlinespace
+mengejar & menyerang & jarak & Pemain berada di dalam jangkauan serang. \\
+\addlinespace
+mengejar & berdiam & pewaktu & Pemain tidak terlihat selama 1 detik. \\
+\addlinespace
+menyerang & mengejar & jarak & Pemain keluar dari jangkauan serang. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.10cm}
+{\footnotesize\color{ubMuted}Dua keadaan dapat menuju keadaan yang sama melalui
+syarat yang sama, misalnya dari berdiam maupun dari berpatroli menuju mengejar.
+Hal itu wajar dan tidak menimbulkan persoalan.}
+\end{frame}
+
+\begin{frame}{Pewaktu sebagai Syarat Perpindahan}
+\awalan{Tiga dari tujuh perpindahan bersyarat pewaktu, bukan jarak. Ketiganya
+dijalankan dengan cara yang sama.}
+\begin{itemize}
+  \item \textbf{Pewaktu berdiam} menghitung lama NPC berdiam, agar keadaan
+        berdiam tidak langsung ditinggalkan pada bingkai berikutnya.
+  \item \textbf{Pewaktu tenggang} menghitung lama NPC kehilangan pemain, agar
+        ia tidak menyerah hanya karena pemain sekejap berada di balik
+        rintangan.
+  \item \textbf{Pewaktu jeda} (\emph{cooldown}) menghitung jarak waktu antara
+        dua serangan, agar serangan tidak terjadi pada setiap bingkai.
+  \item Setiap pewaktu ditambah selang waktu setiap bingkai, lalu dibandingkan
+        dengan nilai batasnya.
+\end{itemize}
+\vspace{0.12cm}
+\begin{peringatan}
+Tiga kesalahan diagram yang sering terjadi: perpindahan tanpa syarat yang dapat
+diperiksa, keadaan tanpa jalan keluar, dan dua syarat yang saling bertentangan.
+Gejala terakhir khas: NPC sesekali berperilaku tidak seperti dugaan, dan hanya
+pada keadaan tertentu.
+\end{peringatan}
+\end{frame}
+
+% ========================================================= bagian 3
+\section{Menerapkan Mesin Keadaan di Dalam Kode}
+\sectionframe{03}{Menerapkan Mesin Keadaan di Dalam Kode}
+  {Keputusan, penyiapan, dan tindakan dipisahkan}
+
+\begin{frame}{Tiga Pekerjaan yang Dipisahkan}
+\awalan{Susunan program memisahkan tiga pekerjaan yang berbeda. Pemisahan
+itulah yang menjadi inti bagian ini.}
+\begin{itemize}
+  \item \texttt{decide} membaca keadaan sekarang, jarak terhadap pemain, dan
+        ketiga pewaktu, lalu mengembalikan nama keadaan berikutnya. Fungsi ini
+        tidak mengubah apa pun.
+  \item \texttt{enter\_state} menetapkan keadaan baru, mengembalikan penghitung
+        keadaan itu ke nol, dan mencatat perpindahannya.
+  \item \texttt{act} menjalankan perilaku keadaan yang sedang aktif, yaitu
+        mengubah kecepatan NPC.
+  \item \texttt{update} menyatukan ketiganya: menghitung jarak, meminta
+        keputusan, menyiapkan keadaan baru apabila berpindah, lalu bertindak.
+\end{itemize}
+\vspace{0.12cm}
+\begin{kotak}
+Karena \texttt{decide} tidak mengubah apa pun, keputusan dapat diperiksa dengan
+memanggilnya berulang kali tanpa menjalankan permainan.
+\end{kotak}
+\end{frame}
+
+\begin{frame}[fragile]{Syarat Perpindahan Ditulis pada Satu Tempat}
+\awalan{Seluruh syarat dari tabel dikumpulkan di dalam \texttt{decide}, disusun
+menurut keadaan yang sedang aktif.}
+\lstinputlisting[language=Python,firstline=160,lastline=170]
+  {../buku_ajar/code/python/ch09_fsm.py}
+\kodejelas{Pewaktu jeda serangan dijalankan pada awal fungsi, sebab ia berjalan
+tanpa memandang keadaan. Pada keadaan berdiam, syarat ``pemain terlihat''
+diperiksa lebih dahulu daripada syarat ``sudah cukup lama berdiam'': NPC yang
+melihat pemain harus segera mengejar, walaupun ia baru saja mulai berdiam.}
+\end{frame}
+
+\begin{frame}[fragile]{Penghalang pada Batas Jangkauan Serang}
+\awalan{Keadaan mengejar memakai jari-jari persepsi dan pewaktu tenggang;
+keadaan menyerang memakai penghalang pada batas jangkauan.}
+\lstinputlisting[language=Python,firstline=179,lastline=192]
+  {../buku_ajar/code/python/ch09_fsm.py}
+\kodejelas{Syarat dari menyerang ke mengejar memakai jangkauan serang dikalikan
+1,2, bukan jangkauan itu sendiri. Tanpa penghalang, kedua syarat benar bersamaan
+pada jarak tepat jangkauan; NPC berganti keadaan setiap bingkai dan tampak
+berkedip serta tersendat di tepi jangkauan.}
+\end{frame}
+
+% ========================================================= bagian 4
+\section{Menguji Setiap Keadaan dan Perpindahannya}
+\sectionframe{04}{Menguji Setiap Keadaan dan Perpindahannya}
+  {Catatan, skenario berulang, dan pemeriksaan keabsahan}
+
+\begin{frame}{Mengapa Pengujiannya Sulit}
+\awalan{Mesin keadaan sulit diperiksa dengan cara biasa, sebab perilakunya
+bergantung pada posisi pemain dan pada waktu.}
+\begin{itemize}
+  \item Memeriksa keadaan menyerang secara manual menuntut pemain mendekat,
+        menunggu NPC menyadarinya, lalu menunggu NPC mendekat. Setiap percobaan
+        puluhan detik dan hasilnya bergantung pada keterampilan mengendalikan
+        pemain.
+  \item Tiga cara dipakai bersama: mencatat perpindahan beserta nomor
+        bingkainya, menjalankan skenario yang dapat diulang, dan memeriksa
+        keabsahan setiap perpindahan.
+  \item Catatan perpindahan lebih berguna daripada tangkapan layar: ia
+        memperlihatkan urutan dan lama setiap keadaan, bukan hanya keadaan yang
+        sedang aktif.
+\end{itemize}
+\vspace{0.12cm}
+\begin{kotak}
+Skenario menuntut pemain berdiri cukup jauh ketika menghilang, kira-kira 410
+piksel pada nilai bab ini. Bila kurang jauh, NPC menemukan pemain kembali
+sebelum pewaktu tenggangnya habis.
+\end{kotak}
+\end{frame}
+
+\begin{frame}[fragile]{Memeriksa Keabsahan Perpindahan}
+\awalan{Tabel perpindahan yang sah adalah diagram keadaan yang ditulis kembali
+dalam bentuk yang dapat diperiksa program.}
+\lstinputlisting[language=Python,firstline=58,lastline=63]
+  {../buku_ajar/code/python/ch09_fsm.py}
+\kodejelas{Setiap pasangan keadaan yang berurutan pada catatan perpindahan
+diperiksa terhadap tabel ini. Pemeriksaan sifat yang harus selalu berlaku tidak
+menuntut urutan tertentu, sehingga tahan terhadap perbedaan kecepatan komputer,
+tetapi tetap menangkap perpindahan yang keliru.}
+\end{frame}
+
+\begin{frame}{Memandang Keadaan sebagai Garis Waktu}
+\awalan{Catatan perpindahan dapat digambarkan sebagai garis waktu, sehingga lama
+setiap keadaan terlihat sekaligus.}
+\begin{center}
+\adjustbox{max width=0.99\linewidth,max height=0.30\textheight}{%
+  \input{../buku_ajar/chapters/09/figures/garis-waktu-keadaan.tikz}}
+\end{center}
+\vspace{-0.06cm}
+\begin{itemize}
+  \item Skenario mencatat urutan: 0 berdiam, 91 berpatroli, 151 mengejar,
+        217 menyerang, 421 mengejar, 482 berdiam, 571 berpatroli.
+  \item Keadaan menyerang berlangsung paling lama, 204 bingkai atau 3,4 detik.
+        Dengan pewaktu jeda 0,8 detik, jumlah serangan seharusnya
+        $3{,}4 \div 0{,}8 + 1 \approx 5$, dan program mencatat lima serangan.
+  \item Apabila hasil tidak sesuai dugaan, periksa lebih dahulu apakah dugaan
+        atau rancangan skenarionya yang keliru, bukan programnya.
+\end{itemize}
+\end{frame}
+
+% ========================================================= bagian 5
+\section{Program Mesin Keadaan Lengkap}
+\sectionframe{05}{Program Mesin Keadaan Lengkap}
+  {Susunan kelas, keluaran pengujian, dan percobaan yang disarankan}
+
+\begin{frame}{Susunan Kelas \emph{Npc}}
+\awalan{Seluruh perilaku NPC terletak pada kelas \texttt{Npc}. Fungsi
+\texttt{update} hanya berisi empat langkah dan tidak memuat satu pun syarat
+perpindahan.}
+\begin{itemize}
+  \item \texttt{decide} menentukan keadaan berikutnya; ia hanya membaca dan
+        mengembalikan jawaban.
+  \item \texttt{enter\_state} menyiapkan keadaan baru dan mencatat
+        perpindahannya.
+  \item \texttt{act} menjalankan perilaku keadaan yang sedang aktif.
+  \item \texttt{update} menghitung jarak, meminta keputusan, menyiapkan keadaan
+        baru apabila berpindah, lalu bertindak.
+\end{itemize}
+\vspace{0.14cm}
+\begin{kotak}
+Seluruh syarat perpindahan berada di dalam \texttt{decide}. Susunan itulah yang
+membuat keputusan dapat diperiksa terpisah dari perilakunya.
+\end{kotak}
+\end{frame}
+
+\begin{frame}[fragile]{Keluaran Pengujian}
+\awalan{Dijalankan dengan skenario, program menampilkan catatan perpindahan
+beserta hasil pemeriksaannya.}
+\begin{lstlisting}[language={},numbers=none]
+Bingkai dijalankan : 900
+Serangan dilakukan : 5
+Catatan perpindahan keadaan (bingkai, keadaan):
+        0  berdiam
+       91  berpatroli
+      151  mengejar
+      217  menyerang
+      421  mengejar
+      482  berdiam
+      571  berpatroli
+Hasil pemeriksaan  : seluruh perpindahan sah
+Hasil skenario     : SESUAI dengan urutan yang diharapkan
+\end{lstlisting}
+\kodejelas{Ketujuh perpindahan terjadi seluruhnya, dalam urutan yang dapat
+diperkirakan, dan seluruhnya sah menurut tabel perpindahan. Empat keadaan pada
+diagram telah diuji satu per satu.}
+\end{frame}
+
+\begin{frame}{Percobaan yang Disarankan}
+\awalan{Mengubah satu nilai pada satu waktu memperlihatkan tugas masing-masing
+unsur mesin keadaan.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{6.0cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Yang diubah dan caranya} & \textbf{Yang sebaiknya diamati} \\
+\midrule
+\texttt{ATTACK\_COOLDOWN} menjadi 0,2 detik &
+Jumlah serangan bertambah, sedangkan urutan keadaannya tidak berubah. \\
+\addlinespace
+\texttt{GIVE\_UP\_SECONDS} menjadi 3 detik &
+NPC mengejar lebih lama; pemain harus berdiri lebih jauh agar benar-benar
+kehilangan jejak. \\
+\addlinespace
+\texttt{IDLE\_SECONDS} menjadi nol &
+Keadaan berdiam tidak lagi berlangsung lama; NPC langsung berpatroli sesudah
+menyerah. \\
+\addlinespace
+Hapus perkalian 1,2 pada jangkauan serang &
+NPC berkedip dan tersendat pada tepi jangkauan serang, sebab kedua syarat benar
+bersamaan. \\
+\addlinespace
+Tambahkan perpindahan yang tidak ada pada diagram &
+Pemeriksaan keabsahan melaporkan perpindahan yang tidak sah. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.10cm}
+\begin{kotak}
+Percobaan terakhir paling penting. Menambahkan satu perpindahan yang tidak ada
+pada diagram akan langsung ditangkap pemeriksaan keabsahan; diagram menjadi
+ukuran kebenaran program, bukan sekadar catatan.
+\end{kotak}
+\end{frame}
+
+% ========================================================= bagian 6
+\section{Yang Belum Ada pada Mesin Keadaan Ini}
+\sectionframe{06}{Yang Belum Ada pada Mesin Keadaan Ini}
+  {Niat tanpa rute, dan bentuk mesin keadaan yang lebih besar}
+
+\begin{frame}{Keputusan tanpa Pengetahuan tentang Jalan}
+\awalan{Mesin keadaan menjawab pertanyaan ``apa yang sebaiknya saya lakukan?'',
+bukan ``bagaimana cara menuju ke sana?''.}
+\begin{itemize}
+  \item NPC memutuskan untuk mengejar, tetapi pelaksanaannya hanya satu:
+        bergerak lurus ke arah pemain.
+  \item Empat keadaan tidak menolong NPC yang terhalang dinding; keadaan
+        mengejar tetap menekan dinding selama pemain berada di baliknya.
+  \item Yang bertambah hanyalah keragaman perilaku, bukan keterangan tentang
+        jalan.
+  \item Bab X menambahkan pencarian jalur: keadaan mengejar tidak lagi
+        menghasilkan gerak lurus, melainkan memanggil A* untuk menentukan rute.
+\end{itemize}
+\vspace{0.12cm}
+\begin{kotak}
+Mesin keadaan menentukan \textbf{niat}, sedangkan pencarian jalur menentukan
+\textbf{rute}. Pemisahan tanggung jawab itu mulai terbentuk di sini.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Bentuk Mesin Keadaan yang Lebih Besar}
+\awalan{Dua bentuk pengembangan lazim pada permainan yang lebih besar; keduanya
+bertolak dari gagasan yang sama dengan mesin keadaan.}
+\begin{itemize}
+  \item \textbf{Mesin keadaan bertingkat} (\emph{hierarchical state machine}):
+        sebuah keadaan dapat memuat mesin keadaan yang lebih kecil. Misalnya,
+        keadaan mengejar memuat keadaan menghindari rintangan dan mendekati
+        pemain.
+  \item \textbf{Pohon perilaku} (\emph{behaviour tree}): perilaku disusun
+        sebagai pohon keputusan yang dibaca dari atas ke bawah; setiap cabang
+        menyatakan satu pertimbangan.
+  \item Pohon perilaku lebih mudah dibaca ketika jumlah perilakunya banyak, dan
+        banyak dipakai pada permainan yang sesungguhnya.
+  \item Keduanya di luar cakupan mata kuliah, tetapi sama-sama memisahkan
+        keadaan yang mungkin terjadi dari syarat perpindahannya.
+\end{itemize}
+\vspace{0.12cm}
+\begin{kotak}
+Cara itu mencegah jumlah keadaan bertambah secara berlipat ketika perilaku NPC
+makin beragam.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Ringkasan Perkembangan}
+\awalan{Bab ini melengkapi bagian pertama lapisan keputusan; yang masih kurang
+adalah kemampuan NPC mengetahui jalannya sendiri.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{1.7cm}
+    >{\raggedright\arraybackslash}p{4.9cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Bab} & \textbf{Yang ditambahkan} & \textbf{Akibatnya} \\
+\midrule
+Bab X & Pencarian jalur A* pada peta berhalangan &
+Keadaan mengejar tidak lagi menghasilkan gerak lurus, melainkan rute yang
+menghindari rintangan. \\
+\addlinespace
+Bab XI & Penggabungan mesin keadaan dan pencarian jalur &
+NPC mengejar dengan rute memutar, dan biaya perhitungannya diatur agar tetap
+ringan. \\
+\addlinespace
+Bab XIII & Fisika mesin pada Unity &
+Sebagian perilaku dapat disusun memakai perkakas mesin, sedangkan logika
+keputusannya tetap ditulis sendiri. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.10cm}
+\begin{kotak}
+Setelah bab ini, seluruh perkakas untuk menyusun perilaku NPC yang beragam sudah
+tersedia. Yang masih kurang hanyalah kemampuan NPC untuk mengetahui jalannya
+sendiri.
+\end{kotak}
+\end{frame}
+
+% --------------------------------------------------------- aktivitas
+\begin{frame}{Aktivitas di Kelas \textperiodcentered\ Praktikum 07}
+\awalan{Pengalaman belajar minggu 7 pada RPS, dikerjakan berurutan di kelas lalu
+diselesaikan di rumah.}
+\begin{enumerate}
+  \item Ketik ulang \texttt{ch09\_fsm.py} ke folder \texttt{code}, jalankan,
+        lalu amati warna NPC yang berubah menurut keadaannya dan jalur patroli
+        yang dilaluinya.
+  \item Amati setiap keadaan secara terpisah: berdiamlah di jauh sampai satu
+        putaran patroli selesai, dekati sampai NPC mengejar, lalu berdirilah di
+        dekatnya sampai ia menyerang. Catat keadaan yang paling lama
+        berlangsung.
+  \item Jalankan skenario pengujian
+        \texttt{python ch09\_fsm.py --frames 900 --scenario}, lalu catat
+        seluruh perpindahan beserta nomor bingkainya.
+  \item Gambarlah diagram keadaan Anda sendiri dengan empat keadaan dan syarat
+        pada setiap perpindahan; bandingkan dengan diagram bab, lalu periksa
+        apakah setiap syarat benar-benar ada di dalam kode.
+  \item Tambahkan keadaan menghindar ketika nyawa tinggal sedikit, tentukan
+        syarat masuk dan keluarnya, lalu uji satu perpindahan yang tidak ada
+        pada diagram dan amati laporan pemeriksaan keabsahan.
+  \item Tulis catatan praktikum yang memuat diagram, catatan perpindahan, dan
+        hasil pemeriksaan keabsahan; simpan pekerjaan ke repositori Git.
+\end{enumerate}
+\vspace{0.10cm}
+{\footnotesize\color{ubAccent}\itshape Rincian lengkap: Praktikum 07 pada Bab IX
+buku ajar. Kumpulkan melalui repositori Git pribadi.}
+\end{frame}
+
+% --------------------------------------------------------- rangkuman
+\begin{frame}{Rangkuman}
+\begin{itemize}
+  \item Variabel bernilai benar-salah sudah merupakan mesin keadaan dua
+        keadaan; mesin yang sesungguhnya menambahkan keadaan lebih dari dua,
+        syarat perpindahan tersendiri, dan penyiapan saat masuk keadaan.
+  \item NPC memiliki empat keadaan: berdiam, berpatroli, mengejar, dan
+        menyerang, dengan tujuh perpindahan yang sah.
+  \item Diagram memakai tiga lambang; setiap perpindahan harus memiliki syarat
+        yang dapat diperiksa, setiap keadaan harus memiliki jalan keluar, dan
+        tidak boleh ada dua syarat yang saling bertentangan.
+  \item Tiga pewaktu dipakai: pewaktu berdiam, pewaktu tenggang, dan pewaktu
+        jeda serangan (\emph{cooldown}); ketiganya ditambah selang waktu lalu
+        dibandingkan dengan nilai batasnya.
+  \item Kode memisahkan \texttt{decide}, \texttt{enter\_state}, dan
+        \texttt{act}; \texttt{decide} tidak mengubah apa pun sehingga keputusan
+        dapat diuji terpisah dari tindakan.
+  \item Pengujian memakai catatan perpindahan beserta bingkainya, skenario yang
+        dapat diulang, dan pemeriksaan keabsahan; mesin keadaan menentukan niat,
+        bukan rute.
+\end{itemize}
+\end{frame}
+
+% --------------------------------------------------------- cek
+\begin{frame}{Cek Pemahaman}
+\begin{enumerate}
+  \item Sebutkan tiga unsur yang ditambahkan mesin keadaan dibandingkan variabel
+        bernilai benar-salah, dan jelaskan mengapa masing-masing diperlukan.
+  \item Mengapa fungsi \texttt{decide} sengaja tidak mengubah keadaan apa pun,
+        dan apa manfaatnya bagi pengujian?
+  \item Mengapa pemeriksaan keabsahan perpindahan lebih berguna daripada
+        pemeriksaan urutan keadaan?
+\end{enumerate}
+\vspace{0.35cm}
+{\footnotesize\color{ubMuted}\itshape Jawab tanpa membuka catatan, lalu
+bandingkan dengan pasangan di sebelah Anda.}
+\end{frame}
+
+% --------------------------------------------------------- penutup
+\penutup{Tugas Praktikum 07}
+  {Materi 8 membuka pathfinding grid: keadaan mengejar tidak lagi bergerak
+   lurus, melainkan memanggil pencarian jalur untuk menentukan rute. Anda akan
+   membangun grid berbiaya, memakai \emph{heapq}, dan merekonstruksi jalur.}
+
+\end{document}

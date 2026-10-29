@@ -1,0 +1,326 @@
+% =========================================================
+%  ppt/config/theme.tex
+%  Satu tema Beamer untuk keempat belas presentasi
+%  Pengantar Pemrograman Game
+% =========================================================
+
+% --------------------------------------------------------- warna
+\definecolor{ubNavy}{HTML}{1F3864}
+\definecolor{ubAccent}{HTML}{2E75B6}
+\definecolor{ubHead}{HTML}{D9E2F3}
+\definecolor{ubSoft}{HTML}{F2F6FC}
+\definecolor{ubLine}{HTML}{BFBFBF}
+\definecolor{ubText}{HTML}{1F2937}
+\definecolor{ubMuted}{HTML}{5A6678}
+\definecolor{ubGreen}{HTML}{1E7B45}
+\definecolor{ubGreenBg}{HTML}{F1F8F2}
+\definecolor{ubRed}{HTML}{B3261E}
+\definecolor{ubRedBg}{HTML}{FDF2F1}
+\definecolor{ubWarn}{HTML}{A35A05}
+\definecolor{ubWarnBg}{HTML}{FFF8EC}
+\definecolor{ubGray}{HTML}{F6F6F6}
+\definecolor{ubCodeBg}{HTML}{10233F}
+\definecolor{ubCodeText}{HTML}{E8EEF7}
+\definecolor{ubCodeKey}{HTML}{8FBCF0}
+\definecolor{ubCodeCom}{HTML}{8FB37A}
+\definecolor{ubCodeStr}{HTML}{D9A46B}
+\definecolor{ubCodeNum}{HTML}{7E99BE}
+
+% Nama warna yang dipakai gambar TikZ buku ajar.
+\definecolor{ubPrimary}{HTML}{1F3864}
+\definecolor{ubAlt}{HTML}{F2F6FC}
+
+% --------------------------------------------------------- dasar
+\usetheme{default}
+\usefonttheme{professionalfonts}
+\setbeamertemplate{navigation symbols}{}
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\small}
+\setbeamerfont{footline}{size=\tiny}
+\setbeamerfont{block title}{size=\small,series=\bfseries}
+\setbeamerfont{block body}{size=\small}
+\setbeamerfont{itemize/enumerate body}{size=\small}
+\setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}
+
+\setbeamersize{text margin left=0.60cm,text margin right=0.60cm}
+\uchyph=0
+
+\setbeamercolor{normal text}{fg=ubText,bg=white}
+\setbeamercolor{structure}{fg=ubAccent}
+\setbeamercolor{frametitle}{fg=ubNavy,bg=white}
+\setbeamercolor{title}{fg=ubNavy}
+\setbeamercolor{footline}{fg=ubMuted,bg=white}
+\setbeamercolor{itemize item}{fg=ubAccent}
+\setbeamercolor{itemize subitem}{fg=ubAccent}
+\setbeamercolor{block title}{fg=white,bg=ubNavy}
+\setbeamercolor{block body}{fg=ubText,bg=ubSoft}
+\setbeamercolor{block title alerted}{fg=white,bg=ubWarn}
+\setbeamercolor{block body alerted}{fg=ubText,bg=ubWarnBg}
+\setbeamercolor{block title example}{fg=white,bg=ubGreen}
+\setbeamercolor{block body example}{fg=ubText,bg=ubGreenBg}
+\setbeamercolor{caption name}{fg=ubMuted}
+
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamertemplate{itemize item}{\raisebox{0.10em}{\color{ubAccent}\scriptsize$\blacksquare$}}
+\setbeamertemplate{itemize subitem}{\raisebox{0.06em}{\color{ubAccent}\tiny$\blacktriangleright$}}
+\setbeamertemplate{enumerate item}{%
+  \makebox[1.3em][l]{\color{ubAccent}\insertenumlabel.}}
+
+\addtobeamertemplate{itemize/enumerate body begin}{%
+  \setlength{\itemsep}{0.42em}\setlength{\parskip}{0pt}}{}
+
+% --------------------------------------------------------- judul frame
+\setbeamertemplate{frametitle}[default][left]
+
+% --------------------------------------------------------- kaki
+\newcommand{\materino}{00}
+\newcommand{\materifoot}{Pengantar Pemrograman Game \textperiodcentered\ Materi \materino}
+
+\setbeamertemplate{footline}{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.015cm,dp=0cm]{footline}%
+    \color{ubHead}\rule{\paperwidth}{0.4pt}%
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.40cm,dp=0.14cm,%
+                         leftskip=0.60cm,rightskip=0.60cm]{footline}%
+    \usebeamerfont{footline}\color{ubMuted}\materifoot\hfill\insertframenumber%
+  \end{beamercolorbox}%
+}
+
+% --------------------------------------------------------- makro buku ajar
+\providecommand{\code}[1]{\texttt{\detokenize{#1}}}
+\providecommand{\istilah}[1]{\emph{#1}}
+\providecommand{\CPMK}[1]{CPMK\,#1}
+\providecommand{\CPL}[1]{CPL\,#1}
+\providecommand{\SUBCPMK}[1]{Sub-CPMK\,#1}
+
+% --------------------------------------------------------- gaya kode
+\lstdefinelanguage{CSharp}{
+  morekeywords={abstract,as,base,bool,break,byte,case,catch,char,class,const,
+    continue,decimal,default,delegate,do,double,else,enum,event,explicit,
+    extern,false,finally,fixed,float,for,foreach,goto,if,implicit,in,int,
+    interface,internal,is,lock,long,namespace,new,null,object,operator,out,
+    override,params,private,protected,public,readonly,ref,return,sbyte,
+    sealed,short,sizeof,stackalloc,static,string,struct,switch,this,throw,
+    true,try,typeof,uint,ulong,unchecked,unsafe,ushort,using,virtual,void,
+    volatile,while,var,get,set},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]",
+}
+
+\lstdefinestyle{kode}{
+  basicstyle=\ttfamily\footnotesize\color{ubCodeText},
+  keywordstyle=\color{ubCodeKey}\bfseries,
+  commentstyle=\color{ubCodeCom}\itshape,
+  stringstyle=\color{ubCodeStr},
+  numberstyle=\tiny\color{ubCodeNum},
+  numbers=left,
+  numbersep=7pt,
+  backgroundcolor=\color{ubCodeBg},
+  frame=none,
+  showstringspaces=false,
+  breaklines=false,
+  tabsize=4,
+  columns=fullflexible,
+  keepspaces=true,
+  xleftmargin=12pt,
+  xrightmargin=2pt,
+  aboveskip=0pt,
+  belowskip=0pt,
+  upquote=true,
+}
+\lstset{style=kode}
+
+\newcommand{\kodejelas}[1]{%
+  \vspace{0.16cm}%
+  {\footnotesize\color{ubMuted}#1\par}%
+}
+\newcommand{\sumber}[1]{%
+  \vspace{0.08cm}%
+  {\scriptsize\color{ubMuted}\itshape #1\par}%
+}
+\newcommand{\awalan}[1]{%
+  {\small\color{ubMuted}#1\par}\vspace{0.18cm}%
+}
+
+% --------------------------------------------------------- kotak
+\newtcolorbox{kotak}[1][]{enhanced, colback=ubSoft, colframe=ubAccent,
+  boxrule=0pt, leftrule=2.2pt, arc=1pt, left=6pt, right=6pt, top=4pt,
+  bottom=4pt, fontupper=\footnotesize, #1}
+\newtcolorbox{peringatan}[1][]{enhanced, colback=ubWarnBg, colframe=ubWarn,
+  boxrule=0pt, leftrule=2.2pt, arc=1pt, left=6pt, right=6pt, top=4pt,
+  bottom=4pt, fontupper=\footnotesize, #1}
+\newtcolorbox{kiat}[1][]{enhanced, colback=ubGreenBg, colframe=ubGreen,
+  boxrule=0pt, leftrule=2.2pt, arc=1pt, left=6pt, right=6pt, top=4pt,
+  bottom=4pt, fontupper=\footnotesize, #1}
+
+% --------------------------------------------------------- sampul
+% \deckcover{nomor}{minggu}{judul}{sub-cpmk}{teknologi}{sumber}{blok}
+\newcommand{\deckcover}[7]{%
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[ubNavy] (current page.south west) rectangle ([xshift=6.00cm]current page.north west);
+  \fill[ubAccent] ([xshift=6.00cm]current page.south west) rectangle ([xshift=6.08cm]current page.north west);
+
+  \node[anchor=north west, text width=4.72cm, align=left, inner sep=0pt]
+    at ($(current page.north west)+(0.66cm,-0.60cm)$) {%
+      {\color{white}\bfseries\fontsize{10.2}{12.2}\selectfont
+       Universitas Bale Bandung}\\[4pt]
+      {\color{ubHead}\fontsize{7.6}{9.4}\selectfont
+       Fakultas Teknologi Informasi}\\[1pt]
+      {\color{ubHead}\fontsize{7.6}{9.4}\selectfont
+       Program Studi Teknik Informatika}\\[7pt]
+      {\color{ubAccent}\rule{4.0cm}{0.5pt}}%
+    };
+
+  \node[anchor=north west, text width=4.72cm, align=left, inner sep=0pt]
+    at ($(current page.north west)+(0.66cm,-2.72cm)$) {%
+      {\color{ubAccent}\fontsize{6.4}{7.8}\selectfont MATA KULIAH}\\[3pt]
+      {\color{white}\bfseries\fontsize{9.8}{12.0}\selectfont
+       Pengantar Pemrograman Game}\\[3pt]
+      {\color{ubHead}\fontsize{7.6}{9.4}\selectfont
+       MWCA009 \textperiodcentered\ 3 SKS}\\[8pt]
+      {\color{ubHead}\fontsize{7.6}{9.4}\selectfont
+       Semester Ganjil 2026/2027}%
+    };
+
+  \node[anchor=south west, text width=4.72cm, align=left, inner sep=0pt]
+    at ($(current page.south west)+(0.66cm,0.52cm)$) {%
+      {\color{ubAccent}\fontsize{6.4}{7.8}\selectfont DOSEN PENGAMPU}\\[3pt]
+      {\color{white}\fontsize{8.4}{10.4}\selectfont
+       Cecep Suwanda, S.Si., M.Kom.}%
+    };
+
+  \node[anchor=north west, text width=8.95cm, align=left, inner sep=0pt]
+    at ($(current page.north east)+(-9.40cm,-0.92cm)$) {%
+      {\color{ubAccent}\bfseries\fontsize{8.2}{10.2}\selectfont
+       MATERI #1\ \ \textperiodcentered\ \ MINGGU #2}\\[8pt]
+      {\color{ubNavy}\bfseries\fontsize{19.4}{23.4}\selectfont
+       \hyphenpenalty=10000 \exhyphenpenalty=10000 \raggedright #3}%
+    };
+
+  \node[anchor=north west, text width=8.95cm, align=left, inner sep=0pt]
+    at ($(current page.north east)+(-9.40cm,-4.30cm)$) {%
+      \renewcommand{\arraystretch}{1.30}%
+      \begin{tabular}{@{}>{\color{ubMuted}\fontsize{7.3}{9.0}\selectfont}p{1.85cm}
+                        >{\color{ubText}\fontsize{8.1}{10.0}\selectfont}p{6.7cm}@{}}
+        Sub-CPMK      & #4 \\
+        Teknologi     & #5 \\
+        Sumber materi & #6 \\
+        Blok          & #7 \\
+      \end{tabular}%
+    };
+\end{tikzpicture}
+\end{frame}%
+}
+
+% --------------------------------------------------------- pembatas bagian
+\newcommand{\sectionframe}[3]{%
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[ubNavy] (current page.south west) rectangle (current page.north east);
+  \fill[ubAccent] (current page.north west) rectangle ([xshift=0.10cm]current page.south west);
+  \node[anchor=west, inner sep=0pt]
+    at ($(current page.west)+(1.00cm,1.45cm)$)
+    {\color{ubNavy!52!white}\bfseries\fontsize{58}{58}\selectfont #1};
+  \node[anchor=west, inner sep=0pt, text width=11.6cm, align=left]
+    at ($(current page.west)+(1.05cm,-0.55cm)$) {%
+      {\color{ubAccent}\bfseries\fontsize{8.0}{10.0}\selectfont BAGIAN}\\[3pt]
+      {\color{white}\bfseries\fontsize{20.5}{24.5}\selectfont #2}\\[5pt]
+      {\color{ubHead}\small #3}%
+    };
+  \node[anchor=south east, inner sep=0pt]
+    at ($(current page.south east)+(-0.60cm,0.32cm)$)
+    {\color{ubHead}\fontsize{7.4}{9}\selectfont #1 / 6
+     \ \ \textperiodcentered\ \ \insertframenumber};
+\end{tikzpicture}
+\end{frame}%
+}
+
+% --------------------------------------------------------- peta pertemuan
+\newcommand{\blokpeta}[6]{%
+  \ifnum#2=#3
+    \node[rounded corners=3pt, fill=ubNavy, draw=ubNavy, line width=0.5pt,
+          text width=3.02cm, minimum height=1.62cm, align=left, inner sep=5pt]
+      at (#1,0) {%
+        {\color{ubAccent}\bfseries\fontsize{6.8}{8}\selectfont #4}\\[1pt]
+        {\color{white}\bfseries\fontsize{7.6}{9}\selectfont #5}\\[2pt]
+        {\color{ubHead}\fontsize{6.4}{7.6}\selectfont #6}};
+  \else
+    \node[rounded corners=3pt, fill=ubSoft, draw=ubHead, line width=0.5pt,
+          text width=3.02cm, minimum height=1.62cm, align=left, inner sep=5pt]
+      at (#1,0) {%
+        {\color{ubAccent}\bfseries\fontsize{6.8}{8}\selectfont #4}\\[1pt]
+        {\color{ubNavy}\bfseries\fontsize{7.6}{9}\selectfont #5}\\[2pt]
+        {\color{ubMuted}\fontsize{6.4}{7.6}\selectfont #6}};
+  \fi
+}
+
+% \petapertemuan{blok aktif}{sebelumnya}{sesudahnya}{keluaran}
+% \petapertemuan{blok aktif}{sebelumnya}{pertemuan ini}{sesudahnya}{keluaran}
+\newcommand{\petapertemuan}[5]{%
+\begin{frame}{Peta Pertemuan}
+{\scriptsize\color{ubMuted}Kedudukan materi dalam empat blok perkuliahan}\par
+\vspace{0.10cm}
+\centering
+\begin{tikzpicture}
+  \blokpeta{-5.58}{1}{#1}{BLOK I}{Materi 1--5}{Game loop, vektor,\\fisika, collision}
+  \blokpeta{-1.86}{2}{#1}{BLOK II}{Materi 6--9}{AI NPC: chase, FSM,\\pathfinding A*}
+  \blokpeta{1.86}{3}{#1}{BLOK III}{Materi 10--11}{Unity: scene,\\level, physics}
+  \blokpeta{5.58}{4}{#1}{BLOK IV}{Materi 12--14}{Aset visual, audio,\\UI, playtest}
+\end{tikzpicture}
+\par\vspace{0.30cm}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.315\textwidth}
+    \begin{beamercolorbox}[wd=\linewidth,sep=4pt,rounded=true]{block body}
+      {\color{ubMuted}\fontsize{6.6}{8}\selectfont SEBELUMNYA}\\[2pt]
+      {\footnotesize #2}
+    \end{beamercolorbox}
+  \end{column}
+  \begin{column}{0.315\textwidth}
+    \begin{beamercolorbox}[wd=\linewidth,sep=4pt,rounded=true]{block title}
+      {\color{ubHead}\fontsize{6.6}{8}\selectfont PERTEMUAN INI}\\[2pt]
+      {\footnotesize #3}
+    \end{beamercolorbox}
+  \end{column}
+  \begin{column}{0.315\textwidth}
+    \begin{beamercolorbox}[wd=\linewidth,sep=4pt,rounded=true]{block body}
+      {\color{ubMuted}\fontsize{6.6}{8}\selectfont SESUDAHNYA}\\[2pt]
+      {\footnotesize #4}
+    \end{beamercolorbox}
+  \end{column}
+\end{columns}
+\par\vspace{0.26cm}
+{\footnotesize\color{ubText}\textbf{Keluaran pertemuan.} #5\par}
+\end{frame}%
+}
+
+% --------------------------------------------------------- penutup
+\newcommand{\penutup}[2]{%
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[ubNavy] (current page.south west) rectangle (current page.north east);
+  \fill[ubAccent] (current page.north west) rectangle ([xshift=0.10cm]current page.south west);
+
+  \node[anchor=north west, text width=13.6cm, align=left, inner sep=0pt]
+    at ($(current page.north west)+(1.00cm,-0.95cm)$) {%
+      {\color{ubAccent}\bfseries\fontsize{8.2}{10}\selectfont ASESMEN MINGGU INI}\\[6pt]
+      {\color{white}\bfseries\fontsize{24}{28}\selectfont #1}%
+    };
+
+  \node[anchor=north west, text width=13.6cm, align=left, inner sep=0pt]
+    at ($(current page.north west)+(1.00cm,-4.55cm)$) {%
+      {\color{ubNavy!0!ubHead}\rule{13.4cm}{0.4pt}}\\[7pt]
+      {\color{ubAccent}\bfseries\fontsize{7.4}{9}\selectfont
+       PENGAIT KE MATERI BERIKUTNYA}\\[4pt]
+      {\color{ubHead}\fontsize{10.6}{13.2}\selectfont #2}%
+    };
+
+  \node[anchor=south east, inner sep=0pt]
+    at ($(current page.south east)+(-0.60cm,0.32cm)$)
+    {\color{ubHead}\fontsize{7.4}{9}\selectfont \insertframenumber};
+\end{tikzpicture}
+\end{frame}%
+}
+

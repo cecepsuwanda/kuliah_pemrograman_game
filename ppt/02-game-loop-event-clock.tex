@@ -1,0 +1,530 @@
+% =========================================================
+%  ppt/02-game-loop-event-clock.tex
+%  Materi 2 — Game Loop, Event Handling, dan Clock
+%  Bab IV buku ajar
+% =========================================================
+\documentclass[aspectratio=169,10pt]{beamer}
+\input{config/packages}
+\input{config/theme}
+
+\renewcommand{\materino}{02}
+
+\begin{document}
+
+\deckcover{02}{2}
+  {Game Loop, Event Handling, dan Clock}
+  {1.1}
+  {Python / Pygame}
+  {Bab IV buku ajar}
+  {Blok I \textperiodcentered\ Materi 1--5}
+
+% --------------------------------------------------------- peta
+\petapertemuan{1}
+  {Materi 1 \textperiodcentered\ Pengantar dan persiapan lingkungan}
+  {Materi 2 \textperiodcentered\ Game Loop, Event Handling, dan Clock}
+  {Materi 3 \textperiodcentered\ Gerak Objek, Vector2, Input, dan Delta Time}
+  {Siklus permainan berjalan dengan laju bingkai terkendali, antrean
+   peristiwa dikosongkan setiap bingkai, dan laju terukur tercatat pada
+   lembar praktikum.}
+
+% --------------------------------------------------------- capaian
+\begin{frame}{Capaian Pertemuan}
+\setbeamerfont{itemize/enumerate body}{size=\scriptsize}
+\awalan{Sub-CPMK 1.1 beserta tiga indikatornya, dan tujuan Bab IV buku ajar.}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.50\textwidth}
+    \begin{beamercolorbox}[wd=\linewidth,sep=5pt,rounded=true]{block title}
+      {\fontsize{6.8}{8}\selectfont\color{ubHead}SUB-CPMK 1.1 \textperiodcentered\ C2}\\[2pt]
+      {\footnotesize Menjelaskan struktur \emph{game loop} (input,
+       \emph{update}, \emph{render}) dan peran manajemen waktu dalam
+       permainan.}
+    \end{beamercolorbox}
+    \vspace{0.14cm}
+
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}INDIKATOR}\par
+    \vspace{0.06cm}
+    \begin{itemize}
+      \item Menjelaskan urutan tahapan input--\emph{update}--\emph{render}
+            dengan benar.
+      \item Mengidentifikasi peran \texttt{pygame.time.Clock} dan pembatasan
+            \emph{FPS}.
+      \item Membedakan \emph{fixed timestep} dan \emph{variable timestep}
+            secara konseptual.
+    \end{itemize}
+  \end{column}
+  \begin{column}{0.46\textwidth}
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}TUJUAN BAB IV}\par
+    \vspace{0.06cm}
+    \begin{itemize}
+      \item Menjelaskan ketiga tahap siklus permainan beserta urutan dan
+            alasan urutannya.
+      \item Membaca masukan pemain sebagai peristiwa tanpa menghentikan
+            jalannya siklus.
+      \item Menjelaskan peran \texttt{pygame.time.Clock} dalam mengukur selang
+            waktu dan menahan laju bingkai.
+      \item Menulis siklus lengkap yang berjalan sampai jendela ditutup,
+            dengan laju bingkai yang ditentukan sendiri.
+      \item Mengukur pengaruh batas laju terhadap beban prosesor dan memilih
+            batas yang wajar.
+      \item Menjelaskan mengapa siklus ini belum cukup untuk menghasilkan
+            gerak, dan apa yang ditambahkan pada Bab V.
+    \end{itemize}
+  \end{column}
+\end{columns}
+\end{frame}
+
+% ========================================================= bagian 1
+\section{Kerangka Siklus Permainan}
+\sectionframe{01}{Kerangka Siklus Permainan}
+  {Tiga tahap yang selalu sama dan alasan urutannya}
+
+\begin{frame}{Tiga Tahap yang Selalu Sama}
+\awalan{Siklus permainan terdiri atas tiga tahap yang dikerjakan berurutan
+lalu diulang terus-menerus.}
+\centering
+\adjustbox{max width=0.90\linewidth,max height=0.52\textheight}{%
+  \input{../buku_ajar/chapters/04/figures/siklus-game-loop.tikz}}
+\vspace{0.10cm}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.32\textwidth}
+    {\scriptsize\textbf{Masukan} --- membaca peristiwa sejak bingkai
+     sebelumnya: tombol, tetikus, atau jendela yang hendak ditutup.}
+  \end{column}
+  \begin{column}{0.34\textwidth}
+    {\scriptsize\textbf{Pembaruan} --- mengubah keadaan: memindahkan objek,
+     memeriksa tabrakan, menambah skor, menentukan perilaku NPC.}
+  \end{column}
+  \begin{column}{0.30\textwidth}
+    {\scriptsize\textbf{Penayangan} --- menggambar ulang seluruh jendela
+     menurut keadaan yang baru diperbarui.}
+  \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Mengapa Urutannya Demikian}
+\awalan{Urutan tahapan bukan pilihan gaya penulisan, melainkan keharusan yang
+lahir dari sifat pekerjaannya.}
+\begin{itemize}
+  \item \textbf{Masukan didahulukan} karena pembaruan memerlukan pengetahuan
+        tentang kehendak pemain.
+        \begin{itemize}
+          \item Bila pembaruan lebih dahulu, tombol yang baru ditekan baru
+                berpengaruh pada bingkai berikutnya; pemain merasakan tanggapan
+                terlambat satu bingkai.
+        \end{itemize}
+  \item \textbf{Penayangan dikerjakan terakhir} karena pemain harus melihat
+        keadaan akhir setelah seluruh perhitungan selesai.
+        \begin{itemize}
+          \item Menggambar di tengah perhitungan menampilkan keadaan setengah
+                jadi.
+        \end{itemize}
+\end{itemize}
+\begin{kotak}
+Ketika jumlah objek bertambah, urutan yang tidak konsisten menimbulkan gejala
+yang sulit dilacak: objek tampak bergerak mendahului tabrakannya, atau skor
+bertambah sebelum kejadiannya sungguh terjadi. Pada Unity kelak, ketiga tahap
+itu tetap ada walaupun sebagian dikelola mesin.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Kerangka Siklus dalam Bentuk Kode}
+\awalan{Tanpa isi setiap tahapnya, kerangka siklus hanya memerlukan satu
+perulangan dengan tiga hal penting.}
+\begin{enumerate}
+  \item \textbf{Perulangan dikendalikan sebuah variabel.} \texttt{running}
+        diubah menjadi salah ketika pemain meminta keluar, sehingga siklus
+        berakhir dengan rapi.
+  \item \textbf{Variabel keadaan berada di luar perulangan.} Keadaan harus
+        tetap hidup dari satu bingkai ke bingkai berikutnya.
+  \item \textbf{Ketiga tahap berada dalam satu perulangan yang sama.} Bukan
+        tiga perulangan terpisah yang berjalan tidak serempak.
+\end{enumerate}
+\begin{kotak}
+Apabila variabel keadaan dibuat di dalam perulangan, isinya kembali ke nilai
+awal setiap bingkai dan permainan kehilangan ingatannya. Perulangan tanpa cara
+keluar hanya dapat dihentikan dengan mematikan program secara paksa.
+\end{kotak}
+\end{frame}
+
+% ========================================================= bagian 2
+\section{Membaca Masukan sebagai Peristiwa}
+\sectionframe{02}{Membaca Masukan sebagai Peristiwa}
+  {Antrean peristiwa, event.get, dan jenis peristiwa lazim}
+
+\begin{frame}{Mengapa event.wait() Tidak Cukup}
+\awalan{Program Bab III menunggu peristiwa dengan
+\texttt{pygame.event.wait()}. Cara itu tidak dapat dipakai di dalam siklus.}
+\begin{itemize}
+  \item \emph{Event handling} adalah cara program membaca peristiwa pemain
+        tanpa menghentikan jalannya siklus.
+  \item \texttt{event.wait()} \textbf{menghentikan} program sampai ada
+        peristiwa yang terjadi.
+  \item Bila pemain diam, tidak ada peristiwa datang; tahap pembaruan dan
+        penayangan tidak pernah dikerjakan sehingga permainan membeku.
+  \item Permainan yang benar tetap berjalan walaupun pemain sedang diam,
+        karena objek di dalamnya terus bergerak dan waktu terus berjalan.
+\end{itemize}
+\begin{peringatan}
+Pygame mengumpulkan peristiwa ke dalam antrean. \texttt{event.get()} mengambil
+seluruh isinya tanpa menunggu, sedangkan \texttt{event.wait()} menunggu.
+Hanya yang pertama boleh dipakai di dalam siklus.
+\end{peringatan}
+\end{frame}
+
+\begin{frame}[fragile]{Menangani Peristiwa di Dalam Siklus}
+\awalan{Perulangan membaca seluruh peristiwa yang masuk sejak bingkai
+sebelumnya, lalu menanganinya satu per satu.}
+\lstinputlisting[language=Python,firstline=129,lastline=141]
+  {../buku_ajar/code/python/ch04_game_loop.py}
+\kodejelas{\texttt{event.get()} mengosongkan antrean. \texttt{QUIT} dan ESC
+mengakhiri siklus, sedangkan panah atas dan bawah mengubah batas laju bingkai.}
+\end{frame}
+
+\begin{frame}{Jenis Peristiwa yang Lazim}
+{\scriptsize
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.0cm}
+    >{\raggedright\arraybackslash}p{3.9cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Jenis peristiwa} & \textbf{Keterangan tambahan} & \textbf{Dipakai untuk} \\
+\midrule
+\texttt{QUIT} & tidak ada &
+  Menutup jendela: pemain meminta program berakhir. \\
+\texttt{KEYDOWN} & \texttt{event.key}, \texttt{event.mod} &
+  Tombol ditekan; terjadi sekali untuk setiap penekanan. \\
+\texttt{KEYUP} & \texttt{event.key} &
+  Tombol dilepas; berguna untuk tindakan yang berakhir. \\
+\texttt{MOUSEBUTTONDOWN} & \texttt{event.pos}, \texttt{event.button} &
+  Tombol tetikus ditekan, beserta letak penunjuk. \\
+\texttt{MOUSEMOTION} & \texttt{event.pos}, \texttt{event.rel} &
+  Penunjuk tetikus bergeser. \\
+\bottomrule
+\end{tabularx}}
+\vfill
+\begin{kotak}
+Gunakan peristiwa untuk tindakan yang terjadi sekali (melompat, menembak,
+membuka menu, keluar). Untuk tindakan yang berlangsung selama tombol ditahan
+(berjalan, mengarahkan), periksa keadaan tombol dengan
+\texttt{pygame.key.get\_pressed()}.
+\end{kotak}
+\end{frame}
+
+% ========================================================= bagian 3
+\section{Mengendalikan Laju dengan Clock}
+\sectionframe{03}{Mengendalikan Laju dengan Clock}
+  {Mengukur selang waktu dan menahan laju bingkai}
+
+\begin{frame}{Dua Pekerjaan clock.tick()}
+\awalan{Satu pemanggilan \texttt{clock.tick()} mengerjakan dua hal sekaligus.}
+\begin{enumerate}
+  \item \textbf{Mengukur selang waktu} yang benar-benar berlangsung sejak
+        pemanggilan sebelumnya, dan mengembalikannya dalam milidetik. Nilai
+        inilah yang kelak dipakai sebagai \emph{delta time}.
+  \item \textbf{Menahan laju} dengan menunggu sampai selang waktu satu bingkai
+        terpenuhi, apabila batas laju diberikan sebagai argumen.
+\end{enumerate}
+\[
+  \mathrm{dt} = \frac{\mathrm{tick}(60)}{1000}\ \text{detik}
+\]
+\begin{kotak}
+Karena mengukur sekaligus menahan, \texttt{tick()} diletakkan pada akhir
+setiap putaran, yaitu setelah penayangan. Selang yang diukur harus mencakup
+seluruh pekerjaan satu bingkai, bukan sebagiannya.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Mengukur Laju yang Benar-benar Tercapai}
+\awalan{Batas laju menyatakan keinginan, bukan kenyataan.}
+\begin{itemize}
+  \item \texttt{clock.get\_fps()} melaporkan laju yang benar-benar tercapai,
+        dihitung dari rata-rata selang beberapa bingkai terakhir.
+  \item Nilainya dipakai untuk menampilkan keadaan program kepada pemain dan
+        menolong penulis program.
+  \item Selisih besar antara batas laju dan laju terukur merupakan tanda
+        paling awal bahwa program terlalu berat.
+  \item Pada program bab ini, nilai tersebut ditampilkan pada judul jendela
+        setiap bingkai.
+\end{itemize}
+\begin{kotak}
+Judul jendela dipilih karena selalu terlihat, tidak memakan ruang gambar
+permainan, dan dapat dibaca walaupun jendela sedang tidak difokuskan.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Mengapa Laju Bingkai Perlu Dibatasi}
+\awalan{Bukankah permainan yang lebih cepat lebih baik? Jawabannya tidak, dan
+alasannya ada tiga.}
+\begin{enumerate}
+  \item \textbf{Perilaku permainan tidak seragam.} Bila gerak bergantung pada
+        jumlah bingkai, permainan lebih sulit pada komputer yang lebih cepat.
+  \item \textbf{Beban prosesor dan panas berlebihan.} Prosesor yang dipakai
+        penuh tanpa manfaat menaikkan suhu dan mempercepat pemakaian baterai.
+  \item \textbf{Tidak ada manfaat yang sepadan.} Mata manusia tidak dapat
+        membedakan ribuan bingkai per detik, dan layar hanya menampilkan
+        sejumlah gambar terbatas.
+\end{enumerate}
+\begin{kotak}
+Siklus yang dibatasi 60 bingkai per detik memakai sekitar tiga persen satu inti
+prosesor; siklus yang sama tanpa pembatasan memakai hampir seratus persen untuk
+pekerjaan yang tidak terlihat pemain.
+\end{kotak}
+\begin{kiat}
+Nilai batas yang wajar untuk pembelajaran adalah 60 bingkai per detik.
+Turunkan menjadi 30 apabila program mulai berat.
+\end{kiat}
+\end{frame}
+
+% ========================================================= bagian 4
+\section{Siklus Lengkap}
+\sectionframe{04}{Siklus Lengkap}
+  {Menyatukan masukan, pembaruan, penayangan, dan pengendali waktu}
+
+\begin{frame}{Susunan Siklus Lengkap}
+\awalan{Siklus lengkap menambahkan pengendali waktu di akhir setiap putaran,
+setelah ketiga tahap pekerjaan.}
+\centering
+\adjustbox{max width=0.90\linewidth,max height=0.52\textheight}{%
+  \input{../buku_ajar/chapters/04/figures/siklus-dengan-pengendali-waktu.tikz}}
+\par\vspace{0.10cm}
+\sumber{Keempat unsur ini dipertahankan pada seluruh bab berikutnya; yang
+berubah adalah isi tahap pembaruan.}
+\end{frame}
+
+\begin{frame}[fragile]{Tahap Penayangan dan Pengendali Waktu}
+\lstinputlisting[language=Python,firstline=155,lastline=168]
+  {../buku_ajar/code/python/ch04_game_loop.py}
+\kodejelas{\texttt{draw\_window} menggambar ulang seluruh jendela dan
+\texttt{flip} menayangkannya. \texttt{clock.tick(fps\_limit)} di akhir putaran
+menahan sisa waktu, lalu nilainya dibagi 1000 menjadi detik.}
+\end{frame}
+
+\begin{frame}{Tiga Kebiasaan yang Perlu Dibangun}
+\begin{enumerate}
+  \item \textbf{Gambar seluruh jendela dari awal setiap bingkai.}
+        \texttt{screen.fill()} menimpa isi lama; tanpanya objek yang bergerak
+        meninggalkan jejak di sepanjang lintasannya.
+  \item \textbf{Simpan keadaan di luar perulangan.} \texttt{frame\_count},
+        \texttt{fps\_limit}, dan \texttt{start\_ticks} harus hidup dari satu
+        bingkai ke bingkai berikutnya.
+  \item \textbf{Ubah keadaan hanya pada tahap pembaruan.} Fungsi penggambaran
+        tidak mengubah apa pun, sehingga dapat dipanggil berapa kali pun tanpa
+        mempengaruhi jalannya permainan.
+\end{enumerate}
+\begin{peringatan}
+Kesalahan yang paling sering terjadi: menambahkan penghitung bingkai di dalam
+fungsi penggambaran. Akibatnya penghitung bertambah setiap kali gambar
+disusun, bukan setiap bingkai.
+\end{peringatan}
+\end{frame}
+
+% ========================================================= bagian 5
+\section{Mengukur dan Menyetel Laju}
+\sectionframe{05}{Mengukur dan Menyetel Laju}
+  {Membuktikan penghematan prosesor dengan pengukuran}
+
+\begin{frame}[fragile]{Program Pengukuran}
+\awalan{Siklus yang sama dijalankan tanpa jendela selama jangka waktu tetap;
+setiap batas laju diuji bergantian.}
+\lstinputlisting[language=Python,firstline=55,lastline=68]
+  {../buku_ajar/code/python/ch04_ukur_laju.py}
+\kodejelas{\texttt{time.perf\_counter()} mengukur waktu berjalan (jam dinding),
+sedangkan \texttt{time.process\_time()} mengukur waktu prosesor. Perbandingan
+keduanya menghasilkan pemakaian prosesor.}
+\end{frame}
+
+\begin{frame}{Hasil Pengukuran}
+{\scriptsize
+\renewcommand{\arraystretch}{1.14}
+\begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}p{1.7cm}
+    >{\centering\arraybackslash}p{1.9cm}
+    >{\centering\arraybackslash}p{2.3cm}
+    >{\centering\arraybackslash}p{2.6cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Batas laju} & \textbf{Bingkai} & \textbf{Laju tercapai} &
+\textbf{Waktu prosesor} & \textbf{Pemakaian prosesor} \\
+\midrule
+30    & 60      & 29,7 FPS    & 0,02 detik & 0,8\% \\
+60    & 120     & 59,9 FPS    & 0,06 detik & 3,1\% \\
+120   & 233     & 116,0 FPS   & 0,09 detik & 4,7\% \\
+tanpa & 37.884  & 18.941 FPS  & 1,94 detik & 96,9\% \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.10cm}
+\sumber{Pengukuran penulis pada lingkungan tanpa jendela, lama pengujian dua
+detik setiap konfigurasi. Angka pada komputer Anda akan berbeda; yang penting
+adalah hubungan antarbarisnya.}
+\begin{kotak}
+Batas laju dipatuhi dengan tepat, pemakaian prosesor tetap kecil pada semua
+batas yang wajar, dan tanpa pembatasan prosesor dipakai penuh hampir
+sepanjang waktu.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Anggaran Waktu dan Pilihan Batas}
+\awalan{Pekerjaan satu bingkai pada contoh: masukan 0,5 ms, pembaruan 5 ms,
+dan penayangan 25 ms, sedangkan jatah pada batas 60 adalah}
+\[
+  \frac{1000\ \text{ms}}{60} = 16{,}7\ \text{ms per bingkai}.
+\]
+\begin{itemize}
+  \item Jumlah pekerjaan 30,5 ms melebihi jatah; \texttt{clock.tick()} tidak
+        menahan apa pun dan laju hanya mencapai sekitar 32,8 bingkai per detik.
+  \item Menaikkan batas tidak mempercepat program yang pekerjaannya memang
+        berat; yang menentukan adalah lama pekerjaan satu bingkai.
+  \item \textbf{60 bingkai per detik} pilihan bawaan yang baik; \textbf{30}
+        bila program berat; \textbf{120 ke atas} hanya bila benar-benar perlu.
+\end{itemize}
+\begin{kiat}
+Batas laju bukan pembatasan mutu, melainkan penghematan yang tidak mengurangi
+apa pun yang dapat dirasakan pemain. Ukur, jangan menebak.
+\end{kiat}
+\end{frame}
+
+% ========================================================= bagian 6
+\section{Yang Belum Ada pada Siklus Ini}
+\sectionframe{06}{Yang Belum Ada pada Siklus Ini}
+  {Dari siklus yang berjalan menuju objek yang bergerak}
+
+\begin{frame}{Siklus Berjalan, tetapi Tidak Ada yang Bergerak}
+\awalan{Siklus permainan sudah berjalan, tetapi permainannya belum.}
+\begin{itemize}
+  \item Program hanya memperbarui keadaan berupa penghitung bingkai; belum ada
+        objek yang berpindah tempat.
+  \item Perpindahan objek memerlukan \textbf{keadaan yang lebih kaya}: posisi
+        dan kecepatan setiap objek harus disimpan dan diperbarui.
+  \item Perpindahan juga memerlukan \textbf{pemakaian selang waktu}: nilai dari
+        \texttt{clock.tick()} dipakai sebagai pengali kecepatan.
+  \item Pemisahan ini disengaja agar kesalahan pada gerak nanti dapat
+        ditelusuri tanpa mempertanyakan apakah siklusnya sudah benar.
+\end{itemize}
+\begin{kotak}
+Perangkatnya sudah lengkap; yang belum ada hanyalah pemakaiannya. Bab V memakai
+nilai selang waktu yang sama untuk menggerakkan objek, sehingga jarak yang
+ditempuh sama setiap detik terlepas dari laju bingkai.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Fixed Timestep dan Variable Timestep}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.48\textwidth}
+    \begin{block}{Fixed timestep}
+      \begin{itemize}
+        \item Simulasi selalu maju dengan panjang langkah yang sama,
+              $\Delta t = 1/60$ detik.
+        \item Selisih waktu yang belum terpakai ditabung pada penampung.
+        \item Hasilnya dapat diulang persis dan perhitungan fisika stabil.
+      \end{itemize}
+    \end{block}
+  \end{column}
+  \begin{column}{0.48\textwidth}
+    \begin{block}{Variable timestep}
+      \begin{itemize}
+        \item Simulasi maju mengikuti lama bingkai sesungguhnya,
+              $\Delta t = t_n - t_{n-1}$.
+        \item Panjang langkahnya berubah-ubah; lebih sederhana diterapkan.
+        \item Bila langkah menjadi sangat besar, objek cepat dapat melompat
+              melewati rintangan tanpa terdeteksi.
+      \end{itemize}
+    \end{block}
+  \end{column}
+\end{columns}
+\vspace{0.22cm}
+\begin{kotak}
+Siklus yang baru saja Anda tulis termasuk \emph{variable timestep}: setiap
+putaran memakai selang yang benar-benar berlangsung, kadang 16 milidetik,
+kadang 34 milidetik.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Perkembangan Siklus pada Bab Berikutnya}
+\awalan{Bab-bab selanjutnya menambahkan bagian pada siklus yang sama, bukan
+menggantinya.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.14}
+\begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}p{1.9cm}
+    >{\raggedright\arraybackslash}p{5.2cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Bab} & \textbf{Yang ditambahkan} & \textbf{Akibat pada siklus} \\
+\midrule
+Bab V & Posisi, kecepatan, dan pemakaian selang waktu &
+  Pembaruan mulai mengubah keadaan objek; penayangan menggambar posisi baru. \\
+Bab VI & Gravitasi, lompatan, dan pantulan &
+  Pembaruan menghitung percepatan, lalu kecepatan sebelum posisi. \\
+Bab VII & \emph{Sprite}, \emph{Group}, dan tabrakan &
+  Pembaruan memeriksa tabrakan dan mengubah keadaan permainan. \\
+Bab VIII--XI & Pengendalian NPC &
+  Pembaruan memanggil lapisan keputusan dan navigasi; sebagian tidak setiap
+  bingkai. \\
+Bab XIII & Fisika mesin pada Unity &
+  Langkah tetap untuk fisika; kode Anda dipanggil mengikuti lama bingkai. \\
+\bottomrule
+\end{tabularx}}
+\end{frame}
+
+% --------------------------------------------------------- aktivitas
+\begin{frame}{Aktivitas di Kelas \textperiodcentered\ Praktikum 02}
+\awalan{Pengalaman belajar minggu 2 pada RPS, dikerjakan berurutan di kelas
+lalu diselesaikan di rumah.}
+\begin{enumerate}
+  \item Tulis \texttt{ch04\_game\_loop.py} secara mandiri: siklus
+        masukan--pembaruan--penayangan yang lengkap.
+  \item Tangkap peristiwa keluar dan tombol: \texttt{QUIT}, ESC, panah
+        atas/bawah, dan spasi.
+  \item Batasi laju bingkai dengan \texttt{Clock} dan tampilkan laju terukur
+        pada judul jendela.
+  \item Ubah batas FPS dari 30 sampai 120, lalu catat laju terukur pada setiap
+        nilai.
+  \item Jalankan \texttt{ch04\_ukur\_laju.py} dan bandingkan pemakaian prosesor
+        dengan dan tanpa pembatasan.
+\end{enumerate}
+\vspace{0.12cm}
+{\footnotesize\color{ubAccent}\itshape Rincian lengkap: Praktikum 02 pada
+Bab IV buku ajar. Asesmennya Tugas Praktikum 02 dengan observasi kinerja
+\emph{game loop} (laju terukur dan pemakaian prosesor). Kumpulkan melalui
+repositori Git pribadi.}
+\end{frame}
+
+% --------------------------------------------------------- rangkuman
+\begin{frame}{Rangkuman}
+\begin{itemize}
+  \item Siklus permainan terdiri atas masukan, pembaruan, dan penayangan yang
+        dikerjakan berurutan dan diulang selama permainan berjalan.
+  \item Urutan tahapan bersifat wajib: masukan lebih dahulu agar pembaruan
+        mengetahui kehendak pemain, penayangan paling akhir agar yang terlihat
+        adalah keadaan yang sudah selesai dihitung.
+  \item Variabel keadaan harus dibuat di luar perulangan agar nilainya bertahan
+        dari satu bingkai ke bingkai berikutnya.
+  \item \texttt{pygame.event.get()} mengambil seluruh isi antrean tanpa
+        menunggu; \texttt{event.wait()} membekukan permainan, dan antrean harus
+        dikosongkan setiap bingkai.
+  \item \texttt{clock.tick()} mengukur selang waktu sekaligus menahan laju,
+        sehingga diletakkan pada akhir putaran siklus.
+  \item Batas laju adalah penghematan, bukan pembatasan mutu; menaikkan batas
+        tidak mempercepat program yang pekerjaannya memang berat.
+\end{itemize}
+\end{frame}
+
+% --------------------------------------------------------- cek
+\begin{frame}{Cek Pemahaman}
+\begin{enumerate}
+  \item Jelaskan urutan ketiga tahap siklus permainan beserta pekerjaan pada
+        masing-masing tahap.
+  \item Apa dua pekerjaan yang dilakukan \texttt{clock.tick(60)}?
+  \item Mengapa menaikkan batas laju tidak selalu menaikkan laju yang
+        tercapai?
+\end{enumerate}
+\vspace{0.35cm}
+{\footnotesize\color{ubMuted}\itshape Jawab tanpa membuka catatan, lalu
+bandingkan dengan pasangan di sebelah Anda.}
+\end{frame}
+
+% --------------------------------------------------------- penutup
+\penutup{Tugas Praktikum 02}
+  {Materi 3 memakai selang waktu yang telah diukur untuk menggerakkan objek:
+   posisi dan kecepatan sebagai \texttt{Vector2}, masukan tombol yang ditahan,
+   dan \emph{delta time} agar kecepatan tetap konsisten pada 30 maupun 60 FPS.}
+
+\end{document}

@@ -1,0 +1,619 @@
+% =========================================================
+%  ppt/09-integrasi-fsm-astar.tex
+%  Materi 9 — Integrasi FSM dan A* (Mini Proyek AI)
+%  Bab XI buku ajar
+% =========================================================
+\documentclass[aspectratio=169,10pt]{beamer}
+\input{config/packages}
+\input{config/theme}
+
+\renewcommand{\materino}{09}
+
+\begin{document}
+
+\deckcover{09}{9}
+  {Integrasi FSM dan A* (Mini Proyek AI)}
+  {2.4}
+  {Python / Pygame}
+  {Bab XI buku ajar}
+  {Blok II \textperiodcentered\ Materi 6--9}
+
+% --------------------------------------------------------- peta
+\petapertemuan{2}
+  {Materi 8 \textperiodcentered\ Pathfinding Grid}
+  {Materi 9 \textperiodcentered\ Integrasi FSM dan A* (Mini Proyek AI)}
+  {Materi 10 \textperiodcentered\ Pengenalan Unity: Project, Scene, dan
+   GameObject}
+  {Mini proyek AI kelompok: kode Python/Pygame, ringkasan desain, dan laporan
+   \emph{playtest} atas tiga skenario uji, dipresentasikan 10 menit.}
+
+% --------------------------------------------------------- capaian
+\begin{frame}{Capaian Pertemuan}
+\setbeamerfont{itemize/enumerate body}{size=\scriptsize}
+\awalan{Sub-CPMK dan indikator dari RPS, serta tujuan Bab XI buku ajar.}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.52\textwidth}
+    \begin{beamercolorbox}[wd=\linewidth,sep=5pt,rounded=true]{block title}
+      {\fontsize{6.8}{8}\selectfont\color{ubHead}SUB-CPMK 2.4}\\[2pt]
+      {\footnotesize Mengevaluasi perilaku NPC hasil kombinasi FSM dan A*
+       terhadap \emph{skenario uji} permainan.}
+    \end{beamercolorbox}
+    \vspace{0.14cm}
+
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}INDIKATOR}\par
+    \vspace{0.06cm}
+    \begin{itemize}
+      \item Menyusun skenario uji dan mencatat hasil pengamatan.
+      \item Menilai kualitas perilaku NPC: kelancaran, daya tanggap, dan beban
+            komputasi.
+      \item Merumuskan perbaikan berdasarkan hasil evaluasi.
+    \end{itemize}
+    \vspace{0.10cm}
+    \begin{kotak}
+      Bab ini menutup CPMK 2 dan merupakan bab bertingkat tertinggi pada blok
+      Python, yaitu ranah C5: menilai, bukan menulis kode baru.
+    \end{kotak}
+  \end{column}
+  \begin{column}{0.45\textwidth}
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}TUJUAN BAB XI}\par
+    \vspace{0.08cm}
+    \begin{itemize}
+      \item Menghubungkan lapisan keputusan dan lapisan navigasi dalam satu NPC.
+      \item Menyimpan hasil pencarian jalur dan menentukan kapan perlu diulang.
+      \item Menggerakkan NPC mengikuti jalur berupa rangkaian petak.
+      \item Menilai mutu perilaku dari kelancaran, daya tanggap, dan beban
+            perhitungan.
+      \item Menyusun skenario uji dan mencatat hasil pengamatannya.
+      \item Merumuskan perbaikan beserta cara mengukur keberhasilannya.
+    \end{itemize}
+  \end{column}
+\end{columns}
+\end{frame}
+
+% ========================================================= bagian 1
+\section{Menghubungkan Dua Lapisan}
+\sectionframe{01}{Menghubungkan Dua Lapisan}
+  {Niat dari mesin keadaan, rute dari pencarian jalur}
+
+\begin{frame}{Niat dan Rute}
+\awalan{Setiap lapisan menjawab satu pertanyaan yang berbeda, dan keduanya
+diperlukan oleh NPC yang sama.}
+\begin{itemize}
+  \item \textbf{Mesin keadaan} (Bab IX) menghasilkan \textbf{niat}: jawaban atas
+        ``apa yang sebaiknya saya lakukan?''. Jawabannya berupa keadaan,
+        misalnya mengejar.
+  \item \textbf{Pencarian jalur} (Bab X) menghasilkan \textbf{rute}: jawaban atas
+        ``bagaimana cara menuju ke sana?''. Jawabannya berupa rangkaian petak.
+  \item Pada Bab IX, niat mengejar dilaksanakan dengan bergerak lurus ke arah
+        pemain. Pada bab ini, niat yang sama dilaksanakan dengan memanggil
+        pencarian jalur terlebih dahulu.
+  \item Perubahan itu hanya menambah satu langkah pada fungsi tindakan;
+        mesin keadaannya tidak berubah sama sekali.
+\end{itemize}
+\vspace{0.1cm}
+\begin{kotak}
+Hasil \emph{integrasi} kedua lapisan ini bukan sekadar penjumlahan: keputusan
+menentukan kapan rute dicari, sedangkan rute menentukan bagaimana keputusan itu
+diwujudkan sebagai gerak.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Arsitektur Integrasi}
+\centering
+\adjustbox{max width=0.78\linewidth,max height=0.47\textheight}{%
+  \input{../buku_ajar/chapters/11/figures/arsitektur-integrasi.tikz}}
+\vspace{0.10cm}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.235\textwidth}
+    {\scriptsize\textbf{Mesin keadaan} --- menentukan niat dan kapan pencarian
+     dijalankan.}
+  \end{column}
+  \begin{column}{0.235\textwidth}
+    {\scriptsize\textbf{Pencarian A*} --- mencari rute pada peta berhalangan.}
+  \end{column}
+  \begin{column}{0.265\textwidth}
+    {\scriptsize\textbf{Simpanan jalur} --- rangkaian petak beserta waktu hitung
+     ulang terakhir.}
+  \end{column}
+  \begin{column}{0.235\textwidth}
+    {\scriptsize\textbf{Pengikut jalur} --- menggerakkan NPC menuju petak
+     berikutnya.}
+  \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Kapan Pencarian Diulang}
+\awalan{Pencarian jalur mahal, sehingga hasilnya disimpan dan dipakai
+berkali-kali. Pencarian hanya diulang pada dua keadaan berikut.}
+\lstinputlisting[language=Python,firstline=143,lastline=149]
+  {../buku_ajar/code/python/ch11_mini_proyek.py}
+\vspace{0.10cm}
+\begin{itemize}
+  \item \textbf{Selang hitung ulang telah habis} sejak pencarian terakhir.
+  \item \textbf{Jalurnya sudah habis dilalui}, misalnya NPC telah sampai di
+        tujuan sementara pemain belum berpindah.
+\end{itemize}
+\kodejelas{Petak pertama hasil pencarian dibuang karena itulah petak tempat NPC
+berada sekarang. Kedua penghitung statistik ditambah di sini, dan keduanya
+menjadi bahan penilaian pada Bagian 4.}
+\end{frame}
+
+% ========================================================= bagian 2
+\section{Mengikuti Jalur}
+\sectionframe{02}{Mengikuti Jalur}
+  {Dari rangkaian petak menjadi gerak piksel per detik}
+
+\begin{frame}[fragile]{Pengikut Jalur}
+\lstinputlisting[language=Python,firstline=180,lastline=191]
+  {../buku_ajar/code/python/ch11_mini_proyek.py}
+\vspace{0.10cm}
+{\scriptsize
+\begin{itemize}
+  \item \textbf{\texttt{while}, bukan \texttt{if}.} Dalam satu bingkai NPC dapat
+        melampaui lebih dari satu petak.
+  \item \textbf{Toleransi \texttt{REACH\_DISTANCE}.} Tanpa toleransi, petak tidak
+        pernah dibuang dan NPC berhenti selamanya.
+  \item \textbf{Jalur sebagai antrean.} Petak dibuang dari depan, bukan ditelusuri
+        seluruhnya setiap bingkai.
+\end{itemize}}
+\end{frame}
+
+\begin{frame}{Jalur yang Menjadi Usang}
+\begin{itemize}
+  \item Ketika pemain berpindah, jalur yang sedang ditempuh menjadi usang:
+        rangkaian petaknya masih menuju tempat pemain berada sebelumnya.
+  \item NPC terus mengikutinya sampai selang hitung ulang habis, lalu
+        memperbaiki arahnya.
+  \item Perilaku itu wajar, dan justru itulah pertukaran yang harus dinilai:
+        memperpendek selang membuat NPC lebih tanggap tetapi lebih berat
+        dihitung.
+  \item Memperpanjang selang menghemat perhitungan, tetapi membuat NPC sempat
+        menempuh arah yang salah.
+\end{itemize}
+\vspace{0.1cm}
+\begin{kotak}
+Pada permainan sesungguhnya, keusangan sering dikurangi dengan cara yang lebih
+murah: periksa apakah jalur lama masih memadai, misalnya apakah pemain masih
+dekat dengan ujung jalur. Bila ya, jalur diperpanjang, bukan dihitung ulang.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Gerak yang Tidak Selalu Mulus}
+\begin{itemize}
+  \item NPC bergerak menuju titik tengah setiap petak, sehingga lintasannya
+        berupa rangkaian garis lurus antar-petak, bukan garis halus.
+  \item Pada jalur yang berbelok tajam, geraknya terlihat menyudut.
+  \item Cara memperhalusnya adalah \emph{path smoothing}: singkirkan petak yang
+        terletak segaris dengan petak sebelumnya dan berikutnya, sehingga hanya
+        titik belok yang tersisa.
+\end{itemize}
+\vspace{0.12cm}
+\begin{kiat}
+Sebelum menambahkan penghalusan, periksa lebih dahulu apakah memang diperlukan.
+Pada petak yang kecil dan NPC yang sedikit, gerak menyudut hampir tidak
+terlihat; penghalusan menambah perhitungan dan menambah satu hal yang dapat
+salah. Ukur dulu, baru perbaiki.
+\end{kiat}
+\end{frame}
+
+% ========================================================= bagian 3
+\section{Batasan Kinerja dan Hitung Ulang Berkala}
+\sectionframe{03}{Batasan Kinerja dan Hitung Ulang}
+  {Biaya pencarian, selang \emph{repath}, dan penyebaran beban}
+
+\begin{frame}{Menghitung Beban Perhitungan}
+\awalan{Pencarian jalur adalah perhitungan termahal pada blok Python ini.}
+\begin{itemize}
+  \item Biaya bertambah menurut tiga hal yang \textbf{berlipat}, bukan
+        menjumlah: banyaknya NPC, seringnya pencarian diulang, dan mahalnya
+        satu kali pencarian.
+  \item Satu kali pencarian memeriksa sekitar 90 sampai 280 petak (Bab X).
+  \item Tiga NPC yang menghitung ulang setiap bingkai pada 60 bingkai per detik:
+\end{itemize}
+\[
+  3 \times 60 \times 90 = 16.200 \text{ petak setiap detik},
+\]
+yaitu sekitar enam belas ribu pemeriksaan petak setiap detik, belum termasuk
+menggambar, memperbarui gerak, dan menangani tabrakan.
+\begin{kotak}
+Hitunglah dalam satuan \textbf{per detik}, bukan per bingkai. Beban
+perhitunganlah yang menentukan apakah permainan masih berjalan pada laju
+bingkai yang wajar.
+\end{kotak}
+\end{frame}
+
+\begin{frame}[fragile]{Kebijakan \emph{Repath} Berkala}
+\lstinputlisting[language=Python,firstline=171,lastline=178]
+  {../buku_ajar/code/python/ch11_mini_proyek.py}
+\vspace{0.10cm}
+\begin{itemize}
+  \item Hasil pencarian disimpan pada NPC, lalu dipakai berkali-kali sampai
+        selang waktunya habis.
+  \item Selang diatur melalui pilihan \texttt{--repath}: nilai nol berarti
+        pencarian diulang setiap bingkai.
+  \item Memperlambat pengulangan bukan tanpa harga: selama selang itu jalurnya
+        menuju tempat pemain berada sebelumnya.
+\end{itemize}
+\kodejelas{Kondisi \texttt{selang\_tersisa <= 0.0 or not self.jalur} memuat kedua
+pemicu sekaligus. Syarat kedua mudah terlupakan, dan akibatnya NPC berhenti
+bergerak walaupun pemainnya masih terlihat.}
+\end{frame}
+
+\begin{frame}{Menyebar Waktu Perhitungan}
+\begin{itemize}
+  \item Bila seluruh NPC menghitung ulang pada bingkai yang sama, beban
+        menumpuk pada bingkai itu lalu longgar pada bingkai berikutnya.
+  \item Gejalanya laju bingkai yang naik turun, walaupun rata-ratanya tetap.
+  \item Penanganannya sederhana: berikan awal yang berbeda kepada setiap NPC,
+        sehingga waktu perhitungan ulangnya tidak berbarengan.
+\end{itemize}
+\begin{center}
+{\ttfamily\small self.selang\_tersisa = self.selang * (index / jumlah\_npc)}
+\end{center}
+\begin{itemize}
+  \item NPC pertama menghitung ulang pada awal selang, NPC kedua pada sepertiga
+        selang, dan seterusnya. Beban rata-ratanya sama, tetapi sebarannya rata.
+\end{itemize}
+\begin{kiat}
+Prinsip yang sama dipakai peladen yang membagi pekerjaan latar belakang, atau
+robot yang membagi waktu perhitungan penglihatannya: pekerjaan mahal yang tidak
+mendesak sebaiknya disebar, bukan ditumpuk.
+\end{kiat}
+\end{frame}
+
+% ========================================================= bagian 4
+\section{Menilai Mutu Perilaku}
+\sectionframe{04}{Menilai Mutu Perilaku}
+  {Kelancaran, daya tanggap, dan beban komputasi}
+
+\begin{frame}{Tiga Segi Penilaian}
+\awalan{Inilah inti bab ini: menilai, bukan menulis. Ketiga segi diukur, bukan
+dikira-kira.}
+\begin{itemize}
+  \item \textbf{Kelancaran} --- seberapa lancar permainan berjalan. Ukurannya
+        laju bingkai yang benar-benar tercapai; laju yang turun saat NPC
+        bertambah menandakan beban telah melampaui batas.
+  \item \textbf{Daya tanggap} --- seberapa cepat NPC menyesuaikan diri terhadap
+        perpindahan pemain. Ukurannya jarak rata-rata NPC terhadap pemain;
+        jarak lebih kecil berarti NPC lebih rapat mendekati pemain.
+  \item \textbf{Beban komputasi} --- seberapa banyak pekerjaan yang diperlukan
+        untuk menghasilkan perilaku itu. Ukurannya banyaknya pencarian jalur
+        dan banyaknya petak yang diperiksa.
+\end{itemize}
+\vspace{0.1cm}
+\begin{kotak}
+Ketiga segi itu saling bertentangan. Menambah daya tanggap berarti menambah
+beban komputasi, dan beban berlebihan mengurangi kelancaran. Titik
+keseimbangannya hanya dapat ditemukan dengan mengukur.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Hasil Pengukuran}
+{\scriptsize
+\renewcommand{\arraystretch}{1.48}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.3cm}
+    >{\raggedleft\arraybackslash}p{2.7cm}
+    >{\raggedleft\arraybackslash}p{3.0cm}
+    >{\raggedleft\arraybackslash}X@{}}
+\toprule
+\textbf{Selang hitung ulang} & \textbf{Hitung ulang} &
+\textbf{Petak diperiksa} & \textbf{Jarak rata-rata} \\
+\midrule
+0,00 detik (setiap bingkai) & 2.700 & 251.463 & 35 piksel \\
+0,15 detik & 942 & 236.940 & 34 piksel \\
+0,30 detik & 858 & 240.582 & 34 piksel \\
+0,60 detik & 636 & 201.051 & 38 piksel \\
+1,20 detik & 594 & 189.237 & 40 piksel \\
+\bottomrule
+\end{tabularx}}
+\sumber{Pengukuran penulis: tiga NPC selama 900 bingkai dengan jalur pemain
+yang tetap, sehingga seluruh baris dapat dibandingkan secara adil. Program
+menyediakan pilihan \texttt{--evaluasi} untuk menghasilkan tabel ini.}
+\vspace{0.14cm}
+\begin{kotak}
+Jalur pemain yang tetap adalah syarat perbandingan yang adil. Tanpa itu,
+perbedaan hasil dapat berasal dari jalur pemain, bukan dari selang yang diuji.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Menafsirkan Hasilnya}
+\begin{enumerate}
+  \item \textbf{Pencarian setiap bingkai sangat boros.} Baris pertama menjalankan
+        2.700 pencarian, sekitar tiga kali lipat baris ketiga, tetapi jarak
+        rata-ratanya hampir sama: 35 berbanding 34 piksel. Sepertiga pekerjaan
+        sudah cukup.
+  \item \textbf{Selang yang terlalu panjang mulai merugikan.} Pada 1,20 detik
+        bebannya paling ringan, tetapi jarak rata-ratanya membesar menjadi 40
+        piksel: NPC mulai tertinggal.
+  \item \textbf{Titik keseimbangannya sekitar 0,30 detik.} Beban tinggal
+        sepertiga dibandingkan pencarian setiap bingkai, sedangkan jarak
+        rata-ratanya justru yang terkecil. Nilai itulah yang dipakai sebagai
+        bawaan program.
+\end{enumerate}
+\vspace{0.12cm}
+\begin{peringatan}
+Kesimpulan ini berlaku untuk peta, jumlah NPC, dan jalur pemain yang diuji,
+bukan untuk segala keadaan. Pada peta lebih luas, selang yang lebih panjang
+mungkin lebih menguntungkan. Menyebutkan keadaan pengukuran adalah bagian dari
+laporan yang jujur.
+\end{peringatan}
+\end{frame}
+
+% ========================================================= bagian 5
+\section{Menyusun Skenario Uji dan Merumuskan Perbaikan}
+\sectionframe{05}{Skenario Uji dan Perbaikan}
+  {Memicu perilaku, mengukur, lalu merumuskan perbaikan}
+
+\begin{frame}{Syarat Skenario Uji yang Berguna}
+\awalan{Pengujian biasa menuntut jawaban benar atau salah; skenario perilaku
+menuntut keadaan yang memicu perilaku tertentu, lalu pengamatan atas mutunya.}
+\begin{enumerate}
+  \item \textbf{Dapat diulang dengan hasil yang sama.} Posisi dan urutan pemain
+        tetap, misalnya jalur pemain ditentukan oleh nomor bingkai.
+  \item \textbf{Memicu perilaku yang hendak dinilai.} Untuk menilai perilaku
+        mengejar, pemain harus terlihat cukup panjang.
+  \item \textbf{Memuat ukuran yang dapat dibandingkan.} Setiap skenario
+        menghasilkan angka: jarak rata-rata, banyaknya pencarian, atau waktu.
+  \item \textbf{Mewakili keadaan pemakaian yang sesungguhnya.} Ruang terbuka saja
+        tidak cukup; permainan juga memuat lorong sempit dan tikungan.
+\end{enumerate}
+\vspace{0.1cm}
+\begin{kotak}
+Skenario pada ruang terbuka menjadi pembanding: di sana jalur lurus sudah
+mencukupi, sehingga kelemahan pada skenario lain dapat terlihat jelas.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Tiga Skenario yang Diminta}
+{\scriptsize
+\renewcommand{\arraystretch}{1.34}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.7cm}
+    >{\raggedright\arraybackslash}p{5.2cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Skenario} & \textbf{Keadaan yang dipicu} & \textbf{Yang diamati} \\
+\midrule
+Ruang terbuka &
+  Pemain berlari lurus menjauh, tanpa rintangan di antaranya. &
+  Apakah NPC dapat menyusul, dan berapa lama waktunya. Hasilnya menjadi
+  pembanding bagi kedua skenario berikutnya. \\
+\addlinespace
+Labirin &
+  Pemain berlari mengelilingi lorong, sehingga jalan lurus selalu terhalang. &
+  Apakah NPC menemukan jalan memutar, apakah jalurnya berubah-ubah tanpa sebab,
+  dan berapa banyak pencarian yang dijalankan. \\
+\addlinespace
+Rintangan dinamis &
+  Sebuah benda bergerak menutupi lorong yang sedang dilalui NPC. &
+  Apakah NPC mengatasi jalur yang menjadi usang di tengah jalan, dan berapa lama
+  memperbaikinya. Skenario ini mengungkap kelemahan terpenting rancangan. \\
+\bottomrule
+\end{tabularx}}
+\sumber{Ketiga skenario ini diminta RPS dan harus ada pada laporan
+\emph{playtest} mini proyek.}
+\vspace{0.14cm}
+\begin{kotak}
+Ketiganya dipilih karena memicu kesulitan yang berbeda, dan ketiganya dapat
+dibangun dengan perkakas yang telah tersedia. Ruang terbuka menjadi pembanding
+bagi kedua skenario lainnya.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Merumuskan Perbaikan}
+{\scriptsize
+\renewcommand{\arraystretch}{1.26}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.5cm}
+    >{\raggedright\arraybackslash}p{4.4cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Temuan} & \textbf{Usulan perbaikan} & \textbf{Cara mengukur
+keberhasilan} \\
+\midrule
+Pencarian setiap bingkai tidak membawa perbaikan perilaku &
+  Pakai selang 0,3 detik sebagai bawaan. &
+  Pencarian turun menjadi sepertiga, sedangkan jarak rata-rata tidak membesar. \\
+\addlinespace
+Seluruh NPC menghitung ulang pada bingkai yang sama, laju bingkai naik turun &
+  Sebar waktu perhitungan dengan awal berbeda tiap NPC. &
+  Simpangan laju antar-bingkai menyusut, rata-ratanya tidak berubah. \\
+\addlinespace
+Jalur dihitung ulang walaupun jalur lama masih memadai &
+  Periksa apakah ujung jalur masih dekat dengan pemain; bila ya, perpanjang
+  jalur alih-alih menghitung dari awal. &
+  Pencarian turun tanpa membesarnya jarak rata-rata. \\
+\addlinespace
+Gerak NPC menyudut pada tikungan &
+  Singkirkan petak yang segaris, sisakan titik belok saja. &
+  Pengamatan atas gerak, dan tambahan waktu perhitungan yang masih diterima. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.10cm}
+{\footnotesize\color{ubMuted}\itshape Tiga perbaikan pertama dapat dibuktikan
+dengan angka; perbaikan keempat menuntut pengamatan yang lebih halus. Dahulukan
+yang dapat diukur.}
+\end{frame}
+
+% ========================================================= bagian 6
+\section{Menutup Blok Python}
+\sectionframe{06}{Menutup Blok Python}
+  {Mini proyek, perkakas yang lengkap, dan yang menyusul}
+
+\begin{frame}{Mini Proyek yang Dihasilkan}
+\awalan{Mini proyek AI menuntut tiga keluaran, dan ketiganya telah tersedia pada
+bab ini.}
+\begin{itemize}
+  \item \textbf{Kode program} --- mini permainan dengan NPC bermesin keadaan
+        yang mencari jalurnya sendiri, tersusun atas \texttt{ch09\_fsm.py},
+        \texttt{ch10\_astar.py}, dan \texttt{ch11\_mini\_proyek.py}.
+  \item \textbf{Ringkasan desain} --- diagram keadaan beserta diagram arsitektur
+        integrasi pada frame sebelumnya.
+  \item \textbf{Laporan \emph{playtest}} --- catatan ketiga skenario uji beserta
+        perbaikan yang dirumuskan.
+  \item \textbf{Waktu pengumpulan} --- dikumpulkan dan dipresentasikan pada
+        minggu kesembilan; Bab VIII sampai Bab XI juga menjadi bahan UTS pada
+        minggu kesepuluh.
+\end{itemize}
+\vspace{0.1cm}
+\begin{kotak}
+Rubrik Lampiran A menimbang implementasi FSM 25\%, pencarian jalur 25\%,
+penggabungan keduanya 20\%, pengujian dan laporan 20\%, serta presentasi dan
+kerja sama 10\%. Bobot CPMK 2 adalah 10\% dari nilai akhir mata kuliah.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Perkakas Blok Python yang Telah Lengkap}
+\awalan{Seluruh perkakas Blok I dan Blok II kini tersedia, dan masing-masing
+tetap berlaku setelah pekerjaan berpindah ke Unity.}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.49\textwidth}
+    {\scriptsize
+    \begin{itemize}
+      \item Lingkungan kerja dan repositori --- Bab III.
+      \item Siklus permainan dan pengendalian waktu --- Bab IV.
+      \item Vektor, masukan, dan gerak --- Bab V.
+      \item Gravitasi, lompatan, dan pantulan --- Bab VI.
+      \item \texttt{Sprite}, \texttt{Group}, dan tabrakan --- Bab VII.
+    \end{itemize}}
+  \end{column}
+  \begin{column}{0.49\textwidth}
+    {\scriptsize
+    \begin{itemize}
+      \item Perilaku mengejar --- Bab VIII.
+      \item Mesin keadaan --- Bab IX.
+      \item Pencarian jalur A* --- Bab X.
+      \item Penggabungan keduanya dan penilaian mutu --- Bab XI.
+    \end{itemize}}
+  \end{column}
+\end{columns}
+\vspace{0.16cm}
+\begin{kotak}
+Yang berubah pada Blok III bukan gagasannya, melainkan letak tanggung jawabnya:
+siklus permainan, fisika, tabrakan, dan penyajian diserahkan kepada mesin.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Apa yang Menyusul}
+\begin{itemize}
+  \item Capaian ini bukan perkakas yang ditinggalkan. Pada Blok III dan Blok IV
+        pekerjaan berpindah ke Unity, dan seluruh gagasan tetap berlaku.
+  \item Waktu Anda beralih kepada pekerjaan yang tidak dapat dikerjakan mesin:
+        menentukan desain level, menyusun pengalaman bermain, dan menilai mutu
+        hasilnya.
+  \item Bekal mekanisme yang Anda bangun sendiri membuat peralihan berjalan
+        mulus: ketika perilaku terasa janggal, Anda dapat menelusuri apakah
+        komponennya keliru, mesinnya bekerja tak terduga, atau rancangan
+        levelnya yang kurang tepat.
+\end{itemize}
+\vspace{0.1cm}
+\begin{kiat}
+Simpanlah catatan praktikum sejak Bab III. Catatan itulah bahan refleksi yang
+paling jujur ketika Bab XVII membandingkan pendekatan Python dan Unity.
+\end{kiat}
+\end{frame}
+
+% --------------------------------------------------------- ketentuan
+\begin{frame}{Ketentuan Mini Proyek AI}
+\awalan{Ketentuan ini diambil dari RPS dan menjadi dasar penilaian asesmen
+minggu ini.}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.48\textwidth}
+    {\scriptsize\bfseries\color{ubAccent}PELAKSANAAN DAN KELUARAN}\par
+    \vspace{0.06cm}
+    \begin{itemize}
+      \item Kelompok beranggotakan 2--3 mahasiswa; dikumpulkan Minggu 9.
+      \item Satu atau lebih NPC dengan FSM minimal \texttt{idle},
+            \texttt{patrol}, dan \texttt{chase}.
+      \item A* dipanggil saat \emph{state chase}, pada peta berhalangan.
+      \item Keluaran: kode Python/Pygame, ringkasan desain (\emph{GDD}
+            singkat), dan laporan \emph{playtest}.
+    \end{itemize}
+  \end{column}
+  \begin{column}{0.48\textwidth}
+    {\scriptsize\bfseries\color{ubAccent}PENGUJIAN DAN PRESENTASI}\par
+    \vspace{0.06cm}
+    \begin{itemize}
+      \item Minimal tiga skenario uji: ruang terbuka, labirin, dan rintangan
+            dinamis sederhana.
+      \item Laporan \emph{playtest} 2--3 halaman berisi hasil pengamatan.
+      \item Demonstrasi 10 menit, dilanjutkan tanya jawab dan umpan balik
+            kelompok lain.
+      \item Setiap anggota harus memahami bagiannya dan mampu menjawab
+            pertanyaan penguji.
+    \end{itemize}
+  \end{column}
+\end{columns}
+\vspace{0.14cm}
+\begin{kotak}
+Presentasi dinilai dari kejelasan demonstrasi, kerja sama kelompok, dan
+kemampuan menjawab, bukan dari panjang kode. Setengah nilai berada pada
+penggabungan, pengujian, dan penyajiannya.
+\end{kotak}
+\end{frame}
+
+% --------------------------------------------------------- aktivitas
+\begin{frame}{Aktivitas di Kelas \textperiodcentered\ Kerja Kelompok}
+\awalan{Pengalaman belajar minggu 9 pada RPS, dikerjakan berurutan di kelas lalu
+diselesaikan sebelum presentasi.}
+\begin{enumerate}
+  \item Ketik ulang \texttt{ch11\_mini\_proyek.py} ke folder \texttt{code};
+        berkas itu memakai \texttt{ch10\_astar.py}, sehingga keduanya harus
+        satu folder.
+  \item Jalankan \texttt{python ch11\_mini\_proyek.py --evaluasi}, catat
+        tabelnya, lalu bandingkan dengan tabel pengukuran pada Bab XI.
+  \item Uji ruang terbuka dan labirin: catat jarak rata-rata, banyaknya
+        pencarian, dan kesan mutu perilaku NPC.
+  \item Tambahkan satu benda bergerak yang menutupi lorong, lalu amati perilaku
+        NPC ketika jalurnya menjadi usang.
+  \item Terapkan satu perbaikan dari tabel perbaikan, ukur hasilnya dengan cara
+        yang tercantum, lalu susun laporan \emph{playtest}.
+  \item Siapkan demonstrasi 10 menit dan simpan seluruh pekerjaan ke repositori
+        Git dengan pesan yang menerangkan isinya.
+\end{enumerate}
+\vspace{0.10cm}
+{\footnotesize\color{ubAccent}\itshape Rincian lengkap: Mini Proyek AI pada
+Bab XI buku ajar dan spesifikasi pada RPS minggu 9.}
+\end{frame}
+
+% --------------------------------------------------------- rangkuman
+\begin{frame}{Rangkuman}
+\begin{itemize}
+  \item Mesin keadaan menghasilkan niat, pencarian jalur menghasilkan rute;
+        menghubungkan keduanya hanya menambah satu langkah pada keadaan
+        mengejar.
+  \item Hasil pencarian disimpan dan dipakai berkali-kali; pencarian diulang
+        ketika selang habis atau ketika jalurnya sudah dilalui.
+  \item Pengikut jalur memakai perulangan \texttt{while} dan toleransi jarak;
+        tanpa keduanya NPC meninggalkan petak atau berhenti selamanya.
+  \item Selama selang hitung ulang jalurnya menjadi usang: itulah harga atas
+        penghematan perhitungan.
+  \item Menghitung ulang setiap bingkai sangat boros; titik keseimbangannya
+        sekitar 0,30 detik, dan beban sebaiknya disebar antar-NPC.
+  \item Mutu dinilai dari kelancaran, daya tanggap, dan beban komputasi; skenario
+        uji yang berguna dapat diulang dan memuat ukuran yang dibandingkan.
+\end{itemize}
+\end{frame}
+
+% --------------------------------------------------------- cek
+\begin{frame}{Cek Pemahaman}
+\begin{enumerate}
+  \item Mengapa pencarian jalur tidak dijalankan setiap bingkai, dan sebutkan
+        dua syarat yang memicunya.
+  \item Sebuah pencarian memeriksa 200 petak. Hitunglah beban perhitungannya
+        bila empat NPC menghitung ulang setiap bingkai pada 60 bingkai per
+        detik.
+  \item Mengapa jalur pemain pada skenario uji harus sama ketika membandingkan
+        dua rancangan?
+\end{enumerate}
+\vspace{0.35cm}
+{\footnotesize\color{ubMuted}\itshape Jawab tanpa membuka catatan, lalu
+bandingkan dengan kelompok di sebelah Anda.}
+\end{frame}
+
+% --------------------------------------------------------- penutup
+\penutup{Presentasi dan Laporan Mini Proyek AI}
+  {Setelah UTS, Blok III dimulai dengan Unity: Materi 10 \textperiodcentered\
+   Pengenalan Unity: \emph{Project}, \emph{Scene}, dan \emph{GameObject}.
+   Perkakas Python yang telah lengkap tetap berlaku; yang berubah hanyalah
+   letak tanggung jawabnya.}
+
+\end{document}
