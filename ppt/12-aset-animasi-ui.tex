@@ -1,0 +1,614 @@
+% =========================================================
+%  ppt/12-aset-animasi-ui.tex
+%  Materi 12 — Impor Aset Visual, Animasi, dan UI Dasar
+%  Bab XIV buku ajar
+% =========================================================
+\documentclass[aspectratio=169,10pt]{beamer}
+\input{config/packages}
+\input{config/theme}
+
+\renewcommand{\materino}{12}
+
+\begin{document}
+
+\deckcover{12}{13}
+  {Impor Aset Visual, Animasi, dan UI Dasar}
+  {4.1}
+  {Unity}
+  {Bab XIV buku ajar}
+  {Blok IV \textperiodcentered\ Materi 12--14}
+
+% --------------------------------------------------------- capaian
+\begin{frame}{Capaian Pertemuan}
+\setbeamerfont{itemize/enumerate body}{size=\scriptsize}
+\awalan{Sub-CPMK dan indikator dari RPS, serta tujuan Bab XIV buku ajar.}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.52\textwidth}
+    \begin{beamercolorbox}[wd=\linewidth,sep=5pt,rounded=true]{block title}
+      {\fontsize{6.8}{8}\selectfont\color{ubHead}SUB-CPMK 4.1 \textperiodcentered\ RANAH C3}\\[2pt]
+      {\footnotesize Mengimpor dan mengonfigurasi aset visual
+       (\emph{sprite}/model, animasi, UI) ke dalam \emph{scene}.}
+    \end{beamercolorbox}
+    \vspace{0.14cm}
+
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}INDIKATOR}\par
+    \vspace{0.06cm}
+    \begin{itemize}
+      \item Mengimpor aset dan mengatur \emph{importer setting} dengan tepat.
+      \item Menyiapkan \emph{Animator} beserta transisi animasi, misalnya
+            diam dan berlari.
+      \item Menampilkan elemen UI (skor dan nyawa) yang berfungsi pada
+            \emph{scene}.
+    \end{itemize}
+    \vspace{0.10cm}
+    \begin{kotak}
+      Bab ini membuka CPMK 4. Yang dibahas bukan lagi mekanisme permainan,
+      melainkan penyajiannya kepada pemain.
+    \end{kotak}
+  \end{column}
+  \begin{column}{0.45\textwidth}
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}TUJUAN BAB XIV}\par
+    \vspace{0.08cm}
+    \begin{itemize}
+      \item Menjelaskan jalan pengolahan aset, dari berkas gambar menjadi
+            benda pada \emph{scene}.
+      \item Mengatur empat \emph{importer setting} yang paling berpengaruh.
+      \item Menjelaskan mengapa berkas aset tidak boleh diubah di luar Unity.
+      \item Menyusun \emph{Animator} beserta keadaan dan transisinya.
+      \item Menghubungkan keadaan pemain dengan animasi melalui parameter.
+      \item Menyusun \emph{Canvas} yang menampilkan skor dan nyawa.
+    \end{itemize}
+  \end{column}
+\end{columns}
+\end{frame}
+
+% --------------------------------------------------------- peta
+\petapertemuan{4}
+  {Materi 11 \textperiodcentered\ Membangun Level, \emph{Physics}, dan Kontrol
+   Pemain}
+  {Materi 12 \textperiodcentered\ Impor Aset Visual, Animasi, dan UI Dasar}
+  {Materi 13 \textperiodcentered\ Integrasi Audio dan \emph{Trigger} Interaksi}
+  {\emph{Scene} dengan aset visual sungguhan: animasi diam dan berlari
+   berganti menurut gerak pemain, \emph{Canvas} menampilkan skor dan nyawa,
+   dan \emph{placeholder} \emph{greybox} telah diganti.}
+
+% ========================================================= bagian 1
+\section{Jalan Pengolahan Aset}
+\sectionframe{01}{Jalan Pengolahan Aset}
+  {Dari berkas gambar menjadi benda pada scene}
+
+\begin{frame}{Tiga Langkah dari Berkas menjadi Benda}
+\awalan{Perbedaan besar antara Unity dan Pygame terletak pada saat aset
+dikerjakan.}
+\begin{enumerate}
+  \item \textbf{Berkas disalin} ke dalam folder \texttt{Assets}. Unity
+        memantau folder itu, sehingga berkas yang baru muncul langsung diolah.
+  \item \textbf{Berkas diolah} menurut \emph{importer setting} yang berlaku
+        baginya, lalu hasilnya disimpan pada folder \texttt{Library}. Pengolahan
+        hanya dilakukan sekali untuk setiap pengaturan, bukan setiap kali
+        \emph{scene} dijalankan.
+  \item \textbf{Berkas dipakai} dengan menyeretnya dari \emph{Project window}
+        ke \emph{Scene} atau ke komponen \emph{Sprite Renderer}.
+\end{enumerate}
+\vspace{0.12cm}
+\begin{kotak}
+Pada Pygame gambar dimuat ketika program dijalankan, sehingga program harus
+disunting untuk mengubahnya. Pada Unity aset diolah ketika diimpor, dan
+hasilnya disimpan.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Empat Pengaturan Impor yang Paling Berpengaruh}
+{\scriptsize
+\renewcommand{\arraystretch}{1.14}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.9cm}
+    >{\raggedright\arraybackslash}p{3.4cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Pengaturan} & \textbf{Nilai yang lazim} & \textbf{Pengaruhnya} \\
+\midrule
+\emph{Sprite Mode} &
+  \emph{Single} atau \emph{Multiple} &
+  Menentukan apakah berkas berisi satu gambar atau banyak gambar tersusun
+  sebagai \emph{sprite sheet}. \\
+\addlinespace
+\emph{Pixels Per Unit} &
+  Misalnya 64 atau 100 &
+  Menentukan berapa piksel setara satu satuan pada \emph{scene}; nilai inilah
+  yang mengaitkan ukuran gambar dengan ukuran level. \\
+\addlinespace
+\emph{Filter Mode} &
+  \emph{Point} &
+  Menentukan cara gambar dihaluskan saat diperbesar; \emph{Point}
+  mempertahankan ketajaman piksel. \\
+\addlinespace
+\emph{Compression} &
+  \emph{None} &
+  Menentukan cara gambar dipadatkan saat program berjalan; \emph{None}
+  menjaga mutu gambar. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.10cm}
+\begin{kotak}
+Gambar 128 kali 128 piksel dengan \emph{Pixels Per Unit} 100 tingginya
+$128 \div 100 = 1{,}28$ satuan. Agar tingginya 2 satuan, nilai yang diperlukan
+$128 \div 2 = 64$. Samakan nilai itu untuk seluruh aset.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{\emph{Sprite Sheet} dan Pemotongannya}
+\awalan{Sebuah \emph{sprite sheet} memuat beberapa gambar dalam satu berkas,
+dan pemotongannya diatur melalui \emph{Sprite Editor}.}
+\begin{itemize}
+  \item Cara itu dipakai untuk gambar yang berubah-ubah, misalnya gerak
+        berjalan yang dipecah menjadi beberapa bingkai.
+  \item \emph{Sprite Mode} diatur menjadi \emph{Multiple}, lalu bingkainya
+        dipotong pada \emph{Sprite Editor}.
+  \item Tentukan ukuran setiap bingkai secara seragam, misalnya 64 kali 64
+        piksel, sehingga pemotongannya dapat dilakukan otomatis.
+  \item Ukuran yang tidak seragam menuntut pemotongan satu per satu; itu
+        melelahkan dan mudah salah.
+\end{itemize}
+\vspace{0.12cm}
+\begin{peringatan}
+Jangan mengubah ukuran berkas gambar di luar Unity, misalnya dengan program
+penyunting gambar. Apabila berkasnya berubah, Unity mengolahnya ulang dan
+hasilnya untuk seluruh benda yang memakainya ikut berubah. Ubahlah melalui
+\emph{Pixels Per Unit} agar perubahannya terkendali dan dapat dikembalikan.
+\end{peringatan}
+\end{frame}
+
+% ========================================================= bagian 2
+\section{Animator dan Peralihan Animasi}
+\sectionframe{02}{Animator dan Peralihan Animasi}
+  {Mesin keadaan yang mengurus gambar yang ditampilkan}
+
+\begin{frame}{Mesin Keadaan untuk Animasi}
+\awalan{Komponen \emph{Animator} adalah mesin keadaan yang khusus mengurus
+animasi. Yang berpindah bukan perilaku benda, melainkan gambar yang
+ditampilkan.}
+\centering
+\adjustbox{max width=0.90\linewidth,max height=0.52\textheight}{%
+  \input{../buku_ajar/chapters/14/figures/animator-dan-canvas.tikz}}
+\vspace{0.10cm}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.48\textwidth}
+    {\scriptsize Keadaan pada \emph{Animator} disebut \emph{animation clip}:
+     rangkaian gambar yang diputar berulang.}
+  \end{column}
+  \begin{column}{0.48\textwidth}
+    {\scriptsize Transisinya diatur melalui \emph{parameter}, yaitu nilai
+     yang ditetapkan oleh kode Anda.}
+  \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Tiga Jenis Parameter}
+\awalan{Pilihan yang tepat di antara ketiganya menghemat pekerjaan.}
+\begin{itemize}
+  \item \textbf{Angka pecahan} (\emph{float}) dipakai untuk nilai yang berubah
+        halus, misalnya besar kecepatan.
+  \item \textbf{Nilai benar atau salah} (\emph{bool}) dipakai untuk keadaan
+        yang hanya memiliki dua kemungkinan, misalnya sedang menyentuh tanah
+        atau tidak.
+  \item \textbf{Pemicu} (\emph{trigger}) dipakai untuk kejadian yang terjadi
+        sekali dan tidak memiliki lama, misalnya lompatan atau menerima
+        kerusakan.
+\end{itemize}
+\vspace{0.12cm}
+\begin{peringatan}
+Sebuah lompatan sebaiknya memakai \emph{trigger}, bukan \emph{bool} yang harus
+dikembalikan ke nilai semula oleh kode, sebab \emph{trigger} dikembalikan
+sendiri oleh mesin setelah dipakai.
+\end{peringatan}
+\begin{kotak}
+Nama parameter pada kode harus sama persis dengan nama pada jendela
+\emph{Animator}, termasuk besar-kecil hurufnya. Kesamaan itu tidak diperiksa
+penyunting.
+\end{kotak}
+\end{frame}
+
+\begin{frame}[fragile]{Menghubungkan Animasi dengan Keadaan Pemain}
+\lstinputlisting[language=CSharp,firstline=32,lastline=46]
+  {../buku_ajar/code/unity/ch14_kontrol_animasi.cs}
+\kodejelas{Skrip tidak memutar animasi apa pun. Ia hanya menetapkan nilai
+parameter, sedangkan peralihannya dikerjakan mesin menurut transisi yang Anda
+gambar pada jendela \emph{Animator}.}
+\begin{itemize}
+  \item Nama parameter disimpan pada peubah tetap melalui
+        \texttt{Animator.StringToHash}, sehingga kesalahan penamaan dicegah
+        sejak awal.
+\end{itemize}
+\end{frame}
+
+% ========================================================= bagian 3
+\section{Canvas: Skor dan Nyawa}
+\sectionframe{03}{Canvas: Skor dan Nyawa}
+  {Wadah tersendiri untuk antarmuka pengguna}
+
+\begin{frame}{Mengapa Antarmuka Memerlukan Wadah Tersendiri}
+\awalan{Elemen antarmuka berbeda sifatnya dari benda permainan.}
+\begin{itemize}
+  \item Ia tidak berada pada ruang permainan, tidak terpengaruh kamera, dan
+        tidak bergerak ketika pemain berpindah.
+  \item Karena itu ia ditempatkan pada wadah tersendiri yang disebut
+        \emph{Canvas}.
+  \item Seluruh elemen berada di bawah satu \emph{Canvas}, dan itulah yang
+        membuat susunannya tetap sama pada setiap ukuran layar.
+  \item Antarmuka permainan semacam ini lazim disebut \emph{HUD}
+        (\emph{heads-up display}): skor, nyawa, dan keterangan yang melekat
+        pada layar.
+\end{itemize}
+\vspace{0.10cm}
+{\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}TIGA ELEMEN YANG DIPAKAI}\par
+\vspace{0.04cm}
+\begin{itemize}
+  \item \textbf{\emph{Text}} --- menampilkan tulisan, misalnya skor dan jumlah
+        nyawa; ukuran dan jenis hurufnya diatur pada \emph{Inspector}.
+  \item \textbf{\emph{Image}} --- menampilkan gambar, misalnya ikon nyawa atau
+        bingkai antarmuka.
+  \item \textbf{\emph{Panel}} --- wadah untuk mengelompokkan elemen, sehingga
+        susunannya dapat dipindahkan bersama-sama.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Memperbarui Teks dan Ikon Nyawa}
+\lstinputlisting[language=CSharp,firstline=46,lastline=59]
+  {../buku_ajar/code/unity/ch14_tampilan_hud.cs}
+\kodejelas{\texttt{PerbaruiTampilan} hanya menyalin keadaan ke tampilan: teks
+skor dan nyawa diperbarui, lalu ikon nyawa dinyalakan menurut sisa nyawa.}
+\begin{itemize}
+  \item \texttt{Mathf.Max(0, lives - nilai)} menjaga nyawa tidak bernilai
+        negatif, sebab angka negatif pada antarmuka terlihat janggal.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Antarmuka Hanya Menampilkan, Bukan Menyimpan}
+\awalan{Antarmuka tidak menyimpan keadaan permainan; ia hanya menampilkannya.}
+\begin{itemize}
+  \item Keadaan yang sebenarnya tetap disimpan pada kode Anda, dan antarmuka
+        diperbarui ketika keadaannya berubah.
+  \item Apabila skor disimpan pada tulisan di layar saja, keadaan permainan
+        menjadi bergantung pada tampilannya, dan penyimpanan keadaan menjadi
+        sulit.
+  \item Aturannya sama dengan yang telah Anda pelajari pada Bab III: keadaan
+        disimpan pada satu tempat yang jelas, sedangkan tampilan hanya
+        mengikuti.
+\end{itemize}
+\vspace{0.12cm}
+\begin{peringatan}
+Rujukan ke elemen antarmuka dihubungkan melalui \emph{Inspector}, bukan melalui
+kode. Apabila rujukan itu belum dihubungkan, program tetap berjalan tetapi
+antarmukanya tidak diperbarui; kesalahannya muncul sebagai pesan peringatan
+pada panel \emph{Console}. Periksa panel itu setiap kali antarmuka tidak
+berubah seperti yang diharapkan.
+\end{peringatan}
+\end{frame}
+
+% ========================================================= bagian 4
+\section{Mengganti Greybox dengan Aset}
+\sectionframe{04}{Mengganti Greybox dengan Aset}
+  {Urutan tetap agar tidak ada yang terlewat}
+
+\begin{frame}{Urutan Penggantian}
+\awalan{Penggantian balok abu-abu dengan aset sebaiknya dilakukan menurut
+urutan yang tetap.}
+\begin{enumerate}
+  \item \textbf{Pastikan mekaniknya sudah selesai.} Seluruh ukuran telah
+        ditetapkan, dan levelnya sudah dapat dimainkan dengan lancar.
+  \item \textbf{Impor seluruh asetnya lebih dahulu}, lalu atur
+        \emph{importer setting}-nya satu per satu. Mengatur pengaturan sekaligus
+        pada awal pekerjaan lebih cepat daripada mengaturnya sambil mengganti
+        benda.
+  \item \textbf{Ganti benda satu per satu}, mulai dari yang paling terlihat
+        pemain: pemain, lalu rintangan, lalu latar. Setelah setiap penggantian,
+        jalankan \emph{scene}-nya dan pastikan mekaniknya tidak berubah.
+  \item \textbf{Periksa bentuk batas bendanya.} Mengganti gambar benda tidak
+        mengubah \emph{Collider}-nya secara otomatis.
+\end{enumerate}
+\vspace{0.10cm}
+\begin{kotak}
+Langkah keempat paling sering terlewat. Gejalanya khas: benda yang sudah
+bergambar rapi tetap bertabrakan seolah-olah masih berupa balok sebelumnya.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Membandingkan Sebelum dan Sesudah}
+\awalan{Perbandingan sebelum dan sesudah penggantian aset merupakan bagian dari
+luaran praktikum pada RPS.}
+\begin{itemize}
+  \item \textbf{Memastikan mekaniknya tidak berubah.} Apabila pemain tiba-tiba
+        tidak dapat melompati celah yang sebelumnya terjangkau, kemungkinan
+        besar bentuk batas bendanya berubah bersama gambarnya.
+  \item \textbf{Memeriksa keputusan perancangan.} Sering kali aset yang
+        sesungguhnya menuntut penyesuaian pada levelnya: celah yang tadinya
+        wajar menjadi terlalu sempit, atau warna latar bertabrakan dengan
+        warna pemain.
+  \item Temuan semacam itu wajar, dan justru merupakan alasan mengapa level
+        disusun lebih dahulu secara \emph{greybox}.
+\end{itemize}
+\vspace{0.10cm}
+\begin{kiat}
+Simpan tangkapan layar sebelum dan sesudah penggantian aset, lalu letakkan
+keduanya berdampingan pada laporan praktikum. Laporan yang memuat bukti
+perubahan lebih meyakinkan daripada yang hanya menceritakannya.
+\end{kiat}
+\end{frame}
+
+\begin{frame}{Bentuk Batas Tidak Ikut Berubah}
+\awalan{Mengganti gambar benda tidak mengubah \emph{Collider}-nya secara
+otomatis.}
+\begin{itemize}
+  \item Apabila ukuran gambarnya berbeda dari balok sebelumnya, bentuk batasnya
+        perlu disesuaikan.
+  \item Periksa letak dan ukuran \emph{Collider} pada \emph{Inspector}, lalu
+        bandingkan dengan bentuk gambar yang baru.
+  \item Jalankan \emph{scene}-nya setelah setiap penyesuaian; satu perubahan
+        bentuk batas dapat mengubah lompatan, celah, dan daerah aman sekaligus.
+  \item Apabila Anda memakai aset buatan orang lain, catatlah sumbernya beserta
+        lisensinya sejak awal, ketika asetnya baru diimpor.
+\end{itemize}
+\vspace{0.12cm}
+\begin{peringatan}
+Mencari kembali asal-usul ratusan berkas pada akhir semester jauh lebih
+melelahkan daripada mencatatnya satu per satu ketika diimpor.
+\end{peringatan}
+\end{frame}
+
+% ========================================================= bagian 5
+\section{Program Animasi dan Antarmuka}
+\sectionframe{05}{Program Animasi dan Antarmuka}
+  {Kode menentukan keadaan, mesin mengerjakan peralihan}
+
+\begin{frame}[fragile]{Fungsi Publik yang Dipanggil Skrip Lain}
+\lstinputlisting[language=CSharp,firstline=29,lastline=34]
+  {../buku_ajar/code/unity/ch14_tampilan_hud.cs}
+\kodejelas{\texttt{TambahSkor} adalah fungsi publik yang dipanggil dari skrip
+lain, misalnya ketika pemain mengambil benda. Skor disimpan pada kode, lalu
+tampilannya diperbarui.}
+\begin{itemize}
+  \item Pembagian pekerjaan pada animasi sama dengan pembagian pada Bab IX:
+        kode menentukan keadaan, sedangkan peralihannya ditentukan aturan yang
+        telah Anda susun.
+  \item Arah hadap gambar dibalik dengan mengubah \texttt{transform.localScale},
+        bukan memutar bendanya; memutar gambar dua dimensi 180 derajat akan
+        membuatnya terbalik atas-bawah.
+\end{itemize}
+\vspace{0.10cm}
+\begin{kotak}
+\texttt{enabled = false} dipakai ketika rujukan antarmuka belum dihubungkan,
+sehingga kesalahan yang sama tidak terulang pada setiap bingkai. Menghentikan
+pekerjaan yang tidak dapat dilanjutkan lebih baik daripada membiarkannya
+berjalan.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Menelusuri Animasi yang Tidak Berganti}
+\awalan{Gejalanya khas: program berjalan tanpa pesan kesalahan apa pun, tetapi
+animasinya tidak pernah berganti.}
+\begin{enumerate}
+  \item \textbf{Periksa jendela \emph{Animator}.} Apakah kedua keadaannya ada,
+        dan apakah transisinya tergambar?
+  \item \textbf{Periksa nilai parameter ketika \emph{scene} berjalan.} Jendela
+        itu menampilkan nilai setiap parameter pada saat itu.
+  \item \textbf{Periksa kode yang menetapkan nilainya.} Nama \texttt{speed}
+        pada kode berbeda dari \texttt{Speed} pada \emph{Animator}; perbedaan
+        besar-kecil huruf tidak diperiksa.
+  \item \textbf{Perbaiki, lalu jalankan kembali.} Animasinya berganti
+        sebagaimana mestinya.
+\end{enumerate}
+\vspace{0.10cm}
+\begin{kotak}
+Jendela \emph{Animator} yang menampilkan nilai parameter saat berjalan adalah
+alat pemeriksa yang paling berguna di sini. Kesalahan penamaan tidak
+menimbulkan pesan apa pun.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Percobaan yang Disarankan}
+{\scriptsize
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{6.4cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Yang diubah dan caranya} & \textbf{Yang sebaiknya diamati} \\
+\midrule
+\emph{Pixels Per Unit} pada aset pemain, dari 100 menjadi 50 &
+  Gambar pemain menjadi dua kali lebih besar, sedangkan bentuk batasnya tidak
+  ikut berubah. Sesuaikan bentuk batasnya sesudah percobaan. \\
+\addlinespace
+Nama parameter pada kode dibuat berbeda dari jendela \emph{Animator} &
+  Animasi tidak pernah berganti, dan program tetap berjalan tanpa satu pun
+  pesan kesalahan. Kembalikan sesudah percobaan. \\
+\addlinespace
+Nilai ambang kecepatan pada transisi dinaikkan menjadi 5 &
+  Animasi berlari baru muncul ketika pemain benar-benar cepat. Perhatikan
+  perbedaan rasa geraknya. \\
+\addlinespace
+Rujukan teks pada antarmuka diputus dari \emph{Inspector} &
+  Pesan peringatan muncul pada panel \emph{Console}, dan antarmukanya tidak
+  diperbarui. Kembalikan sesudah percobaan. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.10cm}
+\begin{peringatan}
+Percobaan kedua paling penting untuk dicoba, sebab kesalahannya tidak
+menimbulkan pesan apa pun. Peubah tetap untuk nama parameter mencegahnya sejak
+awal.
+\end{peringatan}
+\end{frame}
+
+% ========================================================= bagian 6
+\section{Aset dan Hak Pakainya}
+\sectionframe{06}{Aset dan Hak Pakainya}
+  {Lisensi, atribusi, dan penutup bagian visual}
+
+\begin{frame}{Tiga Jenis Lisensi yang Perlu Dikenal}
+\awalan{Aset yang ditemukan di internet tidak selalu boleh dipakai. Periksa
+lisensinya sebelum memakai aset apa pun.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.14}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.3cm}
+    >{\raggedright\arraybackslash}p{4.3cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Lisensi} & \textbf{Boleh dipakai untuk} & \textbf{Kewajiban} \\
+\midrule
+\emph{Public domain} atau \emph{CC0} &
+  Segala keperluan, termasuk komersial. &
+  Tidak ada. Cara paling bebas, dan paling aman untuk proyek mata kuliah. \\
+\addlinespace
+\emph{Creative Commons} dengan atribusi (CC~BY) &
+  Segala keperluan, termasuk komersial. &
+  Wajib menyebutkan pembuatnya dan lisensinya; untuk mata kuliah ini cukup
+  pada laporan. \\
+\addlinespace
+\emph{Creative Commons} tanpa penggunaan komersial (CC~BY-NC) &
+  Keperluan pendidikan, termasuk tugas mata kuliah. &
+  Wajib menyebutkan pembuatnya, dan tidak boleh dipakai untuk produk yang
+  dijual. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.08cm}
+{\footnotesize\color{ubMuted}\itshape Bacalah lisensi setiap aset pada halaman
+asalnya; sebagian aset menyertakan berkas lisensi tersendiri.}
+\end{frame}
+
+\begin{frame}{Mencatat Sumber Aset}
+\awalan{Catatan sumber aset sebaiknya dibuat sejak awal, dalam bentuk yang
+sederhana.}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.48\textwidth}
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}EMPAT HAL YANG DICATAT}\par
+    \vspace{0.06cm}
+    \begin{itemize}
+      \item Nama berkasnya.
+      \item Sumbernya.
+      \item Jenis lisensinya.
+      \item Keperluan atribusinya.
+    \end{itemize}
+  \end{column}
+  \begin{column}{0.48\textwidth}
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}GUNA CATATAN ITU}\par
+    \vspace{0.06cm}
+    \begin{itemize}
+      \item Memenuhi kewajiban atribusi.
+      \item Memudahkan mencari pengganti apabila diperlukan.
+      \item Menjadi bukti kejujuran akademik pada laporan proyek akhir.
+    \end{itemize}
+  \end{column}
+\end{columns}
+\vspace{0.14cm}
+\begin{peringatan}
+Aset yang ditemukan melalui mesin pencari gambar belum tentu boleh dipakai.
+Hak cipta berlaku sejak karya itu dibuat, walaupun tidak ada keterangan apa pun
+pada berkasnya. Pakai hanya aset dari tempat yang menyatakan lisensinya dengan
+jelas.
+\end{peringatan}
+\end{frame}
+
+\begin{frame}{Menutup Bagian Visual dari CPMK 4}
+\awalan{Bab ini melengkapi bagian pertama CPMK 4, yaitu penyajian visual.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{1.7cm}
+    >{\raggedright\arraybackslash}p{5.0cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Bab} & \textbf{Yang ditambahkan} & \textbf{Akibatnya} \\
+\midrule
+Bab XIV & Aset visual, animasi, dan UI dasar &
+  \emph{Placeholder} \emph{greybox} diganti aset sesungguhnya; pemain diam dan
+  berlari; \emph{Canvas} menampilkan skor dan nyawa. \\
+\addlinespace
+Bab XV & Bunyi dan umpan balik interaksi &
+  Peristiwa permainan---lompatan, pengambilan benda, kalah---memperoleh
+  tanggapan bunyi. \\
+\addlinespace
+Bab XVI & Pengujian prototipe dan presentasi &
+  Aset yang telah dipasang dinilai mutunya oleh pemain lain, dan hasilnya
+  menjadi dasar perbaikan. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.12cm}
+\begin{kotak}
+Yang tersisa adalah penyajian bunyi, dan pengujian atas keduanya secara
+menyeluruh. Keduanya berpijak pada \emph{scene} yang baru saja Anda lengkapi.
+\end{kotak}
+\end{frame}
+
+% --------------------------------------------------------- aktivitas
+\begin{frame}{Aktivitas di Kelas \textperiodcentered\ Praktikum 11}
+\setbeamerfont{itemize/enumerate body}{size=\scriptsize}
+\awalan{Pengalaman belajar minggu 13 pada RPS, dikerjakan berurutan di kelas
+lalu diselesaikan di rumah.}
+\begin{enumerate}
+  \item Impor sekurang-kurangnya satu aset pemain yang memuat animasi diam dan
+        berlari, beserta aset latar dan rintangan. Catat sumber dan lisensinya
+        sejak awal.
+  \item Atur \emph{Pixels Per Unit} pada seluruh aset agar nilainya sama, lalu
+        hitung tinggi pemain yang dikehendaki. Potong \emph{sprite sheet} menjadi
+        bingkai berukuran seragam.
+  \item Susun \emph{Animator}: keadaan diam dan berlari, parameter kecepatan dan
+        keadaan menyentuh tanah, lalu gambar transisinya.
+  \item Tempelkan \texttt{ch14\_kontrol\_animasi.cs}, hubungkan rujukan
+        \emph{Animator} dan \texttt{Rigidbody} pada \emph{Inspector}, lalu uji
+        pergantian animasinya.
+  \item Buat \emph{Canvas} berisi teks skor dan nyawa, tempelkan
+        \texttt{ch14\_tampilan\_hud.cs}, hubungkan rujukan teksnya, lalu panggil
+        \texttt{TambahSkor} ketika pemain mengambil benda.
+  \item Simpan tangkapan layar sebelum dan sesudah penggantian aset, periksa
+        bentuk batasnya, tulis catatan praktikum, lalu simpan ke repositori Git.
+\end{enumerate}
+\vspace{0.06cm}
+{\footnotesize\color{ubAccent}\itshape Rincian lengkap: Praktikum 11 pada
+Bab XIV buku ajar. Kumpulkan melalui repositori Git pribadi.}
+\end{frame}
+
+% --------------------------------------------------------- rangkuman
+\begin{frame}{Rangkuman}
+\begin{itemize}
+  \item Aset diolah ketika diimpor, bukan ketika program dijalankan. Mengubah
+        \emph{importer setting} mengubah seluruh benda yang memakai aset itu
+        sekaligus.
+  \item Empat pengaturan impor yang paling berpengaruh: \emph{Sprite Mode},
+        \emph{Pixels Per Unit}, \emph{Filter Mode}, dan \emph{Compression}.
+        Nilai \emph{Pixels Per Unit} sebaiknya sama untuk seluruh aset.
+  \item \emph{Sprite sheet} dipotong menjadi bingkai berukuran seragam melalui
+        \emph{Sprite Editor}; ukuran berkas tidak boleh diubah di luar Unity.
+  \item \emph{Animator} adalah mesin keadaan animasi. Keadaannya berupa
+        \emph{animation clip}, dan transisinya diatur melalui parameter
+        \emph{float}, \emph{bool}, atau \emph{trigger}.
+  \item Nama parameter harus sama persis dengan yang ada pada jendela
+        \emph{Animator}; kesalahannya tidak menimbulkan pesan apa pun.
+  \item Antarmuka pada \emph{Canvas} hanya menampilkan keadaan yang disimpan
+        pada kode. Mengganti aset menuntut pemeriksaan bentuk batas benda.
+\end{itemize}
+\end{frame}
+
+% --------------------------------------------------------- cek
+\begin{frame}{Cek Pemahaman}
+\begin{enumerate}
+  \item Sebuah gambar berukuran 192 kali 192 piksel diimpor dengan
+        \emph{Pixels Per Unit} bernilai 100. Hitunglah tingginya pada
+        \emph{scene}, lalu hitunglah nilai yang diperlukan agar tingginya
+        menjadi 2 satuan.
+  \item Kode menetapkan nilai parameter animasi, tetapi animasinya tidak
+        berganti dan tidak ada pesan kesalahan. Sebutkan dua kemungkinan
+        penyebabnya.
+  \item Mengapa keadaan permainan disimpan pada kode, bukan pada tampilan
+        antarmukanya?
+\end{enumerate}
+\vspace{0.35cm}
+{\footnotesize\color{ubMuted}\itshape Jawab tanpa membuka catatan, lalu
+bandingkan dengan pasangan di sebelah Anda.}
+\end{frame}
+
+% --------------------------------------------------------- penutup
+\penutup{Tugas Praktikum 11}
+  {Materi 13 \textperiodcentered\ Integrasi Audio dan \emph{Trigger} Interaksi:
+   \emph{AudioClip} dan \emph{AudioSource} mengiringi BGM serta SFX, lalu
+   \emph{trigger} pada \emph{pickup}, tabrakan, dan kondisi menang atau kalah
+   memberi umpan balik atas peristiwa permainan.}
+
+\end{document}

@@ -1,0 +1,572 @@
+% =========================================================
+%  ppt/04-fisika-gravitasi-lompat-pantul.tex
+%  Materi 4 — Fisika Sederhana: Gravitasi, Lompatan, dan Pantulan
+%  Bab VI buku ajar
+% =========================================================
+\documentclass[aspectratio=169,10pt]{beamer}
+\input{config/packages}
+\input{config/theme}
+
+\renewcommand{\materino}{04}
+
+\begin{document}
+
+\deckcover{04}{4}
+  {Fisika Sederhana: Gravitasi, Lompatan, dan Pantulan}
+  {1.3}
+  {Python / Pygame}
+  {Bab VI buku ajar}
+  {Blok I \textperiodcentered\ Materi 1--5}
+
+% --------------------------------------------------------- capaian
+\begin{frame}{Capaian Pertemuan}
+\setbeamerfont{itemize/enumerate body}{size=\scriptsize}
+\awalan{Sub-CPMK dan indikator dari RPS, serta tujuan Bab VI buku ajar.}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.52\textwidth}
+    \begin{beamercolorbox}[wd=\linewidth,sep=5pt,rounded=true]{block title}
+      {\fontsize{6.8}{8}\selectfont\color{ubHead}SUB-CPMK 1.3}\\[2pt]
+      {\footnotesize Menerapkan logika fisika sederhana (\emph{gravitasi},
+       lompatan, pantulan) dalam simulasi 2D.}
+    \end{beamercolorbox}
+    \vspace{0.16cm}
+
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}INDIKATOR}\par
+    \vspace{0.06cm}
+    \begin{itemize}
+      \item Menerapkan \emph{integrasi Euler} untuk memperbarui kecepatan dan
+            posisi.
+      \item Mengimplementasikan lompatan yang hanya aktif ketika objek berada
+            di tanah.
+      \item Menghasilkan pantulan dengan \emph{koefisien restitusi} sederhana.
+    \end{itemize}
+  \end{column}
+  \begin{column}{0.45\textwidth}
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}TUJUAN BAB VI}\par
+    \vspace{0.08cm}
+    \begin{itemize}
+      \item Menerapkan integrasi Euler dua tingkat untuk memperbarui kecepatan
+            lalu posisi.
+      \item Menjelaskan mengapa arah percepatan gravitasi bernilai positif
+            pada koordinat layar.
+      \item Menghentikan benda di lantai, dan menjelaskan mengapa pemain tidak
+            boleh memantul ketika mendarat.
+      \item Mengimplementasikan lompatan yang hanya bekerja ketika benda berada
+            di tanah.
+      \item Memilih nilai gravitasi dan kecepatan lompatan untuk memperoleh
+            tinggi lompatan yang dikehendaki.
+      \item Menghasilkan pantulan dengan koefisien restitusi, dan menjelaskan
+            mengapa tinggi pantulan menyusut sebesar kuadrat koefisien itu.
+    \end{itemize}
+  \end{column}
+\end{columns}
+\end{frame}
+
+% --------------------------------------------------------- peta
+\petapertemuan{1}
+  {Materi 3 \textperiodcentered\ Gerak Objek, \texttt{Vector2}, Input, dan
+   \emph{Delta Time}}
+  {Materi 4 \textperiodcentered\ Fisika Sederhana: Gravitasi, Lompatan, dan
+   Pantulan}
+  {Materi 5 \textperiodcentered\ \emph{Sprite}, \emph{Group}, dan
+   \emph{Collision Detection}}
+  {Prototipe permainan yang bendanya jatuh, melompat, dan memantul; tinggi
+   lompatan terukur sesuai dengan hitungan.}
+
+% ========================================================= bagian 1
+\section{Percepatan sebagai Perubahan Kecepatan}
+\sectionframe{01}{Percepatan sebagai\\Perubahan Kecepatan}
+  {Tingkat kedua pada tahap pembaruan keadaan}
+
+\begin{frame}{Tingkat Kedua pada Pembaruan Keadaan}
+\awalan{Pada bab sebelumnya, kecepatan benda berubah hanya karena tombol ditekan
+atau dilepas. Bab ini membahas perubahan kecepatan yang terjadi dengan
+sendirinya, yaitu karena adanya percepatan.}
+\begin{itemize}
+  \item Penerapannya hanya menambah satu baris dibandingkan Bab V: kecepatan
+        tegak bertambah setiap bingkai, dan penambahannya sebanding dengan
+        selang waktu antar bingkai (\emph{delta time}).
+  \item Kedua baris dikerjakan berurutan; baris kedua memakai kecepatan yang
+        baru saja diperbarui pada baris pertama. Itulah sebabnya benda yang
+        jatuh bergerak makin cepat.
+\end{itemize}
+\[
+  v \leftarrow v + a\,\Delta t
+  \qquad\qquad
+  p \leftarrow p + v\,\Delta t
+\]
+\begin{kotak}
+Urutan itu bukan pilihan gaya penulisan, melainkan kaidah \emph{integrasi
+Euler} semi-implisit. Apabila urutannya dibalik, benda tampak jatuh lebih cepat
+daripada seharusnya, dan kesalahan itu menumpuk ke satu arah sehingga tidak
+lagi terlihat sebagai kesalahan kecil.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Arah Gravitasi pada Koordinat Layar}
+\awalan{Pada koordinat layar, sumbu tegak menuju ke bawah. Karena itu,
+percepatan \emph{gravitasi} yang menarik benda ke bawah dinyatakan sebagai
+nilai positif.}
+\[
+  a_y = +g > 0, \qquad\qquad v_{\text{lompat}} < 0
+\]
+\begin{itemize}
+  \item Kecepatan lompatan bernilai negatif karena mengarah ke atas. Kedua
+        tanda itu mudah tertukar, dan gejalanya khas.
+  \item Benda yang seharusnya jatuh justru melayang ke atas, atau lompatan yang
+        seharusnya ke atas justru menekan benda ke lantai.
+  \item Nilai gravitasi diukur dalam piksel per detik kuadrat, bukan meter per
+        detik kuadrat; nilai yang sering dipakai berkisar 1000--2500 piksel per
+        detik kuadrat.
+\end{itemize}
+\begin{kotak}
+Pilihan nilainya bergantung pada skala permainan dan pada kecepatan lompatan,
+sebagaimana dibahas pada bagian tentang lompatan.
+\end{kotak}
+\end{frame}
+
+\begin{frame}[fragile]{Satu Fungsi untuk Semua Benda}
+\lstinputlisting[language=Python,firstline=69,lastline=81]
+  {../buku_ajar/code/python/ch06_fisika.py}
+\kodejelas{Dua tingkat terlihat berurutan: percepatan mengubah kecepatan, lalu
+kecepatan mengubah posisi. Gravitasi dan restitusi diberikan sebagai argumen,
+bukan ditulis di dalam fungsi, sehingga satu fungsi melayani semua benda dan
+perbaikan cukup dilakukan di satu tempat.}
+\end{frame}
+
+% ========================================================= bagian 2
+\section{Gravitasi dan Batas Lantai}
+\sectionframe{02}{Gravitasi dan Batas Lantai}
+  {Lantai sebagai batas, dan persoalan ketika benda menyentuhnya}
+
+\begin{frame}{Lantai sebagai Batas Bawah}
+\awalan{Benda yang jatuh perlu berhenti di suatu tempat. Lantai dinyatakan
+sebagai satu nilai tetap: jarak tepi atasnya dari tepi atas jendela.}
+\begin{itemize}
+  \item Pada program bab ini lantai berada 60 piksel di atas tepi bawah jendela,
+        menyisakan ruang untuk menampilkan keterangan.
+  \item Setiap bingkai, sesudah posisi diperbarui, program memeriksa apakah
+        benda sudah menyentuh atau melewati lantai.
+  \item Pemeriksaan memakai tanda ketidaksamaan, bukan kesamaan. Benda yang
+        bergerak cepat melampaui lantai dalam satu bingkai, sehingga posisinya
+        tidak pernah tepat sama dengan nilai lantai.
+  \item Posisi dikembalikan ke permukaan lantai sebelum kecepatan diubah, agar
+        benda tidak terbenam semakin dalam.
+  \item Kecepatan jatuh dibatasi pada nilai tertentu, misalnya 1200 piksel per
+        detik, untuk mencegah benda menembus lantai. Nilai batas itu disebut
+        kecepatan akhir (\emph{terminal velocity}).
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Mengapa Pemain Tidak Boleh Memantul}
+\awalan{Pemain dan bola memakai fungsi pembaruan yang sama, tetapi satu nilai
+argumennya berbeda. Perhatikan akibatnya.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.14}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{1.8cm}
+    >{\centering\arraybackslash}p{1.7cm}
+    >{\raggedright\arraybackslash}p{4.5cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Benda} & \textbf{Restitusi} & \textbf{Perilaku saat mendarat}
+  & \textbf{Alasan} \\
+\midrule
+Pemain & $0{,}0$ &
+  Berhenti seketika; kecepatan tegaknya menjadi nol. &
+  Kendali pemain menuntut ketepatan. Pemain yang memantul tidak dapat
+  mengarahkan geraknya, dan permainan terasa tidak dapat diandalkan. \\
+\addlinespace
+Bola & $0{,}8$ &
+  Memantul dengan kecepatan 80 persen dari kecepatan datangnya. &
+  Pantulan memang dikehendaki; kehilangan kecepatan membuat bola akhirnya
+  berhenti dengan sendirinya. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.14cm}
+\begin{peringatan}
+Kesalahan yang sering terjadi adalah memberi koefisien restitusi kepada pemain
+``supaya terlihat hidup''. Akibatnya pemain memantul setiap kali mendarat dan
+kendalinya terasa lepas. Untuk kesan hidup, tambahkan percepatan dan
+perlambatan pada gerak mendatar, bukan pantulan pada gerak tegak.
+\end{peringatan}
+\end{frame}
+
+\begin{frame}[fragile]{Mengenali Benda yang Menyentuh Lantai}
+\lstinputlisting[language=Python,firstline=86,lastline=94]
+  {../buku_ajar/code/python/ch06_fisika.py}
+\kodejelas{Pemeriksaan memakai \texttt{>=} agar benda cepat tetap terdeteksi;
+posisi dikembalikan sebelum kecepatan diubah; syarat \texttt{velocity.y > 0}
+memastikan hanya benda yang bergerak ke bawah yang dipantulkan; dan
+\texttt{MIN\_BOUNCE\_SPEED} menghentikan pantulan yang terlalu kecil. Keadaan
+menyentuh lantai diperiksa dengan dua syarat: badan bersandar pada lantai
+dengan toleransi setengah piksel, dan kecepatan tegak tidak lagi mengarah ke
+bawah.}
+\end{frame}
+
+% ========================================================= bagian 3
+\section{Lompatan sebagai Impuls}
+\sectionframe{03}{Lompatan sebagai Impuls}
+  {Perubahan kecepatan seketika, syarat, dan pemilihan nilainya}
+
+\begin{frame}{Perubahan Kecepatan Seketika}
+\awalan{Lompatan adalah \emph{jump impulse}: perubahan kecepatan yang terjadi
+seketika, bukan gaya yang bekerja selama beberapa waktu.}
+\begin{itemize}
+  \item Kecepatan lompatan diberikan sebagai nilai negatif karena mengarah ke
+        atas, dan nilainya \textbf{diganti}, bukan ditambahkan: satu baris
+        \texttt{player\_velocity.y = -jump\_speed}.
+  \item Setelah itu gravitasi bekerja seperti biasa: benda melambat naik,
+        berhenti di puncak, lalu jatuh kembali.
+\end{itemize}
+\vspace{0.04cm}
+\centering
+\adjustbox{max width=0.80\linewidth,max height=0.40\textheight}{%
+  \input{../buku_ajar/chapters/06/figures/gravitasi-lompatan.tikz}}
+\par
+\sumber{Lintasan lompatan: kecepatan awal $v_0$, puncak dengan kecepatan tegak
+nol, lalu jatuh makin cepat karena gravitasi.}
+\end{frame}
+
+\begin{frame}[fragile]{Lompatan Dibaca sebagai Peristiwa}
+\awalan{Bila lompatan dibaca dengan \texttt{pygame.key.get\_pressed()},
+syaratnya selalu benar selama tombol ditahan, sehingga benda melompat
+berulang-ulang dan pemain dapat terbang.}
+\lstinputlisting[language=Python,firstline=186,lastline=196]
+  {../buku_ajar/code/python/ch06_fisika.py}
+\kodejelas{Peristiwa \texttt{KEYDOWN} hanya terjadi sekali pada setiap
+penekanan. Syarat \texttt{if on\_ground} mencegah lompatan di udara, sedangkan
+\texttt{on\_ground = False} segera sesudah lompatan mencegah lompatan kedua
+pada bingkai berikutnya.}
+\end{frame}
+
+\begin{frame}{Memilih Gravitasi dan Kecepatan Lompatan}
+\awalan{Tinggi lompatan ditentukan oleh gravitasi dan kecepatan lompatan.
+Hubungannya dapat dihitung, dan dapat dibalik untuk keperluan perancangan.}
+\[
+  h = \frac{v_0^2}{2g}, \qquad\qquad
+  t = \frac{2v_0}{g}, \qquad\qquad
+  v_0 = \sqrt{2gh}
+\]
+{\scriptsize
+\renewcommand{\arraystretch}{1.14}
+\begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}p{1.9cm}
+    >{\centering\arraybackslash}p{3.0cm}
+    >{\centering\arraybackslash}p{2.2cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Gravitasi} & \textbf{Kecepatan lompatan} & \textbf{Lama di udara}
+  & \textbf{Rasa gerak} \\
+\midrule
+1200 & 600 piksel/detik & 1,00 detik & Melayang, seperti di bulan. \\
+\addlinespace
+1800 & 735 piksel/detik & 0,82 detik & Sedang, banyak dipakai permainan
+  platform. \\
+\addlinespace
+2400 & 849 piksel/detik & 0,71 detik & Gesit dan tegas, cocok untuk permainan
+  yang cepat. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.10cm}
+\begin{kotak}
+Ketiga pasangan itu menghasilkan tinggi 150 piksel, tetapi rasanya berbeda.
+Tinggi lompatan saja tidak menentukan rasa gerak; yang menentukan adalah
+perbandingan antara gravitasi dan kecepatan lompatan, yaitu lama benda berada
+di udara.
+\end{kotak}
+\end{frame}
+
+% ========================================================= bagian 4
+\section{Pantulan dengan Koefisien Restitusi}
+\sectionframe{04}{Pantulan dengan Koefisien Restitusi}
+  {Membalik arah, mengurangi kecepatan, dan menyusutkan tinggi}
+
+\begin{frame}{Membalik Arah dan Mengurangi Kecepatan}
+\awalan{Pantulan terjadi dalam dua langkah: arah gerak dibalik, lalu besarnya
+dikurangi. Keduanya dilakukan sekaligus dengan satu perhitungan.}
+\[
+  v' = -e\,v
+\]
+\begin{itemize}
+  \item Tanda negatif membalik arah, sedangkan pengali $e$ adalah
+        \emph{koefisien restitusi} yang nilainya terletak antara nol dan satu.
+  \item $e = 0$: tidak ada pantulan sama sekali, benda berhenti seketika.
+        Nilai ini dipakai untuk pemain.
+  \item $e = 1$: pantulan sempurna, kecepatan tidak berkurang dan benda
+        memantul selamanya. Nilai ini jarang dipakai karena membuat permainan
+        tidak pernah tenang.
+  \item $0 < e < 1$, misalnya $0{,}8$: benda kehilangan sebagian kecepatannya
+        setiap pantulan sehingga akhirnya berhenti.
+\end{itemize}
+\begin{kotak}
+Pada program bab ini pemain memakai $e = 0$ dan bola memakai $e = 0{,}8$.
+Perbedaan perilaku keduanya hanya berasal dari satu nilai itu.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Tinggi Pantulan Menyusut Kuadrat}
+\awalan{Kecepatan setelah pantulan adalah $e$ kali kecepatan sebelumnya,
+sedangkan tinggi yang dapat dicapai sebanding dengan kuadrat kecepatan.}
+\[
+  h' = e^2 h
+\]
+\vspace{0.04cm}
+\centering
+\adjustbox{max width=0.95\linewidth,max height=0.42\textheight}{%
+  \input{../buku_ajar/chapters/06/figures/pantulan.tikz}}
+\par
+\sumber{Untuk $e = 0{,}8$, tinggi tinggal $0{,}64$ kali setiap pantulan.}
+\end{frame}
+
+\begin{frame}{Urutan Penanganan yang Benar}
+\awalan{Satu hal yang mudah terlewat adalah urutan pekerjaan ketika benda
+menyentuh lantai.}
+\begin{enumerate}
+  \item Posisi dikembalikan ke permukaan lantai \textbf{lebih dahulu}, baru
+        kecepatan diubah. Bila dibalik, benda membalik arah saat masih terbenam:
+        tinggi pantulan menyusut lebih cepat dan benda dapat tersangkut.
+  \item Syarat \texttt{velocity.y > 0} memastikan hanya benda yang sedang
+        bergerak ke bawah yang dipantulkan. Tanpa syarat itu, benda yang baru
+        memantul akan dibalik lagi dan terperangkap di lantai.
+  \item Pada dinding, yang dibalik adalah komponen mendatar. \texttt{abs()}
+        menentukan arah keluar, sebab tanda negatif sederhana akan membalik
+        benda yang sudah bergerak menjauhi dinding.
+  \item Pantulan yang kecepatannya di bawah 60 piksel per detik dihentikan agar
+        benda tidak bergetar di permukaan lantai (\emph{jitter}).
+\end{enumerate}
+\end{frame}
+
+% ========================================================= bagian 5
+\section{Program Fisika Lengkap}
+\sectionframe{05}{Program Fisika Lengkap}
+  {Dua benda, satu hukum, dan pengukuran tinggi lompatan}
+
+\begin{frame}{Dua Benda, Satu Hukum}
+\awalan{Program bab ini menyatukan ketiga unsur fisika menjadi satu program
+yang memuat dua benda dengan perilaku berbeda, tetapi dihitung oleh fungsi
+yang sama.}
+\begin{itemize}
+  \item \textbf{Pemain} --- digerakkan tombol mendatar, jatuh karena
+        gravitasi, berhenti di lantai karena $e = 0$, dan dapat melompat ketika
+        menyentuh lantai. Benda ini memperlihatkan indikator (a) dan (b).
+  \item \textbf{Bola} --- bergerak sendiri, memantul di lantai dan di kedua
+        dinding dengan $e = 0{,}8$, sehingga pantulannya makin lama makin
+        pendek. Benda ini memperlihatkan indikator (c).
+  \item Perbedaan perilaku keduanya hanya berasal dari dua hal: siapa yang
+        menentukan kecepatan mendatarnya, dan berapa nilai koefisien
+        restitusinya.
+\end{itemize}
+\begin{kotak}
+Karena hukum fisika ditulis sebagai satu fungsi, seluruh benda dijamin
+mengikuti hukum yang sama. Apabila ditemukan kesalahan pada perhitungan
+gravitasi, perbaikannya cukup dilakukan di satu tempat.
+\end{kotak}
+\end{frame}
+
+\begin{frame}[fragile]{Satu Fungsi, Dua Pemanggilan}
+\lstinputlisting[language=Python,firstline=215,lastline=224]
+  {../buku_ajar/code/python/ch06_fisika.py}
+\kodejelas{Pemanggilan pertama memakai \texttt{PLAYER\_RESTITUTION}, yang kedua
+memakai \texttt{args.restitution}; selebihnya identik. Keadaan menyentuh lantai
+diperiksa sesudahnya dengan dua syarat: badan bersandar pada lantai dengan
+toleransi setengah piksel, dan kecepatan tegak tidak lagi mengarah ke bawah.}
+\end{frame}
+
+\begin{frame}{Mengukur Tinggi Lompatan}
+\awalan{Tinggi terukur dibandingkan dengan hitungan pada empat laju bingkai.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.14}
+\begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}p{2.2cm}
+    >{\centering\arraybackslash}p{3.0cm}
+    >{\centering\arraybackslash}p{3.4cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Batas laju} & \textbf{Tinggi terukur} & \textbf{Menurut hitungan}
+  & \textbf{Galat} \\
+\midrule
+30 FPS  & 124,6 piksel & 124,7 piksel & 11,4 piksel (8,4\%) \\
+\addlinespace
+60 FPS  & 130,3 piksel & 130,3 piksel & 5,8 piksel (4,3\%) \\
+\addlinespace
+120 FPS & 133,1 piksel & 133,2 piksel & 2,9 piksel (2,1\%) \\
+\addlinespace
+240 FPS & 134,5 piksel & 134,7 piksel & 1,5 piksel (1,1\%) \\
+\bottomrule
+\end{tabularx}}
+\sumber{Gravitasi 1800 piksel per detik kuadrat dan kecepatan lompatan 700
+piksel per detik, sehingga tinggi yang seharusnya 136,1 piksel.}
+\begin{kotak}
+Hasil pengukuran sesuai dengan hitungan; selisihnya di bawah 0,2 piksel pada
+setiap laju. Simulasi selalu sedikit lebih rendah daripada lintasan sebenarnya;
+itulah galat integrasi Euler, dan galatnya menyusut separuh setiap panjang
+langkah diperkecil separuh.
+\end{kotak}
+\end{frame}
+
+% ========================================================= bagian 6
+\section{Yang Belum Ada pada Fisika Ini}
+\sectionframe{06}{Yang Belum Ada pada Fisika Ini}
+  {Batas kemampuan model dan pengait ke materi berikutnya}
+
+\begin{frame}{Tabrakan yang Baru Diketahui Sebagian}
+\awalan{Program bab ini hanya mengenal dua jenis batas: lantai sebagai satu
+garis mendatar dan kedua dinding sebagai dua garis tegak.}
+\begin{itemize}
+  \item Pemeriksaannya membandingkan satu nilai, bukan memeriksa bentuk.
+  \item Permainan yang sesungguhnya memiliki rintangan di tengah ruang
+        permainan, benda yang bertumpuk, dan benda yang bergerak saling
+        mendekat.
+  \item Pemeriksaan semacam itu menuntut cara yang lebih umum: membandingkan
+        persegi pembatas dua benda, menentukan dari sisi mana tabrakan terjadi,
+        lalu menyelesaikannya per sumbu. Seluruhnya dibahas pada Bab VII.
+  \item Pekerjaan bab ini tidak sia-sia: urutan ``perbaiki posisi lebih dahulu,
+        baru ubah kecepatan'' dan pemeriksaan dengan tanda ketidaksamaan tetap
+        berlaku pada pemeriksaan tabrakan yang lebih umum.
+\end{itemize}
+\begin{kiat}
+Keterbatasan itu menjadi titik tolak Materi 5: \emph{sprite}, \emph{group}, dan
+\emph{collision detection} memberi cara yang berlaku untuk benda apa pun,
+bukan hanya untuk tepi jendela.
+\end{kiat}
+\end{frame}
+
+\begin{frame}{Sifat Benda yang Belum Dimodelkan}
+\awalan{Tiga sifat berikut belum ada pada model ini, dan masing-masing menuntut
+tambahan tersendiri.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.16}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.0cm}
+    >{\raggedright\arraybackslash}p{5.3cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Sifat} & \textbf{Yang seharusnya terjadi} & \textbf{Akibat pada model
+  ini} \\
+\midrule
+Gesekan (\emph{friction}) &
+  Benda yang bergeser di atas lantai melambat dan akhirnya berhenti. &
+  Kecepatan mendatar hanya berubah karena tombol, sehingga pemain dapat
+  meluncur selamanya. \\
+\addlinespace
+Hambatan udara &
+  Benda yang jatuh sangat lama mencapai kecepatan akhir dan tidak bertambah
+  cepat lagi. &
+  Kecepatan bertambah tanpa batas; karena itu perlu batas kecepatan untuk
+  mencegah benda menembus lantai. \\
+\addlinespace
+Permukaan miring dan bertingkat &
+  Arah normal menentukan gerak, dan perpindahan dibagi menjadi beberapa langkah
+  kecil. &
+  Lantai hanya berupa satu garis mendatar; belum ada dukungan untuk kemiringan
+  maupun tangga. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.14cm}
+\begin{kotak}
+Ketiganya tidak menghalangi permainan sederhana. Namun begitu level memuat
+tanjakan atau benda yang meluncur, model ini perlu dilengkapi.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Perhitungan Diserahkan kepada Mesin}
+\awalan{Seperti seluruh Blok I, bab ini memperlihatkan apa yang sesungguhnya
+dikerjakan oleh mesin permainan. Pada Unity nanti, gravitasi, pantulan, dan
+tabrakan dihitung oleh \emph{engine} dengan cara yang jauh lebih cermat.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.16}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.2cm}
+    >{\raggedright\arraybackslash}p{5.6cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Bab} & \textbf{Yang ditambahkan} & \textbf{Akibatnya} \\
+\midrule
+Bab VII & Deteksi tabrakan antar-objek, \emph{sprite} dan \emph{group} &
+  Benda dapat bertabrakan dengan rintangan dan dengan benda lain, bukan hanya
+  dengan tepi jendela. \\
+\addlinespace
+Bab VIII--XI & Pengendalian NPC &
+  Kecepatan tidak lagi berasal dari tombol atau bernilai tetap, melainkan dari
+  keputusan yang diambil program sendiri. \\
+\addlinespace
+Bab XIII & Fisika mesin pada Unity &
+  Perhitungan percepatan, tabrakan, dan gesekan diserahkan kepada mesin,
+  sedangkan kode Anda mengatur pengaturan dan menanggapi peristiwanya. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.14cm}
+\begin{kotak}
+Yang tidak berubah adalah cara berpikirnya: benda memiliki posisi dan kecepatan,
+percepatan mengubah kecepatan, kecepatan mengubah posisi, dan tabrakan
+menyelesaikan posisi lebih dahulu sebelum mengubah kecepatan.
+\end{kotak}
+\end{frame}
+
+% --------------------------------------------------------- aktivitas
+\begin{frame}{Aktivitas di Kelas \textperiodcentered\ Praktikum 04}
+\awalan{Pengalaman belajar minggu 4 pada RPS, dikerjakan berurutan di kelas lalu
+diselesaikan di rumah.}
+\begin{enumerate}
+  \item Ketik ulang \texttt{ch06\_fisika.py} --- jangan salin-tempel ---
+        jalankan, lalu amati pemain yang berhenti di lantai dan bola yang
+        memantul makin pendek.
+  \item Uji lompatan: pastikan pemain hanya melompat ketika menyentuh lantai,
+        dan menahan tombol tidak menghasilkan lompatan berulang.
+  \item Jalankan pada 30, 60, dan 120 FPS, lalu catat tinggi lompatan terukur
+        dan tinggi menurut hitungan pada lembar kerja.
+  \item Ubah rasa lompatan dengan tiga pasangan nilai:
+        \texttt{-{}-gravity 1200 -{}-jump-speed 600},
+        \texttt{-{}-gravity 1800 -{}-jump-speed 735}, dan
+        \texttt{-{}-gravity 2400 -{}-jump-speed 849}.
+  \item Ubah koefisien restitusi bola menjadi 0,5; 0,95; dan 1,0. Amati lama
+        bola memantul pada masing-masing nilai.
+  \item Tambahkan satu bongkahan sebagai lantai kedua, atur agar pemain dapat
+        mendarat di atasnya, lalu tulis catatan dan simpan pekerjaan ke Git.
+\end{enumerate}
+\vspace{0.12cm}
+{\footnotesize\color{ubAccent}\itshape Rincian lengkap: Praktikum 04 pada Bab VI
+buku ajar. Kumpulkan melalui repositori Git pribadi.}
+\end{frame}
+
+% --------------------------------------------------------- rangkuman
+\begin{frame}{Rangkuman}
+\begin{itemize}
+  \item Percepatan adalah tingkat kedua pada pembaruan: percepatan mengubah
+        kecepatan, lalu kecepatan mengubah posisi. Urutan itu wajib, sesuai
+        kaidah Euler semi-implisit.
+  \item Pada koordinat layar, gravitasi bernilai positif karena mengarah ke
+        bawah, sedangkan kecepatan lompatan bernilai negatif karena mengarah
+        ke atas.
+  \item Lantai diperiksa dengan tanda ketidaksamaan, bukan kesamaan; posisi
+        dikembalikan ke permukaan lantai sebelum kecepatan diubah.
+  \item Pemain memakai $e = 0$ agar berhenti seketika dan kendalinya andal;
+        bola memakai $0 < e < 1$ agar pantulannya mereda dengan sendirinya.
+  \item Lompatan adalah impuls: kecepatan diganti satu baris, dibaca sebagai
+        peristiwa \texttt{KEYDOWN}, dan hanya diizinkan di tanah. Tinggi
+        lompatan $h = v_0^2/(2g)$ dan lama di udara $t = 2v_0/g$.
+  \item Pantulan mengikuti $v' = -e\,v$; tinggi menyusut $e^2$ kali (pada
+        $e = 0{,}8$ tinggal 64 persen), pantulan kecil dihentikan, dan galat
+        Euler pada 60 FPS sekitar empat persen.
+\end{itemize}
+\end{frame}
+
+% --------------------------------------------------------- cek
+\begin{frame}{Cek Pemahaman}
+\begin{enumerate}
+  \item Tuliskan dua baris integrasi Euler, lalu jelaskan mengapa urutannya
+        tidak boleh dibalik.
+  \item Mengapa pemeriksaan lantai memakai tanda ketidaksamaan, bukan tanda
+        kesamaan? Apa yang terjadi pada benda yang bergerak cepat?
+  \item Sebuah bola dijatuhkan dari ketinggian 120 piksel dengan koefisien
+        restitusi $0{,}6$. Hitunglah tinggi pantulan pertamanya.
+\end{enumerate}
+\vspace{0.35cm}
+{\footnotesize\color{ubMuted}\itshape Jawab tanpa membuka catatan, lalu
+bandingkan dengan pasangan di sebelah Anda.}
+\end{frame}
+
+% --------------------------------------------------------- penutup
+\penutup{Tugas Praktikum 04}
+  {Pertemuan berikutnya mengorganisasi benda ke dalam \emph{sprite} dan
+   \emph{group}, lalu mendeteksi tabrakan dengan \texttt{spritecollide},
+   \texttt{groupcollide}, dan AABB berbasis \texttt{Rect}. Urutan ``perbaiki
+   posisi lebih dahulu, baru ubah kecepatan'' tetap berlaku.}
+
+\end{document}

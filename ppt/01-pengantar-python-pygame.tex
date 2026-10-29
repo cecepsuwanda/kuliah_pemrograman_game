@@ -1,0 +1,546 @@
+% =========================================================
+%  ppt/01-pengantar-python-pygame.tex
+%  Materi 1 — Pengantar Pemrograman Game dan Persiapan Python/Pygame
+%  Bab III buku ajar
+% =========================================================
+\documentclass[aspectratio=169,10pt]{beamer}
+\input{config/packages}
+\input{config/theme}
+
+\renewcommand{\materino}{01}
+
+\begin{document}
+
+\deckcover{01}{1}
+  {Pengantar Pemrograman Game dan Persiapan Python/Pygame}
+  {menuju 1.1}
+  {Python / Pygame}
+  {Bab III buku ajar}
+  {Blok I \textperiodcentered\ Materi 1--5}
+
+% --------------------------------------------------------- capaian
+\begin{frame}{Capaian Pertemuan}
+\setbeamerfont{itemize/enumerate body}{size=\scriptsize}
+\awalan{Sub-CPMK dan indikator dari RPS, serta tujuan Bab III buku ajar.}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.52\textwidth}
+    \begin{beamercolorbox}[wd=\linewidth,sep=5pt,rounded=true]{block title}
+      {\fontsize{6.8}{8}\selectfont\color{ubHead}SUB-CPMK MENUJU 1.1}\\[2pt]
+      {\footnotesize Menjelaskan struktur \emph{game loop} (input,
+       \emph{update}, \emph{render}) dan peran manajemen waktu dalam
+       permainan.}
+    \end{beamercolorbox}
+    \vspace{0.16cm}
+
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}INDIKATOR}\par
+    \vspace{0.06cm}
+    \begin{itemize}
+      \item Menjelaskan urutan tahapan input--\emph{update}--\emph{render}
+            dengan benar.
+      \item Mengidentifikasi peran \texttt{pygame.time.Clock} dan pembatasan
+            FPS.
+      \item Membedakan \emph{fixed timestep} dan \emph{variable timestep}
+            secara konseptual.
+    \end{itemize}
+  \end{column}
+  \begin{column}{0.45\textwidth}
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}TUJUAN BAB III}\par
+    \vspace{0.08cm}
+    \begin{itemize}
+      \item Menyiapkan lingkungan kerja Python dan memeriksa kesiapannya
+            secara mandiri.
+      \item Memasang Pygame serta menjelaskan kedudukannya di antara program
+            dan perangkat keras.
+      \item Menyusun struktur folder proyek dan mengelola pekerjaan dengan
+            Git.
+      \item Menulis, menjalankan, dan mengubah program Pygame pertama.
+      \item Membaca pesan kesalahan Python dan menentukan penyebabnya.
+      \item Membedakan peringatan (\emph{warning}) dari kesalahan
+            (\emph{error}).
+    \end{itemize}
+  \end{column}
+\end{columns}
+\end{frame}
+
+% --------------------------------------------------------- peta
+\petapertemuan{1}
+  {Pertemuan pertama (orientasi dan kontrak belajar)}
+  {Materi 1 \textperiodcentered\ Pengantar dan persiapan lingkungan}
+  {Materi 2 \textperiodcentered\ Game Loop, Event Handling, dan Clock}
+  {Lingkungan kerja siap dipakai, program Pygame pertama berjalan, dan
+   repositori Git berisi penyimpanan awal.}
+
+% ========================================================= bagian 1
+\section{Dari Teori ke Praktik}
+\sectionframe{01}{Dari Teori ke Praktik}
+  {Tiga hasil yang harus ada, bukan sekadar dipahami}
+
+\begin{frame}{Tiga Hasil yang Harus Diperoleh}
+\awalan{Bab ini bukan bab teori. Ia selesai apabila tiga hal berikut benar-benar
+ada di komputer Anda.}
+\begin{itemize}
+  \item \textbf{Lingkungan kerja yang siap.} Python dan Pygame terpasang,
+        dapat dipanggil, dan Anda mampu memeriksanya sendiri.
+        \begin{itemize}
+          \item Tanpa bantuan orang lain, termasuk saat berpindah komputer.
+        \end{itemize}
+  \item \textbf{Program pertama yang berjalan.} Jendela terbuka, teks versi
+        tampil, dan program menunggu sampai jendela ditutup.
+  \item \textbf{Tempat kerja yang tertata.} Folder proyek dengan struktur
+        jelas dan repositori Git sejak minggu pertama.
+\end{itemize}
+\vspace{0.2cm}
+\begin{kotak}
+Ketiganya dipakai terus sampai akhir semester. Praktikum minggu-minggu
+berikutnya menumpuk berkas pada struktur folder yang sama, dan seluruh nilai
+portofolio diambil dari repositori yang Anda buat sekarang.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Konvensi Penulisan Kode pada Buku Ini}
+\awalan{Satu kebiasaan perlu diketahui sebelum menulis kode pertama.}
+\begin{itemize}
+  \item \textbf{Nama variabel, fungsi, dan kelas berbahasa Inggris} ---
+        \texttt{screen}, \texttt{check\_pygame}, \texttt{parse\_arguments} ---
+        agar sejalan dengan dokumentasi resmi Pygame.
+  \item \textbf{Komentar, keterangan fungsi, dan keluaran program berbahasa
+        Indonesia} agar maksud setiap bagian kode dapat dipahami tanpa
+        penerjemahan.
+  \item \textbf{Istilah konsep pada teks berbahasa Indonesia}; istilah asingnya
+        dicetak miring pada kemunculan pertama.
+\end{itemize}
+\vspace{0.2cm}
+\begin{kiat}
+Kebiasaan ini juga berguna di luar perkuliahan: kode yang dibaca tim atau
+pewawancara kerja lazim memakai penamaan berbahasa Inggris.
+\end{kiat}
+\end{frame}
+
+\begin{frame}{Batas Pembahasan Bab Ini}
+\awalan{Mengetahui batas ini mencegah Anda mencari-cari bagian yang memang
+belum ada.}
+\begin{itemize}
+  \item \textbf{Siklus permainan} --- baru dibahas pada Bab IV. Program bab ini
+        menggambar sekali lalu menunggu peristiwa.
+  \item \textbf{Gerak dan fisika} --- dibahas pada Bab V sampai Bab VII. Objek
+        bergerak, gravitasi, dan tabrakan belum muncul di sini.
+  \item \textbf{Pemasangan Unity} --- dibahas pada Bab XII, karena kebutuhan
+        perangkatnya berbeda dari Python.
+\end{itemize}
+\vspace{0.2cm}
+\begin{kotak}
+Kerangka Bab I dan Bab II --- waktu, ruang, fisika, dan pengendalian objek ---
+menjadi latar bab ini. Bab III memindahkan kerangka itu ke meja kerja: menyiapkan
+perkakas, menyusun tempat bekerja, dan menulis program yang benar-benar berjalan.
+\end{kotak}
+\end{frame}
+
+% ========================================================= bagian 2
+\section{Menyiapkan Perkakas}
+\sectionframe{02}{Menyiapkan Perkakas}
+  {Dua perkakas wajib, dua yang sangat dianjurkan}
+
+\begin{frame}{Empat Perkakas dan Perannya}
+\begin{itemize}
+  \item \textbf{Penafsir Python} (wajib) --- menjalankan kode Python. Berkas
+        \texttt{.py} bukan program yang dapat dijalankan langsung oleh sistem
+        operasi; ia diserahkan kepada penafsir.
+  \item \textbf{Editor kode} (wajib) --- tempat menulis kode: menyoroti
+        sintaksis, mengatur indentasi, menyimpan berkas \texttt{.py}.
+  \item \textbf{Terminal} (sangat dianjurkan) --- menampilkan pesan kesalahan
+        secara lengkap, tempat perintah pemasangan paket dan perintah Git.
+  \item \textbf{Git} (wajib untuk tugas) --- mencatat riwayat perubahan berkas.
+        Seluruh tugas praktikum dikumpulkan melalui repositori Git pribadi.
+\end{itemize}
+\vspace{0.2cm}
+\begin{kotak}
+Pada minggu pertama cukup Python, editor, dan Git. Unity baru diperlukan mulai
+Bab XII.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Tiga Syarat Editor Kode}
+\awalan{Editor apa pun boleh, asalkan memenuhi tiga syarat berikut.}
+\begin{enumerate}
+  \item \textbf{Menyoroti sintaksis.} Warna berbeda untuk kata kunci, teks, dan
+        komentar membuat kesalahan seperti tanda kutip yang belum ditutup mudah
+        terlihat.
+  \item \textbf{Mengatur indentasi secara otomatis.} Python sangat peka terhadap
+        indentasi; editor membantu mempertahankannya konsisten.
+  \item \textbf{Memudahkan penyimpanan berkas berakhiran \texttt{.py}} pada
+        folder yang Anda tentukan.
+\end{enumerate}
+\vspace{0.2cm}
+\begin{kiat}
+Editor dengan terminal terpadu dan penampil pesan kesalahan menghemat waktu.
+Pilihan lazim: Visual Studio Code, PyCharm Community, atau editor teks dengan
+tambahan penyorot sintaksis.
+\end{kiat}
+\end{frame}
+
+\begin{frame}[fragile]{Terminal: Dua Perintah yang Perlu Dikuasai}
+\awalan{Hanya dua perintah yang perlu dikuasai lebih dahulu: berpindah folder
+dan melihat isi folder.}
+\begin{lstlisting}
+cd proyek-pygame        # masuk ke folder proyek
+dir                     # Windows: daftar berkas pada folder aktif
+ls                      # Linux dan macOS: daftar berkas
+\end{lstlisting}
+\kodejelas{\texttt{cd} berarti \emph{change directory}. Kesalahan ``berkas tidak
+ditemukan'' paling sering terjadi bukan karena berkasnya hilang, melainkan
+karena terminal berada di folder yang keliru.}
+\end{frame}
+
+% ========================================================= bagian 3
+\section{Memasang Pygame dan Memeriksa Pemasangan}
+\sectionframe{03}{Memasang Pygame dan Memeriksa Pemasangan}
+  {Pustaka, pengelola paket, dan skrip pemeriksaan}
+
+\begin{frame}{Kedudukan Pygame di atas SDL}
+\centering
+\adjustbox{max width=0.86\linewidth,max height=0.52\textheight}{%
+  \input{../buku_ajar/chapters/03/figures/lapisan-perkakas.tikz}}
+\vspace{0.12cm}
+\begin{kotak}
+Karena berlapis, pesan kesalahan kadang menyebut SDL, bukan Pygame. Versi SDL
+yang terpasang ikut menentukan kemampuan yang tersedia.
+\end{kotak}
+\end{frame}
+
+\begin{frame}[fragile]{Memasang Pygame dengan pip}
+\begin{lstlisting}
+python -m pip install pygame
+
+# bila pemasangan gagal karena masalah izin
+python -m pip install --user pygame
+\end{lstlisting}
+\kodejelas{Bentuk \texttt{python -m pip} memastikan pemasangan mengikuti
+penafsir yang akan menjalankan program.}
+\vspace{0.15cm}
+\begin{peringatan}
+Perintah \texttt{pip} saja dapat menunjuk versi Python yang berbeda. Akibatnya
+Pygame terpasang pada penafsir yang tidak Anda pakai, dan program tetap
+melaporkan bahwa Pygame tidak ditemukan.
+\end{peringatan}
+\end{frame}
+
+\begin{frame}[fragile]{Skrip Pemeriksaan Lingkungan}
+\awalan{Pemasangan yang berhasil belum membuktikan lingkungan siap. Skrip ini
+memeriksa penafsir yang dipakai dan kesiapan Pygame.}
+\lstinputlisting[language=Python,firstline=37,lastline=44]
+  {../buku_ajar/code/python/ch03_periksa_lingkungan.py}
+\kodejelas{Skrip melaporkan versi Python, Pygame, dan SDL, pengandar video, serta
+huruf bawaan. Kode keluar 0 berarti siap; 1 berarti ada yang perlu diperbaiki.}
+\end{frame}
+
+\begin{frame}{Masalah Pemasangan yang Sering Terjadi}
+{\scriptsize
+\renewcommand{\arraystretch}{1.16}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.4cm}
+    >{\raggedright\arraybackslash}p{3.7cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Gejala} & \textbf{Penyebab paling sering} & \textbf{Tindakan} \\
+\midrule
+\texttt{python} tidak dikenali &
+  Python belum terpasang atau tidak terdaftar pada PATH &
+  Pasang ulang dengan ``Add python.exe to PATH'', atau pakai \texttt{py} \\
+\texttt{ModuleNotFoundError} &
+  Pygame belum terpasang, atau terpasang pada penafsir berbeda &
+  Perhatikan baris \emph{Penafsir Python}, lalu
+  \texttt{python -m pip install pygame} \\
+\texttt{Access is denied} saat memasang &
+  Tidak ada izin menulis pada folder instalasi Python &
+  Tambahkan pilihan \texttt{--user} \\
+\texttt{No available video device} &
+  Dijalankan pada lingkungan tanpa layar &
+  Kerjakan di laboratorium; untuk uji tanpa layar setel
+  \texttt{SDL\_VIDEODRIVER} bernilai \texttt{dummy} \\
+\bottomrule
+\end{tabularx}}
+\vfill
+\begin{kotak}
+Jendela yang terbuka lalu langsung tertutup biasanya dijalankan dengan pilihan
+\texttt{--auto-close}: periksa argumen pada baris perintah.
+\end{kotak}
+\end{frame}
+
+% ========================================================= bagian 4
+\section{Struktur Folder Proyek dan Pengelolaan Versi}
+\sectionframe{04}{Struktur Folder dan Pengelolaan Versi}
+  {Tempat bekerja yang tertata dan riwayat pekerjaan}
+
+\begin{frame}{Struktur Folder Proyek}
+\centering
+\adjustbox{max width=0.98\linewidth,max height=0.55\textheight}{%
+  \input{../buku_ajar/chapters/03/figures/struktur-proyek.tikz}}
+\vspace{0.10cm}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.32\textwidth}
+    {\scriptsize\textbf{\texttt{code}} --- seluruh berkas program, satu berkas
+     per latihan.}
+  \end{column}
+  \begin{column}{0.34\textwidth}
+    {\scriptsize\textbf{\texttt{catatan}} --- kendala dan cara penyelesaiannya;
+     bahan laporan proyek akhir.}
+  \end{column}
+  \begin{column}{0.30\textwidth}
+    {\scriptsize\textbf{\texttt{aset}} --- gambar dan bunyi; baru terisi mulai
+     Bab VII.}
+  \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Berkas .gitignore}
+\awalan{Tidak semua berkas perlu disimpan. Salinan sementara Python dapat dibuat
+ulang kapan saja dan berbeda pada setiap komputer.}
+\begin{lstlisting}
+__pycache__/
+*.pyc
+.venv/
+.vscode/
+\end{lstlisting}
+\kodejelas{Empat baris mengabaikan salinan sementara Python, berkas terjemahan
+kode, lingkungan virtual, dan pengaturan editor yang bersifat pribadi.}
+\end{frame}
+
+\begin{frame}[fragile]{Tiga Tempat Penyimpanan Git}
+\begin{itemize}
+  \item \textbf{Folder kerja} (\emph{working directory}) --- berkas yang sedang
+        Anda sunting.
+  \item \textbf{Daftar siap simpan} (\emph{staging area}) --- berkas yang sudah
+        ditandai untuk ikut disimpan.
+  \item \textbf{Riwayat} (\emph{repository}) --- penyimpanan yang telah tercatat
+        dan tidak berubah lagi.
+\end{itemize}
+\vspace{0.10cm}
+\begin{lstlisting}
+git init                  # sekali saja: memulai repositori
+git status                # memeriksa keadaan berkas
+git add .                 # menandai seluruh perubahan
+git commit -m "praktikum 01: jendela pertama dan struktur proyek"
+git log --oneline         # melihat riwayat penyimpanan
+\end{lstlisting}
+\kodejelas{\texttt{git add} tidak menyimpan apa pun ke riwayat; penyimpanan
+sebenarnya terjadi pada \texttt{git commit}.}
+\end{frame}
+
+% ========================================================= bagian 5
+\section{Program Pygame Pertama}
+\sectionframe{05}{Program Pygame Pertama}
+  {Jendela, teks versi, dan perulangan peristiwa}
+
+\begin{frame}{Kerangka Program dalam Lima Langkah}
+\awalan{Kelima langkah ini akan Anda temui kembali, dengan tambahan, pada
+seluruh bab berikutnya.}
+\begin{enumerate}
+  \item \textbf{Memulai Pygame} dengan \texttt{pygame.init()}, sehingga seluruh
+        bagian pustaka yang diperlukan siap dipakai.
+  \item \textbf{Membuat permukaan tampilan} dengan
+        \texttt{pygame.display.set\_mode()}, yang membuka jendela dan
+        mengembalikan permukaan tempat Anda menggambar.
+  \item \textbf{Menggambar isi jendela}: mengisi latar dengan satu warna, lalu
+        menempelkan teks atau bentuk di atasnya.
+  \item \textbf{Menayangkan hasil gambar} dengan \texttt{pygame.display.flip()};
+        gambar yang telah disusun masih berada di memori.
+  \item \textbf{Menunggu sampai program diakhiri, lalu membersihkan} dengan
+        \texttt{pygame.quit()}.
+\end{enumerate}
+\vspace{0.15cm}
+\begin{kotak}
+Pada Pygame, apa pun yang digambar --- jendela, gambar yang dimuat, atau teks ---
+adalah \textbf{permukaan} (\emph{surface}). Menggambar berarti menempelkan satu
+permukaan ke permukaan lain dengan \texttt{blit}.
+\end{kotak}
+\end{frame}
+
+\begin{frame}[fragile]{Program Pertama: Jendela dan Teks}
+\lstinputlisting[language=Python,firstline=56,lastline=71]
+  {../buku_ajar/code/python/ch03_jendela.py}
+\kodejelas{\texttt{set\_mode} mengembalikan permukaan \texttt{screen}; warna
+dinyatakan rangkap tiga 0--255; \texttt{font.render} mengubah teks menjadi
+permukaan; \texttt{blit} menempelkannya; \texttt{flip} menayangkan hasilnya.}
+\end{frame}
+
+\begin{frame}{Perulangan Peristiwa, Bukan Siklus Permainan}
+\begin{itemize}
+  \item \texttt{pygame.event.wait()} menghentikan program sampai satu peristiwa
+        (\emph{event}) terjadi, misalnya tombol ditekan atau jendela ditutup.
+  \item Bila peristiwa itu \texttt{QUIT}, variabel \texttt{running} diubah
+        menjadi salah dan perulangan berakhir.
+  \item Tidak ada keadaan yang diperbarui dan tidak ada gambar yang disusun
+        ulang di dalam perulangan ini.
+  \item Akibatnya isi jendela tidak digambar kembali walaupun tertutup sebagian
+        oleh jendela lain.
+\end{itemize}
+\vspace{0.2cm}
+\begin{peringatan}
+Perulangan ini adalah \textbf{perulangan peristiwa}. Siklus permainan yang
+membaca masukan, memperbarui keadaan, dan menggambar ulang terus-menerus baru
+dibahas pada Bab IV.
+\end{peringatan}
+\end{frame}
+
+% ========================================================= bagian 6
+\section{Menjalankan, Memeriksa, dan Menelusuri Kesalahan}
+\sectionframe{06}{Menjalankan dan Menelusuri Kesalahan}
+  {Membaca keluaran, traceback, dan membedakan peringatan}
+
+\begin{frame}{Alur Kerja Harian}
+\centering
+\adjustbox{max width=0.92\linewidth,max height=0.52\textheight}{%
+  \input{../buku_ajar/chapters/03/figures/alur-kerja.tikz}}
+\vspace{0.14cm}
+\begin{itemize}
+  \item Program dijalankan dari terminal, tepatnya dari folder tempat berkas
+        program berada.
+  \item Untuk mengubah ukuran jendela tanpa menyunting kode, tambahkan pilihan
+        pada perintah: \texttt{python ch03\_jendela.py --width 800 --height 600}.
+\end{itemize}
+\begin{kotak}
+Pendekkan perulangan tulis--jalankan--amati--simpan. Perubahan kecil yang
+langsung dijalankan lebih mudah dilacak daripada perubahan besar yang melibatkan
+puluhan baris sekaligus.
+\end{kotak}
+\end{frame}
+
+\begin{frame}[fragile]{Membaca Traceback dari Baris Terakhir}
+\begin{lstlisting}[language={},numbers=none]
+Traceback (most recent call last):
+  File "proyek-pygame\code\galat2.py", line 5, in <module>
+    screen.fill(WARNA_LATAR)
+                ^^^^^^^^^^^
+NameError: name 'WARNA_LATAR' is not defined
+\end{lstlisting}
+\kodejelas{Baris terakhir memuat jenis kesalahan; baris di atasnya memuat berkas
+dan nomor baris penyebabnya. Karena itu pesan dibaca dari bawah ke atas.}
+\vspace{0.12cm}
+\begin{peringatan}
+Kesalahan nama baru terdeteksi ketika barisnya dieksekusi. Cara paling andal
+menemukannya adalah menjalankan program, bukan membacanya berulang kali.
+\end{peringatan}
+\end{frame}
+
+\begin{frame}{Peringatan Bukan Kesalahan}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.48\textwidth}
+    \begin{block}{Kesalahan (\emph{error})}
+      \begin{itemize}
+        \item Menghentikan program, atau membuat program tidak dapat dijalankan
+              sama sekali.
+        \item Selama masih ada pesan kesalahan, program tidak akan berjalan.
+        \item Contoh: \texttt{SyntaxError}, \texttt{IndentationError},
+              \texttt{NameError}, \texttt{ModuleNotFoundError}.
+      \end{itemize}
+    \end{block}
+  \end{column}
+  \begin{column}{0.48\textwidth}
+    \begin{exampleblock}{Peringatan (\emph{warning})}
+      \begin{itemize}
+        \item Memberitahukan sesuatu yang sebaiknya diketahui.
+        \item Program tetap berjalan; boleh diabaikan apabila maksudnya
+              dipahami.
+        \item Contoh: sambutan Pygame dan peringatan \texttt{pkg\_resources}
+              yang sudah usang.
+      \end{itemize}
+    \end{exampleblock}
+  \end{column}
+\end{columns}
+\vspace{0.18cm}
+\begin{kotak}
+Yang menandakan program berjalan baik adalah keluaran program Anda sendiri:
+``Jendela 640x480 dibuka.'' dan ``Program selesai.''
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Kesalahan yang Sering Terjadi}
+{\scriptsize
+\renewcommand{\arraystretch}{1.18}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{4.4cm}
+    >{\raggedright\arraybackslash}p{3.6cm}
+    >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Pesan atau gejala} & \textbf{Penyebab} & \textbf{Perbaikan} \\
+\midrule
+\texttt{SyntaxError: '(' was never closed} &
+  Ada kurung, tanda kutip, atau kurung siku yang belum ditutup &
+  Periksa baris yang ditunjuk tanda panah; hitung pasangan kurung \\
+\texttt{IndentationError: unexpected indent} &
+  Indentasi tidak konsisten, misalnya bercampur tab dan spasi &
+  Pakai empat spasi setiap tingkat; atur editor mengubah tab menjadi spasi \\
+\texttt{NameError: name 'X' is not defined} &
+  Nama dipakai sebelum dibuat, atau ejaannya berbeda &
+  Periksa ejaan dan besar-kecil huruf \\
+\texttt{ModuleNotFoundError: No module named 'pygame'} &
+  Pygame belum terpasang pada penafsir yang sedang dipakai &
+  Jalankan skrip pemeriksaan, lalu \texttt{python -m pip install pygame} \\
+\texttt{FileNotFoundError: [Errno 2]} &
+  Folder kerja terminal bukan folder tempat berkas berada &
+  \texttt{cd} ke folder yang benar, lalu periksa dengan \texttt{dir} atau
+  \texttt{ls} \\
+\bottomrule
+\end{tabularx}}
+\end{frame}
+
+% --------------------------------------------------------- aktivitas
+\begin{frame}{Aktivitas di Kelas \textperiodcentered\ Praktikum 01}
+\awalan{Pengalaman belajar minggu 1 pada RPS, dikerjakan berurutan di kelas lalu
+diselesaikan di rumah.}
+\begin{enumerate}
+  \item Periksa lingkungan: jalankan \texttt{ch03\_periksa\_lingkungan.py},
+        catat versi Python, Pygame, SDL, dan nama pengandar video.
+  \item Susun folder \texttt{proyek-pygame} berisi \texttt{code},
+        \texttt{catatan}, dan \texttt{aset}, lalu salin skrip pemeriksaan ke
+        dalamnya.
+  \item Ketik ulang \texttt{ch03\_jendela.py} --- jangan salin-tempel ---
+        jalankan, lalu tutup jendelanya.
+  \item Jalankan dengan \texttt{--width 800 --height 600}, ubah
+        \texttt{WARNA\_LATAR}, dan tambahkan satu baris nama serta NIM Anda.
+  \item Buat \texttt{.gitignore}, simpan pekerjaan dengan pesan yang menerangkan
+        isinya, lalu tulis catatan kendala pada folder \texttt{catatan}.
+\end{enumerate}
+\vspace{0.12cm}
+{\footnotesize\color{ubAccent}\itshape Rincian lengkap: Praktikum 01 pada Bab III
+buku ajar. Kumpulkan melalui repositori Git pribadi.}
+\end{frame}
+
+% --------------------------------------------------------- rangkuman
+\begin{frame}{Rangkuman}
+\begin{itemize}
+  \item Python dijalankan oleh penafsir; pemasangan di Windows perlu mencentang
+        ``Add python.exe to PATH''.
+  \item Pygame adalah pustaka di atas SDL: jendela, gambar, huruf, bunyi, dan
+        masukan.
+  \item \texttt{python -m pip install pygame} memasang pada penafsir yang sama
+        dengan program.
+  \item Skrip pemeriksaan melaporkan versi, pengandar video, dan huruf bawaan.
+  \item Folder \texttt{code}/\texttt{catatan}/\texttt{aset} dengan
+        \texttt{README.md} dan \texttt{.gitignore}; Git mencatat riwayat.
+  \item Menggambar dan menayangkan berbeda: perubahan baru terlihat setelah
+        \texttt{pygame.display.flip()}.
+\end{itemize}
+\end{frame}
+
+% --------------------------------------------------------- cek
+\begin{frame}{Cek Pemahaman}
+\begin{enumerate}
+  \item Mengapa perintah \texttt{pip} saja berisiko, sedangkan
+        \texttt{python -m pip} tidak?
+  \item Apa yang terjadi bila \texttt{pygame.display.flip()} dihilangkan setelah
+        penggambaran?
+  \item Mengapa \texttt{NameError} tidak dapat ditemukan sebelum program
+        dijalankan?
+\end{enumerate}
+\vspace{0.35cm}
+{\footnotesize\color{ubMuted}\itshape Jawab tanpa membuka catatan, lalu
+bandingkan dengan pasangan di sebelah Anda.}
+\end{frame}
+
+% --------------------------------------------------------- penutup
+\penutup{Tugas Praktikum 01}
+  {Pertemuan berikutnya menyusun siklus input $\rightarrow$ \emph{update}
+   $\rightarrow$ \emph{render}: menangkap \emph{event} \texttt{QUIT},
+   membatasi laju bingkai dengan \emph{Clock}, dan membedakan \emph{fixed}
+   dengan \emph{variable timestep}.}
+
+\end{document}

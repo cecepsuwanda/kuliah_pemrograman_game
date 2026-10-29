@@ -1,0 +1,585 @@
+% =========================================================
+%  ppt/03-gerak-vector2-delta-time.tex
+%  Materi 3 — Gerak Objek, Vector2, Input, dan Delta Time
+%  Bab V buku ajar
+% =========================================================
+\documentclass[aspectratio=169,10pt]{beamer}
+\input{config/packages}
+\input{config/theme}
+
+\renewcommand{\materino}{03}
+
+\begin{document}
+
+\deckcover{03}{3}
+  {Gerak Objek, Vector2, Input, dan Delta Time}
+  {1.2}
+  {Python / Pygame}
+  {Bab V buku ajar}
+  {Blok I \textperiodcentered\ Materi 1--5}
+
+% --------------------------------------------------------- capaian
+\begin{frame}{Capaian Pertemuan}
+\setbeamerfont{itemize/enumerate body}{size=\scriptsize}
+\awalan{Sub-CPMK dan indikator dari RPS, serta tujuan Bab V buku ajar.}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{0.52\textwidth}
+    \begin{beamercolorbox}[wd=\linewidth,sep=5pt,rounded=true]{block title}
+      {\fontsize{6.8}{8}\selectfont\color{ubHead}SUB-CPMK 1.2}\\[2pt]
+      {\footnotesize Merancang dan mengimplementasikan gerak objek berbasis
+       \emph{delta time} dan vektor pada Pygame.}
+    \end{beamercolorbox}
+    \vspace{0.16cm}
+
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}INDIKATOR}\par
+    \vspace{0.06cm}
+    \begin{itemize}
+      \item Menulis kode gerak menggunakan \texttt{pygame.Vector2} dan
+            \emph{delta time}.
+      \item Menunjukkan kecepatan objek tetap konsisten pada 30 \emph{FPS} dan
+            60 FPS.
+      \item Menyinkronkan posisi bertipe \emph{float} dengan \emph{Rect}
+            (\texttt{pygame.Rect}) bertipe bilangan bulat.
+    \end{itemize}
+  \end{column}
+  \begin{column}{0.45\textwidth}
+    {\fontsize{7}{8.5}\selectfont\bfseries\color{ubAccent}TUJUAN BAB V}\par
+    \vspace{0.08cm}
+    \begin{itemize}
+      \item Menyatakan posisi dan kecepatan sebagai vektor dengan
+            \texttt{pygame.Vector2}.
+      \item Membaca masukan yang berlangsung selama tombol ditahan.
+      \item Menjelaskan mengapa vektor arah perlu dinormalkan.
+      \item Menghitung perpindahan dari kecepatan dan selang waktu.
+      \item Membuktikan kecepatan tetap pada 30 dan 60 bingkai per detik.
+      \item Menyelaraskan posisi pecahan dengan \texttt{Rect} bilangan bulat.
+    \end{itemize}
+  \end{column}
+\end{columns}
+\end{frame}
+
+% --------------------------------------------------------- peta
+\petapertemuan{1}
+  {Materi 2 \textperiodcentered\ Game Loop, Event Handling, dan Clock}
+  {Materi 3 \textperiodcentered\ Gerak Objek, Vector2, Input, dan Delta Time}
+  {Materi 4 \textperiodcentered\ Fisika Sederhana: Gravitasi, Lompatan, dan
+   Pantulan}
+  {Objek bergerak dengan kecepatan tetap dalam piksel per detik pada 30 dan
+   60 FPS, posisi pecahan selaras dengan \texttt{Rect}, dan tabel pengukuran
+   kecepatan terisi.}
+
+% ========================================================= bagian 1
+\section{Posisi dan Kecepatan sebagai Vektor}
+\sectionframe{01}{Posisi dan Kecepatan sebagai Vektor}
+  {Dua angka yang disatukan menjadi satu nilai}
+
+\begin{frame}{Mengapa Pasangan Angka Perlu Disatukan}
+\awalan{Posisi pada bidang datar dinyatakan oleh dua angka. Menyimpannya pada
+dua variabel terpisah dapat dipakai, tetapi cepat menjadi merepotkan.}
+\begin{itemize}
+  \item Setiap operasi harus ditulis dua kali, dan setiap fungsi yang menerima
+        posisi harus menerima dua argumen.
+  \item Ketika jumlah objek bertambah, jumlah variabel bertambah dua kali
+        lipat.
+  \item Kekeliruan menukar pasangan angka---misalnya menambahkan kecepatan
+        mendatar ke posisi tegak---sulit terlihat karena keduanya bertipe sama.
+  \item \emph{Vector2} (\texttt{pygame.Vector2}) menyatukan kedua angka menjadi
+        satu nilai; seluruh perhitungan dilakukan atas vektor, bukan atas
+        komponennya.
+  \item Penjumlahan dan perkalian dengan satu angka bekerja per komponen:
+        $(200, 130) + (10, -5) = (210, 125)$ dan $(10, 5) \times 3 = (30, 15)$.
+\end{itemize}
+\vspace{0.16cm}
+\begin{kotak}
+Pada koordinat layar, sumbu tegak menuju ke bawah. Gerak ke atas karena itu
+dinyatakan sebagai pengurangan nilai tegak. Tombol atas ditekan tetapi objek
+bergerak ke bawah adalah kekeliruan tanda yang paling sering terjadi.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Posisi, Kecepatan, dan Perpindahan sebagai Vektor}
+\centering
+\adjustbox{max width=0.82\linewidth,max height=0.55\textheight}{%
+  \input{../buku_ajar/chapters/05/figures/vektor-kecepatan.tikz}}
+\vspace{0.08cm}
+\begin{itemize}
+  \item Posisi $p = (200;\ 130)$ dan kecepatan $v$ masing-masing adalah satu
+        nilai vektor, bukan dua angka yang kebetulan berdampingan.
+  \item Perpindahan selama satu selang waktu adalah $v \cdot \Delta t$; arahnya
+        segaris dengan kecepatan, panjangnya sebanding dengan selang waktu.
+\end{itemize}
+\sumber{Posisi, kecepatan, dan perpindahan sebagai vektor (Bab V buku ajar).}
+\end{frame}
+
+\begin{frame}{Operasi Vector2 yang Sering Dipakai}
+\awalan{Operasi berikut disediakan Pygame dan dipakai sepanjang Blok I serta
+Blok II.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.10}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{4.7cm} X@{}}
+\toprule
+\textbf{Penulisan} & \textbf{Arti dan contoh} \\
+\midrule
+\texttt{pygame.Vector2(200, 130)} &
+  Membuat vektor baru: 200 satuan mendatar dan 130 satuan tegak dari titik
+  asal. \\
+\texttt{position.x}, \texttt{position.y} &
+  Membaca atau mengubah satu komponen; berguna untuk membatasi posisi pada tepi
+  jendela. \\
+\texttt{position + velocity * dt} &
+  Menjumlahkan vektor dan mengalikannya dengan satu angka; perhitungan
+  dilakukan per komponen secara otomatis. \\
+\texttt{velocity.length()} &
+  Panjang vektor, yaitu besarnya kecepatan dalam piksel per detik. \\
+\texttt{velocity.length\_squared()} &
+  Kuadrat panjang vektor; dipakai memeriksa vektor bernilai nol tanpa
+  menghitung akar. \\
+\texttt{direction.normalize()} &
+  Vektor baru yang arahnya sama dengan panjang satu; vektor asalnya tidak
+  berubah. \\
+\texttt{a.distance\_to(b)} &
+  Jarak antara dua titik; berguna untuk mengukur jarak pemain terhadap objek
+  lain. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.10cm}
+\sumber{\texttt{normalize()} mengembalikan vektor baru; \texttt{normalize\_ip()}
+mengubah vektor asalnya. Menulis \texttt{direction.normalize()} tanpa
+menyimpan hasilnya tidak berpengaruh apa pun.}
+\end{frame}
+
+% ========================================================= bagian 2
+\section{Membaca Masukan yang Berlangsung Terus}
+\sectionframe{02}{Membaca Masukan yang Berlangsung Terus}
+  {Keadaan tombol, bukan peristiwa sekali}
+
+\begin{frame}{Keadaan Seluruh Tombol}
+\awalan{\texttt{pygame.key.get\_pressed()} mengembalikan keadaan seluruh tombol
+pada saat itu, bukan peristiwa.}
+\begin{itemize}
+  \item Pemeriksaan dilakukan tanpa menunggu peristiwa, sehingga hasilnya selalu
+        menggambarkan keadaan terkini.
+  \item Bila tombol masih ditahan pada bingkai ini, nilainya benar; bila sudah
+        dilepas, nilainya salah. Karena itu cara ini dipakai untuk gerak yang
+        berlangsung terus.
+  \item Dua tombol dihubungkan dengan \texttt{or}, sehingga pemain dapat memakai
+        tombol panah maupun huruf WASD.
+  \item Peristiwa \texttt{KEYDOWN} hanya terjadi sekali saat tombol ditekan dan
+        tidak memadai untuk gerak selama tombol ditahan.
+  \item Vektor arah dibaca sekali setiap bingkai, pada awal tahap pembaruan,
+        lalu dipakai menghitung kecepatan.
+\end{itemize}
+\vspace{0.16cm}
+\begin{kotak}
+Gerak yang dihasilkan disebut gerak langsung: kecepatan penuh begitu tombol
+ditekan, dan langsung berhenti begitu dilepas. Percepatan dan perlambatan
+ditambahkan pada Bab VI.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Menyusun Vektor Arah dan Menormalkannya}
+\centering
+\adjustbox{max width=0.86\linewidth,max height=0.37\textheight}{%
+  \input{../buku_ajar/chapters/05/figures/normalisasi-diagonal.tikz}}
+\vspace{0.04cm}
+\begin{itemize}
+  \item Dua tombol bersamaan, misalnya kanan dan bawah, menghasilkan vektor
+        $(1, 1)$ dengan panjang $\sqrt{1^2 + 1^2} = \sqrt{2} \approx 1{,}414$.
+  \item Akibatnya objek bergerak 41 persen lebih cepat ketika menempuh arah
+        diagonal: $200 \times 1{,}414 = 282{,}8$ piksel per detik.
+  \item Penanganannya disebut \emph{normalisasi}: panjang vektor dipaksa menjadi
+        satu sebelum dikalikan kecepatan, yaitu
+        \texttt{direction.normalize() * speed}.
+  \item Pemeriksaan \texttt{length\_squared() > 0} dilakukan lebih dahulu karena
+        menormalkan vektor bernilai nol tidak bermakna.
+\end{itemize}
+\sumber{Akibat gerak diagonal tanpa dan dengan penormalan vektor arah (Bab V).}
+\end{frame}
+
+\begin{frame}{Urutan Pembacaan yang Benar}
+\begin{itemize}
+  \item Vektor arah dibaca \textbf{sekali} pada setiap bingkai, yaitu pada awal
+        tahap pembaruan, lalu dipakai untuk menghitung kecepatan.
+  \item Membaca tombol berulang kali di dalam satu bingkai tidak salah, tetapi
+        tidak ada gunanya: keadaan tombol tidak berubah di tengah bingkai.
+  \item Yang perlu dihindari adalah membaca tombol pada tahap penayangan,
+        misalnya di dalam fungsi penggambaran. Keadaan yang digambar tidak
+        selalu sama dengan keadaan yang dihitung.
+  \item Kebiasaan yang benar: masukan dibaca pada tahap masukan, disimpan pada
+        variabel, lalu dipakai oleh tahap-tahap berikutnya.
+\end{itemize}
+\vspace{0.16cm}
+\begin{kiat}
+Untuk memeriksa apakah vektor bernilai nol, pakailah
+\texttt{length\_squared()}, bukan \texttt{length()}. Keduanya memberi jawaban
+yang sama untuk keperluan itu, tetapi kuadrat panjang lebih murah dihitung
+karena tidak menuntut operasi akar.
+\end{kiat}
+\end{frame}
+
+% ========================================================= bagian 3
+\section{Gerak Berbasis Selang Waktu}
+\sectionframe{03}{Gerak Berbasis Selang Waktu}
+  {Menghubungkan kecepatan dengan waktu yang terukur}
+
+\begin{frame}{Perpindahan Selama Satu Bingkai}
+\awalan{Perpindahan dihitung dari kecepatan dan selang waktu yang benar-benar
+berlangsung, yaitu nilai yang dikembalikan \texttt{clock.tick()}.}
+\[
+\Delta t = \frac{\text{clock.tick(FPS)}}{1000}\ \text{detik},
+\qquad
+\vec{p}_{\text{baru}} = \vec{p} + \vec{v}\,\Delta t .
+\]
+\begin{itemize}
+  \item Kecepatan dinyatakan dalam piksel per detik dan selang waktu dalam
+        detik, sehingga hasil kalinya adalah piksel.
+  \item Apabila selang waktunya dua kali lebih panjang, perpindahannya dua kali
+        lebih jauh, dan jarak yang ditempuh dalam satu detik tetap sama.
+  \item Urutan perhitungan mengikuti kaidah Euler: kecepatan dihitung lebih
+        dahulu, baru posisi diperbarui.
+  \item Baris \texttt{position = position + velocity * delta\_seconds} inilah
+        yang membuat kecepatan tidak bergantung pada laju bingkai.
+\end{itemize}
+\vspace{0.14cm}
+\begin{kotak}
+Selang waktu bingkai pertama bernilai nol, sehingga bingkai itu belum
+menghasilkan perpindahan. Nilai itu tetap harus dipakai apa adanya, bukan
+diganti dengan jatah waktu yang diharapkan.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Membuktikan Kecepatan Tetap melalui Pengukuran}
+\awalan{Setiap bingkai program mencatat perubahan posisi yang sesungguhnya,
+lalu membagi jumlah jarak dengan lama objek benar-benar bergerak.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.22}
+\begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}p{1.9cm}
+    >{\centering\arraybackslash}p{1.5cm}
+    >{\centering\arraybackslash}p{2.7cm}
+    >{\centering\arraybackslash}p{2.5cm} X@{}}
+\toprule
+\textbf{Batas laju} & \textbf{Bingkai} & \textbf{Waktu berjalan} &
+\textbf{Jarak tempuh} & \textbf{Kecepatan terukur} \\
+\midrule
+30 FPS  & 18 & 0,61 detik & 115,4 piksel & 200,0 piksel/detik \\
+60 FPS  & 36 & 0,60 detik & 116,8 piksel & 200,0 piksel/detik \\
+120 FPS & 72 & 0,62 detik & 122,4 piksel & 200,0 piksel/detik \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.16cm}
+\begin{itemize}
+  \item Kolom terakhir sama pada ketiga laju: pada 30 FPS objek berpindah lebih
+        jauh setiap bingkainya, pada 120 FPS lebih pendek, tetapi jarak per
+        detiknya sama.
+  \item Jarak tempuh boleh berbeda sedikit karena \texttt{clock.tick()} hanya
+        menjamin laju tidak \emph{melampaui} batas, bukan bahwa setiap bingkai
+        tepat sepanjang jatahnya.
+  \item Yang harus sama adalah \textbf{kecepatan}, bukan jarak tempuh selama
+        selang waktu yang diukur secara kasar.
+\end{itemize}
+\sumber{Pengukuran penulis pada kecepatan 200 piksel per detik, arah lurus,
+tanpa jendela; angka pada komputer Anda akan berbeda.}
+\end{frame}
+
+\begin{frame}{Mengapa Cara Ini Perlu Diuji Sendiri}
+\awalan{Anggapan ``jelas kecepatannya sama'' berbahaya, karena tiga kekeliruan
+berikut tidak menimbulkan pesan kesalahan apa pun.}
+\begin{itemize}
+  \item \texttt{delta\_seconds} lupa dipakai sebagai pengali: program tetap
+        berjalan, yang terlihat hanyalah gerak yang berbeda-beda menurut
+        komputer.
+  \item \texttt{delta\_seconds} dikalikan dua kali, misalnya karena kecepatan
+        sudah dinyatakan per bingkai: objek tetap bergerak dan hanya terasa
+        terlalu cepat.
+  \item Penormalan vektor arah terlupa: gerak diagonal tetap tampak wajar sampai
+        pemain menyadari bahwa berlari diagonal lebih cepat daripada berlari
+        lurus.
+\end{itemize}
+\vspace{0.16cm}
+\begin{kiat}
+Biasakan menjalankan program gerak pada dua laju bingkai yang berbeda, misalnya
+30 dan 60, setiap kali selesai menulisnya. Apabila kecepatan objek terasa
+berbeda, ada yang keliru pada perhitungan perpindahannya.
+\end{kiat}
+\end{frame}
+
+% ========================================================= bagian 4
+\section{Menyinkronkan Posisi Pecahan dengan Rect}
+\sectionframe{04}{Menyinkronkan Posisi Pecahan\\ dengan Rect}
+  {Dua tipe data, dua tugas yang berbeda}
+
+\begin{frame}[fragile]{Dua Tipe Data yang Berbeda}
+\awalan{Posisi gerak berjalan lancar sebagai pecahan, tetapi persoalan muncul
+ketika posisi itu hendak dipakai untuk menggambar.}
+\begin{itemize}
+  \item \texttt{pygame.Vector2} menyimpan nilai pecahan, misalnya 312,47.
+  \item \emph{Rect} menyimpan bilangan bulat: piksel ke-312 tepat berada di
+        tempatnya, dan tidak ada piksel ke-312,47.
+  \item Posisi pecahan karena itu diselaraskan setiap bingkai, tepat sebelum
+        penggambaran.
+\end{itemize}
+\vspace{0.10cm}
+\lstinputlisting[language=Python,firstline=197,lastline=199]
+  {../buku_ajar/code/python/ch05_gerak.py}
+\kodejelas{Pembulatan, bukan pemotongan, agar gerak tidak tampak tersendat.
+\texttt{player\_rect} hanyalah salinan yang dibulatkan untuk menggambar dan
+untuk memeriksa tabrakan pada Bab VII; posisi sesungguhnya tetap disimpan pada
+\texttt{position}.}
+\end{frame}
+
+\begin{frame}{Posisi Tetap Disimpan sebagai Pecahan}
+\awalan{Aturan yang perlu dipegang adalah pembagian tugas antara posisi yang
+sebenarnya dan posisi yang digambar.}
+\begin{itemize}
+  \item \textbf{Posisi sebenarnya disimpan sebagai pecahan} (\texttt{Vector2}),
+        karena hanya dengan begitu gerak dapat berlangsung halus. Pada kecepatan
+        20 piksel per detik dan 60 bingkai per detik, perpindahan setiap
+        bingkainya hanya $20 \div 60 = 0{,}333$ piksel; nilai itu harus
+        tersimpan agar dapat terakumulasi.
+  \item \textbf{\texttt{Rect} dipakai untuk menggambar dan memeriksa tabrakan},
+        dan diselaraskan dari posisi pecahan setiap bingkai. \texttt{Rect} bukan
+        tempat menyimpan posisi.
+  \item Bila aturan itu dilanggar, objek yang posisinya bilangan bulat tidak
+        bergerak sama sekali pada kecepatan rendah: perpindahan 0,333 piksel
+        terpotong menjadi nol pada setiap bingkai, dan nilai yang terpotong itu
+        hilang untuk selamanya.
+  \item Gejala itu tidak muncul pada kecepatan tinggi. Pada 200 piksel per detik
+        perpindahannya 3,33 piksel, sehingga kekeliruannya tidak terlihat sampai
+        kecepatan diturunkan untuk permainan yang sesungguhnya.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Membulatkan atau Memotong}
+\awalan{Pilihan antara \texttt{round()} dan \texttt{int()} memengaruhi letak
+objek yang terlihat.}
+\begin{itemize}
+  \item \texttt{int(312.9)} menghasilkan 312 (selalu ke arah nol), sedangkan
+        \texttt{round(312.9)} menghasilkan 313 (ke bilangan bulat terdekat).
+  \item Karena posisi yang benar adalah 312,9, nilai yang lebih dekat adalah
+        313. Memakai \texttt{int()} membuat objek tampak tertinggal hampir satu
+        piksel secara sistematis.
+  \item Selisih itu tidak terlihat pada objek tunggal, tetapi menjadi gerak yang
+        tersendat ketika beberapa objek bergerak bersama-sama.
+\end{itemize}
+\vspace{0.14cm}
+\begin{kotak}
+Memisahkan ``posisi yang sebenarnya'' dari ``posisi yang digambar'' membawa
+tiga manfaat: gerak tetap halus pada kecepatan rendah, \texttt{Rect} untuk
+tabrakan tersedia setiap bingkai tanpa mengorbankan ketelitian, dan perubahan
+laju bingkai tidak mengubah posisi akhir.
+\end{kotak}
+\end{frame}
+
+% ========================================================= bagian 5
+\section{Program Gerak Lengkap}
+\sectionframe{05}{Program Gerak Lengkap}
+  {Masukan, pembaruan, penyelarasan, dan penayangan}
+
+\begin{frame}[fragile]{Tahap Masukan: read\_direction}
+\awalan{Fungsi ini mengembalikan vektor arah berdasarkan tombol yang sedang
+ditahan.}
+\lstinputlisting[language=Python,firstline=80,lastline=90]
+  {../buku_ajar/code/python/ch05_gerak.py}
+\kodejelas{Vektor yang dikembalikan belum dinormalkan: panjangnya satu bila satu
+tombol ditekan, dan $\sqrt{2}$ bila dua tombol ditekan bersamaan. Penormalan
+dilakukan di tempat lain agar fungsi ini tetap sederhana dan hanya menangani
+masukan.}
+\end{frame}
+
+\begin{frame}[fragile]{Tahap Pembaruan: update\_position}
+\lstinputlisting[language=Python,firstline=100,lastline=108]
+  {../buku_ajar/code/python/ch05_gerak.py}
+\kodejelas{Arah dinormalkan lalu dikalikan kecepatan; posisi diperbarui dengan
+perpindahan selama satu selang waktu. Ketiga pekerjaan---penormalan,
+pembaruan posisi, dan pembatasan pada tepi jendela---berkaitan erat sehingga
+diletakkan pada satu tempat.}
+\vspace{0.10cm}
+\begin{kotak}
+Pembatasan tepi jendela dilakukan dengan memotong nilai posisi, bukan dengan
+memeriksa tabrakan. Pemeriksaan tabrakan yang sesungguhnya baru dibahas pada
+Bab VII.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Percobaan yang Disarankan}
+\awalan{Setiap perubahan kecil berikut dapat diamati langsung pada jendela
+program.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{5.4cm} X@{}}
+\toprule
+\textbf{Yang diubah dan caranya} & \textbf{Yang sebaiknya Anda amati} \\
+\midrule
+Laju bingkai melalui \texttt{--fps}. &
+  Kecepatan terukur tetap sama, sedangkan perpindahan setiap bingkai berubah.
+  Bandingkan nilai \texttt{delta\_seconds}. \\
+Kecepatan melalui \texttt{--speed}. &
+  Kecepatan terukur berubah sebanding. Pada kecepatan sangat rendah, misalnya
+  5 piksel per detik, gerak menjadi tersendat karena pembulatan. \\
+Arah diagonal dengan menekan dua tombol arah sekaligus. &
+  Kecepatan terukur tetap sama dengan gerak lurus; inilah bukti penormalan
+  bekerja. \\
+Baris penormalan dengan menghapus \texttt{normalize()}. &
+  Kecepatan diagonal naik menjadi sekitar 283 piksel per detik. Kembalikan baris
+  itu sesudah percobaan. \\
+Pembulatan dengan mengganti \texttt{round()} menjadi \texttt{int()}. &
+  Selisih letak hampir satu piksel; baris \texttt{Rect} pada jendela
+  memperlihatkan nilainya berbeda. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.12cm}
+\sumber{Kembalikan program ke keadaan semula sesudah bereksperimen, dan simpan
+keadaan percobaan pada repositori Git.}
+\end{frame}
+
+% ========================================================= bagian 6
+\section{Yang Belum Ada pada Gerak Ini}
+\sectionframe{06}{Yang Belum Ada pada Gerak Ini}
+  {Batas kemampuan program dan apa yang ditambahkan}
+
+\begin{frame}{Kecepatan yang Selalu Tetap}
+\awalan{Kecepatan pada bab ini hanya berubah karena tombol ditekan atau
+dilepas; selama ditahan nilainya tetap. Gerak semacam itu disebut gerak lurus
+beraturan.}
+\begin{itemize}
+  \item Sebagian besar permainan tidak cukup dengan gerak itu: benda yang jatuh
+        makin lama makin cepat, bola yang memantul kehilangan sebagian
+        kecepatannya, dan karakter yang melompat melambat mendekati titik
+        tertinggi.
+  \item Ketiga gejala itu berasal dari \textbf{percepatan}, yaitu perubahan
+        kecepatan terhadap waktu.
+  \item Percepatan ditambahkan pada tahap pembaruan, tepat sebelum kecepatan
+        dipakai untuk memperbarui posisi.
+\end{itemize}
+\[
+\vec{v} \leftarrow \vec{v} + \vec{a}\,\Delta t,
+\qquad
+\vec{p} \leftarrow \vec{p} + \vec{v}\,\Delta t .
+\]
+\begin{kotak}
+Baris pertama itulah yang ditambahkan pada Bab VI, beserta cara memilih nilai
+percepatan agar gravitasi terasa wajar dan lompatan dapat dikendalikan.
+\end{kotak}
+\end{frame}
+
+\begin{frame}{Objek yang Belum Dapat Bertabrakan dan Belum Menjadi Sprite}
+\begin{itemize}
+  \item Objek pada bab ini bergerak menembus apa pun. Ia hanya dibatasi tepi
+        jendela, dan pembatasan itu pun dilakukan dengan memotong nilai posisi,
+        bukan dengan memeriksa tabrakan.
+  \item Pada Bab VII, posisi pecahan dan \texttt{Rect} yang telah diselaraskan
+        dipakai untuk memeriksa kapan dua objek bersentuhan. Pemeriksaan
+        tabrakan memerlukan \texttt{Rect} bilangan bulat, sedangkan ketelitian
+        gerak memerlukan posisi pecahan.
+  \item Program ini menggerakkan satu objek yang disimpan pada beberapa
+        variabel: \texttt{position}, \texttt{velocity}, dan \texttt{player\_rect}.
+        Cara itu memadai untuk satu objek, tetapi tidak terkelola untuk sepuluh
+        atau seratus objek.
+  \item Kelas \emph{Sprite} menyatukan gambar, posisi, dan perilaku sebuah objek;
+        kelas \emph{Group} mengelola sekumpulan sprite sekaligus. Keduanya
+        dibahas pada Bab VII.
+  \item Sesudah itu, menambahkan objek baru cukup dengan membuat satu objek
+        lagi, bukan dengan menambah tiga variabel baru untuk setiap objek.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Ringkasan Perkembangan}
+\awalan{Dua hal dari bab ini akan dipakai terus sampai akhir buku: posisi
+sebagai pecahan yang diperbarui setiap bingkai, dan perpindahan sebagai hasil
+kali kecepatan dengan selang waktu.}
+{\scriptsize
+\renewcommand{\arraystretch}{1.14}
+\begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}p{1.7cm}
+    >{\raggedright\arraybackslash}p{5.0cm} X@{}}
+\toprule
+\textbf{Bab} & \textbf{Yang ditambahkan} & \textbf{Akibatnya} \\
+\midrule
+Bab VI & Percepatan: gravitasi, impuls lompatan, pantulan &
+  Kecepatan tidak lagi tetap, melainkan berubah setiap bingkai menurut
+  percepatan yang bekerja. \\
+Bab VII & \emph{Sprite}, \emph{Group}, dan deteksi tabrakan &
+  Objek menjadi satu kesatuan beserta gambarnya, dan perpindahannya dapat
+  terhenti karena bertabrakan. \\
+Bab VIII--XI & Pengendalian NPC &
+  Kecepatan tidak lagi berasal dari tombol, melainkan dari keputusan yang
+  diambil program sendiri. \\
+Bab XIII & Fisika mesin pada Unity &
+  Perhitungan percepatan dan tabrakan diserahkan kepada mesin, sedangkan kode
+  Anda mengatur pengaturan dan menanggapi peristiwanya. \\
+\bottomrule
+\end{tabularx}}
+\vspace{0.14cm}
+\sumber{Bagian yang ditambahkan pada gerak objek pada bab-bab berikutnya
+(Bab V).}
+\end{frame}
+
+% --------------------------------------------------------- aktivitas
+\begin{frame}{Aktivitas di Kelas \textperiodcentered\ Praktikum 03}
+\setbeamerfont{itemize/enumerate body}{size=\footnotesize}
+\awalan{Pengalaman belajar minggu 3 pada RPS, dikerjakan berurutan di kelas lalu
+diselesaikan di rumah.}
+\begin{enumerate}
+  \item Ketik ulang \texttt{ch05\_gerak.py} --- jangan salin-tempel --- lalu
+        gerakkan persegi dengan tombol WASD dan dengan tombol panah.
+  \item Amati dua baris posisi pada jendela: nilai pecahan berubah halus,
+        sedangkan nilai \texttt{Rect} melompat satu piksel setiap kali.
+  \item Ukur kecepatan pada 30 FPS:
+        \texttt{python ch05\_gerak.py --fps 30 --frames 18 --auto-direction
+        kanan}, lalu catat kecepatan terukurnya.
+  \item Ulangi pada 60 dan 120 FPS dengan \texttt{--frames 36} dan
+        \texttt{--frames 72}; bandingkan kecepatan terukurnya.
+  \item Uji \texttt{--auto-direction diagonal}; hapus pemanggilan
+        \texttt{normalize()}, catat perbedaannya, lalu kembalikan baris itu.
+  \item Tambahkan objek kedua berkecepatan 120 piksel per detik dengan tombol
+        IJKL, tulis catatan praktikum, dan simpan pekerjaan ke Git.
+\end{enumerate}
+\vspace{0.10cm}
+{\footnotesize\color{ubAccent}\itshape Rincian lengkap dan lembar kerja:
+Praktikum 03 pada Bab V buku ajar. Kumpulkan melalui repositori Git pribadi.}
+\end{frame}
+
+% --------------------------------------------------------- rangkuman
+\begin{frame}{Rangkuman}
+\begin{itemize}
+  \item \texttt{pygame.Vector2} menyatukan dua komponen posisi atau kecepatan
+        menjadi satu nilai; penjumlahan dan perkalian dengan satu angka bekerja
+        per komponen.
+  \item Pada koordinat layar sumbu tegak menuju ke bawah, sehingga gerak ke atas
+        dinyatakan sebagai pengurangan nilai tegak.
+  \item \texttt{pygame.key.get\_pressed()} menghasilkan gerak yang berlangsung
+        selama tombol ditahan; peristiwa \texttt{KEYDOWN} hanya terjadi sekali.
+  \item Vektor arah dinormalkan menjadi panjang satu sebelum dikalikan kecepatan;
+        tanpa itu gerak diagonal menjadi 41 persen lebih cepat.
+  \item $\Delta t = \text{clock.tick(FPS)}/1000$ dan
+        $p_{\text{baru}} = p + v\,\Delta t$; kecepatan terukur tetap 200,0
+        piksel per detik pada 30, 60, dan 120 FPS.
+  \item Posisi disimpan sebagai pecahan, sedangkan \texttt{Rect} dipakai untuk
+        menggambar dan memeriksa tabrakan; \texttt{round()} dipakai, bukan
+        \texttt{int()}.
+\end{itemize}
+\end{frame}
+
+% --------------------------------------------------------- cek
+\begin{frame}{Cek Pemahaman}
+\begin{enumerate}
+  \item Mengapa vektor arah $(1, 1)$ perlu dinormalkan sebelum dikalikan
+        kecepatan? Sertakan perhitungan singkat untuk mendukung jawaban Anda.
+  \item Mengapa \texttt{delta\_seconds} harus menjadi pengali perpindahan, dan
+        gejala apa yang muncul apabila pengali itu terlupa?
+  \item Mengapa posisi objek disimpan sebagai bilangan pecahan, sedangkan
+        \texttt{Rect} bertipe bilangan bulat? Apa akibatnya pada kecepatan
+        20 piksel per detik?
+\end{enumerate}
+\vspace{0.35cm}
+{\footnotesize\color{ubMuted}\itshape Jawab tanpa membuka catatan, lalu
+bandingkan dengan pasangan di sebelah Anda.}
+\end{frame}
+
+% --------------------------------------------------------- penutup
+\penutup{Tugas Praktikum 03}
+  {Pada Materi 4 kecepatan tidak lagi tetap: percepatan \mbox{gravitasi},
+   impuls lompatan, dan pantulan dinding dihitung dengan integrasi Euler yang
+   sama, lalu \mbox{diuji} pada nilai \mbox{gravitasi} dan koefisien pantulan
+   yang berbeda.}
+
+\end{document}
