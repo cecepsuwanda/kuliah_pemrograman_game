@@ -1,0 +1,45 @@
+% =========================================================
+%  config/commands.tex
+%  Perintah khusus modul praktikum.
+% =========================================================
+
+% Nilai awal; diisi ulang oleh metadata.tex dan tiap sesi.
+\providecommand{\ModulJudul}{Modul Praktikum Gudang Artefak}
+\providecommand{\ModulTeknologi}{Python}
+\providecommand{\SesiAktif}{Petunjuk}
+
+% --- Kepala sesi ------------------------------------------
+% \sesi{nomor}{judul}{sub-cpmk}{perkiraan waktu}
+\newcommand{\sesi}[4]{%
+  \clearpage
+  \renewcommand{\SesiAktif}{Sesi #1}%
+  \phantomsection
+  \addcontentsline{toc}{section}{Sesi #1\quad #2}%
+  \begin{tcolorbox}[enhanced, colback=ubNavy, colframe=ubNavy,
+    boxrule=0pt, arc=2pt, left=16pt, right=16pt, top=13pt, bottom=13pt,
+    before skip=0pt, after skip=14pt]
+    {\sffamily\bfseries\small\color{ubAccent}%
+     SESI #1\ \ \textperiodcentered\ \ #4}\\[4pt]
+    {\sffamily\bfseries\LARGE\color{white}#2}\\[7pt]
+    {\sffamily\small\color{ubHead}Sub-CPMK #3}
+  \end{tcolorbox}%
+}
+
+% --- Judul bagian di dalam sesi ---------------------------
+\newcommand{\bagian}[1]{\subsection*{#1}}
+
+% --- Nama berkas dan menu --------------------------------
+\newcommand{\file}[1]{\texttt{\detokenize{#1}}}
+\newcommand{\menu}[1]{\textsf{#1}}
+
+% --- Kotak checkpoint -------------------------------------
+\newcommand{\checkpoint}[2]{%
+  \begin{catatanbox}[title={Checkpoint Sesi #1}]
+  Proyek utuh sesi ini tersedia di \file{code/sesi-#1}. #2
+  \end{catatanbox}%
+}
+
+% --- Rujukan bab ------------------------------------------
+\newcommand{\sumberbab}[1]{%
+  {\footnotesize\color{ubMuted}Sumber konsep: #1.}%
+}

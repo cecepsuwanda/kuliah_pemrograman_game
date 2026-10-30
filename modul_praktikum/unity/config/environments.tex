@@ -1,0 +1,86 @@
+% =========================================================
+%  config/environments.tex
+%  Kotak dan lingkungan yang dipakai berulang pada tiap sesi.
+% =========================================================
+
+\tcbset{
+  sesibox/.style={
+    enhanced, breakable, arc=1.5pt, boxrule=0.6pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    fonttitle=\sffamily\bfseries\small, coltitle=white,
+    toptitle=2pt, bottomtitle=2pt,
+    before skip=8pt, after skip=8pt,
+    before upper={\setlength{\parskip}{0.35em}}
+  }
+}
+
+% --- Tujuan sesi ------------------------------------------
+\newtcolorbox{tujuanbox}[1][]{sesibox, colframe=ubNavy, colback=ubSoft,
+  title={Yang Dapat Anda Tunjukkan}, #1}
+
+% --- Prasyarat --------------------------------------------
+\newtcolorbox{prasyaratbox}[1][]{sesibox, colframe=ubLine, colback=ubGray,
+  coltitle=ubNavy, title={Sebelum Memulai}, #1}
+
+% --- Uji hasil di tengah tutorial -------------------------
+\newtcolorbox{ujibox}[1][]{sesibox, colframe=ubGreen, colback=ubGreenBg,
+  title={Periksa Hasilnya}, #1}
+
+% --- Kesalahan umum ---------------------------------------
+\newtcolorbox{galatbox}[1][]{sesibox, colframe=ubRed, colback=ubRedBg,
+  title={Gejala, Penyebab, dan Letak Pemeriksaan}, #1}
+
+% --- Lembar kerja -----------------------------------------
+\newtcolorbox{lembarbox}[1][]{sesibox, colframe=ubAccent, colback=white,
+  title={Isi dan Kumpulkan}, #1}
+
+% --- Catatan ----------------------------------------------
+\newtcolorbox{catatanbox}[1][]{sesibox, colframe=ubAccent, colback=ubSoft,
+  title={Catatan}, #1}
+
+% --- Checklist sesi ---------------------------------------
+\newtcolorbox{checklistbox}[1][]{sesibox, colframe=ubGreen, colback=white,
+  title={Centang Bila Sudah Dapat}, #1}
+
+% --- Langkah bernomor -------------------------------------
+\newenvironment{langkah}{%
+  \begin{tcolorbox}[enhanced, breakable, arc=1.5pt, boxrule=0.6pt,
+    colframe=ubHead, colback=white, leftrule=2.5pt, colframe=ubAccent,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    before skip=6pt, after skip=6pt]
+  \begin{enumerate}[label=\textbf{\color{ubAccent}\arabic*.},
+    leftmargin=1.55em, itemsep=0.45em, topsep=0pt, parsep=0pt]
+}{%
+  \end{enumerate}%
+  \end{tcolorbox}%
+}
+
+% --- Butir checklist --------------------------------------
+\newenvironment{checklist}{%
+  \begin{itemize}[label={\color{ubGreen}\large$\square$},
+    leftmargin=1.6em, itemsep=0.35em, topsep=0pt]
+}{%
+  \end{itemize}
+}
+
+% --- Peta kemampuan sesi ----------------------------------
+\newcommand{\petasesi}[3]{%
+  \par\noindent
+  {\small
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.30\linewidth}
+      >{\raggedright\arraybackslash}p{0.33\linewidth}
+      >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    {\footnotesize\sffamily\color{ubMuted}SEBELUM SESI INI} &
+    {\footnotesize\sffamily\color{ubAccent}DITAMBAHKAN} &
+    {\footnotesize\sffamily\color{ubMuted}MENYUSUL} \\
+    \midrule
+    #1 & #2 & #3 \\
+    \bottomrule
+  \end{tabularx}}
+  \par\vspace{0.6em}
+}
+
+% --- Daftar periksa pada tabel ----------------------------
+\newcommand{\centang}{\color{ubGreen}$\square$}

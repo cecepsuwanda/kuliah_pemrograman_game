@@ -1,0 +1,330 @@
+% =========================================================
+%  sesi/07/sesi.tex
+%  Sesi 7 — Mesin Keadaan Penjaga
+% =========================================================
+
+\sesi{07}{Mesin Keadaan Penjaga}{2.2}{140 menit}
+
+Pada sesi 6 penjaga hanya mengenal dua kemungkinan: mengejar atau berdiam.
+Keduanya disimpan pada satu variabel bernilai benar atau salah. Pada minggu 7
+variabel itu diganti susunan yang lebih teratur. Penjaga memperoleh tiga
+keadaan yang berbeda---berdiam, berpatroli, dan mengejar---beserta aturan
+perpindahan di antaranya. Ia berjalan mengelilingi lorong, mengejar ketika
+pemain terlihat, dan menyerah setelah kehilangan jejak selama waktu tertentu.
+
+Perubahan itu bukan sekadar menambah cabang pemeriksaan. Ada susunan yang
+memberi nama pada setiap perilaku, memisahkan syarat perpindahan dari tindakan,
+dan menyimpan waktu. Susunan itulah yang disebut \istilah{Finite State Machine}
+(FSM), dan padanya Anda belajar bahwa perilaku yang tampak rumit dapat diuraikan
+menjadi beberapa keadaan sederhana yang saling berpindah menurut aturan yang
+dapat diperiksa.
+
+Sesi ini menuntaskan Sub-CPMK 2.2: mengimplementasikan FSM untuk NPC, dengan
+transisi berbasis jarak dan \istilah{cooldown}.
+
+% ---------------------------------------------------------
+\bagian{Tujuan Sesi}
+
+\begin{tujuanbox}
+Setelah menuntaskan sesi ini, Anda dapat menunjukkan:
+\begin{enumerate}[leftmargin=1.5em, itemsep=0.2em]
+  \item penjaga yang berubah warna menurut keadaannya---abu-abu, hijau, dan
+        merah---dengan keterangan keadaan pada HUD;
+  \item diagram keadaan--transisi tiga keadaan yang setiap anak panahnya diberi
+        syarat yang dapat diperiksa program;
+  \item penjelasan perbedaan \istilah{state}, \istilah{event}, dan
+        \istilah{transition} beserta peran masing-masing pada penjaga;
+  \item penjaga yang berdiam 1,5 detik, berpatroli pada kecepatan 90 piksel per
+        detik, mengejar pada 165 piksel per detik, dan menyerah setelah
+        1,0 detik kehilangan jejak;
+  \item penjelasan mengapa keputusan keadaan dipisahkan dari pelaksanaan
+        geraknya, beserta keuntungan pemisahan itu.
+\end{enumerate}
+\end{tujuanbox}
+
+% ---------------------------------------------------------
+\bagian{Prasyarat}
+
+\begin{prasyaratbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.25em]
+  \item Checkpoint sesi 6 berjalan: level Lorong tampil, pemain bergerak dengan
+        WASD, dan penjaga mengejar berdasarkan jarak.
+  \item Anda memahami perhitungan $\vec{u} = \vec{p} - \vec{n}$ dan
+        penormalan vektor yang dipakai penjaga.
+  \item Anda dapat membaca kelas Python dengan metode dan atribut, serta
+        memakai \code{delta_seconds} untuk menjalankan pewaktu.
+  \item Bab IX buku ajar sudah dibaca, khususnya bagian tentang diagram
+        keadaan dan tiga jenis pewaktu.
+\end{itemize}
+\end{prasyaratbox}
+
+% ---------------------------------------------------------
+\bagian{Peta Kemampuan}
+
+\petasesi
+  {Penjaga dengan satu variabel \code{chasing}; hanya mengejar atau berdiam.}
+  {Tiga keadaan dengan aturan perpindahan, dua pewaktu, jalur patroli, warna
+   keadaan, dan HUD keadaan.}
+  {Pencarian jalur A* pada sesi 8, lalu penggabungan FSM dan pencarian jalur
+   pada sesi 9.}
+
+% ---------------------------------------------------------
+\bagian{Konsep yang Dipakai}
+
+\subsection*{Tiga kata yang harus dibedakan}
+
+Sebuah \istilah{state} adalah cara penjaga berperilaku untuk sementara waktu:
+berdiam, berpatroli, atau mengejar. Selama berada pada satu keadaan, penjaga
+mengikuti aturan keadaan itu saja. Sebuah \istilah{event} adalah keterangan
+yang dibaca program, misalnya jarak terhadap pemain atau habisnya sebuah
+pewaktu. Sebuah \istilah{transition} adalah aturan yang memindahkan penjaga
+dari satu keadaan ke keadaan lain ketika event tertentu terpenuhi. FSM adalah
+kumpulan keadaan, kumpulan transisi, dan pekerjaan penyiapan yang dijalankan
+saat sebuah keadaan dimasuki.
+
+\subsection*{Tiga keadaan penjaga}
+
+Keadaan \istilah{idle} berarti berdiri diam sambil menghitung waktu. Setelah
+1,5 detik, penjaga mulai berpatroli. Keadaan \istilah{patrol} berarti berjalan
+dari satu titik patroli ke titik berikutnya pada kecepatan 90 piksel per detik.
+Keadaan \istilah{chase} berarti bergerak menuju pemain pada kecepatan 165
+piksel per detik, dengan arah yang dihitung seperti pada sesi 6.
+
+\begin{center}\input{figures/diagram-keadaan.tikz}\end{center}
+
+Diagram di atas memperlihatkan tiga keadaan dan empat perpindahan yang dipakai
+checkpoint ini: berdiam menuju berpatroli ketika pewaktu berdiam habis,
+berpatroli menuju mengejar ketika jarak pemain tidak lebih dari 252 piksel,
+mengejar menuju berpatroli setelah pemain tidak terlihat selama 1,0 detik, dan
+berdiam menuju mengejar jika pemain terlihat lebih dahulu. Perpindahan terakhir
+mencegah penjaga menunggu pewaktu berdiam habis ketika pemain muncul dekat
+dengannya.
+
+\subsection*{Pewaktu sebagai syarat perpindahan}
+
+Dua perpindahan pada sesi ini tidak ditentukan oleh jarak, melainkan oleh waktu.
+Pewaktu berdiam mulai dari 1,5 detik dan berkurang setiap bingkai; ketika
+nilainya mencapai nol, penjaga berpatroli. Pewaktu menyerah mulai dari nol dan
+bertambah selama pemain berada di luar radius; ketika mencapai 1,0 detik,
+penjaga kembali berpatroli. Selama pemain berada di dalam radius, pewaktu itu
+dikembalikan ke nol, sehingga penjaga tidak menyerah hanya karena pemain
+berlari di balik dinding selama satu bingkai.
+
+Kata \istilah{cooldown} dipakai untuk tenggang waktu yang harus dilalui sebelum
+sebuah keputusan boleh berubah. Pada sesi ini perannya dipegang kedua pewaktu
+di atas. Perhatikan bahwa urutan pemeriksaan penting: pada keadaan berdiam,
+syarat jarak diperiksa lebih dahulu daripada syarat pewaktu, agar penjaga yang
+melihat pemain segera mengejar walaupun baru saja mulai berdiam.
+
+\subsection*{Keputusan dipisahkan dari tindakan}
+
+Seluruh syarat perpindahan dikumpulkan pada kelas \code{GuardBrain}, sedangkan
+gerak badan penjaga dikerjakan kelas \code{Guard}. \code{GuardBrain} membaca
+jarak dan kedua pewaktu, lalu mengembalikan nama keadaan; ia tidak memindahkan
+apa pun. \code{Guard} menerima nama keadaan itu, mengganti warna, dan berjalan
+menurut kecepatan keadaan tersebut. Pemisahan itu membuat aturan perpindahan
+dapat diperiksa tanpa menjalankan permainan, dan membuat penambahan keadaan
+baru hanya menuntut satu blok baru pada \code{GuardBrain}.
+
+% ---------------------------------------------------------
+\bagian{Tutorial}
+
+Kerjakan langkah berikut berurutan. Simpan proyek sesi 6 sebagai salinan baru
+sebelum mulai, agar checkpoint lama tetap dapat dibandingkan.
+
+\begin{langkah}
+  \item \textbf{Siapkan proyek.} Buka folder sesi 6, jalankan
+        \code{python main.py --level 2}, dan pastikan penjaga masih mengejar
+        pemain. Salin folder itu menjadi folder kerja sesi 7.
+
+  \item \textbf{Tambahkan pengaturan.} Pada \file{settings.py}, tambahkan warna
+        keadaan \code{GUARD_PATROL_COLOR}, lalu tambahkan
+        \code{GUARD_IDLE_SECONDS = 1.5}, \code{GUARD_GIVE_UP_SECONDS = 1.0},
+        dan \code{WAYPOINT_REACHED = 6.0}. Hapus
+        \code{GUARD_STOP_DISTANCE} apabila sudah tidak dipakai.
+
+  \item \textbf{Tentukan titik patroli.} Pada \file{levels.py}, buat konstanta
+        \code{PATROL_POINTS} berisi empat petak, misalnya
+        $(4,2)$, $(10,2)$, $(10,12)$, dan $(4,12)$. Tambahkan kunci
+        \code{waypoints} pada kamus yang dikembalikan \code{build_lorong}.
+
+  \item \textbf{Buat berkas mesin keadaan.} Buat \file{gudang_artefak/fsm.py}.
+        Isinya tiga konstanta nama keadaan, kelas \code{GuardBrain}, dan metode
+        \code{update}, \code{patrol_point}, serta \code{next_patrol_point}.
+
+  \item \textbf{Tulis keputusan keadaan.} Pada \code{update}, hitung jarak ke
+        pemain. Periksa keadaan yang sedang aktif satu per satu: dari berdiam
+        ke mengejar bila jarak memenuhi radius, dari berdiam ke berpatroli bila
+        pewaktu habis, dan dari mengejar ke berpatroli bila pewaktu menyerah
+        habis. Kembalikan nama keadaan pada akhir fungsi.
+
+  \item \textbf{Tulis gerak patroli.} \code{patrol_point} mengubah petak tujuan
+        menjadi piksel dengan rumus titik pusat petak. \code{next_patrol_point}
+        memajukan indeks dan kembali ke titik pertama setelah titik terakhir.
+
+  \item \textbf{Ubah kelas penjaga.} Ganti atribut \code{chasing} dengan
+        atribut \code{state}. Tambahkan \code{set_state} yang mengganti warna
+        badan menurut keadaan, dan \code{walk_to} yang berjalan lurus menuju
+        titik serta mengembalikan benar bila sudah tiba.
+
+  \item \textbf{Sambungkan ke permainan.} Pada \file{game.py}, buat
+        \code{GuardBrain} ketika level Lorong dimuat. Setiap bingkai, minta
+        keputusan, panggil \code{set_state}, lalu jalankan keadaan itu: mengejar
+        memakai \code{walk_to} ke pemain, berpatroli memakai
+        \code{walk_to} ke titik patroli. Ketika pemain tertangkap, buat ulang
+        otak penjaga agar kembali ke keadaan awal.
+
+  \item \textbf{Tambahkan HUD keadaan.} Pada \code{_draw_hud}, tampilkan
+        keadaan penjaga di sudut kanan atas, misalnya
+        \code{Penjaga: chase}. Warna teks dibuat netral agar tidak tertukar
+        dengan warna badan penjaga.
+
+  \item \textbf{Jalankan dan ukur.} Jalankan
+        \code{python main.py --level 2}. Amati warna penjaga, keterangan HUD,
+        dan jalur patrolinya. Ukur dengan pengukur waktu: lama berdiam, lama
+        mengejar sebelum menyerah, dan lama satu putaran patroli.
+\end{langkah}
+
+\begin{ujibox}
+Setelah Langkah 10, periksa lima hal berikut.
+\begin{itemize}[leftmargin=1.4em, itemsep=0.2em]
+  \item Penjaga berwarna abu-abu ketika program dimulai, lalu berubah hijau
+        setelah sekitar 1,5 detik. Bila ia langsung hijau, periksa nilai awal
+        \code{idle_timer}.
+  \item Penjaga berubah merah ketika pemain berada dalam 252 piksel, dan HUD
+        menampilkan keadaan yang sama dengan warnanya.
+  \item Penjaga kembali hijau sekitar 1,0 detik setelah pemain keluar dari
+        radius. Bila ia menyerah seketika, periksa pengembalian
+        \code{lost_timer} ke nol.
+  \item Penjaga berjalan melalui keempat titik patroli dan mengulanginya dari
+        titik pertama, dengan kecepatan yang terasa lebih lambat daripada
+        kecepatan mengejar.
+  \item Garis merah hanya tampil pada keadaan mengejar. Bila garis tampil pada
+        keadaan lain, periksa syarat penggambarannya.
+\end{itemize}
+\end{ujibox}
+
+% ---------------------------------------------------------
+\bagian{Kode Sesi Ini}
+
+Potongan berikut adalah bagian pokok checkpoint sesi 7. Berkas lengkapnya
+tersedia pada folder \file{code/sesi-07}. Perhatikan bahwa kelas penjaga pada
+sesi ini tidak lagi menghitung arah sendiri; pekerjaan itu berpindah ke
+\code{GuardBrain} dan ke metode \code{walk_to}.
+
+\tampilkodebaris[Python]{code/sesi-07/gudang_artefak/settings.py}{49}{56}
+  {Pengaturan penjaga dan mesin keadaan}
+
+\tampilkodebaris[Python]{code/sesi-07/gudang_artefak/levels.py}{72}{76}
+  {Titik patroli dan titik awal penjaga}
+
+\tampilkodebaris[Python]{code/sesi-07/gudang_artefak/fsm.py}{14}{58}
+  {Mesin keadaan: keadaan, transisi, dan titik patroli}
+
+\tampilkodebaris[Python]{code/sesi-07/gudang_artefak/entities.py}{208}{228}
+  {Mengubah warna menurut keadaan dan berjalan menuju titik}
+
+\tampilkodebaris[Python]{code/sesi-07/gudang_artefak/game.py}{141}{177}
+  {Meminta keputusan, menjalankan keadaan, dan patroli}
+
+\tampilkodebaris[Python]{code/sesi-07/gudang_artefak/game.py}{236}{245}
+  {HUD yang menampilkan keadaan penjaga}
+
+\checkpoint{07}{Program pada folder itu dapat dijalankan dengan
+\code{python main.py --level 2}; penjaga berdiam 1,5 detik, berpatroli pada
+kecepatan 90 piksel per detik, mengejar pada 165 piksel per detik, dan menyerah
+setelah 1,0 detik kehilangan jejak.}
+
+% ---------------------------------------------------------
+\bagian{Kesalahan Umum}
+
+\begin{galatbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.35em]
+  \item \textbf{Penjaga tidak pernah meninggalkan keadaan berdiam.}
+        Gejala: warna tetap abu-abu dan pewaktu tidak berjalan. Penyebabnya,
+        \code{idle_timer} dimulai dari nol atau tidak dikurangi. Periksa nilai
+        awal \code{GUARD_IDLE_SECONDS} dan baris
+        \code{self.idle_timer -= delta_seconds}.
+  \item \textbf{Penjaga berkedip antara mengejar dan berpatroli.}
+        Gejala: warna berganti-ganti ketika pemain berada tepat di tepi radius.
+        Penyebabnya, pewaktu menyerah tidak dikembalikan ke nol selama pemain
+        masih terlihat. Periksa cabang \code{if jarak <= self.radius}.
+  \item \textbf{Penjaga menyerah seketika.}
+        Gejala: penjaga berhenti mengejar pada bingkai pertama setelah pemain
+        menjauh. Penyebabnya, \code{lost_timer} tidak direset ketika keadaan
+        mengejar dimasuki. Periksa \code{self.lost_timer = 0.0}.
+  \item \textbf{Warna tidak berubah.}
+        Gejala: HUD berubah tetapi badan penjaga tetap abu-abu. Penyebabnya,
+        \code{set_state} keluar lebih awal karena nama keadaan dianggap sama,
+        atau kunci kamus warna tidak lengkap. Periksa ketiga kunci
+        \code{idle}, \code{patrol}, dan \code{chase}.
+  \item \textbf{Penjaga berhenti di antara dua titik patroli.}
+        Gejala: penjaga diam di tempat dan tidak melanjutkan perjalanan.
+        Penyebabnya, ambang \code{WAYPOINT_REACHED} lebih kecil daripada
+        perpindahan satu bingkai, sehingga titik tidak pernah dianggap tercapai.
+        Periksa nilai 6.0 piksel dan kecepatan patroli 90 piksel per detik.
+  \item \textbf{\code{KeyError: 'waypoints'}.}
+        Gejala: level Lorong gagal dimuat. Penyebabnya, kamus hasil
+        \code{build_lorong} belum memuat kunci \code{waypoints}. Periksa
+        pengembalian fungsi itu dan nama kunci pada \code{_load_lorong}.
+  \item \textbf{HUD bertumpuk dengan skor.}
+        Gejala: keterangan keadaan menimpa teks skor. Penyebabnya, posisi
+        horizontal dihitung dari lebar jendela tanpa menyisakan ruang untuk
+        teks. Geser posisi itu ke kiri atau pendekkan keterangannya.
+\end{itemize}
+\end{galatbox}
+
+% ---------------------------------------------------------
+\clearpage
+\bagian{Lembar Kerja}
+
+Isi tabel berikut pada catatan praktikum Anda. Lakukan pengukuran dengan
+pengukur waktu atau dengan menghitung bingkai pada layar, lalu bandingkan
+hasilnya dengan nilai pada \file{settings.py}.
+
+{\small
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\linewidth}{@{}C{0.8cm} L{6.2cm} Y@{}}
+\toprule
+\textbf{No} & \textbf{Hasil yang dicatat} & \textbf{Keterangan Anda} \\
+\midrule
+1 & Lama penjaga berdiam sebelum berpatroli & \\[0.55cm]
+2 & Lama penjaga mengejar sebelum menyerah & \\[0.55cm]
+3 & Lama satu putaran patroli dan banyak titik yang dilalui & \\[0.55cm]
+4 & Warna penjaga pada setiap keadaan & \\[0.55cm]
+5 & Keadaan yang paling sulit Anda amati, beserta alasannya & \\[0.9cm]
+6 & Satu kendala yang Anda hadapi dan cara menyelesaikannya & \\[0.9cm]
+\bottomrule
+\end{tabularx}
+}
+
+% ---------------------------------------------------------
+\bagian{Checklist Sesi}
+
+\begin{checklistbox}
+\begin{checklist}
+  \item Saya dapat menunjukkan ketiga keadaan penjaga melalui warna dan HUD.
+  \item Saya dapat menggambar diagram keadaan--transisi dengan syarat yang
+        dapat diperiksa pada setiap anak panah.
+  \item Saya dapat menjelaskan perbedaan \istilah{state}, \istilah{event}, dan
+        \istilah{transition}.
+  \item Saya dapat menjelaskan peran pewaktu berdiam 1,5 detik dan pewaktu
+        menyerah 1,0 detik.
+  \item Saya dapat menjelaskan mengapa syarat jarak diperiksa sebelum syarat
+        pewaktu pada keadaan berdiam.
+  \item Saya dapat menjelaskan keuntungan memisahkan \code{GuardBrain} dari
+        kelas \code{Guard}.
+\end{checklist}
+\end{checklistbox}
+
+% ---------------------------------------------------------
+\bagian{Pengait ke Sesi Berikutnya}
+
+Mesin keadaan menjawab pertanyaan ``apa yang sebaiknya penjaga lakukan?''. Ia
+belum menjawab pertanyaan ``bagaimana cara menuju ke sana?''. Pada keadaan
+mengejar, penjaga masih berjalan lurus ke arah pemain, sehingga dinding tetap
+menghalanginya. Sesi 8 menambahkan pencarian jalur A* pada peta petak yang sudah
+Anda bangun. Keadaan mengejar tidak lagi memakai arah langsung, melainkan rute
+yang dihitung dari petak awal menuju petak pemain. Dengan begitu, lapisan
+keputusan yang Anda susun pada sesi ini akhirnya berhubungan dengan lapisan
+navigasi.

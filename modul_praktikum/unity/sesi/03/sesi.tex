@@ -1,0 +1,407 @@
+% =========================================================
+%  sesi/03/sesi.tex
+%  Sesi 3 — Aset, Animasi, dan UI Dasar
+% =========================================================
+
+\sesi{03}{Aset, Animasi, dan UI Dasar}{4.1}{140 menit}
+
+Ini pertemuan minggu ketiga belas. Level Rak sudah dapat dimainkan, tetapi
+seluruh isinya masih berupa balok dan petak berwarna. Sesi ini mengganti
+tampilan itu dengan \istilah{sprite} sesungguhnya, menambahkan animasi pada
+pemain, dan menampilkan skor serta nyawa pada layar.
+
+Tiga pekerjaan itu mengikuti Bab XIV. Pertama, aset gambar diimpor dan
+pengaturan impornya ditetapkan. Kedua, \istilah{Animator} disusun sebagai mesin
+keadaan yang memilih animasi diam, berlari, atau melompat. Ketiga,
+\istilah{Canvas} dibangun sebagai wadah antarmuka yang menampilkan skor dan
+nyawa.
+
+Mekanik yang telah selesai pada sesi 2 tidak diubah. Yang berubah hanya
+tampilannya. Karena itu, setiap kali sebuah aset dipasang, jalankan kembali
+scene dan pastikan pemain masih dapat berjalan, melompat, dan mengambil
+artefak seperti sebelumnya.
+
+% ---------------------------------------------------------
+\bagian{Tujuan Sesi}
+
+\begin{tujuanbox}
+Setelah menuntaskan sesi ini, Anda dapat menunjukkan:
+\begin{enumerate}[leftmargin=1.5em, itemsep=0.2em]
+  \item aset \istilah{sprite} yang terimpor dengan \menu{Sprite Mode},
+        \menu{Pixels Per Unit}, \menu{Filter Mode}, dan \menu{Compression}
+        yang tercatat;
+  \item pemain yang gambarnya telah diganti, dengan bentuk batas yang masih
+        sesuai dan mekanik yang tidak berubah;
+  \item \istilah{Animator} berisi keadaan diam, berlari, dan melompat yang
+        berganti menurut gerak pemain;
+  \item \istilah{Canvas} yang menampilkan skor dan nyawa, serta berubah ketika
+        artefak diambil atau nyawa berkurang;
+  \item perbandingan scene sebelum dan sesudah penggantian aset.
+\end{enumerate}
+\end{tujuanbox}
+
+% ---------------------------------------------------------
+\bagian{Prasyarat}
+
+\begin{prasyaratbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.25em]
+  \item Checkpoint sesi 2 sudah berjalan: pemain dapat berjalan, melompat,
+        mengambil artefak, dan mencapai pintu.
+  \item Anda telah membaca Bab XIV bagian 14.1 sampai 14.5, yaitu bagian
+        tentang jalan pengolahan aset, \istilah{Animator}, \istilah{Canvas},
+        penggantian \istilah{greybox}, dan lisensi aset.
+  \item Anda memiliki aset \istilah{sprite} berlisensi jelas untuk pemain,
+        petak, artefak, dan pintu. Catat sumber serta lisensinya sejak awal.
+\end{itemize}
+\end{prasyaratbox}
+
+% ---------------------------------------------------------
+\bagian{Peta Kemampuan}
+
+\petasesi
+  {Level yang dapat dimainkan, tetapi seluruhnya masih berupa balok dan petak
+   berwarna.}
+  {Impor \istilah{sprite}, \istilah{Animator}, dan \istilah{Canvas} berisi
+   skor serta nyawa.}
+  {Audio, \istilah{trigger} interaksi, dan pengujian prototipe pada sesi 4
+   dan 5.}
+
+% ---------------------------------------------------------
+\bagian{Konsep yang Dipakai}
+
+\subsection*{Aset diolah ketika diimpor}
+
+Pada Unity, gambar diolah ketika berkasnya masuk ke folder \file{Assets}, bukan
+ketika permainan dijalankan. Hasil pengolahan disimpan, sehingga mengubah
+pengaturan impor langsung mengubah seluruh benda yang memakai gambar itu.
+Karena itu, pengaturan impor adalah tempat pertama yang diperiksa ketika sebuah
+aset tampak salah.
+
+Empat pengaturan yang paling berpengaruh: \menu{Sprite Mode} menentukan satu
+gambar atau lembar berisi banyak gambar; \menu{Pixels Per Unit} menentukan
+berapa piksel yang setara satu satuan; \menu{Filter Mode} menentukan
+penghalusan gambar; dan \menu{Compression} menentukan pemadatan gambar.
+Ukuran gambar pada scene dihitung dari tinggi berkas dibagi nilai
+\menu{Pixels Per Unit}. Seluruh aset sebaiknya memakai nilai yang sama agar
+ukurannya dapat dibandingkan.
+
+\subsection*{Animator adalah mesin keadaan}
+
+\istilah{Animator} menyimpan keadaan animasi dan aturan peralihannya. Keadaan
+disebut \istilah{animation clip}; peralihannya diatur oleh parameter. Tiga
+jenis parameter yang dipakai di sini: angka pecahan untuk kecepatan, nilai
+benar atau salah untuk keadaan menyentuh tanah, dan pemicu untuk lompatan.
+Pemicu cocok bagi kejadian yang berlangsung sekali, sebab mesin mengembalikan
+nilainya sendiri setelah dipakai.
+
+Kode Anda tidak memutar animasi. Kode hanya menetapkan nilai parameter,
+sedangkan peralihannya dikerjakan mesin menurut aturan yang Anda gambar. Nama
+parameter pada kode harus sama persis dengan nama pada jendela
+\istilah{Animator}, termasuk besar-kecil hurufnya. Kesamaan itu tidak
+diperiksa, dan kesalahannya tidak menimbulkan pesan apa pun.
+
+\subsection*{Canvas hanya menampilkan}
+
+Elemen antarmuka tidak berada pada ruang permainan dan tidak terpengaruh
+kamera. Karena itu, elemen itu ditempatkan pada \istilah{Canvas} tersendiri.
+Antarmuka tidak menyimpan keadaan permainan; skor dan nyawa tetap disimpan pada
+kode, sedangkan tulisan di layar hanya mengikuti perubahan nilai itu.
+
+% ---------------------------------------------------------
+\bagian{Tutorial}
+
+Nama menu dan jendela ditulis seperti yang tampak pada Unity LTS. Contoh pada
+sesi ini memakai bingkai berukuran $64 \times 64$ piksel. Apabila aset Anda
+berukuran lain, sesuaikan nilai \menu{Pixels Per Unit} menurut hitungan pada
+bagian Konsep.
+
+\begin{langkah}
+  \item \textbf{Siapkan asetnya.} Unduh aset pemain yang memuat animasi diam,
+        berlari, dan melompat, beserta aset petak, artefak, dan pintu. Catat
+        nama berkas, sumber, dan lisensi setiap aset pada Lembar Kerja.
+
+  \item \textbf{Buat folder dan impor berkas.} Pada jendela \menu{Project},
+        buat folder \code{Sprites} dan \code{Animations} di bawah
+        \file{Assets} melalui \menu{Create > Folder}. Salin berkas gambar ke
+        \file{Assets/Sprites} melalui \menu{File Explorer}; Unity mengimpornya
+        otomatis.
+
+  \item \textbf{Atur impor dan potong lembarnya.} Pilih berkas pemain pada
+        jendela \menu{Project}. Pada \menu{Inspector}, setel \menu{Sprite
+        Mode} menjadi \menu{Multiple}, \menu{Pixels Per Unit} 64,
+        \menu{Filter Mode} \menu{Point}, dan \menu{Compression} \menu{None},
+        lalu tekan \menu{Apply}. Tekan \menu{Sprite Editor}, pilih
+        \menu{Slice}, setel \menu{Type} menjadi \menu{Grid By Cell Size}
+        dengan ukuran $64 \times 64$, lalu tekan \menu{Slice} dan
+        \menu{Apply}.
+
+  \item \textbf{Pasang gambar pemain.} Pilih \code{Pemain} pada
+        \menu{Hierarchy}. Pada \code{Sprite Renderer}, isi \menu{Sprite}
+        dengan salah satu bingkai diam. Periksa \code{Capsule Collider2D}:
+        bila gambar barunya lebih besar, sesuaikan \menu{Size} agar tetap
+        $(0.7,0.9)$.
+
+  \item \textbf{Tambahkan Animator.} Pilih \code{Pemain}, tekan
+        \menu{Add Component}, lalu tambahkan \menu{Animator}. Buat
+        \menu{Create > Animator Controller} bernama \code{AnimatorPemain} di
+        folder \file{Assets/Animations}, seret ke kolom \menu{Controller},
+        lalu klik dua kali untuk membuka jendela
+        \menu{Window > Animation > Animator}.
+
+  \item \textbf{Buat tiga keadaan.} Pilih seluruh bingkai diam dengan
+        \menu{Ctrl+klik} pada jendela \menu{Project}, lalu seret ke jendela
+        \menu{Animator} dan beri nama \code{Idle}. Klik kanan keadaannya,
+        pilih \menu{Set as Layer Default State}. Ulangi untuk bingkai
+        berlari dengan nama \code{Run} dan bingkai melompat dengan nama
+        \code{Jump}.
+
+  \item \textbf{Buat parameter.} Pada tab \menu{Parameters}, tekan \menu{+}
+        tiga kali: \menu{Float} bernama \code{speed}, \menu{Bool} bernama
+        \code{grounded}, dan \menu{Trigger} bernama \code{lompat}. Huruf
+        kecil pada nama itu harus sama dengan yang dipakai skrip.
+
+  \item \textbf{Transisi diam dan berlari.} Klik kanan \code{Idle}, pilih
+        \menu{Make Transition}, lalu klik \code{Run}. Pada
+        \menu{Inspector} transisi, matikan \menu{Has Exit Time}, setel
+        \menu{Transition Duration} 0, dan tambahkan syarat
+        \code{speed} \menu{Greater} 0.1. Buat transisi balik
+        \code{Run} ke \code{Idle} dengan syarat \code{speed} \menu{Less} 0.1.
+
+  \item \textbf{Transisi lompat.} Klik kanan \code{Any State}, pilih
+        \menu{Make Transition}, lalu klik \code{Jump}. Matikan
+        \menu{Has Exit Time} dan tambahkan syarat \code{lompat}. Buat
+        transisi \code{Jump} ke \code{Idle} dengan syarat
+        \code{grounded} bernilai benar.
+
+  \item \textbf{Pasang skrip animasi.} Seret \code{AnimasiPemain} ke
+        \code{Pemain}, lalu isi \menu{Body} dengan komponen
+        \code{Rigidbody2D} pemain. Skrip ini membalik arah hadap gambar
+        menurut arah geraknya.
+
+  \item \textbf{Perbarui KontrolPemain.} Ganti isi
+        \file{Scripts/KontrolPemain.cs} dengan versi pada bagian Kode Sesi
+        Ini. Pada \menu{Inspector}, isi kolom \menu{Animator} dengan komponen
+        \menu{Animator} pemain, lalu jalankan scene.
+\end{langkah}
+
+\begin{ujibox}
+Setelah Langkah 11, periksa empat hal berikut.
+\begin{itemize}[leftmargin=1.4em, itemsep=0.2em]
+  \item Pemain menampilkan gambar diam ketika berhenti.
+  \item Animasi berlari muncul ketika pemain bergerak, dan kembali diam ketika
+        berhenti.
+  \item Animasi melompat muncul sekali setiap lompatan, bukan berulang selama
+        tombol ditahan.
+  \item Gambar pemain menghadap ke kiri ketika bergerak ke kiri, dan ke kanan
+        ketika bergerak ke kanan.
+\end{itemize}
+\end{ujibox}
+
+\begin{langkah}
+  \item \textbf{Buat Canvas.} Pilih menu
+        \menu{GameObject > UI > Canvas}. Unity menambahkan \code{Canvas} dan
+        \code{EventSystem} pada \menu{Hierarchy}. Pada \menu{Canvas Scaler},
+        setel \menu{UI Scale Mode} menjadi \menu{Scale With Screen Size},
+        \menu{Reference Resolution} $1920 \times 1080$, dan \menu{Match} 0.5.
+
+  \item \textbf{Buat teks skor dan nyawa.} Klik kanan \code{Canvas}, pilih
+        \menu{UI > Legacy > Text}, dan beri nama \code{TextSkor}. Setel
+        \menu{Anchor} kiri atas, \menu{Pos} $(30,-30)$, \menu{Size}
+        $400 \times 60$, \menu{Font Size} 36, \menu{Color} putih, dan
+        \menu{Text} \code{Skor: 0}. Gandakan teks itu, beri nama
+        \code{TextNyawa}, setel \menu{Anchor} kanan atas, \menu{Pos}
+        $(-30,-30)$, \menu{Width} 300, \menu{Alignment} kanan, dan
+        \menu{Text} \code{Nyawa: 3}.
+
+  \item \textbf{Buat ikon nyawa.} Klik kanan \code{Canvas}, pilih
+        \menu{UI > Image}, dan beri nama \code{IkonNyawa1}. Setel
+        \menu{Anchor} kanan atas, \menu{Size} $32 \times 32$, \menu{Pos}
+        $(-30,-80)$, dan \menu{Color} \code{#D94A4A}. Gandakan dua kali
+        menjadi \code{IkonNyawa2} dan \code{IkonNyawa3}, lalu geser
+        \menu{Pos X} masing-masing menjadi $-70$ dan $-110$.
+
+  \item \textbf{Pasang skrip HUD.} Seret \code{TampilanHud} ke
+        \code{Canvas}. Pada \menu{Inspector}, isi \menu{Score Text} dengan
+        \code{TextSkor}, \menu{Lives Text} dengan \code{TextNyawa}, dan
+        \menu{Heart Icons} dengan ukuran 3 berisi ketiga ikon nyawa.
+
+  \item \textbf{Perbarui Artefak.} Ganti isi \file{Scripts/Artefak.cs}
+        dengan versi pada bagian Kode Sesi Ini. Pada setiap artefak, isi
+        kolom \menu{Hud} dengan objek \code{Canvas}.
+
+  \item \textbf{Ganti aset lingkungan.} Ganti gambar petak lantai dan rak
+        melalui \menu{Sprite} pada aset \code{TileLantai} dan
+        \code{TileRak}. Ganti pula gambar artefak dan pintu. Periksa kembali
+        \code{Collider} setiap benda, sebab bentuk batas tidak berubah
+        otomatis bersama gambarnya.
+
+  \item \textbf{Bandingkan hasilnya.} Simpan tangkapan layar scene sebelum
+        dan sesudah penggantian aset. Jalankan scene, ambil ketiga artefak,
+        lalu uji nyawa melalui klik kanan komponen \code{TampilanHud} dan
+        pilih \menu{Uji kurangi satu nyawa}. Simpan scene dengan
+        \menu{Ctrl+S}.
+\end{langkah}
+
+\begin{ujibox}
+Setelah Langkah 18, periksa lima hal berikut.
+\begin{itemize}[leftmargin=1.4em, itemsep=0.2em]
+  \item Seluruh benda memakai gambar aset, bukan lagi kotak berwarna.
+  \item \menu{TextSkor} berubah dari \code{Skor: 0} menjadi
+        \code{Skor: 3} setelah ketiga artefak diambil.
+  \item \menu{TextNyawa} dan ikon nyawa berkurang ketika menu konteks
+        \menu{Uji kurangi satu nyawa} dipilih.
+  \item Pemain masih dapat berjalan, melompat, dan mendarat seperti pada
+        sesi 2.
+  \item Tidak ada pesan merah pada \menu{Console}.
+\end{itemize}
+\end{ujibox}
+
+% ---------------------------------------------------------
+\bagian{Kode Sesi Ini}
+
+\code{KontrolPemain} bertambah bagian animasi: ia menetapkan kecepatan dan
+keadaan tanah, serta memicu parameter lompatan. \code{AnimasiPemain}
+membalik arah hadap gambar. \code{Artefak} memanggil fungsi skor pada HUD.
+\code{TampilanHud} menyimpan skor dan nyawa, lalu memperbarui tampilannya.
+\code{Pintu} tidak berubah dari sesi 2; salinannya tetap disertakan pada
+checkpoint.
+
+\tampilkode[language=CSharp]{code/sesi-03/Scripts/KontrolPemain.cs}
+  {KontrolPemain.cs: kontrol pemain yang juga menetapkan parameter Animator}
+
+\tampilkode[language=CSharp]{code/sesi-03/Scripts/AnimasiPemain.cs}
+  {AnimasiPemain.cs: membalik arah hadap gambar menurut arah gerak}
+
+\tampilkode[language=CSharp]{code/sesi-03/Scripts/Artefak.cs}
+  {Artefak.cs: trigger yang menambah skor melalui TampilanHud}
+
+\tampilkode[language=CSharp]{code/sesi-03/Scripts/TampilanHud.cs}
+  {TampilanHud.cs: menampilkan skor dan nyawa pada Canvas}
+
+\subsection*{Tabel objek scene}
+
+Tabel berikut adalah daftar objek yang harus ada pada scene Anda. Nilai yang
+tidak disebut boleh dibiarkan bawaan.
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{@{}L{2.3cm} L{3.5cm} Y@{}}
+\toprule
+\textbf{GameObject} & \textbf{Komponen} & \textbf{Nilai penting} \\
+\midrule
+Pemain & Sprite Renderer, Rigidbody2D, Capsule Collider2D, Animator,
+  KontrolPemain, AnimasiPemain &
+  Animator Controller \code{AnimatorPemain}; parameter \code{speed},
+  \code{grounded}, \code{lompat}; Body \code{Rigidbody2D}; Ambang Gerak 0.1 \\
+Canvas & Canvas, Canvas Scaler, Graphic Raycaster, TampilanHud &
+  Screen Space Overlay; Scale With Screen Size; Reference
+  $1920 \times 1080$; Match 0.5 \\
+TextSkor & Rect Transform, Text &
+  Anchor kiri atas; Pos $(30,-30)$; $400 \times 60$; Font Size 36; putih;
+  \code{Skor: 0} \\
+TextNyawa & Rect Transform, Text &
+  Anchor kanan atas; Pos $(-30,-30)$; $300 \times 60$; Font Size 36; putih;
+  \code{Nyawa: 3} \\
+IkonNyawa1--3 & Rect Transform, Image &
+  Anchor kanan atas; $32 \times 32$; Pos X $-30$, $-70$, $-110$; Pos Y $-80$;
+  \code{#D94A4A} \\
+Artefak1--3 & Sprite Renderer, Circle Collider2D, Artefak &
+  Is Trigger; Radius 0.25; Nilai 1; Hud berisi \code{Canvas} \\
+Pintu & Sprite Renderer, Box Collider2D, Pintu &
+  $(8.3,-2.6,0)$; $(1,1.8)$; Is Trigger; Artefak Diperlukan 3 \\
+\bottomrule
+\end{tabularx}
+}
+
+\subsection*{Tabel pengaturan impor}
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{@{}L{3.4cm} L{2.3cm} C{1.6cm} L{1.9cm} Y@{}}
+\toprule
+\textbf{Aset} & \textbf{Sprite Mode} & \textbf{PPU} & \textbf{Filter} &
+\textbf{Compression} \\
+\midrule
+Pemain (lembar animasi) & Multiple & 64 & Point & None \\
+Petak lantai dan rak & Single & 64 & Point & None \\
+Artefak dan pintu & Single & 64 & Point & None \\
+\bottomrule
+\end{tabularx}
+}
+
+\checkpoint{03}{\raggedright Folder checkpoint memuat \file{Scripts/KontrolPemain.cs},
+\file{Scripts/Artefak.cs}, \file{Scripts/Pintu.cs},
+\file{Scripts/AnimasiPemain.cs}, \file{Scripts/TampilanHud.cs}, dan
+\file{scene.md}. Scene dan berkas aset tidak disertakan sebagai berkas biner;
+susunlah mengikuti tabel di atas.}
+
+% ---------------------------------------------------------
+\bagian{Kesalahan Umum}
+
+\begin{galatbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.35em]
+  \item \textbf{Animasi tidak berganti atau transisi berulang.}
+        Gejala: gambar tetap diam, melompat terus-menerus, atau kembali ke
+        diam di tengah lompatan, tanpa pesan kesalahan. Periksa nama parameter
+        pada jendela \istilah{Animator} terhadap nama pada skrip, nilai
+        parameter ketika scene berjalan, dan \menu{Has Exit Time} pada
+        transisi.
+  \item \textbf{Ukuran, arah, atau bentuk batas tidak sesuai.}
+        Gejala: pemain raksasa, menghadap ke belakang, atau bertabrakan
+        seperti balok lama. Periksa \menu{Pixels Per Unit}, skala $x$ pada
+        \code{AnimasiPemain}, serta \menu{Size} dan \menu{Offset} pada
+        \code{Capsule Collider2D}. Mengganti \menu{Sprite} tidak mengubah
+        collider.
+  \item \textbf{Skor atau nyawa tidak berubah.}
+        Gejala: tulisan tetap \code{Skor: 0} dan Console menampilkan
+        peringatan. Periksa rujukan \menu{Score Text}, \menu{Lives Text}, dan
+        \menu{Hud} pada artefak. Rujukan yang kosong membuat skrip HUD
+        mematikan dirinya sendiri.
+\end{itemize}
+\end{galatbox}
+
+% ---------------------------------------------------------
+\bagian{Lembar Kerja}
+
+Isi tabel berikut dan simpan pada catatan praktikum Anda.
+
+{\small
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\linewidth}{@{}C{0.8cm} L{6.2cm} Y@{}}
+\toprule
+\textbf{No} & \textbf{Hasil yang dicatat} & \textbf{Keterangan Anda} \\
+\midrule
+1 & Nama, sumber, dan lisensi aset pemain & \\[0.45cm]
+2 & Nama, sumber, dan lisensi aset petak, artefak, dan pintu & \\[0.45cm]
+3 & Nilai Pixels Per Unit dan alasan pemilihannya & \\[0.45cm]
+4 & Jumlah bingkai pada setiap animation clip & \\[0.45cm]
+5 & Nilai ambang kecepatan pada transisi diam--berlari & \\[0.45cm]
+6 & Perubahan mekanik yang timbul setelah aset diganti & \\[0.7cm]
+7 & Masalah animasi atau UI yang ditemui dan perbaikannya & \\[0.7cm]
+\bottomrule
+\end{tabularx}
+}
+
+% ---------------------------------------------------------
+\bagian{Checklist Sesi}
+
+\begin{checklistbox}
+\begin{checklist}
+  \item Saya dapat menunjukkan aset \istilah{sprite} yang terimpor dengan
+        pengaturan seragam, dan menghitung tinggi gambarnya pada scene.
+  \item Saya dapat menunjukkan \istilah{Animator} dengan keadaan diam,
+        berlari, dan melompat beserta transisinya.
+  \item Saya dapat menjelaskan perbedaan parameter angka, nilai benar-salah,
+        dan pemicu, serta memilih jenis yang tepat untuk lompatan.
+  \item Saya dapat menunjukkan \istilah{Canvas} yang skor dan nyawanya
+        berubah mengikuti keadaan permainan.
+  \item Saya dapat membandingkan scene sebelum dan sesudah penggantian aset.
+\end{checklist}
+\end{checklistbox}
+
+% ---------------------------------------------------------
+\bagian{Pengait ke Sesi Berikutnya}
+
+Tampilan level kini lengkap, tetapi masih bisu. Sesi 4 menambahkan bunyi latar
+dan efek bunyi, serta menghubungkan lompat, pengambilan artefak, dan pintu
+dengan \istilah{trigger}.

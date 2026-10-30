@@ -1,0 +1,97 @@
+% =========================================================
+%  frontmatter/petunjuk.tex
+%  Petunjuk pemakaian modul.
+% =========================================================
+
+\section*{Petunjuk Pemakaian}
+\addcontentsline{toc}{section}{Petunjuk Pemakaian}
+
+\subsection*{Untuk siapa modul ini}
+
+Modul ini dipakai mahasiswa Program Studi \NamaProdi\ yang menempuh mata
+kuliah \NamaMK\ dan baru pertama kali membangun permainan. Tidak ada
+prasyarat pemrograman permainan; yang dibutuhkan hanya dasar Algoritma dan
+Pemrograman: variabel, percabangan, perulangan, fungsi, kelas, dan cara
+membaca pesan kesalahan.
+
+Anda tidak perlu menghafal isi modul. Yang perlu Anda lakukan adalah
+mengetik, menjalankan, mengamati layar, lalu memperbaiki bila hasilnya
+belum sesuai. Setiap sesi berakhir pada program yang berjalan.
+
+\subsection*{Urutan sesi dan perkiraan waktu}
+
+Setiap sesi dirancang untuk satu pertemuan praktikum, sekitar 100--150 menit
+termasuk mencoba dan mengisi lembar kerja. Kerjakan berurutan; sesi
+berikutnya selalu melanjutkan berkas sesi sebelumnya.
+
+{\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{@{}C{1.1cm} L{6.4cm} Y C{1.9cm}@{}}
+\toprule
+\textbf{Sesi} & \textbf{Judul} & \textbf{Yang ditambahkan} & \textbf{Waktu} \\
+\midrule
+01 & Lingkungan Kerja dan Jendela Pertama &
+     Perkakas, struktur folder, jendela berjudul & 100 menit \\
+02 & Siklus Permainan dan Pengendali Waktu &
+     \istilah{Game loop}, \istilah{event}, \istilah{Clock}, FPS & 110 menit \\
+03 & Pemain Bergerak dengan Vektor dan Delta Time &
+     \code{Vector2}, masukan papan tombol, \istilah{delta time} & 120 menit \\
+04 & Gravitasi, Lompatan, dan Pantulan &
+     Integrasi Euler, lompat, pantulan dinding & 130 menit \\
+05 & Sprite, Artefak, Peti, dan Pintu &
+     \istilah{Sprite}, \istilah{Group}, \istilah{collision}, skor, nyawa & 140 menit \\
+06 & Level Lorong dan Penjaga yang Mengejar &
+     Level tampak atas, penjaga reaktif, garis arah & 130 menit \\
+07 & Mesin Keadaan Penjaga &
+     \istilah{Finite State Machine}: berdiam, berpatroli, mengejar & 140 menit \\
+08 & Grid dan Pencarian Jalur A* &
+     Grid, \code{g}, \code{h}, \code{f = g + h}, animasi jalur & 150 menit \\
+09 & Integrasi FSM dan A*, Dua Level Berurutan &
+     \istilah{repath}, alur dua level, tiga skenario uji & 150 menit \\
+\bottomrule
+\end{tabularx}
+}
+
+\subsection*{Cara menjalankan checkpoint Python}
+
+Setiap sesi meninggalkan satu folder proyek utuh pada \file{code/sesi-NN}.
+Folder itu berisi \file{main.py} dan paket \file{gudang_artefak}. Untuk
+menjalankannya, buka terminal pada folder sesi tersebut, lalu ketik:
+
+\begin{lstlisting}[language={}, numbers=none, caption={Menjalankan checkpoint}]
+cd code/sesi-05
+python main.py
+\end{lstlisting}
+
+Bila muncul pesan bahwa Pygame tidak ditemukan, pasang lebih dahulu dengan
+\code{python -m pip install pygame}. Modul ini memakai Python 3.8 atau lebih
+baru.
+
+Untuk menguji tanpa duduk lama di depan layar, tambahkan pilihan
+\code{--frames 120}. Program akan berhenti sendiri setelah 120 bingkai.
+Pilihan \code{--level 2} langsung membuka Level Lorong, dan
+\code{--scenario 1}, \code{2}, atau \code{3} memilih peta Lorong.
+
+\subsection*{Bila sesi sebelumnya gagal}
+
+Jangan mengulang seluruh modul. Buka folder checkpoint sesi terakhir yang
+berhasil Anda jalankan, salin ke folder kerja Anda, lalu kerjakan sesi
+berikutnya dari salinan itu. Cara ini sah dan memang disediakan: yang
+dinilai adalah kemampuan Anda menjelaskan dan mengubah program, bukan
+mengetik ulang berkas yang sudah benar.
+
+Bila program berhenti dengan pesan kesalahan, bacalah dari baris terakhir ke
+atas. Baris terakhir menyebut jenis kesalahan; baris di atasnya menyebut
+berkas dan nomor baris penyebabnya.
+
+\subsection*{Hubungan dengan buku ajar dan RPS}
+
+Buku ajar menjelaskan mengapa sesuatu bekerja: definisi, rumus, dan
+peringatan. Modul ini menjelaskan bagaimana membangunnya: berkas apa yang
+dibuat, fungsi apa yang ditulis, dan nilai apa yang diisi. Setiap sesi
+menyebut nomor bab yang menjadi sumber konsepnya, sehingga Anda dapat
+berpindah antara modul dan buku bila memerlukan penjelasan tambahan.
+
+RPS mengatur capaian dan asesmen. Sembilan sesi modul ini menuntaskan
+\ModulSubCPMK. Tugas praktikum pada RPS dinilai dari checkpoint yang Anda
+hasilkan pada sesi yang bersangkutan.

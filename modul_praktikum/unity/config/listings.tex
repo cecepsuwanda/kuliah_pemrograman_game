@@ -1,0 +1,57 @@
+% =========================================================
+%  config/listings.tex
+%  Gaya kode Python dan C#.
+% =========================================================
+
+\lstdefinelanguage{CSharp}{
+  morekeywords={abstract,as,base,bool,break,byte,case,catch,char,class,const,
+    continue,decimal,default,delegate,do,double,else,enum,event,explicit,
+    extern,false,finally,fixed,float,for,foreach,goto,if,implicit,in,int,
+    interface,internal,is,lock,long,namespace,new,null,object,operator,out,
+    override,params,private,protected,public,readonly,ref,return,sbyte,
+    sealed,short,sizeof,stackalloc,static,string,struct,switch,this,throw,
+    true,try,typeof,uint,ulong,unchecked,unsafe,ushort,using,virtual,void,
+    volatile,while,var,get,set},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]",
+}
+
+\lstdefinestyle{modulkode}{
+  basicstyle=\ttfamily\footnotesize\color{ubCodeText},
+  keywordstyle=\color{ubCodeKey}\bfseries,
+  commentstyle=\color{ubCodeCom}\itshape,
+  stringstyle=\color{ubCodeStr},
+  numberstyle=\tiny\color{ubCodeNum},
+  numbers=left,
+  numbersep=8pt,
+  backgroundcolor=\color{ubCodeBg},
+  frame=none,
+  showstringspaces=false,
+  breaklines=true,
+  breakatwhitespace=false,
+  postbreak=\mbox{\textcolor{ubCodeKey}{$\hookrightarrow$}\space},
+  tabsize=4,
+  columns=fullflexible,
+  keepspaces=true,
+  xleftmargin=14pt,
+  xrightmargin=3pt,
+  aboveskip=6pt,
+  belowskip=6pt,
+  upquote=true,
+}
+\lstset{style=modulkode}
+
+% \tampilkode[opsi]{berkas}{keterangan}
+\newcommand{\tampilkode}[3][]{%
+  \Needspace{6cm}%
+  \lstinputlisting[style=modulkode, caption={#3}, #1]{#2}%
+}
+
+% \tampilkodebaris[bahasa]{berkas}{awal}{akhir}{keterangan}
+\newcommand{\tampilkodebaris}[5][Python]{%
+  \Needspace{5.5cm}%
+  \lstinputlisting[style=modulkode, language=#1,
+    firstline=#3, lastline=#4, caption={#5}]{#2}%
+}

@@ -1,0 +1,316 @@
+% =========================================================
+%  sesi/01/sesi.tex
+%  Sesi 1 — Pengenalan Unity dan scene pertama
+% =========================================================
+
+\sesi{01}{Pengenalan Unity dan Scene Pertama}{3.1}{100 menit}
+
+Modul ini dimulai sesudah UTS. Pada Blok I dan Blok II Anda membangun
+\NamaPermainan\ dengan Python: siklus permainan, gerak, fisika, tabrakan, dan
+AI. Sekarang pekerjaan yang sama dipindahkan ke \istilah{game engine} Unity.
+
+Yang dibangun bukan permainan baru. Ini tetap \NamaPermainan, dengan cerita
+yang sama: pemain masuk gudang, mengumpulkan artefak, menghindari bahaya,
+lalu mencapai pintu keluar. Level yang dikerjakan pada modul ini adalah Level
+Rak, yaitu level bertampilan samping.
+
+Sesi pertama belum membuat pemain bergerak. Sesi ini menyiapkan project,
+mengenal editor, dan menyusun scene berisi bentuk-bentuk primitif sebagai
+pengganti sementara.
+
+% ---------------------------------------------------------
+\bagian{Tujuan Sesi}
+
+\begin{tujuanbox}
+Setelah menuntaskan sesi ini, Anda dapat menunjukkan:
+\begin{enumerate}[leftmargin=1.5em, itemsep=0.2em]
+  \item project 2D bernama \NamaProject\ yang terbuka di Unity Editor;
+  \item scene \file{LevelRak} berisi kamera, lantai, tiga rak, pemain, dan
+        pintu;
+  \item susunan \istilah{Hierarchy} yang rapi dengan objek berada di bawah
+        induk \code{Gudang};
+  \item scene yang tersimpan dan dapat dibuka kembali;
+  \item penjelasan padanan konsep Unity dengan konsep Pygame yang telah Anda
+        pelajari.
+\end{enumerate}
+\end{tujuanbox}
+
+% ---------------------------------------------------------
+\bagian{Prasyarat}
+
+\begin{prasyaratbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.25em]
+  \item Anda telah menuntaskan Blok I dan Blok II, atau setidaknya memahami
+        \istilah{game loop}, \istilah{delta time}, dan \istilah{collision}
+        dari Python.
+  \item Komputer memenuhi kebutuhan Unity LTS: Windows 10/11 64-bit,
+        RAM minimal 8 GB, dan ruang disk sekitar 10 GB.
+  \item Unity Hub sudah terpasang. Bila belum, pemasangannya dikerjakan pada
+        Langkah 1.
+\end{itemize}
+\end{prasyaratbox}
+
+% ---------------------------------------------------------
+\bagian{Peta Kemampuan}
+
+\petasesi
+  {Belum ada project Unity. Kemampuan dari Blok I--II masih dalam bentuk
+   kode Python.}
+  {Project 2D, scene, kamera, objek primitif, dan skrip C\# pertama.}
+  {Level Rak yang dapat dimainkan: \istilah{Tilemap}, \istilah{Collider2D},
+   \istilah{Rigidbody2D}, dan kontrol pemain pada sesi 2.}
+
+% ---------------------------------------------------------
+\bagian{Konsep yang Dipakai}
+
+\subsection*{Empat panel yang akan sering Anda pakai}
+
+\begin{itemize}[leftmargin=1.4em, itemsep=0.3em]
+  \item \textbf{Hierarchy} --- daftar seluruh \istilah{GameObject} pada scene
+        yang sedang dibuka. Objek di bawah objek lain menjadi anaknya.
+  \item \textbf{Scene} dan \textbf{Game} --- tampilan kerja di editor dan
+        tampilan hasil ketika permainan berjalan.
+  \item \textbf{Inspector} --- isi objek yang sedang dipilih: transform,
+        komponen, dan nilai-nilainya.
+  \item \textbf{Project} --- seluruh berkas project: scene, skrip, gambar,
+        dan bunyi.
+\end{itemize}
+
+\subsection*{GameObject dan komponen}
+
+Di Unity tidak ada kelas yang menggambar dirinya sendiri seperti
+\code{pygame.sprite.Sprite}. Sebagai gantinya, sebuah \istilah{GameObject}
+adalah wadah kosong; perilaku dan tampilannya datang dari komponen yang
+ditempelkan. \code{Sprite Renderer} membuatnya terlihat,
+\code{Collider2D} membuatnya dapat ditabrak, dan \code{Rigidbody2D} membuatnya
+tunduk pada fisika. Skrip C\# juga komponen.
+
+Karena itu, pertanyaan ``di mana kode gambar untuk pemain?'' berubah menjadi
+``komponen apa yang ditempelkan pada GameObject Pemain?''.
+
+\subsection*{Padanan dengan Pygame}
+
+{\small
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\linewidth}{@{}L{4.6cm} Y@{}}
+\toprule
+\textbf{Di Pygame} & \textbf{Di Unity} \\
+\midrule
+Jendela dari \code{set_mode} & Tampilan \menu{Game} pada scene \\
+Objek \code{Sprite} & \istilah{GameObject} + komponen \\
+Posisi \code{Vector2} pada \code{rect} & \code{Transform.position} \\
+Gambar permukaan & \code{Sprite Renderer} \\
+\code{update()} pada siklus sendiri & \code{Update()} yang dipanggil mesin \\
+\code{delta_time} dihitung sendiri & \code{Time.deltaTime} \\
+Scene buatan sendiri di kode & Berkas \file{.unity} yang disunting di editor \\
+\bottomrule
+\end{tabularx}
+}
+
+Perbedaan pentingnya: siklus permainan, pengukuran waktu, dan penggambaran
+tidak lagi Anda tulis. Mesin yang menjalankannya. Tugas Anda berpindah ke
+menyusun objek, memasang komponen, dan menulis perilaku.
+
+% ---------------------------------------------------------
+\bagian{Tutorial}
+
+Nama menu dan jendela ditulis persis seperti yang tampak pada Unity LTS.
+Bila versi Unity Anda sedikit berbeda, cari nama yang paling mirip; jangan
+mengubah urutan pekerjaan.
+
+\begin{langkah}
+  \item \textbf{Pasang Unity.} Buka Unity Hub, pilih \menu{Installs}, lalu
+        \menu{Install Editor}. Pilih versi \textbf{LTS} terbaru dan
+        pastikan modul \menu{Windows Build Support} ikut terpasang.
+
+  \item \textbf{Buat project.} Pada Unity Hub pilih \menu{New project},
+        pilih templat \menu{2D}, isi nama \NamaProject, tentukan lokasi
+        penyimpanan, lalu tekan \menu{Create project}. Tunggu sampai editor
+        terbuka.
+
+  \item \textbf{Simpan scene.} Tekan \menu{Ctrl+S}. Simpan sebagai
+        \file{Assets/Scenes/LevelRak}. Beri nama folder \file{Scenes} bila
+        belum ada. Scene yang belum disimpan akan hilang ketika editor
+        ditutup.
+
+  \item \textbf{Atur kamera.} Pilih objek \code{Main Camera} pada
+        \menu{Hierarchy}. Pada \menu{Inspector}, setel
+        \menu{Projection} menjadi \menu{Orthographic}, \menu{Size} menjadi
+        5, dan \menu{Background} menjadi warna \code{\#18203A}. Posisi
+        kamera: \code{(0, 0, -10)}.
+
+  \item \textbf{Buat induk Gudang.} Klik kanan pada \menu{Hierarchy}, pilih
+        \menu{Create Empty}, beri nama \code{Gudang}. Seluruh objek level
+        akan menjadi anaknya agar Hierarchy tetap rapi.
+
+  \item \textbf{Buat lantai.} Klik kanan \code{Gudang}, pilih
+        \menu{2D Object > Sprites > Square}, beri nama \code{Lantai}.
+        Pada \menu{Inspector}: \code{Transform.position} $(0,-3.5,0)$;
+        \code{Sprite Renderer > Draw Mode} menjadi \menu{Tiled};
+        \code{Size} $(16,1)$; \code{Color} \code{\#46587E}.
+
+  \item \textbf{Buat tiga rak.} Ulangi langkah 6 tiga kali dengan nama
+        \code{RakKiri}, \code{RakTengah}, \code{RakKanan}. Ukuran masing-masing
+        $(3,0.4)$, warna \code{\#60749E}. Posisi:
+        $(-4,-1.8)$, $(0.5,-0.4)$, $(4.5,-1.8)$.
+
+  \item \textbf{Buat pemain dan pintu.} Tambahkan dua Square lagi:
+        \code{Pemain} berukuran $(0.8,0.8)$ berwarna \code{\#2E75B6} pada
+        posisi $(-6.5,-3)$; \code{Pintu} berukuran $(1,2)$ berwarna
+        \code{\#3CA06E} pada posisi $(7,-2.6)$.
+
+  \item \textbf{Buat folder skrip.} Pada jendela \menu{Project}, klik kanan
+        folder \file{Assets}, pilih \menu{Create > Folder}, beri nama
+        \code{Scripts}.
+
+  \item \textbf{Buat skrip pertama.} Klik kanan folder \file{Scripts}, pilih
+        \menu{Create > C\# Script}, beri nama \code{SkripPertama}. Buka
+        berkasnya dan salin isi pada bagian Kode Sesi Ini. Perhatikan bahwa
+        nama kelas harus sama dengan nama berkas.
+
+  \item \textbf{Pasang skrip pada objek uji.} Buat Square baru bernama
+        \code{CobaSkrip} pada posisi $(0,1.5)$, ukuran $(0.6,0.6)$, warna
+        \code{\#DEB242}. Seret berkas \code{SkripPertama} dari jendela
+        \menu{Project} ke objek itu, atau tekan \menu{Add Component} lalu
+        cari \code{SkripPertama}.
+
+  \item \textbf{Jalankan scene.} Tekan \menu{Play}. Gerakkan objek
+        \code{CobaSkrip} dengan tombol panah dan amati jendela
+        \menu{Console}. Tekan \menu{Play} lagi untuk berhenti.
+\end{langkah}
+
+\begin{ujibox}
+Setelah Langkah 12, periksa lima hal berikut.
+\begin{itemize}[leftmargin=1.4em, itemsep=0.2em]
+  \item Hierarchy memuat \code{Gudang} dengan lima anak: lantai, tiga rak,
+        pemain, dan pintu.
+  \item Jendela \menu{Game} menampilkan lantai, tiga rak, pemain biru, dan
+        pintu hijau.
+  \item \code{CobaSkrip} bergerak saat tombol panah ditekan dan berputar
+        pelan.
+  \item \menu{Console} menampilkan ``Skrip mulai.'' dan laporan setiap dua
+        detik.
+  \item Setelah Play dihentikan, posisi objek kembali seperti sebelum
+        dijalankan.
+\end{itemize}
+\end{ujibox}
+
+% ---------------------------------------------------------
+\bagian{Kode Sesi Ini}
+
+Skrip berikut adalah skrip C\# pertama Anda. Ia belum mengatur pemain; ia
+hanya membuktikan bahwa scene berjalan, bahwa \code{Update()} dipanggil
+setiap bingkai, dan bahwa \code{Time.deltaTime} tersedia dari mesin.
+
+\tampilkode[language=CSharp]{code/sesi-01/Scripts/SkripPertama.cs}
+  {SkripPertama.cs: skrip C\# pertama pada project}
+
+\subsection*{Tabel objek scene}
+
+Tabel berikut adalah daftar objek yang harus ada pada scene Anda. Nilai yang
+tidak disebut boleh dibiarkan bawaan.
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{@{}L{2.3cm} L{3.0cm} Y@{}}
+\toprule
+\textbf{GameObject} & \textbf{Komponen} & \textbf{Nilai penting} \\
+\midrule
+Kamera & Transform, Camera &
+  Position $(0,0,-10)$; Orthographic; Size 5; Background \code{\#18203A} \\
+Lantai & Transform, Sprite Renderer &
+  Position $(0,-3.5,0)$; Tiled $(16,1)$; \code{\#46587E} \\
+RakKiri & Transform, Sprite Renderer &
+  $(-4,-1.8,0)$; $(3,0.4)$; \code{\#60749E} \\
+RakTengah & Transform, Sprite Renderer &
+  $(0.5,-0.4,0)$; $(3,0.4)$; \code{\#60749E} \\
+RakKanan & Transform, Sprite Renderer &
+  $(4.5,-1.8,0)$; $(3,0.4)$; \code{\#60749E} \\
+Pemain & Transform, Sprite Renderer &
+  $(-6.5,-3,0)$; $(0.8,0.8)$; \code{\#2E75B6} \\
+Pintu & Transform, Sprite Renderer &
+  $(7,-2.6,0)$; $(1,2)$; \code{\#3CA06E} \\
+CobaSkrip & Transform, Sprite Renderer, SkripPertama &
+  $(0,1.5,0)$; $(0.6,0.6)$; \code{\#DEB242}; Move Speed 3 \\
+\bottomrule
+\end{tabularx}
+}
+
+\checkpoint{01}{Folder checkpoint memuat \file{Scripts/SkripPertama.cs} dan
+\file{scene.md}. Scene tidak disertakan sebagai berkas biner; susunlah
+mengikuti tabel di atas.}
+
+% ---------------------------------------------------------
+\bagian{Kesalahan Umum}
+
+\begin{galatbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.35em]
+  \item \textbf{Objek tidak terlihat di jendela Game.}
+        Gejala: objek ada di Hierarchy tetapi layar kosong. Periksa posisi
+        $z$ objek (harus 0) dan posisi kamera; pada tampilan 2D, kamera
+        berada di $z=-10$ dan melihat ke arah $+z$.
+  \item \textbf{Objek terlihat tetapi sangat kecil atau sangat besar.}
+        Gejala: ukuran tidak sesuai tabel. Periksa \code{Transform.scale}
+        dan \code{Sprite Renderer > Size}; keduanya memengaruhi ukuran
+        akhir.
+  \item \textbf{Berkas skrip tidak dapat ditempel.}
+        Gejala: nama kelas dan nama berkas berbeda, atau berkas tidak berada
+        di dalam folder \file{Assets}. Keduanya membuat Unity menolak
+        komponen.
+  \item \textbf{Perubahan hilang setelah Play dihentikan.}
+        Gejala: posisi objek kembali seperti semula. Itu memang perilaku
+        Unity: perubahan saat Play tidak disimpan. Ubah scene ketika Play
+        berhenti.
+  \item \textbf{Console merah saat Play.}
+        Gejala: skrip tidak berjalan sama sekali. Baca pesan pertama pada
+        Console; biasanya nama kelas salah atau titik koma hilang.
+\end{itemize}
+\end{galatbox}
+
+% ---------------------------------------------------------
+\bagian{Lembar Kerja}
+
+Isi tabel berikut, lalu simpan sebagai bagian dari catatan praktikum Anda.
+
+{\small
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\linewidth}{@{}C{0.8cm} L{5.4cm} Y@{}}
+\toprule
+\textbf{No} & \textbf{Hasil yang dicatat} & \textbf{Keterangan Anda} \\
+\midrule
+1 & Versi Unity dan templat project yang dipakai & \\[0.55cm]
+2 & Jumlah GameObject pada Hierarchy dan susunannya & \\[0.55cm]
+3 & Ukuran kamera (orthographic size) dan warna latar & \\[0.55cm]
+4 & Isi Console setelah Play selama 10 detik & \\[0.9cm]
+5 & Satu kesalahan yang muncul dan cara Anda memperbaikinya & \\[0.9cm]
+\bottomrule
+\end{tabularx}
+}
+
+% ---------------------------------------------------------
+\bagian{Checklist Sesi}
+
+\begin{checklistbox}
+\begin{checklist}
+  \item Saya dapat menunjukkan project 2D \NamaProject\ yang terbuka dari
+        Unity Hub.
+  \item Saya dapat menjelaskan fungsi Hierarchy, Inspector, Project, Scene,
+        dan Game.
+  \item Saya dapat membuat GameObject beserta komponen Sprite Renderer dan
+        mengatur warnanya.
+  \item Saya dapat menyimpan scene dan membukanya kembali.
+  \item Saya dapat menjelaskan padanan \istilah{GameObject} dengan
+        \code{Sprite} pada Pygame.
+  \item Saya dapat membaca Console dan menemukan penyebab skrip tidak
+        berjalan.
+\end{checklist}
+\end{checklistbox}
+
+% ---------------------------------------------------------
+\bagian{Pengait ke Sesi Berikutnya}
+
+Scene ini masih berupa bentuk primitif yang tidak bertabrakan dan tidak dapat
+dikendalikan. Pada sesi 2 Anda menyusun lantai dan rak dengan
+\istilah{Tilemap}, menambahkan \istilah{Collider2D} dan
+\istilah{Rigidbody2D}, lalu menulis skrip kontrol pemain. Di sanalah
+\NamaPermainan\ mulai dapat dimainkan.

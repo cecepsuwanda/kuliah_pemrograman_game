@@ -1,0 +1,335 @@
+% =========================================================
+%  sesi/03/sesi.tex
+%  Sesi 3 — Pemain bergerak dengan vektor dan delta time
+% =========================================================
+
+\sesi{03}{Pemain Bergerak dengan Vektor dan Delta Time}{1.2}{120 menit}
+
+Pada sesi 2 siklus permainan sudah berputar, tetapi belum ada yang berpindah
+tempat. Layar hanya menampilkan latar yang sama dari bingkai ke bingkai. Pada
+minggu 3 ini tahap pembaruan akhirnya diberi pekerjaan: seorang pemain
+berukuran 36 piksel muncul di tengah jendela dan bergerak ke kiri atau ke kanan
+selama tombol arah ditahan.
+
+Gerak itu tidak dihitung dari jumlah bingkai, melainkan dari waktu. Posisi
+pemain disimpan sebagai vektor (\istilah{Vector2}) bertipe pecahan, dan setiap
+bingkai posisinya ditambah kecepatan dikali selang waktu (\istilah{delta
+time}). Dengan cara itu, pemain menempuh jarak yang sama dalam satu detik, baik
+program berjalan pada 30 maupun 60 \istilah{FPS}. Inilah pembeda penting antara
+program yang hanya berkedip dan permainan yang geraknya dapat dipercaya.
+
+% ---------------------------------------------------------
+\bagian{Tujuan Sesi}
+
+\begin{tujuanbox}
+Setelah menuntaskan sesi ini, Anda dapat menunjukkan:
+\begin{enumerate}[leftmargin=1.5em, itemsep=0.2em]
+  \item pemain berukuran 36 $\times$ 36 piksel yang tampil di tengah jendela
+        \NamaPermainan;
+  \item pemain yang bergerak ke kiri dan ke kanan selama tombol panah atau
+        tombol A dan D ditahan;
+  \item kecepatan 260 piksel per detik yang tetap sama ketika program
+        dijalankan pada 30 FPS dan 60 FPS;
+  \item posisi pemain yang tersimpan sebagai pecahan, sementara
+        \istilah{rect} untuk menggambar diselaraskan dengan pembulatan;
+  \item perhitungan $\vec{p}_{\text{baru}} = \vec{p} + \vec{v}\,\Delta t$
+        beserta arti setiap lambangnya.
+\end{enumerate}
+\end{tujuanbox}
+
+% ---------------------------------------------------------
+\bagian{Prasyarat}
+
+\begin{prasyaratbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.25em]
+  \item Checkpoint sesi 2 pada \file{code/sesi-02} sudah berjalan: siklus
+        permainan berputar, FPS tampil pada judul, dan jendela dapat ditutup
+        dengan rapi.
+  \item Anda telah membaca Bab V buku ajar, khususnya bagian posisi sebagai
+        vektor, pembacaan keadaan tombol, gerak berbasis selang waktu, dan
+        penyelarasan posisi dengan \code{Rect}.
+  \item Anda masih mengingat perbedaan peristiwa dan keadaan tombol dari
+        Bab IV; perbedaan itu menjadi dasar pemilihan
+        \code{pygame.key.get_pressed()} pada sesi ini.
+  \item Anda dapat menjalankan program dengan pilihan baris perintah, misalnya
+        \code{python main.py --fps 30}.
+\end{itemize}
+\end{prasyaratbox}
+
+% ---------------------------------------------------------
+\bagian{Peta Kemampuan}
+
+\petasesi
+  {Siklus berjalan dan FPS tampil pada judul, tetapi layar hanya berisi latar
+   polos.}
+  {Pemain 36 piksel, posisi \code{Vector2}, \code{key.get_pressed()},
+   kecepatan 260 piksel per detik, dan penyelarasan \code{rect}.}
+  {Percepatan, gravitasi, lompatan, dan pantulan yang menambah kecepatan
+   sebelum posisi diperbarui pada sesi 4.}
+
+% ---------------------------------------------------------
+\bagian{Konsep yang Dipakai}
+
+\subsection*{Vektor menyatukan dua komponen}
+
+Posisi pada bidang datar memiliki dua angka: jarak mendatar dan jarak tegak.
+Menyimpannya pada dua variabel terpisah membuat setiap operasi harus ditulis
+dua kali dan membuat kekeliruan menukar komponen sulit terlihat.
+\code{pygame.Vector2} menyatukan keduanya menjadi satu nilai, sehingga
+penjumlahan dan perkalian dengan satu angka bekerja per komponen secara
+otomatis. Perlu diingat bahwa pada koordinat layar sumbu tegak menuju ke bawah;
+gerak ke atas berarti mengurangi nilai $y$, bukan menambahnya.
+
+\subsection*{Keadaan tombol bukan peristiwa}
+
+Peristiwa (\istilah{event}) \code{KEYDOWN} hanya dilaporkan sekali pada saat
+tombol mulai ditekan. Peristiwa itu tidak cocok untuk gerak yang berlangsung
+terus, karena pemain yang menahan tombol hanya akan melihat satu perpindahan
+kecil. Untuk keperluan itu Pygame menyediakan
+\code{pygame.key.get_pressed()}, yang mengembalikan keadaan seluruh tombol pada
+bingkai itu. Selama tombol masih ditahan, nilainya benar; begitu dilepas,
+nilainya salah. Inilah cara membaca masukan yang dipakai sesi ini.
+
+\subsection*{Perpindahan dari kecepatan dan selang waktu}
+
+Kecepatan dinyatakan dalam piksel per detik, sedangkan selang waktu dinyatakan
+dalam detik. Perpindahan satu bingkai adalah hasil kalinya:
+
+\[
+\vec{p}_{\text{baru}} = \vec{p} + \vec{v}\,\Delta t.
+\]
+
+Lambang $\vec{p}$ menyatakan posisi sebelum pembaruan, $\vec{v}$ menyatakan
+kecepatan dalam piksel per detik, dan $\Delta t$ menyatakan selang waktu satu
+bingkai dalam detik. Hasil perkalian $\vec{v}\,\Delta t$ bersatuan piksel,
+sehingga dapat langsung dijumlahkan dengan posisi. Nilai $\Delta t$ diperoleh
+dari pengendali waktu:
+
+\[
+\Delta t = \frac{\text{tick}}{1000}.
+\]
+
+Lambang \text{tick} menyatakan nilai yang dikembalikan
+\code{clock.tick(FPS)} dalam milidetik, dan angka 1000 mengubahnya menjadi
+detik. Apabila selang waktu dua kali lebih panjang, perpindahannya dua kali
+lebih jauh, tetapi jarak yang ditempuh dalam satu detik tetap sama.
+
+\subsection*{Posisi pecahan, rect bulat}
+
+Posisi yang sebenarnya harus disimpan sebagai pecahan agar perpindahan kecil
+tetap terakumulasi. Pada kecepatan 260 piksel per detik dan 60 FPS,
+perpindahan setiap bingkainya sekitar 4,33 piksel; pada kecepatan rendah,
+pecahan itu jauh lebih penting. \code{Rect} tidak menyimpan pecahan karena
+letak piksel pada layar memang bilangan bulat. Karena itu, setiap bingkai
+\code{rect} diselaraskan dari posisi pecahan dengan \code{round()}, bukan
+dipotong dengan \code{int()}. Membulatkan memilih bilangan bulat terdekat,
+sedangkan memotong selalu bergerak ke arah nol dan membuat pemain tampak
+tertinggal hampir satu piksel.
+
+% ---------------------------------------------------------
+\bagian{Tutorial}
+
+Kerjakan langkah berikut berurutan. Setiap langkah selesai ketika hasilnya
+dapat Anda lihat, bukan ketika kodenya baru diketik.
+
+\begin{langkah}
+  \item \textbf{Siapkan folder sesi.} Salin folder \file{code/sesi-02} menjadi
+        folder kerja baru, lalu buka di editor dan terminal. Anda berangkat
+        dari siklus yang sudah berjalan dan berjudul FPS.
+
+  \item \textbf{Tambahkan pengaturan pemain.} Pada
+        \file{gudang_artefak/settings.py}, tambahkan \code{PLAYER_SIZE = 36},
+        \code{PLAYER_SPEED = 260.0}, dan \code{PLAYER_COLOR}. Beri keterangan
+        bahwa kecepatan memakai satuan piksel per detik, bukan piksel per
+        bingkai.
+
+  \item \textbf{Buat berkas benda.} Buat \file{gudang_artefak/entities.py}
+        dan impor \code{pygame} serta \code{settings}. Berkas ini akan memuat
+        kelas \code{Player}; memisahkannya dari \code{game.py} membuat aturan
+        gerak mudah dicari ketika program bertambah besar.
+
+  \item \textbf{Tulis kelas pemain.} Buat \code{Player} sebagai turunan
+        \code{pygame.sprite.Sprite}. Di \code{__init__}, buat permukaan
+        berukuran 36 $\times$ 36, isi dengan warna pemain, lalu buat
+        \code{self.rect} dari permukaan itu. Simpan posisi sebenarnya pada
+        \code{self.position = pygame.Vector2(x, y)}.
+
+  \item \textbf{Tulis pembaruan pemain.} Buat metode \code{update(delta_seconds,
+        direction)}. Tambahkan \code{direction * S.PLAYER_SPEED *
+        delta_seconds} ke \code{self.position.x}, jepit nilainya agar pemain
+        tidak keluar jendela, lalu selaraskan \code{self.rect.x} dengan
+        \code{round(self.position.x)}.
+
+  \item \textbf{Tempatkan pemain di tengah.} Di \code{Game.__init__}, buat
+        \code{Player} pada posisi setengah lebar dan setengah tinggi jendela
+        dikurangi setengah ukuran pemain. Sesuaikan \code{player.bounds}
+        dengan ukuran jendela yang benar-benar dipakai, bukan hanya dengan
+        nilai bawaan.
+
+  \item \textbf{Hitung selang waktu.} Di awal \code{run()}, ubah
+        \code{self.clock.tick(self.args.fps)} menjadi
+        \code{delta_seconds = self.clock.tick(self.args.fps) / 1000.0}.
+        Pembagian seribu mengubah milidetik menjadi detik.
+
+  \item \textbf{Panggil pembaruan.} Di dalam \code{run()}, susun urutannya
+        menjadi \code{handle_events()}, \code{update(delta_seconds)},
+        \code{draw()}, lalu \code{pygame.display.flip()}.
+
+  \item \textbf{Baca keadaan tombol.} Buat \code{Game.update(delta_seconds)}.
+        Di dalamnya panggil \code{keys = pygame.key.get_pressed()}, lalu
+        hitung \code{direction = int(keys[pygame.K_RIGHT] or
+        keys[pygame.K_d]) - int(keys[pygame.K_LEFT] or keys[pygame.K_a])}.
+        Teruskan \code{direction} ke \code{self.player.update()}.
+
+  \item \textbf{Gambar pemain.} Di \code{draw()}, setelah mengisi latar,
+        tempelkan \code{self.player.image} pada \code{self.player.rect}
+        dengan \code{self.screen.blit()}.
+\end{langkah}
+
+\begin{ujibox}
+Setelah Langkah 10, periksa empat hal berikut.
+\begin{itemize}[leftmargin=1.4em, itemsep=0.2em]
+  \item Pemain tampil sebagai kotak 36 $\times$ 36 piksel di tengah jendela,
+        bukan di pojok kiri atas.
+  \item Menahan panah kanan atau D menggerakkan pemain ke kanan selama tombol
+        ditahan, bukan satu langkah kecil lalu berhenti.
+  \item Menahan panah kiri atau A menggerakkan pemain ke kiri, dan pemain
+        berhenti di tepi jendela tanpa keluar dari layar.
+  \item Pemain tidak meninggalkan jejak. Bila ada jejak, periksa urutan
+        \code{fill}, \code{blit}, lalu \code{flip}.
+\end{itemize}
+\end{ujibox}
+
+Sekarang uji ketahanan gerak terhadap perubahan laju bingkai. Jalankan
+\code{python main.py --fps 60}, lalu \code{python main.py --fps 30}. Ukur waktu
+yang diperlukan pemain untuk melintasi hampir seluruh lebar jendela, misalnya
+dari tepi kiri ke tepi kanan, dengan pengukur waktu di ponsel. Pada kedua
+pengaturan, waktunya harus kira-kira sama, yaitu sekitar 3,5 detik untuk jarak
+900 piksel pada kecepatan 260 piksel per detik.
+
+\begin{ujibox}
+Tunjukkan tiga bukti berikut sebelum melanjutkan.
+\begin{itemize}[leftmargin=1.4em, itemsep=0.2em]
+  \item Waktu lintasan pada 30 FPS dan 60 FPS tidak berbeda jauh; yang berubah
+        hanyalah jumlah bingkai, bukan jarak per detik.
+  \item Gerak pada 30 FPS terlihat lebih tersendat, tetapi pemain tetap
+        menempuh jarak yang sama dalam satu detik.
+  \item Bila \code{/ 1000.0} dihapus sementara, pemain bergerak sangat cepat
+        dan menempel di tepi jendela. Kembalikan pembagian itu setelah
+        percobaan.
+\end{itemize}
+\end{ujibox}
+
+% ---------------------------------------------------------
+\bagian{Kode Sesi Ini}
+
+Berkas berikut adalah isi checkpoint sesi 3. Bagian yang berubah dari sesi 2
+adalah \file{settings.py} (pengaturan pemain), \file{entities.py} (kelas
+\code{Player}), \file{game.py} (pembaruan posisi dan penggambaran pemain), dan
+\file{main.py} (tetap sama, tetapi pilihan \code{--fps} kini mengubah gerak).
+Ketiklah sendiri, lalu bandingkan hasilnya.
+
+\tampilkodebaris[Python]{code/sesi-03/gudang_artefak/settings.py}{10}{22}
+  {settings.py: ukuran, warna, dan kecepatan pemain}
+
+\tampilkodebaris[Python]{code/sesi-03/gudang_artefak/entities.py}{14}{39}
+  {entities.py: posisi pecahan, pembaruan, dan penyelarasan rect}
+
+\tampilkodebaris[Python]{code/sesi-03/gudang_artefak/game.py}{19}{31}
+  {game.py: pemain dibuat sekali di tengah jendela}
+
+\tampilkodebaris[Python]{code/sesi-03/gudang_artefak/game.py}{33}{56}
+  {game.py: selang waktu dihitung dari clock.tick dan diteruskan ke pembaruan}
+
+\tampilkodebaris[Python]{code/sesi-03/gudang_artefak/game.py}{67}{77}
+  {game.py: pembacaan keadaan tombol dan penggambaran pemain}
+
+\checkpoint{03}{Pemain 36 piksel bergerak mendatar dengan kecepatan 260 piksel
+per detik, kecepatannya sama pada 30 dan 60 FPS, dan posisi pecahannya
+diselaraskan dengan \code{rect} melalui pembulatan.}
+
+% ---------------------------------------------------------
+\bagian{Kesalahan Umum}
+
+\begin{galatbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.35em]
+  \item \textbf{Pemain tidak bergerak sama sekali.}
+        Gejala: pemain tampil, tetapi tombol tidak berpengaruh. Periksa apakah
+        \code{Game.update()} benar-benar dipanggil dari \code{run()} dan apakah
+        \code{delta_seconds} diteruskan ke \code{player.update()}.
+  \item \textbf{Pemain hanya bergerak satu langkah setiap penekanan.}
+        Gejala: pemain melompat sedikit lalu diam walaupun tombol ditahan.
+        Periksa pembacaan masukan; \code{KEYDOWN} hanya terjadi sekali,
+        sedangkan \code{pygame.key.get_pressed()} membaca keadaan tombol.
+  \item \textbf{Pemain bergerak terlalu cepat.}
+        Gejala: pemain melesat dan menempel di tepi jendela. Periksa pembagian
+        \code{/ 1000.0}; memakai nilai milidetik sebagai detik membuat gerak
+        seribu kali lebih cepat.
+  \item \textbf{Pemain meninggalkan jendela.}
+        Gejala: pemain menghilang di tepi. Periksa penjepitan posisi dan
+        pastikan \code{player.bounds} memakai ukuran jendela yang sebenarnya,
+        bukan hanya nilai bawaan.
+  \item \textbf{\code{AttributeError: 'tuple' object has no attribute 'x'}.}
+        Gejala: program berhenti pada baris \code{position.x}. Periksa apakah
+        posisi dibuat dengan \code{pygame.Vector2}, bukan dengan pasangan
+        angka biasa.
+  \item \textbf{Gerak tersendat pada kecepatan rendah.}
+        Gejala: pemain diam beberapa bingkai lalu melompat satu piksel.
+        Periksa penyimpanan posisi; bila posisi disimpan sebagai bilangan
+        bulat, pecahan kecilnya terpotong dan hilang.
+\end{itemize}
+\end{galatbox}
+
+% ---------------------------------------------------------
+\bagian{Lembar Kerja}
+
+Catat hasil pengukuran Anda. Isi kolom terakhir setelah Anda membandingkan
+kedua laju bingkai dan mencoba satu nilai kecepatan yang lebih rendah.
+
+{\small
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\linewidth}{@{}C{0.8cm} L{5.2cm} Y@{}}
+\toprule
+\textbf{No} & \textbf{Hasil yang dicatat} & \textbf{Keterangan Anda} \\
+\midrule
+1 & Kecepatan yang ditetapkan dan ukuran pemain & \\[0.55cm]
+2 & Waktu lintasan pada 30 FPS dan 60 FPS & \\[0.9cm]
+3 & Jarak yang ditempuh dalam satu detik pada kedua laju & \\[0.9cm]
+4 & Contoh nilai posisi pecahan dan nilai \code{rect} yang tampil & \\[0.9cm]
+5 & Perilaku pemain ketika kecepatan diturunkan menjadi 20 piksel per detik & \\[0.9cm]
+6 & Satu kendala yang Anda hadapi dan cara menyelesaikannya & \\[0.9cm]
+\bottomrule
+\end{tabularx}
+}
+
+% ---------------------------------------------------------
+\bagian{Checklist Sesi}
+
+\begin{checklistbox}
+\begin{checklist}
+  \item Saya dapat menunjukkan pemain 36 piksel yang tampil di tengah jendela.
+  \item Saya dapat menggerakkan pemain ke kiri dan ke kanan dengan tombol
+        panah maupun tombol A dan D.
+  \item Saya dapat menunjukkan bahwa kecepatan pemain tetap sama pada 30 FPS
+        dan 60 FPS.
+  \item Saya dapat menjelaskan arti setiap lambang pada
+        $\vec{p}_{\text{baru}} = \vec{p} + \vec{v}\,\Delta t$ dan
+        $\Delta t = \text{tick}/1000$.
+  \item Saya dapat menunjukkan posisi pecahan pemain dan \code{rect} bulat
+        yang diselaraskan dengan \code{round()}.
+  \item Saya dapat menjelaskan mengapa posisi disimpan sebagai pecahan,
+        sedangkan \code{rect} dipakai untuk menggambar.
+\end{checklist}
+\end{checklistbox}
+
+% ---------------------------------------------------------
+\bagian{Pengait ke Sesi Berikutnya}
+
+Pemain pada sesi ini bergerak lurus dengan kecepatan tetap; begitu tombol
+dilepas, kecepatannya langsung nol. Sebagian besar permainan menuntut lebih:
+benda yang jatuh makin cepat, bola yang memantul kehilangan sebagian
+kecepatannya, dan karakter yang melompat melambat di dekat titik tertinggi.
+Semua itu berasal dari percepatan. Pada sesi 4 Anda menambahkan
+$\vec{v}_{\text{baru}} = \vec{v} + \vec{a}\,\Delta t$ sebelum posisi
+diperbarui. Siklus dan penyelarasan \code{rect} tidak berubah; yang bertambah
+hanyalah satu tingkat perhitungan.

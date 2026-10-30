@@ -1,0 +1,265 @@
+% =========================================================
+%  sesi/01/sesi.tex
+%  Sesi 1 — Lingkungan kerja dan jendela pertama
+% =========================================================
+
+\sesi{01}{Lingkungan Kerja dan Jendela Pertama}{1.1 (persiapan)}{100 menit}
+
+Anda akan membangun \NamaPermainan: sebuah gudang tua berisi artefak. Pemain
+masuk, mengumpulkan artefak, menghindari peti dan penjaga, lalu keluar lewat
+pintu. Permainan ini tidak dibuat sekaligus. Setiap sesi menambahkan satu
+kemampuan, dan pada sesi terakhir seluruh kemampuan itu bekerja bersama
+dalam satu program.
+
+Sesi pertama belum membuat permainan. Sesi ini menyiapkan tempat kerja dan
+membuktikan bahwa perkakas Anda benar-benar berjalan: sebuah jendela kosong
+berjudul \NamaPermainan.
+
+% ---------------------------------------------------------
+\bagian{Tujuan Sesi}
+
+\begin{tujuanbox}
+Setelah menuntaskan sesi ini, Anda dapat menunjukkan:
+\begin{enumerate}[leftmargin=1.5em, itemsep=0.2em]
+  \item jendela berukuran 960 $\times$ 600 piksel dengan judul
+        \NamaPermainan\ terbuka di layar;
+  \item lingkungan kerja yang memuat Python 3.8 atau lebih baru dan Pygame 2;
+  \item folder proyek dengan paket \file{gudang_artefak} dan berkas
+        \file{main.py} yang dapat dijalankan;
+  \item jendela yang dapat ditutup dengan tombol silang tanpa meninggalkan
+        proses yang menggantung;
+  \item penjelasan singkat mengapa program berhenti bersih setelah
+        \code{pygame.quit()}.
+\end{enumerate}
+\end{tujuanbox}
+
+% ---------------------------------------------------------
+\bagian{Prasyarat}
+
+\begin{prasyaratbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.25em]
+  \item Anda pernah menulis program Python sederhana: variabel, fungsi, dan
+        kelas.
+  \item Anda dapat membuka terminal dan berpindah folder dengan \code{cd}.
+  \item Tidak ada checkpoint sebelumnya. Bab I dan Bab II buku ajar cukup
+        dibaca sebagai orientasi: keduanya menjelaskan waktu, ruang, dan
+        pengendalian objek yang akan Anda pakai nanti, tetapi tidak perlu
+        dihafal sekarang.
+\end{itemize}
+\end{prasyaratbox}
+
+% ---------------------------------------------------------
+\bagian{Peta Kemampuan}
+
+\petasesi
+  {Belum ada program.}
+  {Jendela berjudul, paket \file{gudang_artefak}, dan titik masuk
+   \file{main.py}.}
+  {Siklus permainan yang berjalan terus-menerus dan pengendali waktu pada
+   sesi 2.}
+
+% ---------------------------------------------------------
+\bagian{Konsep yang Dipakai}
+
+\subsection*{Pygame adalah pustaka, bukan bahasa}
+
+Python yang Anda tulis dijalankan oleh penafsir. Pygame bukan bahasa lain dan
+bukan program berdiri sendiri; ia kumpulan fungsi yang dipanggil dari program
+Python untuk membuka jendela, menggambar, memuat bunyi, dan membaca masukan.
+Di bawah Pygame bekerja SDL yang berbicara dengan perangkat keras.
+
+\begin{center}
+\input{figures/lapisan-pygame.tikz}
+\end{center}
+
+Karena berlapis, ada dua akibat yang akan Anda temui. Pertama, pesan kesalahan
+kadang menyebut SDL, bukan Pygame, karena masalahnya berada di lapisan yang
+lebih dalam. Kedua, Pygame yang terpasang pada penafsir yang berbeda tidak
+akan ditemukan oleh program Anda, walaupun pemasangan sebelumnya berhasil.
+
+\subsection*{Kerangka program dalam lima langkah}
+
+Setiap program Pygame, sederhana maupun rumit, mengikuti kerangka berikut.
+Kelima langkah ini akan muncul kembali, dengan tambahan, pada setiap sesi.
+
+\begin{enumerate}[leftmargin=1.6em, itemsep=0.25em]
+  \item Memulai Pygame dengan \code{pygame.init()}.
+  \item Membuat permukaan tampilan dengan \code{pygame.display.set_mode()},
+        yang membuka jendela sekaligus mengembalikan tempat menggambar.
+  \item Menggambar isi jendela: mengisi latar, lalu menempelkan bentuk atau
+        teks.
+  \item Menayangkan hasil gambar dengan \code{pygame.display.flip()}.
+  \item Menunggu sampai program diakhiri, lalu membersihkan dengan
+        \code{pygame.quit()}.
+\end{enumerate}
+
+\subsection*{Menggambar dan menayangkan adalah dua pekerjaan}
+
+Apa pun yang digambar di Pygame --- jendela, bentuk, atau teks --- adalah
+\istilah{permukaan} (\emph{surface}). Menggambar berarti menempelkan satu
+permukaan ke permukaan lain. Hasilnya masih berada di memori dan belum
+terlihat pemain sampai \code{flip()} dijalankan. Bila Anda mengubah warna
+latar tetapi layar tidak berubah, periksa apakah \code{flip()} masih
+dipanggil.
+
+Sesi ini masih memakai perulangan peristiwa: program menunggu satu peristiwa,
+lalu bereaksi. Perulangan itu belum siklus permainan, karena tidak ada
+keadaan yang diperbarui dan tidak ada gambar yang disusun ulang.
+
+% ---------------------------------------------------------
+\bagian{Tutorial}
+
+Kerjakan langkah berikut berurutan. Setiap langkah adalah satu tindakan yang
+selesai; jangan melompati langkah hanya karena tampaknya sudah jelas.
+
+\begin{langkah}
+  \item \textbf{Periksa penafsir Python.} Buka terminal dan jalankan
+        \code{python --version}. Bila perintah itu tidak dikenali, coba
+        \code{py --version}. Yang dibutuhkan adalah Python 3.8 atau lebih
+        baru; tampilan versi 3.11 berarti siap.
+
+  \item \textbf{Pasang Pygame.} Jalankan
+        \code{python -m pip install pygame}. Bentuk \code{python -m pip}
+        memastikan paket dipasang pada penafsir yang sama dengan yang akan
+        menjalankan program. Bila muncul pesan izin ditolak, ulangi dengan
+        \code{python -m pip install --user pygame}.
+
+  \item \textbf{Buat folder proyek.} Buat folder bernama
+        \file{gudang-artefak}, lalu di dalamnya buat folder paket
+        \file{gudang_artefak}. Nama paket memakai huruf kecil dan garis
+        bawah, tanpa spasi, agar aman pada semua sistem operasi.
+
+  \item \textbf{Buat penanda paket.} Di dalam \file{gudang_artefak}, buat
+        berkas kosong bernama \file{__init__.py}. Berkas ini menandai bahwa
+        folder itu adalah paket Python; isinya boleh hanya satu baris
+        keterangan.
+
+  \item \textbf{Tulis pengaturan.} Buat \file{gudang_artefak/settings.py}
+        berisi judul, ukuran jendela, dan warna latar. Semua angka yang
+        dipakai bersama dikumpulkan di sini supaya mudah dicari ketika
+        terjadi masalah.
+
+  \item \textbf{Tulis kelas permainan.} Buat
+        \file{gudang_artefak/game.py}. Kelas \code{Game} membuka jendela di
+        \code{__init__} dan menunggu peristiwa di \code{run()}.
+
+  \item \textbf{Tulis titik masuk.} Buat \file{main.py} yang membaca pilihan
+        baris perintah, membuat \code{Game}, lalu memanggil \code{run()}.
+        Pilihan \code{--auto-close} disediakan untuk pengujian: program
+        mengirim sendiri peristiwa penutup sehingga berhenti tanpa disentuh.
+
+  \item \textbf{Jalankan program.} Dari folder \file{gudang-artefak}, ketik
+        \code{python main.py}. Jendela biru tua berjudul \NamaPermainan\
+        harus terbuka.
+\end{langkah}
+
+\begin{ujibox}
+Setelah Langkah 8, periksa empat hal berikut.
+\begin{itemize}[leftmargin=1.4em, itemsep=0.2em]
+  \item Jendela terbuka dengan ukuran 960 $\times$ 600 piksel. Bila berbeda,
+        periksa nilai bawaan pada \code{parse_arguments}.
+  \item Judul pada bilah jendela berbunyi \NamaPermainan. Bila masih bawaan
+        Pygame, periksa \code{pygame.display.set_caption}.
+  \item Latar jendela berwarna biru tua, bukan hitam. Bila hitam, periksa
+        urutan \code{fill} dan \code{flip}.
+  \item Menekan tombol silang menutup jendela, dan terminal menampilkan
+        \code{Program selesai.} Bila terminal tidak kembali, periksa
+        pemanggilan \code{pygame.quit()}.
+\end{itemize}
+\end{ujibox}
+
+% ---------------------------------------------------------
+\bagian{Kode Sesi Ini}
+
+Ketiga berkas berikut adalah seluruh isi checkpoint sesi 1. Anda tidak perlu
+mengetik ulang kode di bawah dari layar; ketiklah sendiri di editor agar
+setiap baris terbaca, lalu bandingkan hasilnya dengan daftar ini.
+
+\tampilkode[language=Python]{code/sesi-01/gudang_artefak/settings.py}
+  {settings.py: pengaturan yang dipakai bersama}
+
+\tampilkode[language=Python]{code/sesi-01/gudang_artefak/game.py}
+  {game.py: membuka jendela dan menunggu peristiwa}
+
+\tampilkode[language=Python]{code/sesi-01/main.py}
+  {main.py: membaca pilihan baris perintah dan menjalankan permainan}
+
+\checkpoint{01}{Program pada folder itu dapat dijalankan langsung dengan
+\code{python main.py} dan berhenti dengan rapi ketika jendela ditutup.}
+
+% ---------------------------------------------------------
+\bagian{Kesalahan Umum}
+
+\begin{galatbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.35em]
+  \item \textbf{\code{ModuleNotFoundError: No module named 'pygame'}.}
+        Gejala: program berhenti sebelum jendela terbuka. Periksa baris
+        \emph{Penafsir Python} yang dipakai; bila ada dua versi Python,
+        pasang ulang dengan \code{python -m pip install pygame} dari terminal
+        yang sama dengan yang menjalankan program.
+  \item \textbf{Jendela terbuka lalu langsung tertutup.}
+        Gejala: tidak ada kesalahan, tetapi jendela hanya berkedip. Periksa
+        apakah program dijalankan dengan \code{--auto-close}, atau apakah
+        perulangan peristiwa berakhir karena variabel \code{running} sudah
+        bernilai salah.
+  \item \textbf{\code{IndentationError: unexpected indent}.}
+        Gejala: program tidak pernah sampai membuka jendela. Periksa
+        indentasi di sekitar baris yang ditunjuk; jangan mencampur tab dan
+        spasi. Aturlah editor mengubah tab menjadi empat spasi.
+  \item \textbf{\code{FileNotFoundError: [Errno 2]}.}
+        Gejala: Python menyebut berkas tidak ditemukan padahal berkasnya ada.
+        Periksa folder kerja terminal dengan \code{dir} atau \code{ls};
+        jalankan \code{cd} ke folder yang benar.
+  \item \textbf{Layar hitam setelah \code{set_mode}.}
+        Gejala: jendela terbuka tetapi isinya hitam. Periksa urutan
+        \code{fill}, lalu \code{flip}; menayangkan sebelum menggambar
+        menghasilkan layar kosong.
+\end{itemize}
+\end{galatbox}
+
+% ---------------------------------------------------------
+\bagian{Lembar Kerja}
+
+Isi tabel berikut pada catatan praktikum Anda. Kolom terakhir diisi setelah
+Anda mencoba mengubah satu nilai dan menjalankan ulang program.
+
+{\small
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\linewidth}{@{}C{0.8cm} L{5.2cm} Y@{}}
+\toprule
+\textbf{No} & \textbf{Hasil yang dicatat} & \textbf{Keterangan Anda} \\
+\midrule
+1 & Versi Python dan versi Pygame & \\[0.55cm]
+2 & Nama berkas penafsir Python yang dipakai & \\[0.55cm]
+3 & Ukuran jendela dan judul yang tampil & \\[0.55cm]
+4 & Nilai \code{BACKGROUND} sebelum dan sesudah diubah & \\[0.55cm]
+5 & Satu kendala yang Anda hadapi dan cara menyelesaikannya & \\[0.9cm]
+\bottomrule
+\end{tabularx}
+}
+
+% ---------------------------------------------------------
+\bagian{Checklist Sesi}
+
+\begin{checklistbox}
+\begin{checklist}
+  \item Saya dapat menunjukkan jendela \NamaPermainan\ yang terbuka dengan
+        ukuran yang saya tentukan sendiri.
+  \item Saya dapat menjelaskan perbedaan peran Python dan Pygame.
+  \item Saya dapat menyebutkan lima langkah kerangka program Pygame.
+  \item Saya dapat menjelaskan mengapa gambar baru terlihat setelah
+        \code{flip()}.
+  \item Saya dapat menutup program dengan tombol silang dan memastikan
+        terminal kembali dengan rapi.
+  \item Saya dapat membaca pesan kesalahan dan menentukan baris penyebabnya.
+\end{checklist}
+\end{checklistbox}
+
+% ---------------------------------------------------------
+\bagian{Pengait ke Sesi Berikutnya}
+
+Jendela pada sesi ini hanya menunggu peristiwa; isinya tidak pernah berubah.
+Pada sesi 2 Anda menambahkan siklus permainan: membaca masukan, memperbarui
+keadaan, menggambar ulang, lalu menayangkannya berulang kali. Di sanalah
+\istilah{Clock} mulai mengatur laju bingkai dan angka FPS muncul pada judul
+jendela.

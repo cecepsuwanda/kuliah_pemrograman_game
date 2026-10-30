@@ -1,0 +1,321 @@
+% =========================================================
+%  sesi/05/sesi.tex
+%  Sesi 5 — Sprite, artefak, peti, dan pintu
+% =========================================================
+
+\sesi{05}{Sprite, Artefak, Peti, dan Pintu}{1.4}{140 menit}
+
+Sesi ini adalah pertemuan minggu ke-5. Pada sesi sebelumnya pemain sudah
+jatuh karena \istilah{gravitasi}, melompat dengan \istilah{jump impulse}, dan
+memantul di dinding dengan \istilah{koefisien restitusi} 0,8. Namun seluruh isi
+gudang masih berupa daftar persegi panjang: lantai, rak, dan pemain saja.
+Belum ada yang dapat diambil, belum ada yang berbahaya, dan belum ada pintu
+keluar.
+
+Pada sesi ini gudang diisi. Enam artefak tersebar di atas rak, tiga peti
+menghalangi jalan di lantai, dan sebuah pintu menunggu di ujung kanan. Pemain
+mengumpulkan artefak untuk menambah skor sepuluh poin, menghindari peti yang
+mengurangi satu nyawa, lalu keluar setelah seluruh artefak terkumpul. Nyawa
+awal tiga; bila habis, permainan berakhir.
+
+Untuk mengelola benda yang jumlahnya bertambah itu, Anda memakai
+\istilah{sprite} dan \istilah{group} dari Pygame, serta memeriksa persentuhan
+dengan \istilah{AABB} berupa \code{Rect}. Urutan \istilah{integrasi Euler} dan
+penyelesaian tabrakan per sumbu yang Anda pelajari pada sesi 4 tetap dipakai;
+yang berubah adalah bentuk data yang diperiksa.
+
+% ---------------------------------------------------------
+\bagian{Tujuan Sesi}
+
+\begin{tujuanbox}
+Setelah menuntaskan sesi ini, Anda dapat menunjukkan:
+\begin{enumerate}[leftmargin=1.5em, itemsep=0.2em]
+  \item lantai, rak, artefak, peti, dan pintu sebagai kelas turunan
+        \code{pygame.sprite.Sprite} yang dikelola \code{Group};
+  \item artefak yang hilang ketika tersentuh dan menambah skor sepuluh poin
+        pada HUD;
+  \item peti yang mengurangi satu nyawa dari tiga nyawa awal dan mengembalikan
+        pemain ke titik awal tanpa kehilangan nyawa berulang;
+  \item pintu yang tetap tertutup sampai artefak terakhir terkumpul, lalu
+        membuka dan mengakhiri level ketika disentuh;
+  \item penjelasan mengapa tabrakan diperiksa dengan \code{colliderect} dan
+        \code{spritecollide}, serta mengapa hasilnya harus diselesaikan per
+        sumbu.
+\end{enumerate}
+\end{tujuanbox}
+
+% ---------------------------------------------------------
+\bagian{Prasyarat}
+
+\begin{prasyaratbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.25em]
+  \item Anda sudah menjalankan checkpoint sesi 4: pemain berjalan, jatuh,
+        mendarat di rak, melompat, dan memantul di dinding.
+  \item Anda memahami perbedaan \code{position} bertipe pecahan dan
+        \code{rect} bertipe bilangan bulat.
+  \item Anda pernah menulis kelas Python sederhana dengan \code{__init__} dan
+        \code{self}.
+  \item Anda dapat menjelaskan mengapa pemeriksaan tabrakan dilakukan sesudah
+        posisi diperbarui, bukan sebelumnya.
+\end{itemize}
+\end{prasyaratbox}
+
+% ---------------------------------------------------------
+\bagian{Peta Kemampuan}
+
+\petasesi
+  {Pemain dan fisika dari sesi 4; lantai dan rak masih berupa daftar
+   \code{Rect}; belum ada benda yang dapat diambil.}
+  {Kelas \code{Sprite} untuk seluruh isi level, wadah \code{Group},
+   \code{spritecollide}, \istilah{AABB}, skor, nyawa, pintu, dan HUD.}
+  {NPC yang bergerak dan mengambil keputusan sendiri pada sesi 6.}
+
+% ---------------------------------------------------------
+\bagian{Konsep yang Dipakai}
+
+\subsection*{Sprite: gambar dan persegi pembatas}
+
+Sebuah \istilah{sprite} adalah benda permainan yang menyatukan gambar dan
+letaknya. Pygame menyediakan kelas dasar \code{pygame.sprite.Sprite}; kelas
+turunan Anda wajib memanggil \code{super().__init__()} dan mengisi dua nama
+yang sudah disepakati: \code{self.image} berupa \code{Surface}, dan
+\code{self.rect} berupa \code{Rect}. Nama itu tidak boleh diganti, sebab
+perkakas Pygame mencarinya ketika menggambar dan memeriksa tabrakan.
+
+\subsection*{Group: satu perintah untuk banyak benda}
+
+\istilah{Group} adalah wadah yang menyimpan sekumpulan sprite. Perintah
+\code{group.draw(screen)} menggambar seluruh anggotanya,
+\code{group.update(...)} memanggil pembaruan setiap anggota, dan
+\code{for benda in group} menelusurinya seperti daftar biasa. Satu sprite
+boleh berada di beberapa group sekaligus, karena group hanya menyimpan
+rujukan, bukan salinan. Pada sesi ini ada tiga group: \code{solids},
+\code{artefacts}, dan \code{crates}.
+
+\subsection*{AABB dan arti persentuhan}
+
+\istilah{AABB} (\emph{axis-aligned bounding box}) adalah persegi pembatas yang
+sisinya sejajar sumbu layar. Pemain berukuran 36 kali 36 piksel, sehingga
+persegi pembatasnya berimpit dengan gambarnya. Pemeriksaannya memakai
+\code{Rect}, sehingga murah dan cukup untuk benda yang bentuknya persegi.
+Perlu diingat bahwa
+\code{colliderect} hanya bernilai benar bila kedua persegi beririsan dengan
+luas lebih dari nol; dua persegi yang hanya bersentuhan pada tepinya dinilai
+tidak bertabrakan. Sifat itu berguna agar benda yang sudah ditempelkan pada
+tepi tidak dianggap bertabrakan lagi.
+
+\subsection*{Mendeteksi berbeda dari menyelesaikan}
+
+\code{colliderect} menjawab ``apakah kedua persegi bersinggungan?''.
+\code{spritecollide(benda, group, dokill)} menjawab pertanyaan yang sama untuk
+satu benda terhadap sekumpulan benda, dan mengembalikan daftar. Argumen
+\code{dokill} menentukan apakah benda yang tersentuh langsung dikeluarkan dari
+group. Untuk artefak nilainya benar; untuk peti nilainya salah, sebab peti
+tetap berada di tempatnya.
+
+Pertanyaan berikutnya---dari sisi mana tabrakan terjadi dan apa yang harus
+dilakukan---tidak dijawab oleh pustaka. Itulah \istilah{collision} yang harus
+Anda selesaikan sendiri: pindahkan pada satu sumbu, periksa, perbaiki posisi
+pada sumbu itu, lalu lanjut ke sumbu berikutnya.
+
+% ---------------------------------------------------------
+\bagian{Tutorial}
+
+Kerjakan langkah berikut berurutan. Pada langkah pertama, Anda memindahkan
+benda yang sebelumnya berupa \code{Rect} menjadi kelas \code{Sprite}; jangan
+mencampur kedua cara dalam satu group.
+
+\begin{langkah}
+  \item \textbf{Ubah isi level menjadi sprite.} Di
+        \file{gudang_artefak/entities.py}, tulis kelas \code{Solid},
+        \code{Artefact}, \code{Crate}, dan \code{Door}. Masing-masing
+        memanggil \code{super().__init__()}, membuat \code{self.image}, lalu
+        menetapkan \code{self.rect}. Artefak digambar sebagai belah ketupat
+        berukuran 22 piksel, peti sebagai persegi 34 piksel bergaris silang,
+        dan pintu sebagai persegi panjang 46 kali 78 piksel.
+
+  \item \textbf{Berikan keadaan pada pintu.} Tambahkan \code{self.open =
+        False} dan metode \code{set_open(value)} pada \code{Door}. Metode itu
+        menggambar ulang pintu hanya ketika keadaannya berubah, sehingga pintu
+        tertutup berwarna abu-abu dan pintu terbuka berwarna hijau.
+
+  \item \textbf{Susun level sebagai kamus.} Di \file{levels.py}, tulis
+        \code{build_rak()} yang mengembalikan kamus berisi \code{solids},
+        \code{artefacts}, \code{crates}, \code{door}, \code{spawn}, dan
+        \code{name}. Isi setiap group dari daftar titik yang sudah ada:
+        enam artefak, tiga peti, dan satu pintu.
+
+  \item \textbf{Siapkan keadaan permainan.} Di \code{Game}, tulis
+        \code{reset()} yang menetapkan \code{score = 0},
+        \code{lives = S.START_LIVES} (tiga), \code{mode = "rak"}, dan
+        \code{artefacts_left} sejumlah isi \code{ARTEFACT_LAYOUT}. Panggil
+        \code{reset()} dari \code{__init__} agar permainan selalu mulai dari
+        keadaan yang sama.
+
+  \item \textbf{Tambahkan \code{respawn}.} Pada \code{Player}, tulis metode
+        yang mengembalikan posisi dan \code{rect} ke titik awal, mengosongkan
+        kecepatan, dan memberi \code{respawn_timer} satu detik. Waktu kebal itu
+        mencegah peti yang sama mengurangi nyawa berkali-kali dalam sekejap.
+
+  \item \textbf{Perbarui level Rak.} Pindahkan pemain dengan
+        \code{update_side(delta_seconds, direction, self.solids)}. Karena
+        \code{solids} kini berupa \code{Group}, pemeriksaan di dalam
+        \code{Player} memakai \code{solid.rect}, bukan \code{solid} langsung.
+
+  \item \textbf{Kumpulkan artefak.} Panggil
+        \code{spritecollide(player, artefacts, True)}. Telusuri daftar hasilnya;
+        setiap anggota menambah sepuluh poin dan mengurangi
+        \code{artefacts_left}. Sesudah itu, panggil
+        \code{door.set_open(artefacts_left == 0)}.
+
+  \item \textbf{Periksa peti.} Bila \code{respawn_timer} sudah habis, panggil
+        \code{spritecollide(player, crates, False)}. Bila hasilnya tidak
+        kosong, kurangi nyawa. Bila nyawa masih tersisa, kembalikan pemain ke
+        titik awal; bila habis, ubah mode menjadi kalah.
+
+  \item \textbf{Buka pintu dan gambar HUD.} Periksa
+        \code{door.open and player.rect.colliderect(door.rect)} untuk
+        mengakhiri level. Gambar ketiga group dengan \code{draw}, lalu tampilkan
+        nama level, skor, dan nyawa pada sudut kiri atas.
+\end{langkah}
+
+\begin{ujibox}
+Setelah Langkah 9, periksa lima hal berikut.
+\begin{itemize}[leftmargin=1.4em, itemsep=0.2em]
+  \item Seluruh enam artefak terlihat di atas rak, dan menyentuhnya membuat
+        artefak itu hilang serta skor bertambah sepuluh.
+  \item Setelah artefak keenam, skor bernilai 60 dan pintu berubah menjadi
+        hijau. Sebelum itu, pintu tetap abu-abu dan tidak dapat dibuka.
+  \item Menyentuh peti mengurangi nyawa dari tiga menjadi dua, dan pemain
+        kembali ke titik awal.
+  \item Berdiri menempel pada peti tidak mengurangi nyawa berkali-kali; waktu
+        kebal satu detik bekerja.
+  \item Menyentuh pintu yang sudah terbuka menampilkan pesan
+        \code{Level Rak selesai.}, dan menekan R memulai ulang permainan.
+\end{itemize}
+\end{ujibox}
+
+% ---------------------------------------------------------
+\bagian{Kode Sesi Ini}
+
+Potongan berikut adalah bagian yang berubah pada checkpoint sesi ini.
+Perhatikan bahwa \code{Player} sudah berupa sprite sejak sesi 3; yang baru
+adalah seluruh isi level mengikuti bentuk yang sama, lalu diperiksa dengan
+perkakas group.
+
+\tampilkodebaris[Python]{code/sesi-05/gudang_artefak/entities.py}{107}{117}
+  {entities.py: artefak sebagai sprite yang dapat diambil}
+
+\tampilkodebaris[Python]{code/sesi-05/gudang_artefak/entities.py}{120}{128}
+  {entities.py: peti sebagai sprite yang tetap di tempatnya}
+
+\tampilkodebaris[Python]{code/sesi-05/gudang_artefak/entities.py}{131}{154}
+  {entities.py: pintu dengan keadaan terbuka dan tertutup}
+
+\tampilkodebaris[Python]{code/sesi-05/gudang_artefak/entities.py}{88}{93}
+  {entities.py: respawn dan waktu kebal sesudah kehilangan nyawa}
+
+\tampilkodebaris[Python]{code/sesi-05/gudang_artefak/levels.py}{32}{49}
+  {levels.py: menyusun seluruh isi level menjadi group dan kamus}
+
+\tampilkodebaris[Python]{code/sesi-05/gudang_artefak/game.py}{93}{118}
+  {game.py: artefak, peti, dan pintu diperiksa setiap bingkai}
+
+\tampilkodebaris[Python]{code/sesi-05/gudang_artefak/game.py}{120}{126}
+  {game.py: kehilangan nyawa dan keputusan mengakhiri permainan}
+
+\tampilkodebaris[Python]{code/sesi-05/gudang_artefak/game.py}{150}{155}
+  {game.py: HUD nama level, skor, dan nyawa}
+
+\checkpoint{05}{Enam artefak dapat dikumpulkan dengan nilai sepuluh poin
+masing-masing, peti mengurangi satu dari tiga nyawa dan mengembalikan pemain,
+pintu terbuka setelah artefak terakhir, dan HUD menampilkan skor serta nyawa.}
+
+% ---------------------------------------------------------
+\bagian{Kesalahan Umum}
+
+\begin{galatbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.35em]
+  \item \textbf{Benda tidak tergambar atau tidak pernah bertabrakan.}
+        Gejala: group tampak kosong, atau artefak tidak pernah hilang. Periksa
+        tiga hal pada kelas sprite: \code{super().__init__()} dipanggil, nama
+        \code{image} dan \code{rect} tepat, dan \code{rect} benar-benar
+        berupa \code{Rect}.
+  \item \textbf{\code{TypeError} saat memanggil \code{spritecollide}.}
+        Gejala: program berhenti dengan pesan bahwa argumen bukan group.
+        Periksa bahwa argumen kedua adalah \code{pygame.sprite.Group}, bukan
+        daftar biasa. Ubah daftar menjadi group dengan
+        \code{pygame.sprite.Group(daftar)}.
+  \item \textbf{Skor bertambah setiap bingkai selama artefak disentuh.}
+        Gejala: skor melonjak tanpa artefak menghilang. Periksa argumen ketiga
+        \code{spritecollide}; untuk artefak nilainya harus benar agar benda
+        dikeluarkan dari group.
+  \item \textbf{Nyawa habis dalam sekejap ketika menyentuh peti.}
+        Gejala: tiga nyawa hilang pada satu sentuhan. Periksa
+        \code{respawn_timer}; tanpa waktu kebal, peti yang sama diperiksa dan
+        mengenai pemain pada setiap bingkai.
+  \item \textbf{Pintu sudah terbuka sejak awal.}
+        Gejala: pemain dapat menang tanpa mengumpulkan artefak. Periksa
+        \code{artefacts_left} pada \code{reset()} dan pastikan
+        \code{door.set_open(False)} dipanggil ketika level dimuat.
+  \item \textbf{Pemain tetap menempel pada peti sesudah respawn.}
+        Gejala: pemain kembali ke titik awal tetapi langsung meluncur atau
+        terjebak. Periksa bahwa \code{respawn} mengosongkan
+        \code{velocity} dan menyelaraskan \code{rect} dengan posisi baru.
+\end{itemize}
+\end{galatbox}
+
+% ---------------------------------------------------------
+\bagian{Lembar Kerja}
+
+Isi tabel berikut pada catatan praktikum Anda. Baris keempat diisi dengan
+mencoba membuka pintu sebelum seluruh artefak terkumpul.
+
+{\small
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\linewidth}{@{}C{0.8cm} L{5.4cm} Y@{}}
+\toprule
+\textbf{No} & \textbf{Hasil yang dicatat} & \textbf{Keterangan Anda} \\
+\midrule
+1 & Jumlah artefak dan skor maksimum yang mungkin & \\[0.55cm]
+2 & Nyawa awal dan nyawa setelah satu peti & \\[0.55cm]
+3 & Posisi pemain sesudah respawn & \\[0.55cm]
+4 & Keadaan pintu sebelum dan sesudah artefak keenam & \\[0.55cm]
+5 & Satu kendala yang Anda hadapi dan cara menyelesaikannya & \\[0.9cm]
+\bottomrule
+\end{tabularx}
+}
+
+Catat pula berapa bingkai yang dibutuhkan pemain untuk menyentuh peti yang
+sama dua kali. Angka itu menunjukkan apakah waktu kebal satu detik cukup
+panjang pada laju bingkai yang Anda pakai.
+
+% ---------------------------------------------------------
+\bagian{Checklist Sesi}
+
+\begin{checklistbox}
+\begin{checklist}
+  \item Saya dapat menunjukkan seluruh isi level sebagai sprite yang dikelola
+        group.
+  \item Saya dapat menjelaskan dua nama yang wajib ada pada setiap sprite dan
+        akibatnya bila salah nama.
+  \item Saya dapat memilih nilai \code{dokill} yang tepat untuk artefak dan
+        untuk peti.
+  \item Saya dapat menunjukkan artefak yang menambah sepuluh poin dan HUD yang
+        ikut berubah.
+  \item Saya dapat menunjukkan peti yang mengurangi satu nyawa dan
+        mengembalikan pemain tanpa pengurangan berulang.
+  \item Saya dapat menjelaskan mengapa pintu baru terbuka setelah
+        \code{artefacts_left} bernilai nol.
+\end{checklist}
+\end{checklistbox}
+
+% ---------------------------------------------------------
+\bagian{Pengait ke Sesi Berikutnya}
+
+Gudang sekarang dapat dimainkan, tetapi seluruh benda diam di tempatnya dan
+hanya pemain yang bergerak. Pada sesi 6 Anda menambahkan penjaga: sprite yang
+melihat posisi pemain, menghitung arah menuju pemain, lalu bergerak sendiri.
+Perkakas yang baru Anda pakai---kelas \code{Sprite}, \code{Group}, dan
+pemeriksaan \code{Rect}---tetap dipakai, sehingga penjaga cukup ditambahkan
+sebagai anggota group baru tanpa mengubah cara kerja level.

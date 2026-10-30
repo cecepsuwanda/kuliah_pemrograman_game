@@ -1,0 +1,437 @@
+% =========================================================
+%  sesi/05/sesi.tex
+%  Sesi 5 — Evaluasi, Playtest, dan Presentasi
+% =========================================================
+
+\sesi{05}{Evaluasi, Playtest, dan Presentasi}{4.3}{150 menit}
+
+Ini pertemuan minggu kelima belas, dan pertemuan praktikum yang terakhir.
+Level Rak sudah lengkap: mekanik, animasi, antarmuka, dan bunyi telah
+tersambung. Yang belum dikerjakan adalah memeriksa apakah seluruh bagian itu
+benar-benar berjalan ketika orang lain memainkannya.
+
+Sesi ini tidak menambah fitur. Pekerjaannya adalah mengubah cara Anda memandang
+karya sendiri: dari pembuat menjadi penguji. Anda menyusun
+\istilah{checklist} fungsional dari \istilah{GDD}, membuat \istilah{build} yang
+dapat dijalankan di komputer lain, melaksanakan \istilah{playtest} antar
+kelompok, mencatat temuan pada \istilah{log bug}, memeriksa kesesuaian GDD
+dengan build, lalu menyusun naskah demo lima sampai sepuluh menit.
+
+Seluruh dokumen yang dihasilkan pada sesi ini menjadi bagian dari Proyek Akhir.
+Pada minggu keenam belas, UAS menilai proyek yang dihasilkan modul ini, yaitu
+build beserta dokumen pendukungnya.
+
+% ---------------------------------------------------------
+\bagian{Tujuan Sesi}
+
+\begin{tujuanbox}
+Setelah menuntaskan sesi ini, Anda dapat menunjukkan:
+\begin{enumerate}[leftmargin=1.5em, itemsep=0.2em]
+  \item \istilah{build} \NamaPermainan\ yang berjalan pada komputer yang tidak
+        memiliki Unity;
+  \item \istilah{GDD} satu halaman yang memuat inti permainan, kontrol, aturan
+        menang dan kalah, serta batas lingkup;
+  \item \istilah{checklist} fungsional 20--30 butir yang diturunkan dari GDD
+        dan terbagi menjadi mekanik, integrasi, dan keseluruhan;
+  \item lembar \istilah{playtest} yang terisi oleh sekurang-kurangnya dua
+        penguji dari kelompok lain, beserta waktu dan titik berhentinya;
+  \item \istilah{log bug} yang setiap catatannya dapat diulang dan memiliki
+        berat serta status penanganan;
+  \item naskah demo lima sampai sepuluh menit beserta refleksi perbandingan
+        pekerjaan Python dan Unity.
+\end{enumerate}
+\end{tujuanbox}
+
+% ---------------------------------------------------------
+\bagian{Prasyarat}
+
+\begin{prasyaratbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.25em]
+  \item Checkpoint sesi 4 sudah berjalan: pemain beranimasi, skor dan nyawa
+        tampil, bunyi terdengar pada peristiwanya, dan pintu dapat dibuka.
+  \item Anda telah membaca Bab XVI bagian 16.1 sampai 16.6, yaitu bagian
+        tentang pengujian, \istilah{checklist} fungsional, pemeriksaan
+        otomatis, lembar \istilah{playtest}, \istilah{log bug}, dan
+        presentasi.
+  \item GDD kelompok Anda dari awal perkuliahan sudah tersedia, walaupun masih
+        berupa rancangan.
+  \item Dua kelompok lain bersedia menjadi penguji, dan satu komputer lain
+        tanpa Unity tersedia untuk menguji build.
+\end{itemize}
+\end{prasyaratbox}
+
+% ---------------------------------------------------------
+\bagian{Peta Kemampuan}
+
+\petasesi
+  {Level lengkap yang hanya pernah diuji oleh pembuatnya sendiri.}
+  {\istilah{Checklist} fungsional, \istilah{playtest} antar kelompok,
+   \istilah{log bug}, kesesuaian GDD dengan \istilah{build}, dan naskah demo.}
+  {UAS minggu 16: uji fungsional dosen atas build dan dokumen modul ini.}
+
+% ---------------------------------------------------------
+\bagian{Konsep yang Dipakai}
+
+\subsection*{Pembuat tidak dapat menilai karyanya sendiri}
+
+Anda sudah tahu tombol mana yang harus ditekan dan jalur mana yang harus
+dilewati. Pengetahuan itu tidak dimiliki pemain baru, dan justru pengetahuan
+itulah yang menutupi masalah. Level yang tampak jelas bagi pembuatnya dapat
+membingungkan pemain lain selama beberapa menit pertama. Karena itu, pengujian
+menuntut orang lain, dan menuntut Anda menahan diri untuk tidak menolong
+mereka.
+
+\subsection*{Checklist adalah janji, bukan keinginan}
+
+\istilah{Checklist} fungsional berisi pernyataan yang harus bernilai benar
+sebelum build dianggap selesai. Setiap butirnya diturunkan dari GDD, lalu
+diubah menjadi pemeriksaan yang dapat dijawab lulus atau tidak lulus. Butirnya
+dikelompokkan menjadi tiga: mekanik, integrasi, dan keseluruhan. Kelompok
+ketiga hanya dapat diperiksa pada build yang dijalankan dari awal sampai akhir.
+
+\subsection*{Playtest mengamati, bukan bertanya}
+
+Pertanyaan ``apakah permainannya bagus'' menghasilkan jawaban sopan yang tidak
+dapat ditindaklanjuti. Yang berguna adalah catatan atas apa yang benar-benar
+dilakukan penguji: di mana ia berhenti, berapa lama, dan tindakan apa yang
+membuatnya bingung. Catat waktu dan tempat, bukan hanya kesan.
+
+\subsection*{Log bug harus dapat diulang}
+
+Catatan yang berguna memuat tiga hal: apa yang terjadi, apa yang seharusnya
+terjadi, dan urutan tindakan yang menyebabkannya. ``Bunyinya kadang tidak
+terdengar'' tidak dapat diperbaiki; ``bunyi artefak ketiga tidak terdengar
+setelah dua artefak lain diambil'' dapat diperbaiki pada hari yang sama.
+Setiap catatan ditimbang beratnya dan diberi status.
+
+\subsection*{GDD dan build boleh berbeda}
+
+Perbedaan antara GDD dan build hampir pasti ada. Yang salah adalah perbedaan
+yang tidak disadari. Tiga keadaannya: sesuai, GDD diperbarui karena perubahan
+yang disengaja, dan belum dikerjakan. Janji yang belum dikerjakan dicantumkan
+sebagai kekurangan, bukan dihapus dari GDD agar laporannya tampak lengkap.
+
+% ---------------------------------------------------------
+\bagian{Tutorial}
+
+Nama menu ditulis seperti yang tampak pada Unity LTS. Kerjakan berurutan;
+jangan melompat ke presentasi sebelum build dan lembar pengujian selesai.
+
+\begin{langkah}
+  \item \textbf{Bekukan fitur dan buat build.} Simpan scene, lalu pilih
+        \menu{File > Build Settings}. Tekan \menu{Add Open Scenes} agar
+        \file{LevelRak} masuk ke daftar. Pilih platform \menu{Windows},
+        tentukan folder keluaran, lalu tekan \menu{Build}. Jangan memakai
+        \menu{Build And Run}; Anda perlu berkas hasilnya, bukan menjalankannya
+        di komputer sendiri.
+
+  \item \textbf{Uji build di komputer lain.} Salin seluruh isi folder keluaran,
+        bukan hanya berkas \file{.exe}. Jalankan pada komputer yang tidak
+        memiliki Unity. Periksa layar, suara, dan kontrol. Build yang hanya
+        berjalan di komputer pembuatnya belum memenuhi syarat.
+
+  \item \textbf{Tulis GDD satu halaman.} Buat berkas \file{gdd.md} yang memuat
+        identitas permainan, inti permainan dalam satu paragraf, tabel kontrol,
+        aturan menang dan kalah, isi level, umpan balik yang terlihat dan
+        terdengar, serta hal yang sengaja di luar lingkup.
+
+  \item \textbf{Turunkan checklist.} Baca kembali GDD, lalu tulis 20--30 butir
+        yang dapat diperiksa. Bagi menjadi tiga kelompok: mekanik, integrasi,
+        dan keseluruhan. Simpan sebagai \file{checklist-fungsional.md} dengan
+        kolom putaran 1 dan putaran 2.
+
+  \item \textbf{Jalankan putaran pertama.} Mainkan build dari awal sampai
+        pintu, lalu isi setiap butir dengan lulus atau tidak lulus. Jangan
+        memperbaiki apa pun selama putaran ini; catat saja.
+
+  \item \textbf{Susun lembar playtest.} Buat \file{lembar-playtest.md} yang
+        memuat keterangan penguji, build yang diuji, waktu penyelesaian, titik
+        berhenti, kesalahan yang terlihat, masukan penguji, dan catatan
+        pengamat. Tuliskan satu tujuan sesi: bagian mana yang paling Anda
+        ragukan.
+
+  \item \textbf{Laksanakan playtest.} Serahkan kendali kepada dua penguji dari
+        kelompok lain tanpa memberi petunjuk. Perkenalkan hanya tujuannya,
+        lalu diam. Catat waktu dan tempat setiap kali penguji berhenti lebih
+        dari sepuluh detik. Jangan membela karya Anda selama sesi berlangsung.
+
+  \item \textbf{Pindahkan temuan ke log bug.} Untuk setiap temuan yang dapat
+        diulang, tulis urutan tindakan, hasil yang salah, hasil yang
+        seharusnya, berat, dan status. Simpan sebagai \file{log-bug.md}.
+        Temuan yang belum dapat diulang disempitkan dahulu, bukan dicatat
+        sebagai ``kadang-kadang''.
+
+  \item \textbf{Perbaiki temuan berat satu per satu.} Setelah setiap
+        perbaikan, jalankan kembali checklist fungsional dan isi kolom putaran
+        2. Menggabungkan beberapa perbaikan membuat Anda tidak tahu perbaikan
+        mana yang bekerja.
+
+  \item \textbf{Bandingkan GDD dengan build.} Tandai setiap janji GDD sebagai
+        sesuai, diperbarui, atau belum dikerjakan. Perbarui GDD untuk
+        perubahan yang disengaja, dan cantumkan yang belum dikerjakan sebagai
+        kekurangan yang diketahui.
+
+  \item \textbf{Tulis naskah demo.} Susun \file{naskah-demo.md} untuk lima
+        sampai sepuluh menit: pembukaan satu menit, demo langsung empat sampai
+        enam menit, temuan pengujian satu sampai dua menit, dan penutup satu
+        menit. Latih dengan pengukur waktu, lalu siapkan video dan build
+        cadangan.
+
+  \item \textbf{Sajikan dan refleksikan.} Tampilkan build, bukan scene di
+        editor. Sesudah presentasi, tulis satu paragraf refleksi perbandingan
+        pekerjaan yang Anda tulis sendiri pada Python dan pekerjaan yang
+        diserahkan kepada Unity.
+\end{langkah}
+
+\begin{ujibox}
+Setelah Langkah 12, periksa lima hal berikut.
+\begin{itemize}[leftmargin=1.4em, itemsep=0.2em]
+  \item Build berjalan pada komputer lain tanpa Unity, lengkap dengan suara.
+  \item Checklist memuat 20--30 butir dari ketiga kelompok, dan kedua kolom
+        putaran terisi.
+  \item Lembar playtest memuat dua penguji, waktu penyelesaian, dan titik
+        berhenti yang dapat disebutkan kembali.
+  \item Setiap catatan log bug memuat urutan tindakan yang dapat diulang,
+        berat, dan status.
+  \item Naskah demo dapat diselesaikan di bawah sembilan menit.
+\end{itemize}
+\end{ujibox}
+
+% ---------------------------------------------------------
+\bagian{Kode dan Dokumen Sesi Ini}
+
+Sesi ini tidak menambah skrip C\# baru. Seluruh skrip dari sesi 4 disalin ke
+folder checkpoint, dan yang berubah hanyalah nilai pada \menu{Inspector} serta
+beberapa baris perbaikan yang tercatat pada \istilah{log bug}. Keluaran sesi
+ini adalah dokumen, bukan kode.
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{@{}L{4.3cm} Y@{}}
+\toprule
+\textbf{Berkas} & \textbf{Isi} \\
+\midrule
+\file{Scripts/} & Tujuh skrip sesi 4: kontrol, animasi, artefak, pintu, HUD,
+  pemusat bunyi, dan pemicu bunyi \\
+\file{scene.md} & Susunan scene dan nilai Inspector yang menjadi dasar build \\
+\file{gdd.md} & GDD satu halaman: inti, kontrol, aturan, lingkup \\
+\file{checklist-fungsional.md} & 20--30 butir dari GDD beserta hasil dua
+  putaran \\
+\file{lembar-playtest.md} & Catatan dua penguji: waktu, titik berhenti,
+  kesalahan, masukan \\
+\file{log-bug.md} & Temuan yang dapat diulang, berat, dan status \\
+\file{naskah-demo.md} & Susunan demo lima sampai sepuluh menit \\
+\bottomrule
+\end{tabularx}
+}
+
+\subsection*{Contoh GDD satu halaman}
+
+Berkas berikut adalah bentuk GDD yang dipakai pada checkpoint. Perhatikan bahwa
+isinya muat pada satu halaman dan hanya memuat hal yang dapat diperiksa pada
+build.
+
+\tampilkode[basicstyle=\ttfamily\scriptsize\color{ubCodeText}]
+  {code/sesi-05/gdd.md}
+  {gdd.md: GDD satu halaman yang menjadi dasar checklist}
+
+\subsection*{Tabel checklist fungsional}
+
+Tabel berikut adalah bentuk yang dipakai pada checkpoint. Setiap butir
+diturunkan dari satu pernyataan GDD, dan hasilnya diisi pada setiap putaran.
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{@{}C{0.6cm} L{1.9cm} Y C{0.8cm} C{0.8cm}@{}}
+\toprule
+\textbf{No} & \textbf{Kelompok} & \textbf{Butir pemeriksaan} &
+\textbf{P1} & \textbf{P2} \\
+\midrule
+1 & Mekanik & Pemain berjalan ke kiri dan kanan & L & L \\
+2 & Mekanik & Pemain melompat hanya ketika menyentuh tanah & L & L \\
+3 & Mekanik & Pemain tidak dapat melompat berkali-kali di udara & T & L \\
+4 & Mekanik & Artefak lenyap dan skor bertambah ketika disentuh & L & L \\
+5 & Integrasi & Animasi berganti menurut keadaan pemain & L & T \\
+6 & Integrasi & Bunyi ambil terdengar pada setiap artefak & T & L \\
+7 & Keseluruhan & Level dapat diselesaikan dari awal sampai pintu & L & L \\
+8 & Keseluruhan & Satu penyelesaian berlangsung 5--10 menit & L & L \\
+\bottomrule
+\end{tabularx}
+}
+
+\subsection*{Tabel lembar playtest}
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{@{}L{4.0cm} Y@{}}
+\toprule
+\textbf{Bagian} & \textbf{Isi yang dicatat} \\
+\midrule
+Keterangan penguji & Nama atau kelompok, dan pengalaman bermain sejenis \\
+Berkas yang diuji & Nama build dan tanggalnya \\
+Waktu penyelesaian & Lama permainan, atau keterangan berhenti sebelum selesai \\
+Titik berhenti & Tempat dan lama berhenti lebih dari sepuluh detik \\
+Kesalahan yang terlihat & Keadaan yang tidak seharusnya terjadi, beserta
+  urutan tindakannya \\
+Masukan penguji & Pendapat penguji, dicatat apa adanya \\
+Catatan pengamat & Hal yang Anda lihat tetapi tidak disebutkan penguji \\
+\bottomrule
+\end{tabularx}
+}
+
+\subsection*{Tabel log bug}
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{@{}C{0.6cm} L{1.8cm} Y C{1.1cm} C{1.3cm}@{}}
+\toprule
+\textbf{No} & \textbf{Jenis} & \textbf{Urutan yang menyebabkannya dan hasil
+yang salah} & \textbf{Berat} & \textbf{Status} \\
+\midrule
+1 & Integrasi & Ambil artefak 1 dan 2, lalu artefak 3. Artefak lenyap dan skor
+  bertambah, tetapi bunyinya tidak terdengar & Sedang & Selesai \\
+2 & Mekanik & Melompat di tepi rak, lalu tekan Space lagi sebelum mendarat.
+  Pemain melompat dua kali & Sedang & Selesai \\
+3 & Keseluruhan & Berjalan ke sudut kanan bawah rak kanan dan melompat ke
+  dinding. Pemain tersangkut di celah dangkal & Berat & Selesai \\
+4 & Tampilan & Mendarat, lalu segera berjalan. Animasi diam bertahan sekitar
+  satu detik & Ringan & Terbuka \\
+5 & Tampilan & Mainkan pada jendela 4:3. Teks nyawa bertumpuk dengan ikon
+  ketiga & Ringan & Ditunda \\
+\bottomrule
+\end{tabularx}
+}
+
+\subsection*{Tabel susunan demo}
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{@{}C{1.6cm} L{3.0cm} Y@{}}
+\toprule
+\textbf{Waktu} & \textbf{Bagian} & \textbf{Isi} \\
+\midrule
+1 menit & Pembukaan & Nama, jenis, dan satu kalimat inti permainan \\
+4--6 menit & Demo langsung & Permainan dijalankan dari awal sampai tujuan \\
+1--2 menit & Temuan pengujian & Satu atau dua temuan terpenting dan
+  perbaikannya \\
+1 menit & Penutup & Kekurangan yang diketahui dan rencana berikutnya \\
+\bottomrule
+\end{tabularx}
+}
+
+
+\checkpoint{05}{\raggedright Folder checkpoint memuat seluruh skrip dari
+\file{Scripts/}, \file{scene.md}, \file{gdd.md},
+\file{checklist-fungsional.md}, \file{lembar-playtest.md},
+\file{log-bug.md}, dan \file{naskah-demo.md}. Build dan berkas biner tidak
+disertakan; hasilkan kembali dari project sesuai \file{scene.md}.}
+
+% ---------------------------------------------------------
+\bagian{Kesalahan Umum}
+
+\begin{galatbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.35em]
+  \item \textbf{Build hanya berjalan di komputer pembuatnya.}
+        Gejala: berkas \file{.exe} dibuka di komputer lain lalu gagal atau
+        layar kosong. Periksa apakah scene sudah masuk \menu{Add Open Scenes},
+        apakah seluruh isi folder keluaran disalin (termasuk folder
+        \file{Data}), dan apakah platform yang dipilih sesuai.
+  \item \textbf{Checklist terlalu umum atau terlalu panjang.}
+        Gejala: butir seperti ``permainan terasa baik'' tidak dapat dijawab
+        lulus atau tidak lulus, atau daftar 60 butir tidak pernah selesai.
+        Periksa setiap butir terhadap GDD; ubah menjadi pernyataan yang dapat
+        diperiksa, dan batasi sekitar 20--30 butir.
+  \item \textbf{Playtest menghasilkan catatan yang menyenangkan tetapi kosong.}
+        Gejala: penguji menulis ``cukup jelas'' dan Anda tidak memperoleh
+        temuan. Periksa cara Anda memandu: berhenti memberi petunjuk, catat
+        waktu dan tempat berhenti, dan ajukan pertanyaan sesudah sesi, bukan
+        selama permainan.
+  \item \textbf{Catatan bug tidak dapat diulang.}
+        Gejala: ``bunyi kadang hilang'' tanpa urutan tindakan. Periksa apakah
+        catatan memuat apa yang terjadi, apa yang seharusnya terjadi, dan
+        langkah yang menyebabkannya. Sempitkan dugaan dengan mencoba satu
+        tindakan setiap kali.
+  \item \textbf{Janji GDD dihapus agar laporan tampak sesuai.}
+        Gejala: GDD berubah tanpa catatan alasan, dan fitur yang tidak
+        dikerjakan hilang dari dokumen. Periksa kembali versi GDD lama;
+        cantumkan keadaan sesungguhnya dan alasan perubahannya.
+  \item \textbf{Demo melebihi waktu atau gagal secara teknis.}
+        Gejala: presentasi berhenti di tengah karena build tidak berjalan, atau
+        waktu habis sebelum temuan disampaikan. Periksa latihan berwaktu,
+        video cadangan, dan build cadangan pada dua tempat.
+\end{itemize}
+\end{galatbox}
+
+% ---------------------------------------------------------
+\bagian{Lembar Kerja}
+
+Isi tabel berikut, lalu simpan sebagai bagian dari catatan praktikum Anda.
+
+{\small
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\linewidth}{@{}C{0.8cm} L{6.2cm} Y@{}}
+\toprule
+\textbf{No} & \textbf{Hasil yang dicatat} & \textbf{Keterangan Anda} \\
+\midrule
+1 & Jumlah butir checklist dan sebarannya pada tiga kelompok & \\[0.5cm]
+2 & Jumlah butir yang lulus pada putaran 1 dan putaran 2 & \\[0.5cm]
+3 & Temuan berat beserta perbaikannya & \\[0.9cm]
+4 & Nama dan pengalaman dua penguji playtest & \\[0.5cm]
+5 & Waktu penyelesaian dan titik berhenti setiap penguji & \\[0.9cm]
+6 & Perbedaan GDD dan build yang Anda temukan & \\[0.9cm]
+7 & Durasi demo hasil latihan terakhir & \\[0.5cm]
+\bottomrule
+\end{tabularx}
+}
+
+% ---------------------------------------------------------
+\bagian{Checklist Sesi}
+
+\begin{checklistbox}
+\begin{checklist}
+  \item Saya dapat menunjukkan build yang berjalan pada komputer lain tanpa
+        Unity, beserta suara dan kontrolnya.
+  \item Saya dapat menunjukkan GDD satu halaman dan menjelaskan setiap bagiannya.
+  \item Saya dapat menunjukkan checklist fungsional yang butirnya diturunkan
+        dari GDD dan terbagi menjadi tiga kelompok.
+  \item Saya dapat menunjukkan lembar playtest yang terisi oleh dua penguji,
+        lengkap dengan waktu dan titik berhenti.
+  \item Saya dapat menunjukkan log bug yang setiap catatannya dapat diulang
+        dan memiliki berat serta status.
+  \item Saya dapat menyajikan demo lima sampai sepuluh menit dan menjelaskan
+        satu temuan beserta perbaikannya.
+\end{checklist}
+\end{checklistbox}
+
+% ---------------------------------------------------------
+\bagian{Refleksi: Dari Python ke Unity}
+
+Sepanjang Blok I dan Blok II Anda menulis sendiri siklus permainan,
+\code{delta time}, gravitasi, tabrakan, animasi sederhana, pencarian jalur A*,
+dan pengaturan bunyi menurut jarak. Pada Unity, pekerjaan yang sama diserahkan
+kepada mesin: \code{Update} dan \code{FixedUpdate} dipanggil oleh
+\istilah{game engine}, \istilah{Rigidbody2D} mengurus fisika dan tabrakan,
+\istilah{Animator} memilih animasi, \istilah{AudioSource} mengurus pemutaran
+dan pelemahan bunyi menurut jarak, dan \istilah{Canvas} mengurus tata letak
+antarmuka. Yang tetap menjadi pekerjaan Anda adalah hal yang tidak dapat
+diwakilkan: merancang aturan, menyusun keadaan, menghubungkan peristiwa,
+memilih nilai, dan menguji hasilnya. Perbedaan itu bukan penilaian mana yang
+lebih baik, melainkan keterangan tentang pekerjaan mana yang perlu Anda kuasai
+sendiri dan pekerjaan mana yang sebaiknya Anda serahkan kepada perkakas.
+
+% ---------------------------------------------------------
+\bagian{Penutup}
+
+Pada minggu keenam belas, UAS menilai proyek yang dihasilkan modul ini.
+Yang diserahkan adalah \istilah{build} yang dapat dijalankan,
+\istilah{project source}, GDD, checklist fungsional, lembar \istilah{playtest},
+\istilah{log bug}, naskah demo, dan laporan perbaikan. Uji fungsional oleh
+dosen memakai checklist yang serupa dengan yang Anda susun, sehingga butir
+yang jujur dan dapat diperiksa akan menolong Anda sendiri.
+
+Bawalah build pada dua tempat, salinan project source, dan seluruh dokumen
+dalam bentuk cetak maupun berkas. Periksa sekali lagi bahwa build berjalan
+pada komputer lain, bahwa tidak ada temuan berat yang masih terbuka, dan bahwa
+demo Anda selesai dalam waktu yang ditentukan. Kekurangan yang Anda ketahui
+dan sebutkan dengan jujur lebih bernilai daripada permainan yang tampak tanpa
+cacat tetapi tidak dapat dipertanggungjawabkan.

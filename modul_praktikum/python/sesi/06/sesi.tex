@@ -1,0 +1,338 @@
+% =========================================================
+%  sesi/06/sesi.tex
+%  Sesi 6 — Level Lorong dan Penjaga yang Mengejar
+% =========================================================
+
+\sesi{06}{Level Lorong dan Penjaga yang Mengejar}{2.1}{130 menit}
+
+Sampai sesi 5, seluruh permainan berlangsung pada satu garis mendatar. Pemain
+berlari ke kiri dan ke kanan, gravitasi menariknya ke bawah, dan setiap rintangan
+berupa rak atau peti. Pada minggu 6 ruang permainan berubah: Anda membuka level
+kedua, yaitu Lorong, yang dilihat dari atas dan disusun dari petak-petak.
+
+Perubahan pandangan itu membawa akibat yang besar. Tidak ada lagi gravitasi dan
+tidak ada lagi lompatan; yang ada adalah gerak ke empat arah pada bidang datar.
+Pemain berjalan dengan WASD, dinding menghalangi langkahnya, dan seekor penjaga
+mengikutinya dari sudut ruangan. Penjaga itu belum tahu apa pun tentang peta.
+Ia hanya tahu di mana pemain berada, lalu mengejarnya. Perilaku itu disebut
+\istilah{chase} dan tampak seperti makhluk berkehendak.
+
+Sesi ini menuntaskan Sub-CPMK 2.1: merancang perilaku NPC sederhana berdasarkan
+posisi pemain. Seluruh isi sesi bermuara pada satu perhitungan vektor yang
+panjangnya hanya beberapa baris, tetapi dipakai berulang pada setiap bingkai.
+
+% ---------------------------------------------------------
+\bagian{Tujuan Sesi}
+
+\begin{tujuanbox}
+Setelah menuntaskan sesi ini, Anda dapat menunjukkan:
+\begin{enumerate}[leftmargin=1.5em, itemsep=0.2em]
+  \item level Lorong berukuran $24 \times 14$ petak dengan sel 36 piksel yang
+        tampil di jendela, lengkap dengan dinding, titik awal, dan pintu keluar;
+  \item pemain yang bergerak ke empat arah dengan WASD atau tombol panah dan
+        tidak dapat menembus dinding;
+  \item penjaga yang mulai bergerak ketika pemain masuk radius 7 petak
+        (252 piksel) dan berhenti pada jarak 26 piksel;
+  \item perhitungan vektor arah, jarak, dan kecepatan penjaga yang Anda
+        kerjakan di kertas dengan angka yang benar;
+  \item penjelasan mengapa vektor arah harus dinormalkan sebelum dikalikan
+        kecepatan, beserta satu kelemahan AI reaktif yang Anda amati sendiri.
+\end{enumerate}
+\end{tujuanbox}
+
+% ---------------------------------------------------------
+\bagian{Prasyarat}
+
+\begin{prasyaratbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.25em]
+  \item Checkpoint sesi 5 berjalan: pemain, artefak, peti, dan pintu sudah
+        tersusun sebagai \istilah{sprite} di dalam \istilah{group}.
+  \item Anda dapat memakai \code{pygame.Vector2} untuk penjumlahan,
+        pengurangan, dan \code{normalize()}, sebagaimana dilatih pada sesi 3.
+  \item Anda memahami pemakaian \code{delta_seconds} pada pembaruan posisi.
+  \item Bab VIII buku ajar sudah dibaca, khususnya bagian tentang persepsi,
+        penormalan, dan jarak henti.
+\end{itemize}
+\end{prasyaratbox}
+
+% ---------------------------------------------------------
+\bagian{Peta Kemampuan}
+
+\petasesi
+  {Level Rak bertampilan samping; pemain dan benda bergerak pada satu sumbu
+   mendatar.}
+  {Level Lorong berbasis petak, gerak empat arah dengan tabrakan dinding,
+   penjaga reaktif dengan radius pandang dan jarak henti, serta garis arah.}
+  {Mesin keadaan penjaga pada sesi 7 dan pencarian jalur A* pada sesi 8.}
+
+% ---------------------------------------------------------
+\bagian{Konsep yang Dipakai}
+
+\subsection*{Petak sebagai ruang}
+
+Peta Lorong disimpan sebagai daftar baris teks. Setiap karakter menempati satu
+petak: \texttt{\#} adalah dinding, titik adalah lantai, \code{S} adalah titik awal
+pemain, dan \code{E} adalah pintu keluar. Peta yang dipakai berukuran 24 kolom
+dan 14 baris, dengan setiap petak berukuran 36 piksel. Pojok kiri atas peta
+diletakkan pada $(48, 76)$ piksel di dalam jendela, sehingga seluruh peta
+menempati $864 \times 504$ piksel dan masih menyisakan ruang untuk HUD.
+
+Dari data teks itu program membangun dua hal. Pertama, kumpulan koordinat
+petak dinding. Kedua, daftar \code{pygame.Rect} untuk keperluan tabrakan. Titik
+pusat sebuah petak $(k, b)$ dihitung dengan
+\[
+x = 48 + 36k + 18, \qquad y = 76 + 36b + 18 .
+\]
+Pemisahan antara data peta dan gambar sangat membantu: mengubah lorong berarti
+mengubah teks peta, bukan menyunting puluhan koordinat.
+
+\subsection*{Pemain bergerak pada dua sumbu}
+
+Masukan WASD menghasilkan vektor arah yang komponennya $-1$, $0$, atau $1$.
+Apabila pemain menekan dua tombol sekaligus, panjang vektor itu menjadi
+$\sqrt{2}$; karena itu vektor dinormalkan lebih dahulu, lalu dikalikan kecepatan
+pemain 210 piksel per detik. Tanpa penormalan, gerak diagonal akan lebih cepat
+daripada gerak lurus.
+
+Posisi diperbarui satu sumbu demi satu sumbu. Sumbu $x$ digerakkan, kotak
+tabrakan diselaraskan, lalu dinding diselesaikan; sesudah itu sumbu $y$
+dikerjakan dengan cara yang sama. Urutan itu membuat pemain dapat menyusuri
+dinding, tetapi tidak dapat menembusnya dari sudut.
+
+\subsection*{Penjaga: dari selisih posisi ke kecepatan}
+
+Penjaga tidak menerima arah dari luar. Setiap bingkai ia menghitung sendiri
+arah menuju pemain. Misalkan $\vec{n}$ adalah posisi penjaga dan $\vec{p}$
+posisi pemain, keduanya dalam piksel. Empat besaran berikut dihitung berurutan.
+\begin{align*}
+  \vec{u} &= \vec{p} - \vec{n}, &
+  d &= \lVert \vec{u} \rVert, \\
+  \hat{u} &= \frac{\vec{u}}{\lVert \vec{u} \rVert}, &
+  \vec{v} &= \hat{u}\,s .
+\end{align*}
+Di sini $\vec{u}$ adalah vektor dari penjaga menuju pemain, $d$ adalah jaraknya
+dalam piksel, $\hat{u}$ adalah vektor satuan yang panjangnya satu, dan $s$
+adalah kecepatan penjaga, yaitu 165 piksel per detik. Urutan pengurangan penting:
+$\vec{p} - \vec{n}$ menunjuk ke pemain, sedangkan urutan sebaliknya membuat
+penjaga menjauh.
+
+Penjaga hanya bergerak apabila $26 < d \le 252$. Angka 252 berasal dari radius
+7 petak dikalikan 36 piksel, sedangkan 26 piksel adalah jarak henti. Di luar
+radius itu pemain dianggap tidak terlihat; di dalam jarak henti penjaga berhenti
+agar tidak bergetar di atas pemain. Pada 60 bingkai per detik, perpindahan satu
+bingkai hanya 2,75 piksel, jauh lebih kecil daripada jarak henti.
+
+Satu garis merah digambar dari penjaga ke pemain selama penjaga mengejar. Garis
+itu bukan bagian permainan; ia alat periksa yang memperlihatkan arah hasil
+perhitungan. Warna badan penjaga juga berubah: abu-abu ketika berdiam dan merah
+ketika mengejar.
+
+\subsection*{Reaktif dan berbasis perencanaan}
+
+Penjaga pada sesi ini disebut reaktif karena keputusannya hanya memakai keadaan
+yang terlihat pada bingkai itu, yaitu posisi pemain. Ia tidak menyimpan peta
+dinding dan tidak merencanakan rute. Akibatnya, ketika pemain bersembunyi di
+balik dinding, penjaga tetap menekan dinding itu selama pemain berada di
+seberangnya. AI berbasis perencanaan menambahkan keterangan yang hilang itu:
+ia mengetahui petak mana yang dapat dilalui, menyusun rangkaian langkah menuju
+pemain, lalu memilih rute terpendek. Pencarian rute semacam itu, dengan
+algoritma A*, menjadi pokok sesi 8.
+
+% ---------------------------------------------------------
+\bagian{Tutorial}
+
+Kerjakan langkah berikut berurutan. Setiap langkah adalah satu tindakan yang
+selesai; jalankan program setiap kali satu bagian baru selesai ditulis.
+
+\begin{langkah}
+  \item \textbf{Siapkan proyek.} Buka folder proyek sesi 5, lalu jalankan
+        \code{python main.py} untuk memastikan level Rak masih berjalan.
+        Salin folder itu menjadi folder kerja sesi 6 agar checkpoint lama tetap
+        utuh.
+
+  \item \textbf{Tambahkan pengaturan Lorong.} Pada \file{settings.py}, tambahkan
+        \code{CELL = 36}, \code{GRID_OFFSET_X = 48}, \code{GRID_OFFSET_Y = 76},
+        dan \code{TOP_DOWN_SPEED = 210.0}. Tambahkan pula pengaturan penjaga:
+        \code{GUARD_SIZE = 30}, \code{GUARD_RADIUS_CELLS = 7.0},
+        \code{GUARD_STOP_DISTANCE = 26.0}, dan \code{GUARD_CHASE_SPEED = 165.0}.
+
+  \item \textbf{Tulis peta Lorong.} Pada \file{levels.py}, buat konstanta
+        \code{SCENARIOS} berisi satu peta 24 kolom dan 14 baris. Gunakan
+        \texttt{\#} untuk dinding, titik untuk lantai, \code{S} untuk titik awal,
+        dan \code{E} untuk pintu keluar. Periksa bahwa setiap baris memiliki
+        panjang yang sama; satu karakter yang kurang akan menggeser seluruh
+        peta.
+
+  \item \textbf{Bangun level dari teks.} Tulis fungsi \code{build_lorong} yang
+        menyisir peta, mengumpulkan petak dinding ke dalam himpunan, mencari
+        titik awal dan pintu keluar, lalu mengubah setiap dinding menjadi
+        \code{pygame.Rect}. Kembalikan seluruhnya sebagai satu kamus.
+
+  \item \textbf{Tambahkan titik pusat petak.} Tulis fungsi \code{cell_center}
+        pada \file{entities.py}. Fungsi itu menerima pasangan $(k, b)$ dan
+        mengembalikan \code{pygame.Vector2} titik pusat petak tersebut. Fungsi
+        ini dipakai untuk menempatkan pemain, penjaga, dan pintu keluar.
+
+  \item \textbf{Tulis gerak pemain tampak atas.} Tambahkan metode
+        \code{update_top_down} pada kelas \code{Player}, beserta pembantu
+        \code{_resolve_top_down}. Kerjakan sumbu $x$ lebih dahulu, baru
+        sumbu $y$, dan bulatkan posisi ke bilangan bulat setiap kali
+        \code{rect} diselaraskan.
+
+  \item \textbf{Tulis kelas penjaga.} Tambahkan kelas \code{Guard} yang
+        menyimpan posisi, menghitung vektor menuju pemain, menormalkannya, dan
+        memindahkan badan penjaga. Sediakan pula metode \code{reset} untuk
+        mengembalikan penjaga ke titik awalnya setelah pemain tertangkap.
+
+  \item \textbf{Sambungkan level kedua.} Pada \file{game.py}, tambahkan
+        \code{_load_lorong}, \code{_update_lorong}, dan \code{_draw_lorong}.
+        \code{_update_lorong} membaca WASD, memanggil gerak pemain, memanggil
+        pembaruan penjaga, memeriksa tangkapan, dan memeriksa pintu keluar.
+
+  \item \textbf{Tambahkan pilihan level.} Pada \file{main.py}, tambahkan
+        argumen \code{--level} dengan nilai 1 atau 2, lalu panggil
+        \code{game.start_level(args.level)} sebelum \code{run()}.
+
+  \item \textbf{Jalankan dan amati.} Jalankan
+        \code{python main.py --level 2}. Berjalanlah dengan WASD, sentuh dinding,
+        lalu dekati penjaga dan menjauhlah. Ulangi beberapa kali sambil
+        memperhatikan kapan penjaga mulai bergerak dan kapan ia berhenti.
+\end{langkah}
+
+\begin{ujibox}
+Setelah Langkah 10, periksa lima hal berikut.
+\begin{itemize}[leftmargin=1.4em, itemsep=0.2em]
+  \item Peta memenuhi jendela dengan rapi: dinding berwarna biru muda, pintu
+        keluar berupa petak hijau. Bila peta terpotong, periksa offset dan
+        ukuran sel.
+  \item Pemain bergerak sama cepat ke empat arah, dan gerak diagonal tidak
+        lebih cepat. Bila diagonal terasa lebih cepat, periksa pemanggilan
+        \code{normalize()}.
+  \item Pemain dapat menyusuri dinding tetapi tidak dapat menembusnya, termasuk
+        ketika menekan dua tombol sekaligus pada sudut.
+  \item Penjaga mulai bergerak ketika jarak pemain sekitar 252 piksel dan
+        berhenti ketika jarak sekitar 26 piksel. Bila ia bergetar di atas
+        pemain, periksa jarak henti dan pembatasan langkah.
+  \item Garis merah hanya muncul ketika penjaga mengejar, dan arahnya selalu
+        menunjuk ke pemain. Bila garis tidak muncul, periksa nilai
+        \code{chasing} pada bingkai itu.
+\end{itemize}
+\end{ujibox}
+
+% ---------------------------------------------------------
+\bagian{Kode Sesi Ini}
+
+Potongan berikut adalah bagian pokok checkpoint sesi 6. Berkas lengkapnya,
+termasuk kelas pemain dan level Rak yang tidak berubah, tersedia pada folder
+\file{code/sesi-06}. Bandingkan kode Anda dengan daftar ini setelah program
+berjalan, bukan sebelumnya.
+
+\tampilkodebaris[Python]{code/sesi-06/gudang_artefak/settings.py}{41}{52}
+  {Pengaturan level Lorong dan penjaga}
+
+\tampilkodebaris[Python]{code/sesi-06/gudang_artefak/entities.py}{89}{115}
+  {Gerak pemain tampak atas dan penyelesaian tabrakan per sumbu}
+
+\tampilkodebaris[Python]{code/sesi-06/gudang_artefak/entities.py}{186}{225}
+  {Kelas penjaga: persepsi, keputusan, dan gerak}
+
+\tampilkodebaris[Python]{code/sesi-06/gudang_artefak/game.py}{137}{162}
+  {Memperbarui level Lorong: masukan, penjaga, dan syarat selesai}
+
+\tampilkodebaris[Python]{code/sesi-06/gudang_artefak/game.py}{199}{212}
+  {Menggambar dinding, pintu keluar, dan garis arah}
+
+\checkpoint{06}{Program pada folder itu dapat dijalankan dengan
+\code{python main.py --level 2}; pemain bergerak dengan WASD, dinding menahan
+langkahnya, dan penjaga mengejar ketika pemain berada dalam radius 252 piksel.}
+
+% ---------------------------------------------------------
+\bagian{Kesalahan Umum}
+
+\begin{galatbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.35em]
+  \item \textbf{Penjaga lambat ketika jauh dan cepat ketika dekat.}
+        Gejala: kecepatan penjaga berubah mengikuti jarak. Penyebabnya, vektor
+        \code{to_player} dipakai langsung sebagai kecepatan tanpa dinormalkan.
+        Periksa baris \code{to_player.normalize() * S.GUARD_CHASE_SPEED}.
+  \item \textbf{Penjaga bergetar di atas pemain.}
+        Gejala: penjaga melompat-lompat kecil di sekitar pemain. Penyebabnya,
+        jarak henti terlalu kecil atau perpindahan satu bingkai lebih besar
+        daripada jarak henti. Periksa \code{GUARD_STOP_DISTANCE} dan
+        pembatasan \code{if step.length() > distance}.
+  \item \textbf{Pemain menembus dinding pada sudut.}
+        Gejala: pemain keluar dari peta ketika menekan dua tombol sekaligus.
+        Penyebabnya, kedua sumbu diperbarui sebelum tabrakan diselesaikan.
+        Periksa urutan pada \code{update_top_down}: satu sumbu, selesaikan,
+        lalu sumbu berikutnya.
+  \item \textbf{\code{AttributeError: 'Player' object has no attribute
+        'update_top_down'}.}
+        Gejala: program berhenti ketika level 2 dimuat. Penyebabnya, metode baru
+        ditulis di luar kelas atau namanya berbeda. Periksa indentasi dan ejaan
+        nama metode pada \file{entities.py}.
+  \item \textbf{\code{KeyError: 2} ketika level dimuat.}
+        Gejala: peta tidak ditemukan. Penyebabnya, kunci \code{SCENARIOS} atau
+        \code{GUARD_START} tidak memuat nomor skenario yang diminta. Periksa
+        kedua kamus itu dan nilai bawaan \code{build_lorong}.
+  \item \textbf{Garis arah tidak pernah muncul.}
+        Gejala: penjaga bergerak tetapi garis merah tidak tampak. Penyebabnya,
+        \code{chasing} bernilai salah karena radius dihitung dua kali, atau
+        garis digambar sebelum sprite. Periksa
+        \code{GUARD_RADIUS_CELLS * S.CELL} dan urutan penggambaran.
+\end{itemize}
+\end{galatbox}
+
+% ---------------------------------------------------------
+\clearpage
+\bagian{Lembar Kerja}
+
+Isi tabel berikut pada catatan praktikum Anda. Kolom terakhir diisi setelah
+Anda membandingkan hasil pengukuran dengan nilai pada \file{settings.py}.
+
+{\small
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\linewidth}{@{}C{0.8cm} L{6.2cm} Y@{}}
+\toprule
+\textbf{No} & \textbf{Hasil yang dicatat} & \textbf{Keterangan Anda} \\
+\midrule
+1 & Jarak pemain ketika penjaga mulai bergerak & \\[0.35cm]
+2 & Jarak pemain ketika penjaga berhenti & \\[0.35cm]
+3 & Kecepatan pemain lurus dan kecepatan pemain diagonal & \\[0.35cm]
+4 & Kecepatan penjaga yang Anda perkirakan pada jarak 100, 180, dan 240 piksel & \\[0.35cm]
+5 & Perilaku penjaga ketika pemain bersembunyi di balik dinding & \\[0.9cm]
+6 & Satu kendala yang Anda hadapi dan cara menyelesaikannya & \\[0.9cm]
+\bottomrule
+\end{tabularx}
+}
+
+% ---------------------------------------------------------
+\bagian{Checklist Sesi}
+
+\begin{checklistbox}
+\begin{checklist}
+  \item Saya dapat menunjukkan level Lorong yang utuh, lengkap dengan dinding
+        dan pintu keluar.
+  \item Saya dapat menggerakkan pemain ke empat arah dan menjelaskan mengapa
+        arah diagonal harus dinormalkan.
+  \item Saya dapat menjelaskan urutan penyelesaian tabrakan per sumbu.
+  \item Saya dapat menghitung $\vec{u}$, $d$, $\hat{u}$, dan $\vec{v}$ untuk
+        satu pasangan posisi penjaga dan pemain.
+  \item Saya dapat menjelaskan peran radius 252 piksel dan jarak henti
+        26 piksel.
+  \item Saya dapat menyebutkan satu kelemahan AI reaktif yang saya amati
+        sendiri pada level Lorong.
+\end{checklist}
+\end{checklistbox}
+
+% ---------------------------------------------------------
+\bagian{Pengait ke Sesi Berikutnya}
+
+Penjaga pada sesi ini hanya memiliki dua kemungkinan: mengejar atau berdiam.
+Keduanya disimpan pada satu variabel bernilai benar atau salah, yaitu
+\code{chasing}. Pada sesi 7 variabel itu diganti mesin keadaan yang
+sesungguhnya, dengan tiga \istilah{state} yang berbeda---berdiam, berpatroli,
+dan mengejar---beserta \istilah{transition} yang syaratnya diperiksa satu per
+satu. Penjaga akan berjalan mengelilingi titik-titik patroli, mengejar ketika
+pemain terlihat, dan menyerah setelah kehilangan jejak selama waktu tertentu.
+Dengan begitu, perilakunya tidak lagi hanya reaktif, melainkan memiliki
+riwayat dan jadwal.

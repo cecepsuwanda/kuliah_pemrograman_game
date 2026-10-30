@@ -1,0 +1,406 @@
+% =========================================================
+%  sesi/02/sesi.tex
+%  Sesi 2 — Level Rak: Tilemap, Physics, dan Kontrol Pemain
+% =========================================================
+
+\sesi{02}{Level Rak: Tilemap, Physics, dan Kontrol Pemain}{3.2}{140 menit}
+
+Ini pertemuan minggu kedua belas. Scene \file{LevelRak} yang Anda susun pada
+sesi 1 masih berupa balok-balok primitif: belum ada tabrakan, belum ada
+gravitasi, dan pemain belum dapat digerakkan. Sesi ini mengubahnya menjadi
+level yang benar-benar dapat dimainkan.
+
+Pekerjaan pertama adalah menyusun lantai dan rak dengan \istilah{Tilemap},
+yaitu lembaran petak yang diisi pola. Pekerjaan kedua memberikan sifat fisika:
+lantai dan rak menjadi benda diam yang menghalangi, sedangkan pemain menjadi
+benda bergerak yang tunduk pada gravitasi. Pekerjaan ketiga menulis skrip
+kontrol pemain, lalu menambahkan artefak dan pintu sebagai daerah
+\istilah{trigger}.
+
+Ketiga pekerjaan itu mengikuti Bab XIII. Urutannya sengaja dipertahankan:
+menyusun ruang, memberi bentuk batas, baru menulis perilaku. Apabila urutan
+itu dibalik, Anda akan menghabiskan waktu mencari kesalahan kode padahal
+penyebabnya berada pada komponen yang belum dipasang.
+
+% ---------------------------------------------------------
+\bagian{Tujuan Sesi}
+
+\begin{tujuanbox}
+Setelah menuntaskan sesi ini, Anda dapat menunjukkan:
+\begin{enumerate}[leftmargin=1.5em, itemsep=0.2em]
+  \item scene \file{LevelRak} yang lantai dan raknya tersusun dari
+        \istilah{Tilemap} dan dapat dipijak;
+  \item pemain berkomponen \istilah{Rigidbody2D} dan \istilah{Capsule
+        Collider2D} yang berjalan, melompat, dan mendarat tanpa menembus lantai;
+  \item skrip \code{KontrolPemain} yang terpasang dengan seluruh rujukan
+        \menu{Inspector} terisi;
+  \item tiga artefak yang lenyap ketika disentuh dan pintu yang melaporkan
+        keadaannya pada \menu{Console};
+  \item penjelasan mengapa masukan dibaca pada \code{Update} sedangkan gerak
+        fisika dikerjakan pada \code{FixedUpdate}.
+\end{enumerate}
+\end{tujuanbox}
+
+% ---------------------------------------------------------
+\bagian{Prasyarat}
+
+\begin{prasyaratbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.25em]
+  \item Checkpoint sesi 1 sudah terbuka: project \NamaProject\ dengan scene
+        \file{LevelRak} berisi \code{Gudang}, lantai, tiga rak, pemain, dan
+        pintu.
+  \item Anda telah membaca Bab XIII bagian 13.1 sampai 13.5, yaitu bagian
+        tentang penyusunan level, \istilah{Collider} dan \istilah{Rigidbody},
+        kontrol pemain, serta \istilah{trigger}.
+  \item Scene sesi 1 tersimpan. Perubahan pada sesi ini akan menimpa scene
+        itu, sehingga simpanlah salinan bila Anda masih memerlukannya.
+\end{itemize}
+\end{prasyaratbox}
+
+% ---------------------------------------------------------
+\bagian{Peta Kemampuan}
+
+\petasesi
+  {Scene primitif tanpa tabrakan dan tanpa kontrol. Pemain hanya benda
+   gambar yang diam.}
+  {\istilah{Tilemap}, \istilah{Collider2D}, \istilah{Rigidbody2D},
+   \istilah{trigger}, dan skrip kontrol pemain.}
+  {Penggantian \istilah{greybox} dengan aset, \istilah{Animator}, dan
+   \istilah{Canvas} antarmuka pada sesi 3.}
+
+% ---------------------------------------------------------
+\bagian{Konsep yang Dipakai}
+
+\subsection*{Tilemap: satu lembar, satu bentuk batas}
+
+\istilah{Tilemap} adalah lembaran petak yang dipakai untuk menyusun lantai,
+dinding, dan rak. Keuntungannya bukan pada tampilan, melainkan pada bentuk
+batasnya: seluruh petak yang tersusun cukup memakai satu \istilah{Collider}.
+Komponen \code{Tilemap Collider 2D} membentuk batas menurut petak yang
+dilukis, lalu \code{Composite Collider 2D} menggabungkan batas-batas kecil itu
+menjadi satu bentuk utuh. Tanpa penggabungan, pemain dapat tersangkut pada
+garis sambung antarpetak.
+
+\subsection*{Benda diam dan benda bergerak}
+
+Lantai, rak, dan pintu tidak bergerak. Mereka cukup memiliki \istilah{Collider}
+tanpa \code{Rigidbody2D}. Pemain bergerak, sehingga memerlukan keduanya:
+\istilah{Rigidbody2D} membuatnya mengikuti gravitasi dan \istilah{Collider2D}
+memberinya bentuk batas. Memberi \code{Rigidbody2D} kepada benda diam hanya
+menambah perhitungan tanpa manfaat.
+
+\subsection*{Collider biasa dan trigger}
+
+\istilah{Collider} biasa menghalangi gerak. \istilah{Trigger} tidak
+menghalangi apa pun; ia hanya melaporkan bahwa ada benda lain yang masuk.
+Artefak dan pintu memakai trigger supaya pemain dapat melewatinya sambil
+memicu sesuatu. Tiga syarat agar laporannya sampai: pilihan \menu{Is Trigger}
+dicentang, sekurang-kurangnya satu benda memiliki \code{Rigidbody2D}, dan
+kedua benda berada pada \istilah{layer} yang saling diperiksa.
+
+\subsection*{Dua fungsi, dua pekerjaan}
+
+\code{Update} dipanggil setiap bingkai dengan selang yang berubah-ubah, dan
+dipakai untuk membaca masukan. \code{FixedUpdate} dipanggil dengan selang
+tetap, dan dipakai untuk menggerakkan \code{Rigidbody2D} serta memeriksa tanah.
+Memindahkan \code{Rigidbody2D} melalui \code{transform.position} pada
+\code{Update} membuat benda bergetar dan menembus dinding, sebab perubahan itu
+tidak diperhitungkan oleh langkah fisika.
+
+Pemeriksaan tanah tidak membandingkan posisi dengan letak lantai. Ia memeriksa
+lingkaran kecil di bawah kaki pemain melalui \code{Physics2D.OverlapCircle}.
+Cara itu tetap bekerja pada lantai bertingkat maupun permukaan miring.
+Lingkaran pemeriksaannya digambar pada tampilan \menu{Scene} agar mudah
+diperiksa.
+
+% ---------------------------------------------------------
+\bagian{Tutorial}
+
+Nama menu dan jendela ditulis seperti yang tampak pada Unity LTS. Kerjakan
+berurutan; jangan melompat ke bagian skrip sebelum bentuk batas level selesai.
+
+\begin{langkah}
+  \item \textbf{Buka scene lama.} Pada jendela \menu{Project}, buka
+        \file{Assets/Scenes}, lalu klik dua kali \file{LevelRak}. Pastikan
+        Hierarchy masih memuat \code{Gudang} beserta anak-anaknya.
+
+  \item \textbf{Buat Grid dan tilemap lantai.} Klik kanan pada
+        \menu{Hierarchy}, pilih \menu{2D Object > Tilemap > Rectangular}. Beri
+        nama \code{Grid} pada objek induk dan \code{TilemapLantai} pada
+        anaknya. Pada \menu{Inspector} Grid, setel \menu{Cell Size} menjadi
+        $(1,1,0)$.
+
+  \item \textbf{Buat tilemap rak.} Klik kanan \code{Grid}, pilih
+        \menu{2D Object > Tilemap > Rectangular}, lalu beri nama
+        \code{TilemapRak}. Kedua tilemap menjadi anak \code{Grid} agar
+        petaknya sejajar.
+
+  \item \textbf{Buat aset petak.} Pada jendela \menu{Project}, klik kanan
+        folder \file{Assets}, pilih \menu{Create > Folder}, dan beri nama
+        \code{Tiles}. Klik kanan folder itu, pilih
+        \menu{Create > 2D > Tiles > Tile}, lalu beri nama \code{TileLantai}.
+        Pada \menu{Inspector}, isi \menu{Sprite} dengan sprite \code{Square}
+        dan \menu{Color} dengan \code{#46587E}. Gandakan dengan
+        \menu{Ctrl+D}, beri nama \code{TileRak}, lalu ubah warnanya menjadi
+        \code{#60749E}.
+
+  \item \textbf{Buka palet.} Pilih menu \menu{Window > 2D > Tile Palette}.
+        Tekan \menu{Create New Palette}, beri nama \code{PaletGudang}, dan
+        simpan di folder \file{Assets/Tiles}. Seret \code{TileLantai} dan
+        \code{TileRak} dari jendela \menu{Project} ke dua sel pertama palet.
+
+  \item \textbf{Lukis lantai.} Pilih \code{TilemapLantai} pada
+        \menu{Hierarchy}. Pada jendela \menu{Tile Palette}, pilih
+        \code{TileLantai} dan alat \menu{Brush} (tombol \menu{B}). Pada
+        tampilan \menu{Scene}, lukis satu baris petak pada $y=-4$ dari $x=-9$
+        sampai $x=9$.
+
+  \item \textbf{Lukis tiga rak.} Pilih \code{TilemapRak}, lalu pilih
+        \code{TileRak} pada palet. Lukis tiga rak masing-masing selebar empat
+        petak: $x=-6$ sampai $-3$ pada $y=-2$; $x=-1$ sampai $2$ pada $y=0$;
+        dan $x=4$ sampai $7$ pada $y=-2$.
+
+  \item \textbf{Buat layer Ground.} Pilih menu
+        \menu{Edit > Project Settings > Tags and Layers}. Pada bagian
+        \menu{Layers}, isi \menu{User Layer 6} dengan \code{Ground}. Kembali
+        ke \menu{Hierarchy}, setel \menu{Layer} kedua tilemap menjadi
+        \code{Ground}.
+
+  \item \textbf{Pasang collider tilemap.} Pilih \code{TilemapLantai}, tekan
+        \menu{Add Component}, tambahkan \menu{Tilemap Collider 2D}, lalu
+        tambahkan \menu{Composite Collider 2D}. Komponen \code{Rigidbody2D}
+        ikut terpasang; setel \menu{Body Type} menjadi \menu{Static} dan
+        \menu{Geometry Type} menjadi \menu{Polygons}. Pada
+        \code{Tilemap Collider 2D}, centang \menu{Used By Composite}. Ulangi
+        langkah yang sama untuk \code{TilemapRak}.
+
+  \item \textbf{Berikan fisika kepada pemain.} Pilih \code{Pemain}, tambahkan
+        \menu{Rigidbody2D} dengan \menu{Gravity Scale} 2.5,
+        \menu{Collision Detection} \menu{Continuous}, dan
+        \menu{Interpolate} \menu{Interpolate}. Pada \menu{Constraints},
+        centang \menu{Freeze Rotation Z}. Tambahkan \menu{Capsule Collider2D}
+        dengan \menu{Direction} \menu{Vertical} dan \menu{Size} $(0.7,0.9)$.
+
+  \item \textbf{Beri tag Player.} Pada \menu{Inspector} pemain, buka daftar
+        \menu{Tag}, pilih \menu{Add Tag}, lalu buat tag \code{Player}. Kembali
+        ke pemain dan setel tag-nya menjadi \code{Player}.
+
+  \item \textbf{Buat titik pemeriksaan tanah.} Klik kanan \code{Pemain},
+        pilih \menu{Create Empty}, beri nama \code{TitikTanah}, dan setel
+        \menu{Position} lokalnya menjadi $(0,-0.5,0)$.
+\end{langkah}
+
+\begin{ujibox}
+Sebelum menulis skrip, tekan \menu{Play}. Periksa empat hal berikut, lalu
+hentikan \menu{Play}.
+\begin{itemize}[leftmargin=1.4em, itemsep=0.2em]
+  \item Lantai dan tiga rak tampak sebagai deretan petak, bukan balok
+        primitif.
+  \item Pemain jatuh dan berhenti di atas lantai, tidak menembusnya.
+  \item Pemain dapat berdiri di atas rak tanpa tergelincir turun.
+  \item Pada menu \menu{Window > Analysis > Physics Debug}, bentuk batas
+        lantai dan rak tampak sebagai satu bentuk utuh, bukan petak-petak
+        terpisah.
+\end{itemize}
+\end{ujibox}
+
+\begin{langkah}
+  \item \textbf{Buat tiga skrip.} Pada folder \file{Assets/Scripts}, klik
+        kanan lalu pilih \menu{Create > C\# Script} tiga kali dengan nama
+        \code{KontrolPemain}, \code{Artefak}, dan \code{Pintu}. Buka setiap
+        berkas dan salin isinya dari bagian Kode Sesi Ini. Nama kelas harus
+        sama dengan nama berkas.
+
+  \item \textbf{Pasang kontrol pemain.} Seret \code{KontrolPemain} dari
+        jendela \menu{Project} ke objek \code{Pemain}. Pada
+        \menu{Inspector}, isi \menu{Ground Check} dengan \code{TitikTanah},
+        \menu{Ground Layer} dengan \code{Ground}, \menu{Move Speed} 6,
+        \menu{Jump Speed} 11, dan \menu{Ground Radius} 0.15.
+
+  \item \textbf{Buat tiga artefak.} Klik kanan \code{Gudang}, pilih
+        \menu{2D Object > Sprites > Square}, lalu beri nama
+        \code{Artefak1}. Setel \menu{Position} $(-4,-1.1,0)$, \menu{Scale}
+        $(0.5,0.5,1)$, dan \menu{Color} \code{#DEB242}. Tambahkan
+        \menu{Circle Collider2D} dengan \menu{Radius} 0.25 dan centang
+        \menu{Is Trigger}, lalu tambahkan komponen \code{Artefak}. Ulangi
+        untuk \code{Artefak2} pada $(1,0.9,0)$ dan \code{Artefak3} pada
+        $(6,-1.1,0)$.
+
+  \item \textbf{Ubah pintu menjadi trigger.} Pilih \code{Pintu}, setel
+        \menu{Position} menjadi $(8.3,-2.6,0)$, lalu tambahkan
+        \menu{Box Collider2D} dengan \menu{Size} $(1,1.8)$ dan centang
+        \menu{Is Trigger}. Tambahkan komponen \code{Pintu} dan isi
+        \menu{Artefak Diperlukan} dengan 3.
+
+  \item \textbf{Uji levelnya.} Tekan \menu{Play}. Gerakkan pemain dengan
+        tombol panah atau \menu{A}/\menu{D}, lompat dengan \menu{Space},
+        sentuh ketiga artefak, lalu masuk ke daerah pintu. Amati
+        \menu{Console}, lalu simpan scene dengan \menu{Ctrl+S}.
+\end{langkah}
+
+\begin{ujibox}
+Setelah Langkah 16, periksa lima hal berikut.
+\begin{itemize}[leftmargin=1.4em, itemsep=0.2em]
+  \item Pemain berjalan mendatar, melompat hanya ketika menyentuh tanah, dan
+        tidak dapat melompat berkali-kali di udara.
+  \item Pemain dapat naik dari lantai ke rak pertama, lalu ke rak kedua.
+  \item Artefak lenyap ketika disentuh, dan \menu{Console} mencatat jumlah
+        artefak yang telah diambil.
+  \item Pintu menolak pemain selama artefak belum lengkap, dan menerima
+        pemain setelah ketiganya diambil.
+  \item Lingkaran hijau pemeriksaan tanah tampak di bawah kaki pemain ketika
+        \code{Pemain} dipilih pada tampilan \menu{Scene}.
+\end{itemize}
+\end{ujibox}
+
+% ---------------------------------------------------------
+\bagian{Kode Sesi Ini}
+
+Tiga skrip berikut membagi pekerjaan dengan jelas. \code{KontrolPemain}
+menangani masukan dan fisika pemain, \code{Artefak} menangani pengambilan
+benda, dan \code{Pintu} menangani syarat keluar level.
+
+\tampilkode[language=CSharp]{code/sesi-02/Scripts/KontrolPemain.cs}
+  {KontrolPemain.cs: masukan pada Update, gerak dan pemeriksaan tanah pada FixedUpdate}
+
+\tampilkode[language=CSharp]{code/sesi-02/Scripts/Artefak.cs}
+  {Artefak.cs: trigger yang menandai artefak telah diambil}
+
+\tampilkode[language=CSharp]{code/sesi-02/Scripts/Pintu.cs}
+  {Pintu.cs: trigger yang memeriksa syarat artefak sebelum membuka level}
+
+\subsection*{Tabel objek scene}
+
+Tabel berikut adalah daftar objek yang harus ada pada scene Anda. Nilai yang
+tidak disebut boleh dibiarkan bawaan.
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{@{}L{2.4cm} L{3.5cm} Y@{}}
+\toprule
+\textbf{GameObject} & \textbf{Komponen} & \textbf{Nilai penting} \\
+\midrule
+Grid & Transform, Grid &
+  Cell Size $(1,1,0)$ \\
+TilemapLantai & Tilemap, Tilemap Renderer, Tilemap Collider 2D,
+  Composite Collider 2D, Rigidbody2D &
+  Layer \code{Ground}; Used By Composite; Body Type Static; petak
+  $x=-9$--$9$ pada $y=-4$ \\
+TilemapRak & Tilemap, Tilemap Renderer, Tilemap Collider 2D,
+  Composite Collider 2D, Rigidbody2D &
+  Layer \code{Ground}; Used By Composite; Body Type Static; tiga rak selebar
+  empat petak \\
+Pemain & Sprite Renderer, Rigidbody2D, Capsule Collider2D, KontrolPemain &
+  Tag \code{Player}; Gravity Scale 2.5; Continuous; Freeze Rotation Z;
+  Capsule $(0.7,0.9)$; Move Speed 6; Jump Speed 11; Ground Radius 0.15 \\
+TitikTanah & Transform &
+  Anak \code{Pemain}; local position $(0,-0.5,0)$ \\
+Artefak1 & Sprite Renderer, Circle Collider2D, Artefak &
+  $(-4,-1.1,0)$; $(0.5,0.5)$; \code{#DEB242}; Radius 0.25; Is Trigger;
+  Nilai 1 \\
+Artefak2 & Sprite Renderer, Circle Collider2D, Artefak &
+  $(1,0.9,0)$; Radius 0.25; Is Trigger; Nilai 1 \\
+Artefak3 & Sprite Renderer, Circle Collider2D, Artefak &
+  $(6,-1.1,0)$; Radius 0.25; Is Trigger; Nilai 1 \\
+Pintu & Sprite Renderer, Box Collider2D, Pintu &
+  $(8.3,-2.6,0)$; $(1,1.8)$; Is Trigger; Artefak Diperlukan 3 \\
+\bottomrule
+\end{tabularx}
+}
+
+\checkpoint{02}{\raggedright Folder checkpoint memuat \file{Scripts/KontrolPemain.cs},
+\file{Scripts/Artefak.cs}, \file{Scripts/Pintu.cs}, dan \file{scene.md}.
+Scene tidak disertakan sebagai berkas biner; susunlah mengikuti tabel di atas
+dan berkas \file{scene.md}.}
+
+% ---------------------------------------------------------
+\bagian{Kesalahan Umum}
+
+\begin{galatbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.35em]
+  \item \textbf{Pemain bergetar ketika berjalan.}
+        Gejala: gambar pemain tampak gemetar, terutama ketika kamera
+        mengikutinya. Periksa tempat \code{Rigidbody2D} digerakkan: bila
+        melalui \code{transform.position} pada \code{Update}, pindahkan ke
+        \code{body.velocity} pada \code{FixedUpdate}, lalu aktifkan
+        \menu{Interpolate}.
+  \item \textbf{Pemain menembus lantai atau rak.}
+        Gejala: pemain jatuh melewati petak. Periksa \menu{Used By Composite}
+        pada \code{Tilemap Collider 2D}, keberadaan \code{Composite Collider
+        2D}, dan \menu{Collision Detection} pemain. Tampilkan bentuk batas
+        melalui \menu{Window > Analysis > Physics Debug}.
+  \item \textbf{Pemain jatuh tanpa henti.}
+        Gejala: pemain melewati lantai dan terus turun. Periksa
+        \menu{Ground Layer} pada \code{KontrolPemain} (harus \code{Ground}),
+        \menu{Layer} kedua tilemap, dan \menu{Collision Matrix} pada
+        \menu{Project Settings > Physics 2D}. Bila ketiganya benar, periksa
+        apakah tilemap benar-benar memiliki collider.
+  \item \textbf{Pemain dapat melompat berkali-kali di udara.}
+        Gejala: tombol lompat yang ditekan berulang menghasilkan lompatan
+        baru. Periksa apakah lompatan dibaca dengan
+        \code{Input.GetButtonDown} dan apakah \code{onGround} diperiksa
+        sebelum lompatan. Periksa pula \menu{Ground Radius}: lingkaran yang
+        terlalu besar masih menyentuh rak di atas kepala.
+  \item \textbf{Trigger tidak pernah dipanggil.}
+        Gejala: artefak tidak lenyap dan Console tetap kosong. Periksa
+        \menu{Is Trigger} pada collider artefak atau pintu, tag \code{Player}
+        pada pemain, dan \menu{Layer Collision Matrix} antara layer pemain
+        dan layer artefak.
+  \item \textbf{Rujukan Inspector kosong.}
+        Gejala: pesan \code{NullReferenceException} menunjuk baris
+        \code{groundCheck.position}. Periksa \menu{Ground Check} pada
+        komponen \code{KontrolPemain}; peubah itu harus berisi
+        \code{TitikTanah}, bukan objek lain.
+\end{itemize}
+\end{galatbox}
+
+% ---------------------------------------------------------
+\bagian{Lembar Kerja}
+
+Isi tabel berikut, lalu simpan sebagai bagian dari catatan praktikum Anda.
+
+{\small
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\linewidth}{@{}C{0.8cm} L{5.4cm} Y@{}}
+\toprule
+\textbf{No} & \textbf{Hasil yang dicatat} & \textbf{Keterangan Anda} \\
+\midrule
+1 & Nilai Gravity Scale dan Jump Speed yang dipakai & \\[0.55cm]
+2 & Tinggi lompatan yang teramati, diukur dari lantai ke rak & \\[0.55cm]
+3 & Jumlah petak lantai dan petak rak pada kedua tilemap & \\[0.55cm]
+4 & Masalah fisika yang muncul beserta gejalanya & \\[0.9cm]
+5 & Penyebab dan perbaikan masalah tersebut & \\[0.9cm]
+6 & Pesan Console saat artefak diambil dan saat pintu dicoba & \\[0.9cm]
+\bottomrule
+\end{tabularx}
+}
+
+% ---------------------------------------------------------
+\bagian{Checklist Sesi}
+
+\begin{checklistbox}
+\begin{checklist}
+  \item Saya dapat menunjukkan lantai dan rak yang tersusun dari
+        \istilah{Tilemap} dan memiliki satu bentuk batas utuh.
+  \item Saya dapat menunjukkan pemain yang berjalan, melompat, dan mendarat
+        di atas rak tanpa menembusnya.
+  \item Saya dapat menjelaskan perbedaan \istilah{Collider} biasa dan
+        \istilah{trigger}, beserta syarat agar trigger bekerja.
+  \item Saya dapat menjelaskan mengapa masukan dibaca pada \code{Update}
+        sedangkan gerak \istilah{Rigidbody2D} dikerjakan pada
+        \code{FixedUpdate}.
+  \item Saya dapat menunjukkan lingkaran pemeriksaan tanah dan menjelaskan
+        fungsi \menu{Ground Layer}.
+  \item Saya dapat menelusuri satu masalah fisika sampai penyebabnya, lalu
+        memperbaikinya.
+\end{checklist}
+\end{checklistbox}
+
+% ---------------------------------------------------------
+\bagian{Pengait ke Sesi Berikutnya}
+
+Level ini masih tampak sebagai balok dan petak berwarna. Pada sesi 3 Anda
+mengimpor \istilah{sprite}, menyusun \istilah{Animator} untuk keadaan diam,
+berlari, dan melompat, lalu membangun \istilah{Canvas} yang menampilkan skor
+dan nyawa. Mekanik yang baru saja Anda selesaikan tidak diubah; yang berubah
+hanya tampilannya.

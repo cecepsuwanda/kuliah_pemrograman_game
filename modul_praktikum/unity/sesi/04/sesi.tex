@@ -1,0 +1,437 @@
+% =========================================================
+%  sesi/04/sesi.tex
+%  Sesi 4 — Audio dan Trigger Interaksi
+% =========================================================
+
+\sesi{04}{Audio dan Trigger Interaksi}{4.2}{130 menit}
+
+Ini pertemuan minggu keempat belas. Level Rak sudah tampak lengkap: gambar
+pemain berganti menurut geraknya, skor bertambah, dan nyawa berkurang.
+Namun seluruhnya masih bisu. Pemain yang melompat tidak mendengar apa pun,
+dan artefak yang lenyap tidak memberi tanggapan selain angka pada sudut layar.
+
+Sesi ini menambahkan jalan umpan balik yang kedua, yaitu bunyi. Berkas bunyi
+diimpor dan dipisahkan menjadi musik latar dan efek suara, peristiwa permainan
+dihubungkan dengan bunyinya melalui satu skrip pemusat, lalu waktu pemanggilan
+dan tingkat kekuatan disesuaikan. Partikel sederhana ditambahkan sebagai
+pelengkap bila waktu memungkinkan. Mekanik, animasi, dan antarmuka dari sesi 3
+tidak diubah; setiap kali sebuah bunyi dipasang, jalankan kembali scene dan
+pastikan pemain masih dapat berjalan, melompat, mengambil artefak, dan membuka
+pintu seperti sebelumnya.
+
+% ---------------------------------------------------------
+\bagian{Tujuan Sesi}
+
+\begin{tujuanbox}
+Setelah menuntaskan sesi ini, Anda dapat menunjukkan:
+\begin{enumerate}[leftmargin=1.5em, itemsep=0.2em]
+  \item berkas \istilah{AudioClip} yang terimpor dengan pengaturan
+        \menu{Load Type} dan \menu{Compression} yang tercatat;
+  \item objek \code{ManajerBunyi} berisi dua \istilah{AudioSource} terpisah
+        untuk \istilah{BGM} dan \istilah{SFX};
+  \item bunyi lompat, bunyi mengambil artefak, dan bunyi kalah yang terdengar
+        pada peristiwanya masing-masing;
+  \item \istilah{AudioMixer} dengan tingkat \code{Musik} dan \code{Efek} yang
+        kekuatannya dapat diatur terpisah;
+  \item catatan percobaan volume dan \istilah{timing} beserta alasan setiap
+        nilai yang dipilih.
+\end{enumerate}
+\end{tujuanbox}
+
+% ---------------------------------------------------------
+\bagian{Prasyarat}
+
+\begin{prasyaratbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.25em]
+  \item Checkpoint sesi 3 sudah berjalan: pemain beranimasi, skor dan nyawa
+        tampil pada \istilah{Canvas}, dan pintu menolak pemain selama artefak
+        belum lengkap.
+  \item Anda telah membaca Bab XV bagian 15.1 sampai 15.5, yaitu bagian
+        tentang peran bunyi, \istilah{AudioClip} dan \istilah{AudioSource},
+        peristiwa bunyi, pengaturan waktu dan kekuatan, serta partikel.
+  \item Anda memiliki satu berkas musik latar dan tiga berkas efek suara
+        pendek: lompat, mengambil benda, dan kalah. Catat sumber serta
+        lisensinya sejak awal.
+  \item Scene sesi 3 tersimpan. Sesi ini menimpa scene itu, sehingga simpanlah
+        salinan bila Anda masih memerlukannya.
+\end{itemize}
+\end{prasyaratbox}
+
+% ---------------------------------------------------------
+\bagian{Peta Kemampuan}
+
+\petasesi
+  {Level yang tampak dan beranimasi, tetapi tidak mengeluarkan bunyi sama
+   sekali.}
+  {\istilah{AudioClip}, \istilah{AudioSource}, \istilah{BGM},
+   \istilah{SFX}, \istilah{AudioMixer}, dan pemanggilan bunyi pada peristiwa.}
+  {Pengujian fungsional, \istilah{playtest} antar kelompok, perbaikan
+   \istilah{bug}, dan demo sesi 5.}
+
+% ---------------------------------------------------------
+\bagian{Konsep yang Dipakai}
+
+\subsection*{Berkas dan pemutarnya adalah dua hal}
+
+\istilah{AudioClip} adalah berkas bunyi yang telah diimpor. Ia hanya berisi
+data; ia tidak tahu di mana ia berada dan tidak dapat berbunyi sendiri.
+\istilah{AudioSource} adalah komponen yang menempel pada \istilah{GameObject}
+dan memutar klip itu. Pertanyaan ``di mana bunyi ini terdengar'' selalu
+dijawab oleh letak \code{AudioSource}, bukan oleh berkasnya.
+
+Karena itu, bunyi yang berbeda memerlukan sumber yang berbeda pula. Musik
+latar dan efek suara tidak boleh memakai satu \code{AudioSource}, sebab setiap
+efek suara akan menghentikan musik yang sedang berjalan. Sesi ini memakai dua
+sumber: \code{musicSource} untuk musik dan \code{sfxSource} untuk efek.
+
+\subsection*{Musik berulang, efek sekali pakai}
+
+\istilah{BGM} berjalan terus dan diputar berulang, sehingga ia dipanggil
+dengan \code{Play()} setelah \code{loop} dinyalakan. \istilah{SFX} dipanggil
+menurut kejadian dan harus dapat bertumpuk; dua artefak yang diambil berdekatan
+menghasilkan dua bunyi yang hampir bersamaan. Untuk itu dipakai
+\code{PlayOneShot()}, yang tidak memotong bunyi sebelumnya. Memakai
+\code{Play()} untuk efek suara menghasilkan bunyi yang terputus setiap kali
+panggilan baru datang.
+
+\subsection*{Bunyi dipanggil pada peristiwa, bukan pada keadaan}
+
+Bunyi lompat dipanggil ketika tombol ditekan, bukan selama tombol ditahan.
+Pemeriksaannya dilakukan dengan \code{Input.GetButtonDown} di \code{Update},
+tempat peristiwa masukan dibaca. Bunyi artefak dipanggil dari
+\istilah{trigger} yang sudah ada sejak sesi 2, dan bunyi kalah dipanggil dari
+keadaan nyawa. Memindahkan panggilan bunyi ke \code{FixedUpdate} menunda bunyi
+satu sampai tiga bingkai, sebab bingkai fisika berjalan lebih jarang daripada
+bingkai tampilan.
+
+\subsection*{Kekuatan bunyi disusun, bukan dinaikkan satu per satu}
+
+Kekuatan pada \istilah{AudioMixer} dinyatakan dalam desibel, dan skalanya tidak
+lurus. Menurunkan 6 dB berarti mengurangi kekuatan menjadi kira-kira separuh.
+Karena itu, menyeimbangkan bunyi lebih sering berarti menurunkan musik daripada
+menaikkan efek suara. Selisih sekitar 10 dB antara efek dan musik adalah titik
+awal yang baik.
+
+% ---------------------------------------------------------
+\bagian{Tutorial}
+
+Nama menu dan jendela ditulis seperti yang tampak pada Unity LTS. Nama berkas
+bunyi pada sesi ini hanya contoh; sesuaikan dengan berkas yang Anda miliki.
+
+\begin{langkah}
+  \item \textbf{Kumpulkan berkasnya.} Sediakan satu musik latar berdurasi
+        panjang dan tiga efek suara pendek: lompat, mengambil benda, dan
+        kalah. Catat nama berkas, sumber, dan lisensinya pada Lembar Kerja.
+
+  \item \textbf{Buat folder dan impor.} Pada jendela \menu{Project}, klik
+        kanan folder \file{Assets}, pilih \menu{Create > Folder}, dan beri
+        nama \code{Audio}. Salin berkas bunyi ke folder itu melalui
+        \menu{File Explorer}; Unity mengimpornya otomatis.
+
+  \item \textbf{Atur impor efek suara.} Pilih berkas \code{lompat} pada
+        jendela \menu{Project}. Pada \menu{Inspector}, setel
+        \menu{Load Type} menjadi \menu{Decompress On Load},
+        \menu{Compression Format} menjadi \menu{PCM}, dan centang
+        \menu{Preload Audio Data}, lalu tekan \menu{Apply}. Ulangi untuk
+        \code{ambil} dan \code{kalah}. Pengaturan ini menghilangkan penundaan
+        ketika bunyi pendek dipanggil.
+
+  \item \textbf{Atur impor musik.} Pilih berkas \code{musik-gudang}. Setel
+        \menu{Load Type} menjadi \menu{Streaming} dan
+        \menu{Compression Format} menjadi \menu{Vorbis}, lalu tekan
+        \menu{Apply}. Musik berdurasi panjang tidak perlu dimuat seluruhnya ke
+        memori.
+
+  \item \textbf{Buat pemusat bunyi.} Klik kanan pada \menu{Hierarchy}, pilih
+        \menu{Create Empty}, beri nama \code{ManajerBunyi}, dan letakkan di
+        akar scene, bukan di bawah \code{Gudang}. Pilih
+        \menu{Add Component} dua kali dan tambahkan \menu{Audio Source} dua
+        kali.
+
+  \item \textbf{Atur kedua sumber.} Pada \code{AudioSource} pertama, matikan
+        \menu{Play On Awake}, centang \menu{Loop}, dan setel
+        \menu{Spatial Blend} menjadi 0. Pada \code{AudioSource} kedua, matikan
+        \menu{Play On Awake} dan \menu{Loop}, lalu setel
+        \menu{Spatial Blend} menjadi 0 juga. Keduanya datar sebab bunyi
+        permainan ini selalu berkaitan dengan pemain.
+
+  \item \textbf{Buat AudioMixer.} Pada jendela \menu{Project}, klik kanan
+        folder \file{Assets/Audio}, pilih \menu{Create > Audio Mixer}, dan
+        beri nama \code{GudangMixer}. Klik dua kali berkas itu untuk membuka
+        \menu{Window > Audio > Audio Mixer}. Pada panel \menu{Groups}, klik
+        kanan \code{Master}, pilih \menu{Add Child Group} dua kali, lalu beri
+        nama \code{Musik} dan \code{Efek}.
+
+  \item \textbf{Atur tingkat dan keluaran.} Pilih tingkat \code{Musik}, setel
+        \menu{Volume} menjadi $-8$ dB. Pilih tingkat \code{Efek}, biarkan
+        pada 0 dB. Kembali ke \code{ManajerBunyi}, arahkan \menu{Output} pada
+        \code{AudioSource} pertama ke \code{Master/Musik} dan \code{AudioSource}
+        kedua ke \code{Master/Efek}.
+
+  \item \textbf{Buat skrip pemusat.} Klik kanan folder \file{Assets/Scripts},
+        pilih \menu{Create > C\# Script}, beri nama \code{ManajerBunyi}, lalu
+        salin isi pada bagian Kode Sesi Ini. Seret skrip itu ke objek
+        \code{ManajerBunyi}.
+
+  \item \textbf{Hubungkan rujukannya.} Pada \menu{Inspector} komponen
+        \code{ManajerBunyi}, isi \menu{Music Source} dan \menu{Sfx Source}
+        dengan kedua \code{AudioSource} tadi. Isi \menu{Musik Latar},
+        \menu{Bunyi Lompat}, \menu{Bunyi Ambil}, dan \menu{Bunyi Kalah} dengan
+        klip yang sesuai. Setel \menu{Volume Musik} 0.4, \menu{Volume Efek}
+        0.8, dan \menu{Variasi Nada} 0.08.
+
+  \item \textbf{Buat penghubung pada pemain.} Buat skrip baru bernama
+        \code{PemicuBunyi} dan salin isinya dari bagian Kode Sesi Ini. Seret
+        ke objek \code{Pemain}, lalu isi \menu{Manajer} dengan objek
+        \code{ManajerBunyi}.
+
+  \item \textbf{Perbarui tiga skrip.} Ganti isi \file{KontrolPemain.cs},
+        \file{Artefak.cs}, dan \file{TampilanHud.cs} dengan versi pada bagian
+        Kode Sesi Ini. Pada \code{Pemain}, isi \menu{Pemicu Bunyi} dengan
+        komponen \code{PemicuBunyi}. Pada setiap artefak dan pada
+        \code{Canvas}, isi kolom \menu{Pemicu Bunyi} dengan komponen yang
+        sama.
+\end{langkah}
+
+\begin{ujibox}
+Setelah Langkah 12, periksa lima hal berikut.
+\begin{itemize}[leftmargin=1.4em, itemsep=0.2em]
+  \item Musik latar terdengar sejak scene dijalankan dan berulang setelah
+        selesai, tanpa terputus ketika pemain bergerak.
+  \item Bunyi lompat terdengar seketika ketika \menu{Space} ditekan, bersamaan
+        dengan animasi lompat.
+  \item Setiap artefak yang diambil mengeluarkan bunyi, dan dua artefak yang
+        diambil berdekatan menghasilkan dua bunyi yang tidak saling memotong.
+  \item Ketika nyawa mencapai nol, musik berhenti dan bunyi kalah terdengar.
+  \item Tidak ada pesan merah atau peringatan rujukan kosong pada
+        \menu{Console}.
+\end{itemize}
+\end{ujibox}
+
+\begin{langkah}
+  \item \textbf{Uji waktu dan kekuatan.} Jalankan scene, lalu ubah satu nilai
+        setiap kali. Pertama, setel \menu{Volume Musik} 0.15 lalu 0.7 dan
+        catat kapan efek suara mulai tertelan. Kedua, setel
+        \menu{Variasi Nada} 0 lalu 0.25 dan bandingkan bunyi lompat yang
+        dipanggil berulang. Ketiga, pindahkan sementara panggilan bunyi lompat
+        ke \code{FixedUpdate} dan bandingkan keterlambatannya. Kembalikan
+        setiap nilai setelah dicatat.
+
+  \item \textbf{Simpan scene.} Tekan \menu{Ctrl+S}, lalu periksa kembali
+        seluruh mekanik sesi 3: berjalan, melompat, mengambil artefak, dan
+        membuka pintu.
+\end{langkah}
+
+\begin{ujibox}
+Setelah Langkah 14, periksa dua hal berikut.
+\begin{itemize}[leftmargin=1.4em, itemsep=0.2em]
+  \item Pada \menu{Volume Musik} 0.15, efek suara terdengar jelas; pada 0.7,
+        bunyi lompat mulai tertelan musik.
+  \item Pada \menu{Variasi Nada} 0, bunyi yang dipanggil berulang terdengar
+        seperti mesin; pada 0.25, nadanya berubah-ubah.
+\end{itemize}
+\end{ujibox}
+
+% ---------------------------------------------------------
+\bagian{Kode Sesi Ini}
+
+\code{ManajerBunyi} menyimpan kedua sumber, seluruh klip, dan tingkat kekuatan,
+lalu menyediakan satu fungsi untuk setiap peristiwa. \code{PemicuBunyi}
+menghubungkan skrip lain dengan pemusat itu tanpa harus mengetahui isinya.
+\code{KontrolPemain} memanggil bunyi lompat pada peristiwa masukan.
+\code{Pintu} dan \code{AnimasiPemain} tidak berubah; salinannya tetap
+disertakan pada checkpoint.
+
+\tampilkode[language=CSharp,
+  basicstyle=\ttfamily\scriptsize\color{ubCodeText}]
+  {code/sesi-04/Scripts/ManajerBunyi.cs}
+  {ManajerBunyi.cs: pemusat musik latar dan efek suara}
+
+\tampilkode[language=CSharp,
+  basicstyle=\ttfamily\scriptsize\color{ubCodeText}]
+  {code/sesi-04/Scripts/PemicuBunyi.cs}
+  {PemicuBunyi.cs: penghubung peristiwa permainan dengan bunyinya}
+
+\tampilkodebaris[CSharp]
+  {code/sesi-04/Scripts/KontrolPemain.cs}{10}{52}
+  {KontrolPemain.cs: bidang bunyi dan Update yang memanggil bunyi lompat;
+   bagian FixedUpdate tidak berubah dari sesi 3}
+
+Dua skrip lain hanya berubah sedikit, sehingga isinya tidak dicetak ulang.
+Pada \code{Artefak}, tambahkan dua peubah di bawah \code{hud}:
+
+\begin{quote}
+\code{public PemicuBunyi pemicuBunyi;}\\
+\code{public ParticleSystem partikelAmbil;}
+\end{quote}
+
+lalu panggil keduanya di dalam \code{OnTriggerEnter2D} sebelum artefak
+dimatikan:
+
+\begin{quote}
+\code{if (pemicuBunyi != null) pemicuBunyi.Ambil();}\\
+\code{if (partikelAmbil != null) partikelAmbil.Play();}
+\end{quote}
+
+Medan partikel boleh dibiarkan kosong; bunyi tetap bekerja tanpa partikel.
+Bila Anda menambahkannya, buat \menu{Effects > Particle System} terpisah di
+posisi artefak, matikan \menu{Looping} dan \menu{Play On Awake}, lalu isi
+medan itu.
+
+Pada \code{TampilanHud}, tambahkan peubah berikut:
+
+\begin{quote}
+\code{public PemicuBunyi pemicuBunyi;}
+\end{quote}
+
+lalu panggil \code{pemicuBunyi.Kalah()} di dalam \code{KurangiNyawa} ketika
+\code{lives} mencapai nol. Kedua berkas lengkap tersedia pada folder
+checkpoint.
+
+
+\subsection*{Tabel objek scene}
+
+Tabel berikut adalah daftar objek yang harus ada pada scene Anda. Nilai yang
+tidak disebut boleh dibiarkan bawaan.
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{@{}L{2.4cm} L{3.4cm} Y@{}}
+\toprule
+\textbf{GameObject} & \textbf{Komponen} & \textbf{Nilai penting} \\
+\midrule
+ManajerBunyi & ManajerBunyi, dua AudioSource &
+  Music Source dan Sfx Source terisi; empat klip terisi; Volume Musik 0.4;
+  Volume Efek 0.8; Variasi Nada 0.08. Sumber musik: Loop ya, Spatial Blend 0,
+  Output \code{Master/Musik}. Sumber efek: Loop tidak, Spatial Blend 0,
+  Output \code{Master/Efek} \\
+Pemain & KontrolPemain, PemicuBunyi &
+  Pemicu Bunyi: komponen \code{PemicuBunyi}; Manajer: \code{ManajerBunyi} \\
+Canvas & TampilanHud &
+  Pemicu Bunyi: komponen \code{PemicuBunyi} pada pemain \\
+Artefak1--3 & Artefak &
+  Pemicu Bunyi terisi; Partikel Ambil boleh kosong \\
+Pintu & Pintu &
+  Tidak berubah dari sesi 3; Artefak Diperlukan 3 \\
+\bottomrule
+\end{tabularx}
+}
+
+\subsection*{Tabel peristiwa dan bunyi}
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{@{}L{2.9cm} L{2.1cm} C{1.0cm} L{2.4cm} Y@{}}
+\toprule
+\textbf{Peristiwa} & \textbf{Klip} & \textbf{Jenis} & \textbf{Dipanggil oleh} &
+\textbf{Pasangan yang terlihat} \\
+\midrule
+Scene dimulai & \code{musik-gudang} & BGM &
+  \code{ManajerBunyi} & Level langsung dapat dimainkan \\
+Tombol lompat & \code{lompat} & SFX &
+  \code{KontrolPemain} & Animasi lompat dan posisi pemain naik \\
+Artefak tersentuh & \code{ambil} & SFX &
+  \code{Artefak} & Skor bertambah dan artefak lenyap \\
+Nyawa mencapai nol & \code{kalah} & SFX &
+  \code{TampilanHud} & Teks nyawa 0 dan ikon nyawa lenyap \\
+\bottomrule
+\end{tabularx}
+}
+
+\checkpoint{04}{\raggedright Folder checkpoint memuat
+\file{Scripts/KontrolPemain.cs}, \file{Scripts/Artefak.cs},
+\file{Scripts/Pintu.cs}, \file{Scripts/AnimasiPemain.cs},
+\file{Scripts/TampilanHud.cs}, \file{Scripts/ManajerBunyi.cs},
+\file{Scripts/PemicuBunyi.cs}, dan \file{scene.md}. Scene dan berkas bunyi
+tidak disertakan sebagai berkas biner; susunlah mengikuti tabel di atas.}
+
+% ---------------------------------------------------------
+\bagian{Kesalahan Umum}
+
+\begin{galatbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.35em]
+  \item \textbf{Tidak ada bunyi sama sekali.}
+        Gejala: scene berjalan tanpa suara, Console bersih. Periksa
+        \menu{Volume} pada \code{AudioSource} dan pada tingkat
+        \istilah{AudioMixer} (jangan sampai $-80$ dB), \menu{Mute} pada
+        \code{AudioListener} kamera, serta klip yang belum diisi. Periksa juga
+        \menu{Output} yang menunjuk tingkat senyap.
+  \item \textbf{Musik dan efek suara saling memotong.}
+        Gejala: musik terputus ketika pemain melompat, atau dua efek suara
+        berdekatan saling memotong. Periksa jumlah \code{AudioSource}: musik
+        dan efek suara harus memakai sumber berbeda. Periksa pula
+        pemanggilannya: gunakan \code{PlayOneShot} untuk efek suara, bukan
+        \code{Play}, dan beri \menu{Variasi Nada} nilai bukan nol.
+  \item \textbf{Bunyi lompat berbunyi berulang selama tombol ditahan.}
+        Gejala: bunyi berbunyi setiap bingkai. Periksa bahwa panggilan berada
+        di dalam \code{Input.GetButtonDown}, bukan di luar blok itu atau pada
+        \code{FixedUpdate} berdasarkan keadaan tombol.
+  \item \textbf{Bunyi terdengar terlambat.}
+        Gejala: bunyi muncul beberapa saat setelah lompatan. Periksa tempat
+        pemanggilan: bunyi harus dipanggil di \code{Update} pada peristiwa
+        masukan, bukan di \code{FixedUpdate}. Periksa pula
+        \menu{Load Type} klip pendek; \menu{Streaming} pada efek suara
+        menambah penundaan.
+  \item \textbf{Bunyi kalah tidak pernah terdengar.}
+        Gejala: nyawa habis tetapi musik tetap berjalan. Periksa rujukan
+        \menu{Pemicu Bunyi} pada \code{Canvas}, lalu uji melalui menu konteks
+        \menu{Uji kurangi satu nyawa} pada komponen \code{TampilanHud}.
+        Bila Console menampilkan \code{NullReferenceException}, periksa pula
+        rujukan \menu{Manajer} pada \code{PemicuBunyi} dan \menu{Music Source}
+        pada \code{ManajerBunyi}.
+\end{itemize}
+\end{galatbox}
+
+% ---------------------------------------------------------
+\bagian{Lembar Kerja}
+
+Isi tabel berikut, lalu simpan sebagai bagian dari catatan praktikum Anda.
+
+{\small
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\linewidth}{@{}C{0.8cm} L{6.2cm} Y@{}}
+\toprule
+\textbf{No} & \textbf{Hasil yang dicatat} & \textbf{Keterangan Anda} \\
+\midrule
+1 & Nama, sumber, dan lisensi setiap berkas bunyi & \\[0.5cm]
+2 & Pengaturan impor setiap berkas (Load Type, Compression) & \\[0.5cm]
+3 & Nilai Volume Musik, Volume Efek, dan Variasi Nada yang dipakai & \\[0.5cm]
+4 & Volume tingkat Musik dan Efek pada AudioMixer & \\[0.5cm]
+5 & Hasil percobaan Volume Musik 0.15 dan 0.7 & \\[0.9cm]
+6 & Hasil percobaan Variasi Nada 0 dan 0.25 & \\[0.9cm]
+7 & Satu masalah bunyi yang muncul dan cara memperbaikinya & \\[0.9cm]
+\bottomrule
+\end{tabularx}
+}
+
+% ---------------------------------------------------------
+\bagian{Checklist Sesi}
+
+\begin{checklistbox}
+\begin{checklist}
+  \item Saya dapat menunjukkan \istilah{AudioClip} yang terimpor dengan
+        pengaturan \menu{Load Type} yang sesuai untuk musik dan efek suara.
+  \item Saya dapat menjelaskan perbedaan \istilah{AudioClip} dan
+        \istilah{AudioSource}, serta alasan keduanya dipisahkan.
+  \item Saya dapat menunjukkan dua \istilah{AudioSource} terpisah untuk
+        \istilah{BGM} dan \istilah{SFX}, beserta keluaran masing-masing pada
+        \istilah{AudioMixer}.
+  \item Saya dapat menunjukkan bunyi lompat, bunyi mengambil artefak, dan bunyi
+        kalah yang terdengar pada peristiwanya.
+  \item Saya dapat menjelaskan mengapa bunyi dipanggil di \code{Update} dan
+        bukan di \code{FixedUpdate}.
+  \item Saya dapat menyeimbangkan musik dan efek suara dengan mengubah tingkat
+        pada \istilah{AudioMixer}, bukan dengan menaikkan setiap berkas.
+\end{checklist}
+\end{checklistbox}
+
+% ---------------------------------------------------------
+\bagian{Pengait ke Sesi Berikutnya}
+
+Level kini terlihat dan terdengar lengkap. Yang belum dikerjakan adalah
+memeriksa apakah seluruh bagian itu benar-benar tersambung, dan apakah pemain
+lain dapat menyelesaikannya tanpa penjelasan Anda. Sesi 5 menuntun penyusunan
+\istilah{checklist} fungsional, pelaksanaan \istilah{playtest} antar kelompok,
+pencatatan \istilah{log bug}, dan presentasi demo. Di sanalah bunyi yang terlalu
+pelan atau datang terlambat akan ditemukan oleh orang lain, bukan oleh Anda
+sendiri.
