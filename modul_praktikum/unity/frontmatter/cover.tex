@@ -1,0 +1,96 @@
+% =========================================================
+%  frontmatter/cover.tex
+%  Sampul modul Unity.
+% =========================================================
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[ubNavy] (current page.north west) rectangle
+    ([xshift=7.6cm]current page.south west);
+  \fill[ubAccent] ([xshift=7.6cm]current page.north west) rectangle
+    ([xshift=7.72cm]current page.south west);
+
+  \node[anchor=north west, text width=6.0cm, align=left, inner sep=0pt]
+    at ([xshift=1.15cm,yshift=-1.5cm]current page.north west) {%
+      \raggedright
+      {\color{white}\sffamily\bfseries\fontsize{13}{16}\selectfont
+       \NamaPT}\\[6pt]
+      {\color{ubHead}\sffamily\fontsize{9.4}{12}\selectfont
+       \NamaFakultas}\\[2pt]
+      {\color{ubHead}\sffamily\fontsize{9.4}{12}\selectfont
+       Program Studi \NamaProdi}\\[9pt]
+      {\color{ubAccent}\rule{5.8cm}{0.8pt}}%
+    };
+
+  \node[anchor=north west, text width=6.0cm, align=left, inner sep=0pt]
+    at ([xshift=1.15cm,yshift=-6.0cm]current page.north west) {%
+      \raggedright
+      {\color{ubAccent}\sffamily\bfseries\fontsize{8}{10}\selectfont MATA KULIAH}\\[3pt]
+      {\color{white}\sffamily\bfseries\fontsize{11.6}{14}\selectfont
+       \NamaMK}\\[4pt]
+      {\color{ubHead}\sffamily\fontsize{9.3}{11.5}\selectfont
+       \KodeMK\ \textperiodcentered\ 3 SKS}\\[1pt]
+      {\color{ubHead}\sffamily\fontsize{9.3}{11.5}\selectfont
+       2 SKS teori, 1 SKS praktikum}\\[9pt]
+      {\color{ubHead}\sffamily\fontsize{9.3}{11.5}\selectfont
+       Semester \SemesterMK\ \TahunAkademik}\\[9pt]
+      {\color{ubHead}\sffamily\fontsize{9.3}{11.5}\selectfont
+       Prasyarat: \MataKuliahPrasyarat}\\[14pt]
+      {\color{ubAccent}\sffamily\bfseries\fontsize{8}{10}\selectfont DOSEN PENGAMPU}\\[3pt]
+      {\color{white}\sffamily\fontsize{10.2}{12.5}\selectfont \NamaDosen}%
+    };
+
+  \node[anchor=south west, inner sep=0pt]
+    at ([xshift=1.15cm,yshift=1.25cm]current page.south west)
+    {\color{ubHead}\sffamily\fontsize{8.4}{10}\selectfont
+     Edisi Pertama \textperiodcentered\ 2026};
+
+  \node[anchor=north west, text width=11.4cm, align=left, inner sep=0pt]
+    at ([xshift=8.85cm,yshift=-2.9cm]current page.north west) {%
+      \raggedright
+      {\color{ubAccent}\sffamily\bfseries\fontsize{9.2}{11}\selectfont
+       MODUL PRAKTIKUM\ \ \textperiodcentered\ \ UNITY}\\[11pt]
+      {\color{ubNavy}\sffamily\bfseries\fontsize{40}{44}\selectfont
+       Gudang\\[1pt] Artefak}%
+    };
+
+  \node[anchor=north west, text width=10.9cm, align=left, inner sep=0pt]
+    at ([xshift=8.85cm,yshift=-8.35cm]current page.north west) {%
+      \raggedright\hyphenpenalty=10000
+      {\color{ubMuted}\sffamily\fontsize{11.6}{15}\selectfont
+       Level Rak versi \istilah{game engine}: lantai dan rak dari
+       \istilah{Tilemap}, pemain dengan \istilah{Rigidbody2D}, lalu animasi,
+       HUD, dan audio.}%
+    };
+
+  \foreach \i in {0,1,2,3}{
+    \fill[ubAccent!85]
+      ([xshift=8.95cm+\i*0.95cm,yshift=-10.9cm]current page.north west)
+      ++(0,0.26) -- ++(0.26,-0.26) -- ++(-0.26,-0.26) -- ++(-0.26,0.26) -- cycle;
+  }
+
+  \node[anchor=north west, text width=11.2cm, align=left, inner sep=0pt]
+    at ([xshift=8.85cm,yshift=-12.2cm]current page.north west) {%
+      \renewcommand{\arraystretch}{1.6}%
+      \raggedright\hyphenpenalty=10000
+      \begin{tabular}{@{}>{\color{ubMuted}\sffamily\fontsize{9.2}{11}\selectfont}p{3.6cm}
+                        >{\raggedright\arraybackslash\color{ubText}\sffamily\fontsize{9.8}{12}\selectfont}p{7.2cm}@{}}
+        Capaian modul   & \ModulCPMK \\
+        Sub-CPMK        & \ModulSubCPMK \\
+        Jumlah sesi     & \ModulSesi\ sesi, 100--150 menit per sesi \\
+        Perkakas        & Unity Hub, Unity LTS, editor kode bawaan \\
+        Keluaran        & Satu project 2D yang dapat dimainkan \\
+      \end{tabular}%
+    };
+
+  \node[anchor=south west, text width=11.2cm, align=left, inner sep=0pt]
+    at ([xshift=8.85cm,yshift=1.9cm]current page.south west) {%
+      \raggedright
+      {\color{ubMuted}\sffamily\fontsize{8.8}{11}\selectfont
+       Modul ini dimulai sesudah UTS dan dipakai pada kegiatan praktikum
+       mata kuliah \NamaMK.\\[2pt]
+       Konsep dijelaskan di buku ajar; modul ini menuntun membangun
+       permainannya.}%
+    };
+\end{tikzpicture}
+\end{titlepage}

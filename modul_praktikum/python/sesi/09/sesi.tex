@@ -1,0 +1,362 @@
+% =========================================================
+%  sesi/09/sesi.tex
+%  Sesi 9 — Integrasi FSM dan A*, Dua Level Berurutan
+% =========================================================
+
+\sesi{09}{Integrasi FSM dan A*, Dua Level Berurutan}{2.4}{150 menit}
+
+Minggu 9 adalah pertemuan penutup blok Python. Dua lapisan yang Anda bangun
+secara terpisah akhirnya bekerja bersama: mesin keadaan memutuskan apa yang
+harus dilakukan penjaga, dan \istilah{pathfinding} menentukan bagaimana
+melakukannya. Pemisahan itu penting. Mesin keadaan tidak perlu tahu bentuk
+peta, dan pencarian jalur tidak perlu tahu mengapa penjaga ingin bergerak.
+
+Sesi ini juga menyatukan kedua level menjadi satu permainan yang berjalan
+tanpa dimulai ulang. Pemain mengumpulkan enam artefak di Level Rak, melewati
+pintu, lalu masuk ke Level Lorong tempat penjaga mengejar. Skor dan nyawa
+dibawa dari level pertama ke level kedua. Di ujung sesi, tiga peta Lorong
+dipakai sebagai tiga \istilah{skenario uji}, dan hasil pengamatannya menjadi
+bahan laporan \istilah{playtest} Mini Proyek AI yang dikumpulkan minggu ini.
+
+% ---------------------------------------------------------
+\bagian{Tujuan Sesi}
+
+\begin{tujuanbox}
+Setelah menuntaskan sesi ini, Anda dapat menunjukkan:
+\begin{enumerate}[leftmargin=1.5em, itemsep=0.2em]
+  \item satu kali jalan permainan dari Level Rak sampai Level Lorong tanpa
+        memulai ulang program;
+  \item penjaga yang memanggil A* hanya ketika berada pada keadaan mengejar,
+        sedangkan keadaan berdiam dan berpatroli tidak memanggilnya;
+  \item \istilah{repath} berkala dengan selang 0,3 detik yang dapat Anda
+        tunjukkan pada kode dan hitung pada saat berjalan;
+  \item tiga skenario uji yang berjalan dengan pilihan \code{--scenario 1},
+        \code{2}, dan \code{3}, beserta catatan waktu dan kesan perilakunya;
+  \item perhitungan batas performa penjaga dengan angka 36 piksel, radius
+        7 petak, kecepatan patroli 90, dan kecepatan mengejar 165.
+\end{enumerate}
+\end{tujuanbox}
+
+% ---------------------------------------------------------
+\bagian{Prasyarat}
+
+\begin{prasyaratbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.25em]
+  \item Checkpoint sesi 8 berjalan: penjaga menemukan jalan memutar dengan
+        A* dan jalurnya tergambar di layar.
+  \item Checkpoint sesi 7 berjalan: mesin keadaan penjaga berpindah antara
+        \code{idle}, \code{patrol}, dan \code{chase}.
+  \item Anda dapat menjalankan program dengan pilihan baris perintah dan
+        membaca keluaran \code{argparse}.
+  \item Bab XI buku ajar sudah dibaca, khususnya bagian tentang penggabungan
+        lapisan, hitung ulang berkala, dan penilaian mutu perilaku.
+  \item Kelompok Mini Proyek AI sudah terbentuk, beranggotakan 2--3 mahasiswa.
+\end{itemize}
+\end{prasyaratbox}
+
+% ---------------------------------------------------------
+\bagian{Peta Kemampuan}
+
+\petasesi
+  {Pencarian A* berjalan pada satu peta Lorong; Level Rak berakhir sendiri
+   dan skor belum dibawa ke level berikutnya.}
+  {Keadaan mengejar memanggil A*, \istilah{repath} berkala 0,3 detik,
+   peralihan Level Rak ke Level Lorong, dan tiga peta skenario uji.}
+  {Mini Proyek AI, Ujian Tengah Semester, dan peralihan ke Unity pada
+   pertemuan berikutnya.}
+
+% ---------------------------------------------------------
+\bagian{Konsep yang Dipakai}
+
+\subsection*{Keputusan dan rute adalah dua pekerjaan}
+
+\code{GuardBrain} menghasilkan keadaan, bukan gerak. Ketika jarak pemain
+masuk radius 7 petak, yaitu 252 piksel, keadaan berubah menjadi
+\code{chase}. Perubahan itu hanya menyatakan niat. Pelaksanaannya ada di
+\code{Game}: keadaan \code{chase} memanggil \code{_chase}, keadaan
+\code{patrol} memanggil \code{_patrol}, dan keadaan \code{idle} tidak
+memanggil keduanya.
+
+Pemisahan itu menentukan tempat A* dipakai: hanya pada keadaan mengejar.
+Saat berpatroli, penjaga menuju waypoint secara langsung karena rutenya
+memang bebas halangan; saat berdiam, tidak ada tujuan yang perlu dicari.
+Batas itu menghemat perhitungan dan menjaga perilaku tetap mudah dibaca.
+
+\subsection*{Repath berkala}
+
+A* setiap bingkai itu boros: pada 60 bingkai per detik, satu penjaga
+memicu 60 pencarian padahal petak pemain belum tentu berubah. Hasilnya
+karena itu disimpan dan dipakai sampai salah satu dari dua keadaan berikut
+terjadi.
+
+\begin{enumerate}[leftmargin=1.5em, itemsep=0.2em]
+  \item \textbf{Pewaktu habis.} \code{repath_timer} dikurangi
+        \code{delta_seconds}; ketika mencapai nol, rute dihitung ulang dan
+        pewaktu diisi kembali dengan \code{REPATH_SECONDS = 0.3}. Pada 60
+        bingkai per detik, 0,3 detik berarti sekitar 18 bingkai.
+  \item \textbf{Jalur kosong.} Jalur yang sudah habis dilalui tidak dapat
+        dipakai lagi. Tanpa syarat ini, penjaga berhenti di ujung jalur
+        walaupun pemain masih terlihat.
+\end{enumerate}
+
+Selama selang itu, rute masih mengarah ke posisi pemain beberapa saat lalu,
+sehingga penjaga sempat salah arah. Itulah pertukaran yang harus diterima;
+besarnya diatur oleh satu angka.
+
+\subsection*{Menempuh jalur}
+
+Jalur berupa petak, sedangkan penjaga bergerak dalam piksel per detik.
+\code{Guard.follow} menuju pusat petak berikutnya dengan vektor
+ternormalisasi dikali kecepatan 165. Langkah dibatasi agar tidak melampaui
+tujuan; bila jaraknya tidak lebih dari \code{WAYPOINT_REACHED}, yaitu 6
+piksel, \code{path_index} dinaikkan.
+
+\subsection*{Batas performa}
+
+Beban pencarian berlipat ketika salah satu faktornya naik: jumlah penjaga,
+pencarian per detik, dan petak yang diperiksa sekali pencarian. Dengan satu
+penjaga, selang 0,3 detik, dan sekitar 280 petak, bebannya kira-kira 900
+petak per detik. Bila dihitung setiap bingkai, angkanya sekitar 16.800.
+Selisih itu terasa sebagai laju bingkai yang turun.
+
+\subsection*{Dua level dalam satu program}
+
+Kedua level memakai kamus berbeda, tetapi berbagi skor, nyawa, dan kelas
+\code{Game}. Di \code{_update_rak}, pintu yang terbuka dan disentuh pemain
+memanggil \code{_load_lorong}. Fungsi itu menyiapkan peta, pemain, penjaga,
+dan mesin keadaan baru tanpa mengembalikan skor atau nyawa. Karena masih
+dalam satu siklus, jendela tidak pernah tertutup.
+
+\subsection*{Tiga skenario uji}
+
+Peta 1 adalah lorong terbuka dengan dua pasang pilar; jalur lurus hampir
+selalu cukup, sehingga hasilnya menjadi pembanding. Peta 2 adalah lorong
+berbelok bertingkat yang menuntut jalan memutar. Peta 3 memuat bangunan
+besar di tengah, dan di sanalah manfaat A* paling jelas terlihat.
+
+% ---------------------------------------------------------
+\bagian{Tutorial}
+
+Kerjakan langkah berikut berurutan. Setiap langkah adalah satu tindakan yang
+selesai; jalankan program setiap kali satu bagian baru selesai ditulis.
+
+\begin{langkah}
+  \item \textbf{Siapkan folder kerja.} Salin folder proyek sesi 8 menjadi
+        folder sesi 9. Jalankan \code{python main.py --level 2} untuk
+        memastikan checkpoint lama masih bekerja sebelum ada yang diubah.
+
+  \item \textbf{Tambahkan selang hitung ulang.} Pada \file{settings.py},
+        tambahkan \code{REPATH_SECONDS = 0.3} di dekat pengaturan penjaga.
+        Pastikan pula \code{CELL = 36}, \code{GUARD_RADIUS_CELLS = 7.0},
+        \code{GUARD_PATROL_SPEED = 90.0}, dan
+        \code{GUARD_CHASE_SPEED = 165.0} masih bernilai sama.
+
+  \item \textbf{Tambahkan dua peta.} Pada \file{levels.py}, tambahkan
+        skenario 2 dan 3 ke dalam kamus \code{SCENARIOS}. Setiap peta tetap
+        berukuran 24 kolom dan 14 baris, memuat satu \code{S} dan satu
+        \code{E}, serta menggunakan tanda \texttt{\#} untuk dinding.
+        Tambahkan pula titik patroli dan titik awal penjaga untuk kedua peta
+        itu pada \code{PATROL_POINTS} dan \code{GUARD_START}.
+
+  \item \textbf{Ubah pembangun level.} Ubah \code{build_lorong} agar menerima
+        nomor skenario, memilih baris peta yang sesuai, dan mengembalikan
+        nama level yang memuat nomor itu. Tanpa nomor, ketiga peta akan
+        saling menimpa.
+
+  \item \textbf{Tambahkan pilihan skenario.} Pada \file{main.py}, tambahkan
+        argumen \code{--scenario} dengan pilihan 1, 2, dan 3 serta nilai
+        bawaan 1. Teruskan nilai itu kepada \code{Game} melalui
+        \code{args}.
+
+  \item \textbf{Muat skenario yang diminta.} Pada \code{_load_lorong},
+        panggil \code{build_lorong(self.args.scenario)}. Periksa bahwa
+        pemain, penjaga, dan titik patroli semuanya berasal dari kamus level
+        yang baru, bukan dari peta sebelumnya.
+
+  \item \textbf{Tulis hitung ulang berkala.} Ubah \code{_chase} agar
+        mengurangi \code{repath_timer} dengan \code{delta_seconds}, menghitung
+        petak pemain, lalu memanggil \code{find_path} hanya bila pewaktu
+        sudah habis atau jalur kosong. Sesudah menghitung, isi kembali
+        pewaktu dengan \code{S.REPATH_SECONDS}.
+
+  \item \textbf{Sambungkan kedua level.} Pada \code{_update_rak}, ganti
+        keadaan menang dengan pemanggilan \code{_load_lorong} ketika pintu
+        terbuka dan pemain menyentuhnya. Pastikan skor, nyawa, dan jumlah
+        artefak yang tersisa tidak diatur ulang di dalam fungsi itu.
+
+  \item \textbf{Periksa penjaga yang tertangkap.} Ketika pemain tertangkap,
+        penjaga harus kembali ke titik awalnya, mesin keadaan dibuat baru,
+        dan \code{repath_timer} dinolkan. Tanpa itu, penjaga dapat langsung
+        berada pada keadaan mengejar dengan jalur lama.
+
+  \item \textbf{Jalankan alur lengkap.} Jalankan \code{python main.py},
+        kumpulkan keenam artefak, lewati pintu, lalu masuk ke Lorong. Mainkan
+        sekali lagi dengan \code{python main.py --level 2 --scenario 2} dan
+        \code{--scenario 3} untuk memastikan ketiga peta dapat dimuat.
+\end{langkah}
+
+\begin{ujibox}
+Setelah Langkah 10, periksa lima hal berikut.
+\begin{itemize}[leftmargin=1.4em, itemsep=0.2em]
+  \item Peralihan terjadi tepat ketika pemain menyentuh pintu yang sudah
+        terbuka. Bila pintu terbuka tetapi peralihan tidak terjadi, periksa
+        syarat \code{door.open} dan \code{colliderect}.
+  \item Skor dan nyawa tidak kembali ke nilai awal setelah pindah level.
+        Bila kembali, periksa apakah \code{reset()} ikut dipanggil.
+  \item Penjaga hanya memanggil A* ketika mengejar. Bila jalur dihitung saat
+        berpatroli, periksa cabang keadaan pada \code{_update_lorong}.
+  \item Rute berubah kira-kira setiap 0,3 detik selama pemain bergerak.
+        Bila berubah setiap bingkai, periksa nilai \code{REPATH_SECONDS}.
+  \item Ketiga skenario dapat dimuat dan masing-masing menampilkan peta yang
+        berbeda. Bila peta sama, periksa kunci kamus dan nilai
+        \code{args.scenario}.
+\end{itemize}
+\end{ujibox}
+
+% ---------------------------------------------------------
+\bagian{Kode Sesi Ini}
+
+Potongan berikut adalah bagian pokok checkpoint sesi 9. Berkas lengkapnya,
+termasuk kelas pemain dan level Rak yang tidak berubah, tersedia pada folder
+\file{code/sesi-09}. Bandingkan kode Anda dengan daftar ini setelah program
+berjalan, bukan sebelumnya.
+
+\tampilkodebaris[Python]{code/sesi-09/gudang_artefak/levels.py}{67}{99}
+  {Peta skenario 2 dan 3 yang dipakai sebagai skenario uji}
+
+\tampilkodebaris[Python]{code/sesi-09/gudang_artefak/levels.py}{101}{134}
+  {Titik patroli, titik awal penjaga, dan pembangun level}
+
+\tampilkodebaris[Python]{code/sesi-09/gudang_artefak/game.py}{105}{126}
+  {Level Rak dan peralihan ke Level Lorong}
+
+\tampilkodebaris[Python]{code/sesi-09/gudang_artefak/game.py}{165}{178}
+  {Keadaan mengejar memanggil A* dan menghitung ulang setiap 0,3 detik}
+
+\checkpoint{09}{Program pada folder itu dapat dijalankan dengan
+\code{python main.py}; permainan berpindah dari Level Rak ke Level Lorong
+tanpa dimulai ulang, dan ketiga skenario dapat dibuka dengan
+\code{--scenario 1}, \code{2}, atau \code{3}.}
+
+% ---------------------------------------------------------
+\bagian{Kesalahan Umum}
+
+\begin{galatbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.35em]
+  \item \textbf{Laju bingkai jatuh ketika penjaga mengejar.}
+        Gejala: gerak menjadi tersendat dan FPS turun tajam. Penyebabnya,
+        A* dijalankan setiap bingkai karena \code{repath_timer} tidak pernah
+        diisi kembali atau \code{REPATH_SECONDS} bernilai nol. Periksa baris
+        \code{self.repath_timer = S.REPATH_SECONDS} sesudah pencarian.
+  \item \textbf{Penjaga berhenti di ujung jalur.}
+        Gejala: penjaga diam walaupun pemain masih terlihat. Penyebabnya,
+        jalur sudah habis tetapi pencarian ulang belum waktunya. Periksa
+        syarat \code{or not self.path} pada \code{_chase}.
+  \item \textbf{Peralihan level tidak pernah terjadi.}
+        Gejala: pintu terbuka, pemain menyentuhnya, tetapi level tetap.
+        Penyebabnya, pemeriksaan pintu berada di cabang yang tidak dieksekusi
+        atau \code{_load_lorong} dipanggil sebelum pintu terbuka. Periksa
+        urutan pada \code{_update_rak}.
+  \item \textbf{Skor kembali nol setelah pindah level.}
+        Gejala: HUD menunjukkan skor 0 di Lorong. Penyebabnya,
+        \code{_load_lorong} memanggil \code{reset} atau mengatur ulang
+        \code{self.score}. Periksa isi fungsi itu.
+  \item \textbf{\code{KeyError: 3} ketika memuat skenario.}
+        Gejala: program berhenti sebelum jendela menampilkan peta.
+        Penyebabnya, kunci 3 belum ada pada \code{SCENARIOS},
+        \code{PATROL_POINTS}, atau \code{GUARD_START}. Periksa ketiga kamus
+        itu dan ejaan nomornya.
+  \item \textbf{Garis jalur tertinggal setelah penjaga berhenti mengejar.}
+        Gejala: garis kuning masih tampak padahal keadaan sudah berpatroli.
+        Penyebabnya, \code{self.path} tidak dikosongkan ketika keadaan
+        berubah. Periksa cabang \code{else} pada \code{_update_lorong} atau
+        syarat penggambaran.
+\end{itemize}
+\end{galatbox}
+
+% ---------------------------------------------------------
+\bagian{Lembar Kerja}
+
+Isi tabel pengamatan berikut pada catatan praktikum Anda. Mainkan setiap
+skenario dengan urutan pemain yang sama agar hasilnya dapat dibandingkan.
+Kolom terakhir memuat kesan Anda, bukan hanya angka.
+
+{\small
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\linewidth}{@{}L{2.6cm} C{2.2cm} C{2.0cm} C{1.8cm} Y@{}}
+\toprule
+\textbf{Skenario} & \textbf{Waktu sampai tertangkap (detik)} &
+\textbf{Banyak \istilah{repath}} & \textbf{FPS rata-rata} &
+\textbf{Kesan mutu perilaku} \\
+\midrule
+1. Lorong terbuka & & & & \\[1.0cm]
+2. Lorong berbelok & & & & \\[1.0cm]
+3. Halangan memutar & & & & \\[1.0cm]
+\bottomrule
+\end{tabularx}
+}
+
+\subsection*{Ketentuan Mini Proyek AI}
+
+Mini Proyek AI dikumpulkan dan dipresentasikan pada minggu 9. Ketentuan
+berikut diringkas dari RPS dan Bab XI agar dapat Anda periksa satu per satu.
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{@{}L{2.7cm} Y@{}}
+\toprule
+\textbf{Aspek} & \textbf{Ketentuan} \\
+\midrule
+Kelompok & 2--3 mahasiswa; setiap anggota memahami bagiannya. \\
+NPC & FSM yang sekurang-kurangnya memuat \istilah{idle},
+\istilah{patrol}, dan \istilah{chase}. \\
+Pencarian jalur & A* hanya pada keadaan \code{chase}, dengan peta
+berhalangan, \istilah{heuristik}, dan \istilah{antrean prioritas}. \\
+Skenario uji & Tiga: lorong terbuka, lorong berbelok, dan halangan yang
+memaksa jalur memutar; sertakan angka dan kesan. \\
+Laporan \istilah{playtest} & 2--3 halaman; tiga skenario, angka pengukuran,
+kesan mutu, perbaikan, dan kendala. \\
+Demonstrasi & 10 menit pada minggu 9, dilanjutkan tanya jawab. \\
+Keluaran & Kode Python/Pygame, GDD singkat, dan laporan \istilah{playtest}. \\
+\bottomrule
+\end{tabularx}
+}
+
+Penilaiannya memakai bobot berikut: implementasi FSM 25 persen, implementasi
+pencarian jalur 25 persen, penggabungan keduanya 20 persen, pengujian beserta
+laporan 20 persen, dan presentasi 10 persen. Penggabungan dan pengujian
+bersama-sama menyumbang 40 persen, lebih besar daripada komponen kode mana
+pun.
+
+% ---------------------------------------------------------
+\bagian{Checklist Sesi}
+
+\begin{checklistbox}
+\begin{checklist}
+  \item Saya dapat menunjukkan peralihan dari Level Rak ke Level Lorong dalam
+        satu kali jalan tanpa memulai ulang program.
+  \item Saya dapat menjelaskan pekerjaan lapisan keputusan dan lapisan
+        navigasi, serta mengapa keduanya dipisahkan.
+  \item Saya dapat menunjukkan bahwa A* hanya dipanggil pada keadaan
+        mengejar.
+  \item Saya dapat menjelaskan dua sebab pencarian diulang: pewaktu 0,3 detik
+        habis dan jalur sudah kosong.
+  \item Saya dapat menghitung perkiraan beban pencarian per detik untuk satu
+        penjaga pada selang 0,3 detik.
+  \item Saya telah menjalankan ketiga skenario uji dan mencatat angka serta
+        kesan perilakunya.
+  \item Saya dapat menyebutkan ketentuan Mini Proyek AI dan memeriksa
+        kelengkapan kelompok saya.
+\end{checklist}
+\end{checklistbox}
+
+% ---------------------------------------------------------
+\bagian{Pengait ke Pertemuan Berikutnya}
+
+Blok Python berakhir di sini. Seluruh perkakas yang Anda bangun sejak sesi 1
+--- siklus permainan, vektor, fisika, sprite, mesin keadaan, dan pencarian
+jalur --- tetap berlaku, tetapi letak tanggung jawabnya akan berpindah.
+Minggu 10 adalah Ujian Tengah Semester atas Materi 1--9. Sesudah itu,
+pekerjaan berlanjut di Unity: siklus, fisika, tabrakan, dan penyajian
+diserahkan kepada mesin, sedangkan Anda memusatkan perhatian pada desain
+level, pengalaman bermain, dan penilaian mutu hasilnya.

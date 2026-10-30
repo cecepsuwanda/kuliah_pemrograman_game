@@ -1,0 +1,24 @@
+% figures/diagram-keadaan.tikz
+% Tiga keadaan penjaga dan empat perpindahan yang dipakai checkpoint.
+\begin{tikzpicture}[
+  keadaan/.style={rectangle, rounded corners=8pt, draw=ubNavy, thick,
+    fill=ubSoft, align=center, text width=2.2cm, minimum height=0.95cm,
+    font=\small\bfseries},
+  serang/.style={keadaan, draw=ubRed, fill=ubRedBg},
+  panah/.style={-{Stealth[length=2.4mm]}, thick, draw=ubAccent},
+  label/.style={font=\scriptsize, fill=white, inner sep=1.5pt}
+]
+  \node[keadaan] (idle) at (0,0) {berdiam};
+  \node[keadaan] (patrol) at (5.0,0) {berpatroli};
+  \node[serang] (chase) at (2.5,-2.5) {mengejar};
+
+  \draw[panah] (idle) to[bend left=12] node[label, above] {pewaktu habis} (patrol);
+
+  \draw[panah] (patrol) to[bend left=10]
+    node[label, right=2pt, midway] {jarak $\le$ radius} (chase);
+  \draw[panah] (chase) to[bend left=10]
+    node[label, left=2pt, midway] {hilang $>$ 1 detik} (patrol);
+
+  \draw[panah, dashed] (idle) to[bend right=10]
+    node[label, left=2pt, midway] {pemain terlihat} (chase);
+\end{tikzpicture}

@@ -1,0 +1,339 @@
+% =========================================================
+%  sesi/04/sesi.tex
+%  Sesi 4 — Gravitasi, lompatan, dan pantulan
+% =========================================================
+
+\sesi{04}{Gravitasi, Lompatan, dan Pantulan}{1.3}{130 menit}
+
+Sesi ini adalah pertemuan minggu ke-4. Sejak sesi sebelumnya pemain sudah
+dapat berjalan ke kiri dan ke kanan dengan kecepatan 260 piksel per detik,
+tetapi geraknya hanya mendatar: tidak ada yang menariknya ke bawah, dan tidak
+ada yang menghalanginya selain tepi jendela. Gudang Artefak masih terasa
+seperti lorong, bukan gudang.
+
+Pada sesi ini Anda menambahkan arah tegak. Pemain jatuh karena
+\istilah{gravitasi}, melompat dengan \istilah{jump impulse} ketika kakinya
+menyentuh lantai atau rak, dan memantul ketika membentur dinding. Lantai serta
+rak berubah dari gambar menjadi batas yang benar-benar dihitung, sehingga
+pemain dapat berdiri di atasnya.
+
+Seluruh perilaku itu dihasilkan oleh tiga baris perhitungan yang sama untuk
+setiap benda. Angka yang dipakai tetap: gravitasi 1900 piksel per detik
+kuadrat, kecepatan lompatan 720 piksel per detik, \istilah{koefisien
+restitusi} dinding 0,8, dan ambang pantulan 60 piksel per detik. Sesudah sesi
+ini, kerangka gerak pemain sudah lengkap untuk sebuah permainan platform
+sederhana.
+
+% ---------------------------------------------------------
+\bagian{Tujuan Sesi}
+
+\begin{tujuanbox}
+Setelah menuntaskan sesi ini, Anda dapat menunjukkan:
+\begin{enumerate}[leftmargin=1.5em, itemsep=0.2em]
+  \item pemain yang jatuh dengan percepatan 1900 piksel per detik kuadrat dan
+        berhenti tepat di atas lantai atau rak;
+  \item lompatan setinggi sekitar 136 piksel yang hanya terjadi ketika pemain
+        menyentuh permukaan, dan tidak berulang walaupun tombol ditahan;
+  \item pantulan dinding dengan koefisien restitusi 0,8 yang berhenti sendiri
+        setelah kecepatannya di bawah 60 piksel per detik;
+  \item penjelasan urutan pembaruan \istilah{integrasi Euler}: kecepatan
+        diperbarui lebih dahulu, posisi menyusul;
+  \item pembacaan nilai \code{GRAVITY}, \code{JUMP_SPEED},
+        \code{WALL_RESTITUTION}, dan \code{MIN_BOUNCE_SPEED} pada
+        \file{settings.py}, beserta akibat yang muncul ketika salah satunya
+        diubah.
+\end{enumerate}
+\end{tujuanbox}
+
+% ---------------------------------------------------------
+\bagian{Prasyarat}
+
+\begin{prasyaratbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.25em]
+  \item Anda sudah menjalankan checkpoint sesi 3: pemain bergerak mendatar
+        mengikuti tombol, dan posisinya disimpan sebagai \code{Vector2}
+        pecahan.
+  \item Anda memahami pembagian tugas antara \code{position} yang bertipe
+        pecahan dan \code{rect} yang bertipe bilangan bulat.
+  \item Anda dapat menjelaskan mengapa kecepatan dikalikan
+        \code{delta_seconds} sebelum ditambahkan ke posisi.
+  \item Anda dapat menjalankan program dengan pilihan \code{--frames} untuk
+        menghentikannya secara otomatis.
+\end{itemize}
+\end{prasyaratbox}
+
+% ---------------------------------------------------------
+\bagian{Peta Kemampuan}
+
+\petasesi
+  {Pemain bergerak mendatar dengan kecepatan tetap; posisi pecahan
+   diselaraskan dengan \code{rect}.}
+  {Gravitasi 1900, lompatan 720, pantulan dinding 0,8, ambang 60, serta lantai
+   dan rak sebagai batas gerak.}
+  {Kelas \code{Sprite} (\istilah{sprite}), wadah \code{Group}
+   (\istilah{group}), dan \istilah{collision} dengan \istilah{AABB} pada
+   sesi 5.}
+
+% ---------------------------------------------------------
+\bagian{Konsep yang Dipakai}
+
+\subsection*{Percepatan mengubah kecepatan, kecepatan mengubah posisi}
+
+Sampai sesi 3, kecepatan pemain hanya berubah ketika tombol ditekan atau
+dilepas. Pada sesi ini kecepatan tegak berubah dengan sendirinya setiap
+bingkai. Perubahan itu dihitung dengan dua langkah yang berurutan:
+
+\[
+v \leftarrow v + a\,\Delta t
+\qquad\text{lalu}\qquad
+p \leftarrow p + v\,\Delta t .
+\]
+
+Di sini $v$ adalah kecepatan tegak dalam piksel per detik, $a$ adalah
+percepatan gravitasi dalam piksel per detik kuadrat, $\Delta t$ adalah selang
+waktu satu bingkai dalam detik, dan $p$ adalah posisi tegak dalam piksel.
+Karena sumbu tegak layar mengarah ke bawah, gravitasi yang menarik benda ke
+bawah diberi tanda positif, sedangkan lompatan yang mengarah ke atas diberi
+tanda negatif.
+
+Urutan kedua baris itu penting dan disebut \istilah{integrasi Euler}
+semi-implisit. Posisi memakai kecepatan yang \emph{baru saja} diperbarui,
+bukan kecepatan bingkai sebelumnya. Apabila urutannya dibalik, perpindahan
+selalu tertinggal satu bingkai; pada satu bingkai selisihnya kecil, tetapi
+selama ratusan bingkai ia menumpuk dan membuat tinggi lompatan serta titik
+mendarat meleset dari perhitungan.
+
+\subsection*{Lompatan adalah impuls, bukan gaya}
+
+\istilah{Jump impulse} adalah perubahan kecepatan yang terjadi seketika.
+Karena itu nilainya \emph{diganti}, bukan ditambahkan setiap bingkai:
+\code{velocity.y = -JUMP_SPEED}. Tanda negatif membuat pemain bergerak ke
+atas. Sesudah itu gravitasi bekerja seperti biasa, memperlambat pemain sampai
+berhenti di puncak, lalu menariknya kembali ke bawah.
+
+Lompatan hanya boleh terjadi ketika \code{on_ground} bernilai benar. Tanpa
+syarat itu pemain dapat melompat di udara berkali-kali. Karena lompatan adalah
+peristiwa sekali, tombolnya dibaca dari \code{KEYDOWN}, bukan dari keadaan
+tombol yang terus benar selama tombol ditahan.
+
+\subsection*{Mendarat, memantul, dan ambang}
+
+Ketika badan pemain menyentuh permukaan, posisinya dikembalikan ke tepi
+permukaan itu lebih dahulu, baru kecepatannya diubah. Untuk dinding, arah
+gerak dibalik dan besarnya dikurangi dengan \istilah{koefisien restitusi} $e$:
+
+\[
+v' = -e\,v .
+\]
+
+Dengan $e = 0{,}8$, kecepatan sesudah pantulan tinggal 80 persen kecepatan
+datangnya. Pantulan dihentikan ketika kecepatannya sudah di bawah 60 piksel
+per detik, sebab di bawah nilai itu pantulan hanya mengangkat pemain kurang
+dari satu piksel dan tidak terlihat, tetapi tetap dihitung setiap bingkai.
+Pada sumbu tegak, pemain tidak memantul: kecepatannya langsung dinolkan agar
+mendarat dengan mantap.
+
+\subsection*{Satu sumbu pada satu waktu}
+
+Gerak mendatar dan gerak tegak diperiksa terpisah, mendatar lebih dahulu.
+Sesudah sumbu mendatar selesai dan tidak ada lagi tumpang tindih, barulah
+sumbu tegak diperiksa. Cara ini membuat arah datang dapat disimpulkan dari
+tanda kecepatan: bergerak ke kanan berarti menabrak sisi kiri benda, dan
+sebaliknya. Bila kedua sumbu diperiksa sekaligus, program hanya tahu bahwa
+kedua persegi beririsan, lalu sering memilih penyelesaian yang salah.
+
+% ---------------------------------------------------------
+\bagian{Tutorial}
+
+Kerjakan langkah berikut berurutan. Setiap langkah diakhiri oleh perubahan
+yang dapat Anda jalankan dan lihat akibatnya.
+
+\begin{langkah}
+  \item \textbf{Tambahkan konstanta fisika.} Buka
+        \file{gudang_artefak/settings.py}, lalu tambahkan \code{GRAVITY =
+        1900.0}, \code{JUMP_SPEED = 720.0}, \code{WALL_RESTITUTION = 0.8},
+        dan \code{MIN_BOUNCE_SPEED = 60.0} pada bagian pemain dan fisika.
+        Tulis satuannya sebagai komentar agar angka itu tidak menjadi teka-teki
+        di kemudian hari.
+
+  \item \textbf{Lengkapi keadaan pemain.} Di dalam \code{Player.__init__},
+        tambahkan \code{self.velocity = pygame.Vector2(0, 0)} dan
+        \code{self.on_ground = False}. Ukuran pemain tetap 36 piksel seperti
+        pada sesi 3, sehingga \code{rect} dan \code{position} tetap mengacu
+        pada badan yang sama. Posisi mendatar yang sudah ada tetap
+        dipertahankan; keduanya kini menjadi sumber kebenaran gerak.
+
+  \item \textbf{Tulis pembaruan gerak.} Ganti metode \code{update} menjadi
+        \code{update_side} yang menerima \code{delta_seconds}, arah tombol, dan
+        daftar permukaan padat. Isinya: tetapkan kecepatan mendatar, tambahkan
+        gravitasi ke kecepatan tegak, lalu kosongkan \code{on_ground} sebelum
+        pemeriksaan ulang.
+
+  \item \textbf{Siapkan lantai dan rak.} Pada \file{gudang_artefak/levels.py},
+        tulis \code{PLATFORM_LAYOUT} berisi enam persegi panjang: lantai
+        setinggi 48 piksel di tepi bawah, dan lima rak tipis. Fungsi
+        \code{build_rak()} mengembalikan daftarnya sebagai \code{pygame.Rect}.
+        Simpan hasilnya di \code{Game} sebagai \code{self.solids}.
+
+  \item \textbf{Selesaikan sumbu mendatar.} Pindahkan posisi pada sumbu $x$,
+        selaraskan \code{rect.x} dengan \code{round()}, lalu telusuri
+        \code{solids}. Bila \code{colliderect} benar, tempelkan sisi pemain ke
+        sisi benda, lalu balik kecepatan mendatar dengan koefisien 0,8 atau
+        nolkan bila besarnya di bawah 60.
+
+  \item \textbf{Selesaikan sumbu tegak.} Pindahkan posisi pada sumbu $y$,
+        selaraskan \code{rect.y}, lalu periksa kembali seluruh \code{solids}.
+        Bila pemain sedang bergerak ke bawah, letakkan \code{rect.bottom} di
+        \code{solid.top}, nolkan kecepatan tegak, dan tandai
+        \code{on_ground = True}. Bila sedang bergerak ke atas, letakkan
+        \code{rect.top} di \code{solid.bottom} dan nolkan kecepatannya.
+
+  \item \textbf{Tambahkan lompatan.} Tulis metode \code{jump()} yang hanya
+        bekerja bila \code{on_ground} benar, lalu panggil dari peristiwa
+        \code{KEYDOWN} untuk tombol spasi. Jangan memakai
+        \code{key.get_pressed()} untuk lompatan.
+
+  \item \textbf{Jalankan dan uji.} Gambar seluruh \code{solids} dengan
+        \code{pygame.draw.rect}, lalu jalankan program. Lompat dari lantai ke
+        rak pertama, dan coba tahan tombol spasi untuk memastikan pemain tidak
+        terbang.
+\end{langkah}
+
+\begin{ujibox}
+Setelah Langkah 8, periksa lima hal berikut.
+\begin{itemize}[leftmargin=1.4em, itemsep=0.2em]
+  \item Pemain jatuh dari titik awal dan berhenti dengan kakinya tepat di
+        permukaan lantai, tidak terbenam dan tidak melayang.
+  \item Lompatan dari lantai mencapai tinggi sekitar 136 piksel, cukup untuk
+        rak pertama pada ketinggian 114 piksel di atas lantai.
+  \item Menahan spasi hanya menghasilkan satu lompatan. Bila pemain terus
+        melompat, periksa sumber peristiwanya.
+  \item Berjalan ke dinding membuat pemain memantul sekali atau dua kali,
+        lalu berhenti; pemain tidak bergetar di dinding.
+  \item Program berhenti rapi dengan \code{--frames 120} pada laju 30 maupun
+        60 bingkai per detik, dan tinggi lompatannya tidak berbeda jauh.
+\end{itemize}
+\end{ujibox}
+
+% ---------------------------------------------------------
+\bagian{Kode Sesi Ini}
+
+Potongan berikut adalah bagian yang berubah pada checkpoint sesi ini. Berkas
+\file{levels.py} memuat susunan lantai dan rak, sedangkan \file{entities.py}
+memuat seluruh perhitungan gerak. Bacalah dengan urutan dari atas ke bawah;
+setiap potongan bergantung pada potongan sebelumnya.
+
+\tampilkodebaris[Python]{code/sesi-04/gudang_artefak/settings.py}{22}{28}
+  {settings.py: konstanta pemain dan fisika}
+
+\tampilkodebaris[Python]{code/sesi-04/gudang_artefak/entities.py}{27}{47}
+  {entities.py: pembaruan gerak, urutan Euler, dan dua sumbu}
+
+\tampilkodebaris[Python]{code/sesi-04/gudang_artefak/entities.py}{49}{63}
+  {entities.py: penyelesaian sumbu mendatar dan pantulan dinding}
+
+\tampilkodebaris[Python]{code/sesi-04/gudang_artefak/entities.py}{65}{76}
+  {entities.py: penyelesaian sumbu tegak dan penanda menyentuh permukaan}
+
+\tampilkodebaris[Python]{code/sesi-04/gudang_artefak/entities.py}{78}{83}
+  {entities.py: lompatan yang hanya bekerja di atas permukaan}
+
+\tampilkodebaris[Python]{code/sesi-04/gudang_artefak/levels.py}{12}{29}
+  {levels.py: susunan lantai dan rak sebagai Rect}
+
+\tampilkodebaris[Python]{code/sesi-04/gudang_artefak/game.py}{56}{72}
+  {game.py: peristiwa lompatan dan pembaruan fisika}
+
+\checkpoint{04}{Pemain dapat berjalan, jatuh, mendarat di lantai atau rak,
+melompat sekali setiap penekanan spasi, dan memantul di dinding dengan
+kecepatan yang makin mengecil.}
+
+% ---------------------------------------------------------
+\bagian{Kesalahan Umum}
+
+\begin{galatbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.35em]
+  \item \textbf{Pemain melayang ke atas, bukan jatuh.}
+        Gejala: pemain perlahan naik dan hilang di tepi atas jendela. Periksa
+        tanda \code{GRAVITY}; pada koordinat layar nilai positif menarik ke
+        bawah. Bila Anda menulisnya negatif, gravitasi bekerja seperti
+        dorongan ke atas.
+  \item \textbf{Pemain melompat terus selama spasi ditahan.}
+        Gejala: pemain terbang seperti roket. Periksa bahwa lompatan dibaca
+        dari \code{KEYDOWN}, bukan dari \code{pygame.key.get_pressed()}.
+        Peristiwa hanya muncul sekali pada setiap penekanan.
+  \item \textbf{Pemain bergetar di permukaan lantai.}
+        Gejala: pemain tampak bergetar halus dan \code{on_ground} berganti
+        nilai setiap bingkai. Periksa apakah kecepatan tegak dinolkan sesudah
+        posisi diperbaiki. Tanpa penolan itu, gravitasi menekan pemain kembali
+        ke dalam lantai pada bingkai berikutnya.
+  \item \textbf{Pemain menembus rak yang tipis.}
+        Gejala: pemain melewati rak tanpa pernah mendarat. Periksa pemeriksaan
+        tabrakan; jangan memakai tanda kesamaan (\code{==}) pada posisi.
+        Gunakan \code{colliderect} dan lakukan pemeriksaan sesudah posisi
+        diperbarui. Bila kecepatannya terlalu besar, bagi perpindahan atau
+        batasi kecepatan jatuh.
+  \item \textbf{Posisi dan \code{rect} tidak lagi sama.}
+        Gejala: pemain mendarat di satu tempat, lalu melompat dari tempat lain
+        yang beberapa piksel berbeda. Periksa bahwa sesudah setiap perbaikan
+        \code{rect}, nilai \code{self.position} disalin kembali dari
+        \code{rect}.
+\end{itemize}
+\end{galatbox}
+
+% ---------------------------------------------------------
+\bagian{Lembar Kerja}
+
+Isi tabel berikut pada catatan praktikum Anda. Dua baris pertama meminta
+perbandingan antara hasil pengukuran dan perhitungan, bukan sekadar angka
+pengamatan.
+
+{\small
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\linewidth}{@{}C{0.8cm} L{5.4cm} Y@{}}
+\toprule
+\textbf{No} & \textbf{Hasil yang dicatat} & \textbf{Keterangan Anda} \\
+\midrule
+1 & Tinggi lompatan terukur dan hasil $v_0^2/(2g)$ & \\[0.55cm]
+2 & Lama pemain di udara dan hasil $2v_0/g$ & \\[0.55cm]
+3 & Kecepatan pantulan dinding pertama dan kedua & \\[0.55cm]
+4 & Nilai \code{MIN_BOUNCE_SPEED} sebelum dan sesudah diubah & \\[0.55cm]
+5 & Satu kendala yang Anda hadapi dan cara menyelesaikannya & \\[0.9cm]
+\bottomrule
+\end{tabularx}
+}
+
+Dengan $v_0 = 720$ piksel per detik dan $g = 1900$ piksel per detik kuadrat,
+hitungan memberi tinggi sekitar 136 piksel dan lama di udara sekitar 0,76
+detik. Selisih beberapa piksel dari pengukuran adalah galat integrasi Euler
+yang wajar, bukan kesalahan program.
+
+% ---------------------------------------------------------
+\bagian{Checklist Sesi}
+
+\begin{checklistbox}
+\begin{checklist}
+  \item Saya dapat menunjukkan pemain yang jatuh dan berhenti di atas lantai
+        serta rak.
+  \item Saya dapat menjelaskan arti setiap lambang pada kedua rumus pembaruan
+        gerak.
+  \item Saya dapat menjelaskan mengapa kecepatan diperbarui sebelum posisi.
+  \item Saya dapat menunjukkan lompatan yang hanya terjadi ketika pemain
+        menyentuh permukaan.
+  \item Saya dapat menunjukkan pantulan dinding 0,8 yang berhenti sendiri di
+        bawah ambang 60 piksel per detik.
+  \item Saya dapat mengubah satu konstanta fisika dan menerangkan akibat
+        perubahan itu pada gerak pemain.
+\end{checklist}
+\end{checklistbox}
+
+% ---------------------------------------------------------
+\bagian{Pengait ke Sesi Berikutnya}
+
+Fisika pada sesi ini sudah benar, tetapi seluruh isi gudang masih berupa
+daftar persegi panjang dan pemain masih satu-satunya benda yang hidup. Pada
+sesi 5 Anda mengubah lantai, rak, artefak, peti, dan pintu menjadi
+\istilah{sprite} yang dikelola \istilah{group}, lalu memakai \istilah{AABB}
+untuk memeriksa persentuhannya. Di sanalah permainan mulai memiliki aturan:
+artefak menambah skor, peti mengurangi nyawa, dan pintu terbuka setelah
+seluruh artefak terkumpul.

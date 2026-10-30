@@ -1,0 +1,81 @@
+% =========================================================
+%  config/styles.tex
+%  Warna, judul, kepala dan kaki halaman.
+% =========================================================
+
+\definecolor{ubNavy}{HTML}{1F3864}
+\definecolor{ubAccent}{HTML}{2E75B6}
+\definecolor{ubHead}{HTML}{D9E2F3}
+\definecolor{ubSoft}{HTML}{F2F6FC}
+\definecolor{ubLine}{HTML}{BFBFBF}
+\definecolor{ubText}{HTML}{1F2937}
+\definecolor{ubMuted}{HTML}{5A6678}
+\definecolor{ubGreen}{HTML}{1E7B45}
+\definecolor{ubGreenBg}{HTML}{F1F8F2}
+\definecolor{ubRed}{HTML}{B3261E}
+\definecolor{ubRedBg}{HTML}{FDF2F1}
+\definecolor{ubWarn}{HTML}{A35A05}
+\definecolor{ubWarnBg}{HTML}{FFF8EC}
+\definecolor{ubGray}{HTML}{F6F6F6}
+\definecolor{ubCodeBg}{HTML}{10233F}
+\definecolor{ubCodeText}{HTML}{E8EEF7}
+\definecolor{ubCodeKey}{HTML}{8FBCF0}
+\definecolor{ubCodeCom}{HTML}{8FB37A}
+\definecolor{ubCodeStr}{HTML}{D9A46B}
+\definecolor{ubCodeNum}{HTML}{7E99BE}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\uchyph=0
+\color{ubText}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\renewcommand{\arraystretch}{1.15}
+
+% --- Judul bagian sesi ------------------------------------
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily\color{ubNavy}}
+  {}{0pt}{}[\vspace{-0.55em}{\color{ubAccent}\rule{1.6cm}{1.4pt}}]
+\titlespacing*{\section}{0pt}{1.1em}{0.9em}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily\color{ubNavy}}
+  {}{0pt}{}
+\titlespacing*{\subsection}{0pt}{0.9em}{0.45em}
+
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\sffamily\color{ubAccent}}
+  {}{0pt}{}
+\titlespacing*{\subsubsection}{0pt}{0.7em}{0.3em}
+
+% --- Kepala dan kaki halaman ------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhead[L]{\footnotesize\sffamily\color{ubMuted}\ModulJudul}
+\fancyhead[R]{\footnotesize\sffamily\color{ubMuted}\ModulTeknologi\ \textperiodcentered\ \SesiAktif}
+\fancyfoot[C]{\footnotesize\color{ubMuted}\thepage}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \fancyfoot[C]{\footnotesize\color{ubMuted}\thepage}%
+}
+
+\setlength{\headheight}{14pt}
+
+% --- Hyperref ---------------------------------------------
+\hypersetup{
+  colorlinks=true,
+  linkcolor=ubAccent,
+  urlcolor=ubAccent,
+  pdftitle={\ModulJudul},
+  pdfauthor={\NamaDosen}
+}
+
+% --- Kode dalam teks --------------------------------------
+\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
+\newcommand{\istilah}[1]{\emph{#1}}

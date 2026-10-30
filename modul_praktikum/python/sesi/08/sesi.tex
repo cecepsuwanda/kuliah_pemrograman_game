@@ -1,0 +1,371 @@
+% =========================================================
+%  sesi/08/sesi.tex
+%  Sesi 8 — Grid dan Pencarian Jalur A*
+% =========================================================
+
+\sesi{08}{Grid dan Pencarian Jalur A*}{2.3}{150 menit}
+
+Pada minggu 8 penjaga akhirnya memperoleh pengetahuan tentang ruang. Sejak
+sesi 7 ia sudah memiliki mesin keadaan: berdiam, berpatroli, dan mengejar.
+Namun ketika mengejar, ia hanya berjalan lurus ke arah pemain. Selama jalan
+itu kosong, perilakunya tampak cerdas. Begitu sebuah pilar atau dinding
+berdiri di antaranya, ia menekan dinding sampai pemain menghilang dari
+pandangan. Ia tahu ke mana harus pergi, tetapi tidak tahu bagaimana sampai.
+
+Sesi ini menutup kekurangan itu. Peta Lorong yang selama ini hanya menjadi
+gambar di layar dibaca sebagai graf, lalu dicari rutenya dengan algoritma
+A*. Pekerjaan mencari rute pada peta berhalangan itu disebut
+\istilah{pathfinding}. Penjaga tidak lagi menempuh garis lurus; ia mengikuti
+rangkaian petak yang dijamin tidak melewati dinding. Rute itu digambar di
+layar agar Anda dapat memeriksa hasil pencarian, bukan hanya mempercayainya.
+
+Kuis 2 pada minggu ini mencakup Materi 6--7, yaitu perilaku mengejar dan
+mesin keadaan. Gunakan kuis itu sebagai pemeriksaan sebelum kedua lapisan
+disatukan: bila keadaan penjaga belum Anda pahami, pencarian jalur hanya
+akan menutupi kekeliruan yang lebih dasar.
+
+% ---------------------------------------------------------
+\bagian{Tujuan Sesi}
+
+\begin{tujuanbox}
+Setelah menuntaskan sesi ini, Anda dapat menunjukkan:
+\begin{enumerate}[leftmargin=1.5em, itemsep=0.2em]
+  \item penjaga yang mencapai pemain di balik pilar dengan menempuh jalan
+        memutar, bukan menekan dinding;
+  \item peta Lorong $24 \times 14$ petak yang diubah menjadi graf: sel
+        36 piksel, dinding dibuang, dan setiap sisi berbiaya satu;
+  \item perhitungan $g$, $h$, dan $f$ untuk sebuah petak dengan angka yang
+        benar, termasuk $h = |\Delta x| + |\Delta y|$;
+  \item penjelasan mengapa \code{heapq} mengeluarkan petak dengan $f$
+        terkecil dan mengapa isi antrean yang usang harus dibuang;
+  \item jalur yang direkonstruksi dari tabel asal dan digambar sebagai garis
+        beserta titik pusat setiap petaknya.
+\end{enumerate}
+\end{tujuanbox}
+
+% ---------------------------------------------------------
+\bagian{Prasyarat}
+
+\begin{prasyaratbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.25em]
+  \item Checkpoint sesi 7 berjalan: penjaga berpindah antara keadaan
+        \code{idle}, \code{patrol}, dan \code{chase}.
+  \item Anda dapat memakai \code{dict}, \code{set}, dan \code{tuple} sebagai
+        pasangan koordinat, serta menulis fungsi yang mengembalikan daftar.
+  \item Anda memahami pemakaian \code{delta_seconds} dan \code{pygame.Vector2}
+        dari sesi 3 dan 6.
+  \item Bab X buku ajar sudah dibaca, khususnya bagian tentang graf,
+        \istilah{heuristik}, dan rekonstruksi jalur.
+\end{itemize}
+\end{prasyaratbox}
+
+% ---------------------------------------------------------
+\bagian{Peta Kemampuan}
+
+\petasesi
+  {Penjaga bermesin keadaan; saat mengejar ia bergerak lurus dan berhenti
+   ketika dinding menghalangi.}
+  {Peta berpetak sebagai graf, algoritma A* dengan
+   \istilah{antrean prioritas}, rekonstruksi jalur, dan jalur yang digambar
+   pada layar.}
+  {Penggabungan FSM dan A* dengan \istilah{repath} berkala, dua level
+   berurutan, dan tiga \istilah{skenario uji} pada sesi 9.}
+
+% ---------------------------------------------------------
+\bagian{Konsep yang Dipakai}
+
+\subsection*{Dari peta huruf ke graf}
+
+Peta Lorong adalah daftar 14 baris teks, masing-masing 24 karakter. Setiap
+karakter menempati satu petak berukuran 36 piksel. Karakter \texttt{\#}
+menyatakan dinding, sedangkan karakter lain menyatakan lantai. Dua petak
+bersebelahan secara mendatar atau tegak dihubungkan oleh satu sisi, dan
+setiap sisi berbiaya satu karena memindahkan penjaga satu petak selalu
+menempuh jarak yang sama.
+
+Perubahan itu menghasilkan tiga hal: himpunan dinding, lebar peta, dan
+tinggi peta. Petak dinding tidak pernah menjadi simpul, sehingga pencarian
+tidak perlu memeriksa apakah sebuah langkah menembus dinding. Cukup dengan
+membuangnya sekali ketika peta dibaca.
+
+\subsection*{Biaya, perkiraan, dan jumlahnya}
+
+Tiga lambang dipakai sepanjang sesi ini.
+
+\begin{description}[leftmargin=1.4em, itemsep=0.15em]
+  \item[$g$] biaya dari titik awal sampai petak yang sedang diperiksa. Pada
+        peta ini $g$ sama dengan banyaknya langkah yang sudah ditempuh.
+  \item[$h$] perkiraan biaya dari petak itu sampai tujuan. Pada gerak empat
+        arah dipakai jarak Manhattan,
+        \[
+          h = |\Delta x| + |\Delta y|,
+          \qquad
+          \Delta x = x_{\text{tujuan}} - x_{\text{petak}},
+          \quad
+          \Delta y = y_{\text{tujuan}} - y_{\text{petak}} .
+        \]
+        Di sini $\Delta x$ adalah selisih kolom dan $\Delta y$ selisih baris.
+  \item[$f$] perkiraan biaya total jalur yang melalui petak itu,
+        \[
+          f = g + h .
+        \]
+\end{description}
+
+Petak dengan $f$ terkecil diperiksa lebih dahulu. Karena $h$ menghitung sisa
+jarak, petak yang menuju tujuan mendapat $f$ lebih kecil daripada petak yang
+menjauh. Pencarian menjadi terarah, bukan menyebar ke segala arah seperti
+pencarian melebar. Jarak Manhattan tidak pernah melebihkan jarak sebenarnya
+pada gerak empat arah; sifat itu yang menjaga jalur hasil pencarian tetap
+terpendek.
+
+\subsection*{Antrean prioritas}
+
+Agar petak dengan $f$ terkecil selalu keluar lebih dahulu, tepi pencarian
+disimpan sebagai \istilah{antrean prioritas}. Python menyediakannya pada
+modul \code{heapq}. Isi antrean berupa rangkap tiga
+\code{(f, g, petak)}. Bila dua petak memiliki $f$ sama, angka $g$ menjadi
+pembanding kedua, lalu pasangan koordinat petak menjadi pembanding terakhir.
+Susunan itu membuat urutan pemeriksaan dapat diulang dengan hasil yang sama.
+
+Sebuah petak boleh masuk antrean lebih dari sekali, yaitu setiap kali
+ditemukan jalan yang lebih murah menuju petak itu. Karena itu antrean dapat
+memuat isi usang. Program membuangnya dengan dua cara: himpunan
+\code{closed} menolak petak yang sudah diperiksa, dan kamus \code{best_g}
+menolak jalan yang tidak lebih murah daripada yang sudah diketahui.
+
+\subsection*{Menyimpan asal dan menyusun jalur}
+
+Selama pencarian, \code{came_from} menyimpan dari petak mana setiap petak
+ditemukan. Ketika tujuan keluar dari antrean, jalur diperoleh dengan
+menelusuri kamus itu mundur sampai titik awal, lalu membalik urutannya.
+Apabila tujuan tidak pernah keluar dari antrean, fungsi mengembalikan daftar
+kosong. Keadaan itu wajar terjadi, misalnya ketika pintu keluar terkurung
+dinding, dan harus ditangani oleh pemanggil.
+
+\subsection*{Menggambar jalur}
+
+Jalur berupa daftar petak, sedangkan layar memakai piksel. Setiap petak
+diubah menjadi titik pusatnya, lalu titik-titik itu dihubungkan dengan
+\code{pygame.draw.lines}. Bulatan kecil pada setiap titik memperlihatkan
+petak mana yang dilalui. Jalur hanya digambar ketika penjaga mengejar,
+sehingga garis kuning di layar selalu berarti rute yang sedang dipakai.
+
+% ---------------------------------------------------------
+\bagian{Tutorial}
+
+Kerjakan langkah berikut berurutan. Setiap langkah adalah satu tindakan yang
+selesai; jalankan program setiap kali satu bagian baru selesai ditulis.
+
+\begin{langkah}
+  \item \textbf{Siapkan folder kerja.} Salin folder proyek sesi 7 menjadi
+        folder sesi 8, lalu jalankan \code{python main.py --level 2} untuk
+        memastikan penjaga bermesin keadaan masih bekerja. Checkpoint lama
+        tidak boleh diubah.
+
+  \item \textbf{Tambahkan pengaturan petak.} Pada \file{settings.py},
+        pastikan \code{CELL = 36}, \code{GRID_OFFSET_X = 48}, dan
+        \code{GRID_OFFSET_Y = 76} tersedia. Tambahkan pengaturan penjaga
+        yang dipakai pencarian: \code{GUARD_RADIUS_CELLS = 7.0},
+        \code{GUARD_PATROL_SPEED = 90.0}, \code{GUARD_CHASE_SPEED = 165.0},
+        dan \code{WAYPOINT_REACHED = 6.0}.
+
+  \item \textbf{Buat berkas pencarian.} Buat
+        \file{gudang_artefak/pathfinding.py}. Tulis fungsi
+        \code{build_grid} yang menyisir baris peta, mengumpulkan petak
+        dinding ke dalam himpunan, lalu mengembalikan dinding, lebar, dan
+        tinggi peta.
+
+  \item \textbf{Tulis jarak Manhattan.} Tambahkan fungsi \code{manhattan}
+        yang menerima dua pasangan petak dan mengembalikan jumlah selisih
+        kolom dan selisih baris. Fungsi ini kecil, tetapi menjadi jantung
+        heuristik pada seluruh sesi.
+
+  \item \textbf{Tulis penentuan tetangga.} Tambahkan fungsi
+        \code{neighbours} yang memeriksa empat arah, membuang petak di luar
+        batas peta, dan membuang petak dinding. Keluaran fungsi ini berupa
+        generator, sehingga pemanggil dapat menelusurinya dengan
+        \code{for}.
+
+  \item \textbf{Susun kerangka pencarian.} Tulis \code{find_path} dengan
+        antrean \code{open_heap} berisi \code{(manhattan(start, goal), 0,
+        start)}, kamus \code{came_from}, kamus \code{best_g}, dan himpunan
+        \code{closed}. Periksa lebih dahulu apakah titik awal atau tujuan
+        berada di dinding; bila ya, kembalikan daftar kosong.
+
+  \item \textbf{Tulis perulangan A*.} Keluarkan isi antrean dengan
+        \code{heapq.heappop}. Lewati petak yang sudah ada di \code{closed}.
+        Bila petak itu sama dengan tujuan, rekonstruksi jalurnya. Untuk
+        setiap tetangga, hitung \code{new_g = g + 1}; bila lebih kecil
+        daripada catatan sebelumnya, perbarui \code{best_g},
+        \code{came_from}, lalu masukkan \code{(new_g + h, new_g, tetangga)}
+        ke antrean.
+
+  \item \textbf{Tulis rekonstruksi jalur.} Tambahkan \code{_reconstruct}
+        yang menelusuri \code{came_from} dari tujuan ke titik awal,
+        mengumpulkan petaknya, lalu membalik urutan daftar sebelum
+        dikembalikan.
+
+  \item \textbf{Sambungkan ke penjaga.} Pada \file{game.py}, ubah
+        \code{_chase} agar memanggil \code{find_path} dari petak penjaga ke
+        petak pemain, menyimpan hasilnya pada \code{self.path} dan
+        \code{self.guard.path}, lalu memanggil \code{self.guard.follow}.
+        Tambahkan \code{_player_cell} untuk mengubah titik pusat pemain
+        menjadi pasangan petak.
+
+  \item \textbf{Gambar jalurnya.} Pada \code{_draw_lorong}, ubah setiap
+        petak jalur menjadi titik pusat piksel, hubungkan dengan
+        \code{pygame.draw.lines}, lalu tandai titik pusat itu dengan
+        bulatan kecil. Jalankan \code{python main.py --level 2}, lalu
+        bersembunyilah di balik pilar dan amati rute penjaga.
+\end{langkah}
+
+\begin{center}
+\input{figures/grid-astar.tikz}
+\end{center}
+
+Gambar di atas memperlihatkan peta sepuluh kali enam petak. Petak gelap
+adalah dinding, \textbf{S} titik awal, dan \textbf{G} tujuan. Petak berwarna
+muda adalah jalur yang ditemukan; perhatikan bahwa jalur berbelok di sekitar
+dinding, bukan menembusnya. Keterangan di sebelah kanan mengingatkan arti
+$g$, $h$, dan $f$ yang baru saja Anda hitung.
+
+\begin{ujibox}
+Setelah Langkah 10, periksa lima hal berikut.
+\begin{itemize}[leftmargin=1.4em, itemsep=0.2em]
+  \item Penjaga berjalan memutar ketika pilar menghalangi garis lurus menuju
+        pemain. Bila ia tetap menekan dinding, periksa pemanggilan
+        \code{find_path} pada \code{_chase}.
+  \item Garis kuning tidak pernah melewati petak dinding. Bila melewatinya,
+        periksa penyaringan dinding pada \code{neighbours} dan
+        \code{build_grid}.
+  \item Garis kuning berakhir di petak tempat pemain berdiri. Bila berakhir
+        di tempat lain, periksa urutan \code{_player_cell} dan pembalikan
+        daftar pada \code{_reconstruct}.
+  \item Penjaga sampai di ujung jalur dan berhenti tanpa bergetar. Bila
+        bergetar, periksa \code{WAYPOINT_REACHED} dan pembatasan langkah
+        pada \code{Guard.follow}.
+  \item Ketika pemain berpindah petak, jalur dihitung ulang dan garis kuning
+        berubah. Bila tidak berubah, periksa pembanding
+        \code{last_player_cell} pada \code{_chase}.
+\end{itemize}
+\end{ujibox}
+
+% ---------------------------------------------------------
+\bagian{Kode Sesi Ini}
+
+Potongan berikut adalah bagian pokok checkpoint sesi 8. Berkas lengkapnya,
+termasuk kelas pemain dan level Rak yang tidak berubah, tersedia pada folder
+\file{code/sesi-08}. Bandingkan kode Anda dengan daftar ini setelah program
+berjalan, bukan sebelumnya.
+
+\tampilkodebaris[Python]{code/sesi-08/gudang_artefak/settings.py}{44}{58}
+  {Pengaturan petak, penjaga, dan pencarian jalur}
+
+\tampilkodebaris[Python]{code/sesi-08/gudang_artefak/pathfinding.py}{27}{39}
+  {Jarak Manhattan dan penentuan tetangga yang dapat dilalui}
+
+\tampilkodebaris[Python]{code/sesi-08/gudang_artefak/pathfinding.py}{42}{83}
+  {Pencarian A* dengan antrean prioritas dan rekonstruksi jalur}
+
+\tampilkodebaris[Python]{code/sesi-08/gudang_artefak/game.py}{187}{202}
+  {Menghitung ulang rute ketika petak pemain berubah}
+
+\tampilkodebaris[Python]{code/sesi-08/gudang_artefak/game.py}{242}{264}
+  {Menggambar dinding, pintu keluar, dan jalur hasil pencarian}
+
+\checkpoint{08}{Program pada folder itu dapat dijalankan dengan
+\code{python main.py --level 2}; penjaga menempuh jalan memutar di sekitar
+pilar, dan jalur yang sedang dipakai tampil sebagai garis kuning beserta
+titik pusat setiap petaknya.}
+
+% ---------------------------------------------------------
+\bagian{Kesalahan Umum}
+
+\begin{galatbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.35em]
+  \item \textbf{Jalur menembus dinding.}
+        Gejala: garis kuning melintasi petak gelap. Penyebabnya, fungsi
+        \code{neighbours} tidak menyaring dinding atau batas peta. Periksa
+        syarat \code{0 <= nx < width}, \code{0 <= ny < height}, dan
+        \code{(nx, ny) not in walls}.
+  \item \textbf{\code{TypeError: '<' not supported between instances}.}
+        Gejala: program berhenti saat antrean berisi dua petak dengan $f$
+        sama. Penyebabnya, isi antrean hanya \code{(f, petak)} dan Python
+        membandingkan objek yang tidak sejenis. Periksa susunan rangkap tiga
+        \code{(f, g, petak)}.
+  \item \textbf{Jalur yang ditemukan lebih panjang daripada seharusnya.}
+        Gejala: penjaga memutar jauh padahal ada jalan dekat. Penyebabnya,
+        isi antrean yang usang tidak dibuang, sehingga petak diperiksa
+        dengan biaya lama. Periksa \code{closed} dan perbandingan
+        \code{new_g < best_g.get(nxt, 10 ** 9)}.
+  \item \textbf{Jalur terbalik.}
+        Gejala: penjaga berjalan menjauhi pemain, lalu berbalik di ujung
+        peta. Penyebabnya, daftar hasil rekonstruksi tidak dibalik. Periksa
+        \code{path.reverse()} sebelum daftar dikembalikan.
+  \item \textbf{Jalur kosong padahal tujuan terlihat.}
+        Gejala: penjaga berhenti dan tidak ada garis kuning. Penyebabnya,
+        petak awal atau tujuan ikut terhitung sebagai dinding, atau peta
+        terkurung. Periksa keluaran \code{build_grid} dan bangun peta yang
+        tujuan tidak dapat dicapai untuk memastikan program menanganinya.
+  \item \textbf{Garis kuning muncul, tetapi penjaga diam.}
+        Gejala: rute benar dan tergambar, badan penjaga tidak bergerak.
+        Penyebabnya, \code{guard.path} tidak diisi atau \code{path_index}
+        tidak dinolkan. Periksa kedua baris itu di dalam \code{_chase}.
+\end{itemize}
+\end{galatbox}
+
+% ---------------------------------------------------------
+\bagian{Lembar Kerja}
+
+Isi tabel berikut pada catatan praktikum Anda. Lakukan pengukuran pada peta
+yang sama agar angka dapat dibandingkan. Kolom terakhir diisi setelah Anda
+mengubah satu nilai dan mengamati akibatnya.
+
+{\small
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\linewidth}{@{}C{0.8cm} L{6.0cm} Y@{}}
+\toprule
+\textbf{No} & \textbf{Hasil yang dicatat} & \textbf{Keterangan Anda} \\
+\midrule
+1 & Panjang jalur dari petak awal penjaga ke petak pemain, dalam petak & \\[0.55cm]
+2 & Nilai $g$, $h$, dan $f$ untuk satu petak yang Anda pilih sendiri & \\[0.85cm]
+3 & Banyak petak yang diperiksa sebelum tujuan ditemukan & \\[0.55cm]
+4 & Apakah jalur melewati dinding, diperiksa satu per satu & \\[0.55cm]
+5 & Nilai Kuis 2 (Materi 6--7) dan satu konsep FSM yang perlu diulang & \\[0.85cm]
+6 & Satu kendala yang Anda hadapi dan cara menyelesaikannya & \\[0.9cm]
+\bottomrule
+\end{tabularx}
+}
+
+% ---------------------------------------------------------
+\bagian{Checklist Sesi}
+
+\begin{checklistbox}
+\begin{checklist}
+  \item Saya dapat menunjukkan penjaga yang menemukan jalan memutar di
+        sekitar pilar.
+  \item Saya dapat menjelaskan bagaimana peta berpetak menjadi graf, termasuk
+        peran dinding dan biaya setiap sisi.
+  \item Saya dapat menghitung $g$, $h$, dan $f$ untuk sebuah petak, serta
+        menjelaskan arti setiap lambang.
+  \item Saya dapat menjelaskan mengapa jarak Manhattan tidak melebihkan jarak
+        sebenarnya pada gerak empat arah.
+  \item Saya dapat menjelaskan cara \code{heapq} mengurutkan petak dan cara
+        isi antrean yang usang dibuang.
+  \item Saya dapat menjelaskan rekonstruksi jalur dari \code{came_from} dan
+        menangani keadaan tujuan yang tidak dapat dicapai.
+  \item Saya dapat membaca jalur yang digambar di layar dan memastikan jalur
+        itu tidak menembus dinding.
+\end{checklist}
+\end{checklistbox}
+
+% ---------------------------------------------------------
+\bagian{Pengait ke Sesi Berikutnya}
+
+Pencarian pada sesi ini dijalankan setiap kali petak pemain berubah. Cara itu
+memadai untuk satu penjaga pada peta kecil, tetapi belum layak untuk mini
+proyek. Pada sesi 9 pencarian dipanggil hanya ketika penjaga berada pada
+keadaan mengejar, lalu diulang secara berkala setiap 0,3 detik. Kedua level
+disusun berurutan dalam satu program, dan tiga skenario uji disiapkan untuk
+menilai perilaku penjaga: lorong terbuka, lorong berbelok, dan halangan yang
+memaksa jalur memutar.

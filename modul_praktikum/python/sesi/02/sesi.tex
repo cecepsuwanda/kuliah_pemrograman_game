@@ -1,0 +1,337 @@
+% =========================================================
+%  sesi/02/sesi.tex
+%  Sesi 2 — Siklus permainan dan pengendali waktu
+% =========================================================
+
+\sesi{02}{Siklus Permainan dan Pengendali Waktu}{1.1}{110 menit}
+
+Sesi pertama berakhir pada jendela yang diam. Latar diisi satu kali, lalu
+program menunggu peristiwa dengan \code{pygame.event.wait()}; selama pemain
+tidak menyentuh apa pun, layar tidak berubah dan tidak ada pekerjaan yang
+dilakukan. Jendela semacam itu memadai untuk menampilkan informasi, tetapi
+belum memadai untuk permainan.
+
+Pada minggu 2 ini jendela tersebut mulai hidup. Anda menulis \istilah{game
+loop}: perulangan yang membaca masukan, memperbarui keadaan, dan menggambar
+ulang jendela secara berulang. Agar pengulangan itu tidak memakan seluruh
+kemampuan prosesor, Anda menambahkan pengendali waktu dan menampilkan laju
+bingkai (\istilah{FPS}) pada judul jendela. Angka itu menjadi alat ukur pertama
+Anda untuk menilai apakah program bekerja sebagaimana mestinya.
+
+% ---------------------------------------------------------
+\bagian{Tujuan Sesi}
+
+\begin{tujuanbox}
+Setelah menuntaskan sesi ini, Anda dapat menunjukkan:
+\begin{enumerate}[leftmargin=1.5em, itemsep=0.2em]
+  \item jendela \NamaPermainan\ yang berjalan terus dan judulnya memuat angka
+        FPS yang berubah dari waktu ke waktu;
+  \item jendela yang tetap menanggapi masukan ketika pemain mendiamkan tombol
+        dan tetikus, tanpa tanda ``tidak menanggapi'';
+  \item jendela yang berhenti dengan rapi ketika ditutup lewat tombol silang
+        atau tombol ESC, dan terminal kembali menampilkan
+        \code{Program selesai.};
+  \item perbedaan angka pada judul jendela ketika program dijalankan dengan
+        batas 60 FPS dan 30 FPS;
+  \item penjelasan, sambil menunjuk angka pada judul jendela, mengapa laju
+        yang diminta tidak selalu sama dengan laju yang benar-benar tercapai.
+\end{enumerate}
+\end{tujuanbox}
+
+% ---------------------------------------------------------
+\bagian{Prasyarat}
+
+\begin{prasyaratbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.25em]
+  \item Checkpoint sesi 1 pada \file{code/sesi-01} sudah berjalan: jendela
+        terbuka, latar terisi, dan tombol silang menutup program dengan rapi.
+  \item Anda telah membaca Bab IV buku ajar, khususnya bagian kerangka siklus,
+        pembacaan peristiwa, dan pengendali waktu.
+  \item Bab II buku ajar cukup dibaca pada bagian yang membedakan langkah tetap
+        dan langkah berubah; sesi ini baru memakainya sebagai konsep, belum
+        sebagai perhitungan gerak.
+  \item Python 3.8 atau lebih baru dan Pygame 2 masih terpasang pada penafsir
+        yang sama dengan yang Anda pakai pada sesi 1.
+\end{itemize}
+\end{prasyaratbox}
+
+% ---------------------------------------------------------
+\bagian{Peta Kemampuan}
+
+\petasesi
+  {Jendela diam: latar diisi sekali, lalu program menunggu satu peristiwa
+   dengan \code{event.wait()}.}
+  {Siklus masukan--pembaruan--penayangan, \code{event.get()} dan
+   \code{QUIT}, \code{Clock} pada 60 FPS, serta angka FPS pada judul jendela.}
+  {Pemain berukuran 36 piksel yang bergerak dengan \code{Vector2} dan
+   \istilah{delta time} pada sesi 3.}
+
+% ---------------------------------------------------------
+\bagian{Konsep yang Dipakai}
+
+\subsection*{Tiga tahap yang diulang setiap bingkai}
+
+Satu putaran \istilah{game loop} terdiri atas tiga tahap yang selalu muncul
+dalam urutan yang sama.
+
+\begin{enumerate}[leftmargin=1.6em, itemsep=0.2em]
+  \item \textbf{Masukan.} Program membaca peristiwa yang masuk sejak putaran
+        sebelumnya: jendela hendak ditutup, tombol ditekan, atau tetikus
+        digeser.
+  \item \textbf{Pembaruan.} Keadaan permainan diubah menurut masukan dan
+        menurut waktu yang berjalan. Pada sesi ini belum ada objek yang
+        dipindahkan, sehingga tahap ini masih kosong.
+  \item \textbf{Penayangan.} Seluruh isi jendela digambar ulang menurut keadaan
+        terbaru, lalu ditayangkan dengan \code{pygame.display.flip()}.
+\end{enumerate}
+
+\begin{center}
+\input{figures/siklus-game-loop.tikz}
+\end{center}
+
+Masukan didahulukan karena pembaruan perlu mengetahui kehendak pemain pada
+bingkai itu juga. Penayangan dikerjakan terakhir karena yang boleh dilihat
+pemain hanyalah keadaan yang sudah selesai dihitung, bukan keadaan setengah
+jadi.
+
+\subsection*{Peristiwa dibaca, bukan ditunggu}
+
+Pygame menaruh setiap kejadian ke dalam antrean. Perintah
+\code{pygame.event.get()} mengambil seluruh isi antrean tanpa menunggu kejadian
+baru, sehingga siklus tetap berjalan walaupun pemain sedang diam. Sebaliknya,
+\code{pygame.event.wait()} menghentikan program sampai ada peristiwa, dan
+karena itu tidak boleh dipakai di dalam siklus. Setiap peristiwa memiliki jenis;
+jenis \code{QUIT} berarti pemain meminta jendela ditutup.
+
+\subsection*{Anggaran waktu satu bingkai}
+
+Batas laju 60 FPS berarti program ingin menyelesaikan paling banyak 60 bingkai
+dalam satu detik. Jatah waktu untuk satu bingkai karena itu adalah
+
+\[
+\Delta t_{\text{jatah}} = \frac{1000\ \text{milidetik}}{60}
+\approx 16{,}7\ \text{milidetik}.
+\]
+
+Lambang $\Delta t_{\text{jatah}}$ menyatakan jatah waktu satu bingkai, angka
+1000 menyatakan jumlah milidetik dalam satu detik, dan angka 60 menyatakan
+batas bingkai per detik yang diminta. Apabila seluruh pekerjaan satu bingkai
+selesai dalam 16,7 milidetik atau kurang, \code{clock.tick()} menahan sisa
+waktunya. Apabila pekerjaan itu memerlukan 30 milidetik, jatahnya sudah
+terlampaui: \code{tick()} tidak menahan apa pun dan laju yang tercapai hanya
+sekitar 33 FPS, bukan 60. Inilah sebabnya angka pada judul jendela perlu
+dibaca sebagai kenyataan, bukan sebagai janji.
+
+\subsection*{Langkah tetap dan langkah berubah}
+
+Pada \istilah{fixed timestep}, pembaruan selalu maju dengan potongan waktu yang
+sama, misalnya $1/60$ detik, sedangkan sisa waktu yang belum terpakai
+ditabung. Cara ini membuat simulasi dapat diulang persis dan perhitungan fisika
+lebih stabil. Pada \istilah{variable timestep}, pembaruan memakai selang waktu
+yang benar-benar terukur pada bingkai itu, sehingga panjang langkahnya
+berubah-ubah. Program sesi ini termasuk golongan kedua: nilai dari
+\code{clock.tick()} nanti dipakai langsung sebagai pengali kecepatan. Cara ini
+sederhana dan memadai untuk permainan kecil, dengan satu catatan: bila
+komputer tersendat dan satu bingkai menjadi sangat panjang, objek yang cepat
+dapat melompati rintangan.
+
+% ---------------------------------------------------------
+\bagian{Tutorial}
+
+Kerjakan langkah berikut berurutan. Setiap langkah adalah satu tindakan yang
+selesai; periksa hasilnya sebelum melanjutkan.
+
+\begin{langkah}
+  \item \textbf{Siapkan folder sesi.} Salin folder \file{code/sesi-01} menjadi
+        folder kerja baru, lalu buka folder itu di editor dan terminal. Dengan
+        begitu Anda berangkat dari jendela yang sudah terbukti berjalan.
+
+  \item \textbf{Tambahkan batas laju.} Buka \file{gudang_artefak/settings.py}
+        dan tambahkan \code{FPS = 60} di dekat ukuran jendela. Angka 60 menjadi
+        nilai bawaan yang dapat diubah lewat baris perintah nanti.
+
+  \item \textbf{Tambahkan pengendali waktu.} Di dalam \code{Game.__init__},
+        buat \code{self.clock = pygame.time.Clock()} dan
+        \code{self.frames = 0}. Keduanya harus hidup selama permainan, jadi
+        diletakkan sebagai atribut objek, bukan variabel di dalam
+        perulangan.
+
+  \item \textbf{Tulis siklus.} Ganti isi \code{run()} dengan perulangan
+        \code{while self.running}. Di awal setiap putaran panggil
+        \code{self.clock.tick(self.args.fps)}, lalu jalankan
+        \code{handle_events()}, \code{draw()}, dan
+        \code{pygame.display.flip()}. Tahap pembaruan belum berisi perintah
+        karena keadaan permainan belum berubah; sisakan komentar penanda di
+        antara \code{handle_events()} dan \code{draw()}. Karena perulangan
+        berulang, pemanggilan \code{tick()} di awal putaran setara dengan
+        menaruhnya di akhir putaran sebelumnya.
+
+  \item \textbf{Tulis pembaca peristiwa.} Buat \code{handle_events()} yang
+        mengulang \code{for event in pygame.event.get()}. Periksa
+        \code{event.type == pygame.QUIT} dan tombol \code{K_ESCAPE}; keduanya
+        mengubah \code{self.running} menjadi salah.
+
+  \item \textbf{Tulis penayang.} Buat \code{draw()} yang mengisi latar dengan
+        \code{self.screen.fill(S.BACKGROUND)}. Jangan menambahkan
+        \code{flip()} di dalam \code{draw()}; penayangan tetap menjadi tugas
+        \code{run()} agar urutan tahap mudah dibaca.
+
+  \item \textbf{Tampilkan FPS pada judul.} Setelah \code{flip()}, tambahkan
+        penghitung \code{self.frames}. Setiap 30 bingkai, panggil
+        \code{pygame.display.set_caption()} dengan judul yang memuat
+        \code{int(self.clock.get_fps())}. Membaca FPS setiap bingkai tidak
+        perlu; jeda 30 bingkai membuat angkanya lebih tenang dibaca.
+
+  \item \textbf{Jalankan program.} Dari folder sesi, ketik
+        \code{python main.py}. Jendela harus tetap hidup, judulnya berubah
+        menjadi \NamaPermainan\ diikuti angka FPS, dan menekan ESC atau tombol
+        silang harus mengembalikan terminal dengan rapi.
+\end{langkah}
+
+\begin{ujibox}
+Setelah Langkah 8, periksa empat hal berikut.
+\begin{itemize}[leftmargin=1.4em, itemsep=0.2em]
+  \item Judul jendela memuat angka FPS yang berkisar dekat 60, bukan 0 dan
+        bukan angka yang tidak berubah sama sekali.
+  \item Jendela tetap menanggapi ketika Anda mendiamkan tombol dan tetikus
+        selama beberapa detik. Bila muncul tanda ``tidak menanggapi'',
+        periksa pemanggilan \code{pygame.event.get()}.
+  \item Menekan ESC menutup jendela, dan terminal menampilkan
+        \code{Program selesai.}
+  \item Latar tetap biru tua dan tidak meninggalkan jejak gambar lama. Bila
+        ada jejak, periksa urutan \code{fill}, \code{draw}, lalu \code{flip}.
+\end{itemize}
+\end{ujibox}
+
+Sekarang ubah batas laju dan amati akibatnya. Jalankan
+\code{python main.py --fps 30}, lalu \code{python main.py --fps 120}. Bandingkan
+angka pada judul jendela dengan angka yang Anda minta. Setelah itu jalankan
+\code{python main.py --fps 0}: nilai nol berarti tanpa pembatasan, dan angka
+FPS akan melonjak jauh di atas kemampuan layar Anda.
+
+\begin{ujibox}
+Sebelum melanjutkan, tunjukkan tiga bukti berikut kepada diri sendiri.
+\begin{itemize}[leftmargin=1.4em, itemsep=0.2em]
+  \item Pada \code{--fps 30}, angka pada judul berada di sekitar 30; pada
+        \code{--fps 60}, di sekitar 60.
+  \item Pada \code{--fps 0}, angka FPS jauh lebih tinggi dan pemakaian
+        prosesor pada pengelola tugas meningkat tajam.
+  \item Program dapat berhenti sendiri tanpa disentuh dengan
+        \code{python main.py --frames 120} atau \code{--auto-close}; keduanya
+        berguna untuk pengujian.
+\end{itemize}
+\end{ujibox}
+
+% ---------------------------------------------------------
+\bagian{Kode Sesi Ini}
+
+Berkas berikut adalah isi checkpoint sesi 2. Bagian yang berubah dari sesi 1
+adalah \file{settings.py} (penambahan \code{FPS}), \file{game.py} (siklus dan
+pengendali waktu), dan \file{main.py} (pilihan \code{--fps} dan
+\code{--frames}). Ketiklah sendiri di editor, lalu bandingkan hasilnya.
+
+\tampilkodebaris[Python]{code/sesi-02/gudang_artefak/settings.py}{10}{13}
+  {settings.py: judul, ukuran jendela, dan batas laju}
+
+\tampilkodebaris[Python]{code/sesi-02/gudang_artefak/game.py}{19}{26}
+  {game.py: clock dan penghitung bingkai disiapkan sekali}
+
+\tampilkodebaris[Python]{code/sesi-02/gudang_artefak/game.py}{28}{58}
+  {game.py: siklus permainan, pengendali waktu, dan judul FPS}
+
+\tampilkodebaris[Python]{code/sesi-02/gudang_artefak/game.py}{60}{71}
+  {game.py: pembacaan peristiwa dan penayangan latar}
+
+\tampilkodebaris[Python]{code/sesi-02/main.py}{18}{30}
+  {main.py: pilihan batas laju dan penghentian otomatis}
+
+\checkpoint{02}{Program berjalan terus tanpa membeku, judul jendela
+menampilkan laju bingkai terukur, dan program berhenti dengan rapi lewat
+tombol silang, ESC, atau batas bingkai.}
+
+% ---------------------------------------------------------
+\bagian{Kesalahan Umum}
+
+\begin{galatbox}
+\begin{itemize}[leftmargin=1.4em, itemsep=0.35em]
+  \item \textbf{Jendela membeku dan bertanda ``tidak menanggapi'.}
+        Gejala: judul tidak berubah dan jendela tidak dapat ditutup dengan
+        wajar. Periksa apakah \code{pygame.event.get()} dipanggil setiap
+        bingkai; memakai \code{event.wait()} di dalam siklus menghasilkan
+        gejala ini.
+  \item \textbf{Angka FPS selalu 0.}
+        Gejala: judul menampilkan \code{0 FPS} walaupun program berjalan.
+        Periksa apakah \code{clock.tick()} benar-benar dipanggil dan apakah
+        \code{get_fps()} dibaca setelah beberapa bingkai berjalan.
+  \item \textbf{Prosesor bekerja penuh tanpa manfaat.}
+        Gejala: kipas berbunyi keras dan pemakaian prosesor mendekati
+        seratus persen. Periksa argumen \code{tick()}; memanggil
+        \code{clock.tick()} tanpa angka tidak membatasi laju sama sekali.
+  \item \textbf{Judul jendela tidak pernah berubah.}
+        Gejala: judul tetap \NamaPermainan\ tanpa angka. Periksa blok
+        yang memeriksa sisa bagi \code{self.frames} dengan 30, lalu pastikan
+        \code{pygame.display.set_caption()} berada di dalam blok itu.
+  \item \textbf{Layar berkedip atau isinya hitam.}
+        Gejala: jendela terbuka tetapi tidak menampilkan latar yang benar.
+        Periksa urutan \code{fill()}, \code{draw()}, lalu \code{flip()};
+        menayangkan sebelum menggambar menghasilkan layar kosong.
+  \item \textbf{Terminal tidak kembali setelah jendela ditutup.}
+        Gejala: jendela hilang tetapi proses masih menggantung. Periksa
+        penanganan \code{QUIT} dan pastikan perulangan benar-benar berakhir
+        sebelum \code{pygame.quit()} dipanggil.
+\end{itemize}
+\end{galatbox}
+
+% ---------------------------------------------------------
+\bagian{Lembar Kerja}
+
+Catat hasil pengamatan Anda pada tabel berikut. Isi kolom terakhir setelah
+Anda membandingkan angka yang diminta dengan angka yang benar-benar tampil.
+
+{\small
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\linewidth}{@{}C{0.8cm} L{5.2cm} Y@{}}
+\toprule
+\textbf{No} & \textbf{Hasil yang dicatat} & \textbf{Keterangan Anda} \\
+\midrule
+1 & Batas laju bawaan dan angka FPS pada judul & \\[0.55cm]
+2 & Angka FPS pada batas 30, 60, dan 120 & \\[0.9cm]
+3 & Angka FPS dan pemakaian prosesor pada \code{--fps 0} & \\[0.9cm]
+4 & Selisih antara batas yang diminta dan laju tercapai & \\[0.9cm]
+5 & Gejala yang muncul ketika \code{event.get()} dihilangkan & \\[0.9cm]
+6 & Satu kendala yang Anda hadapi dan cara menyelesaikannya & \\[0.9cm]
+\bottomrule
+\end{tabularx}
+}
+
+% ---------------------------------------------------------
+\bagian{Checklist Sesi}
+
+\begin{checklistbox}
+\begin{checklist}
+  \item Saya dapat menunjukkan jendela yang berjalan terus dan judulnya
+        memuat angka FPS yang berubah.
+  \item Saya dapat menjelaskan urutan tahap masukan, pembaruan, dan
+        penayangan beserta alasan urutannya.
+  \item Saya dapat menunjukkan bahwa program tetap menanggapi ketika pemain
+        mendiamkan tombol dan tetikus.
+  \item Saya dapat membatasi laju pada 60 FPS dan membandingkannya dengan
+        30 FPS melalui judul jendela.
+  \item Saya dapat menjelaskan dua pekerjaan \code{clock.tick()} dan mengapa
+        perintah itu diletakkan pada awal atau akhir putaran siklus.
+  \item Saya dapat menentukan apakah siklus yang saya tulis termasuk langkah
+        tetap atau langkah berubah, beserta alasannya.
+\end{checklist}
+\end{checklistbox}
+
+% ---------------------------------------------------------
+\bagian{Pengait ke Sesi Berikutnya}
+
+Siklus pada sesi ini sudah berjalan, tetapi layar masih menampilkan latar
+polos. Tahap pembaruan belum mengubah apa pun. Pada sesi 3 Anda mengisi tahap
+itu dengan seorang pemain berukuran 36 piksel yang bergerak mendatar pada
+kecepatan 260 piksel per detik. Posisinya disimpan sebagai \code{Vector2}
+bertipe pecahan, dan selang waktu yang telah Anda ukur pada sesi ini berubah
+menjadi pengali kecepatan: $\vec{p}_{\text{baru}} = \vec{p} + \vec{v}\,\Delta
+t$. Di sanalah angka FPS berhenti menjadi hiasan dan mulai menentukan jarak
+yang ditempuh pemain setiap bingkai.

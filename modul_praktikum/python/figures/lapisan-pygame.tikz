@@ -1,0 +1,18 @@
+% figures/lapisan-pygame.tikz
+% Lapisan perkakas: program, Pygame, SDL, perangkat.
+\begin{tikzpicture}[
+  lapis/.style={rectangle, rounded corners=2pt, draw=ubNavy, thick,
+    fill=ubSoft, align=center, text width=7.4cm, inner sep=4pt,
+    minimum height=0.95cm, font=\small},
+  sdl/.style={lapis, draw=ubAccent, fill=white},
+  os/.style={lapis, draw=ubLine, fill=ubGray},
+  panah/.style={-{Stealth[length=2.2mm]}, thick, draw=ubAccent}
+]
+  \node[lapis] (program) {\textbf{Program Anda}\\ \footnotesize kode pada paket gudang\_artefak};
+  \node[sdl, below=0.55cm of program] (pygame) {\textbf{Pygame}\\ \footnotesize jendela, gambar, huruf, bunyi, peristiwa};
+  \node[sdl, below=0.55cm of pygame] (sdl) {\textbf{SDL}\\ \footnotesize penerjemah ke perangkat keras};
+  \node[os, below=0.55cm of sdl] (os) {\textbf{Sistem operasi dan perangkat}\\ \footnotesize layar, papan tombol, tetikus, pengeras suara};
+  \draw[panah] (program) -- (pygame);
+  \draw[panah] (pygame) -- (sdl);
+  \draw[panah] (sdl) -- (os);
+\end{tikzpicture}

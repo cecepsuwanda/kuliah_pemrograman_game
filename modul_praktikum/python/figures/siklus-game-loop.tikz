@@ -1,0 +1,22 @@
+% figures/siklus-game-loop.tikz
+% Siklus input -> update -> render dengan pengendali waktu.
+\begin{tikzpicture}[
+  tahap/.style={rectangle, rounded corners=2pt, draw=ubNavy, thick,
+    fill=ubSoft, align=center, text width=2.5cm, minimum height=1.15cm,
+    inner sep=3pt, font=\small},
+  waktu/.style={tahap, draw=ubAccent, fill=white},
+  panah/.style={-{Stealth[length=2.4mm]}, thick, draw=ubAccent}
+]
+  \node[tahap] (input) {\textbf{Input}\\ \footnotesize baca peristiwa};
+  \node[tahap, right=1.0cm of input] (update) {\textbf{Update}\\ \footnotesize ubah keadaan};
+  \node[tahap, right=1.0cm of update] (render) {\textbf{Render}\\ \footnotesize gambar ulang};
+  \node[waktu, below=0.9cm of update] (clock) {\textbf{Clock}\\ \footnotesize ukur selang, batasi FPS};
+
+  \draw[panah] (input) -- (update);
+  \draw[panah] (update) -- (render);
+  \draw[panah, dashed] (render.south) -- ++(0,-0.55) -| (clock.east);
+  \draw[panah, dashed] (clock.west) -| (input.south);
+  \draw[panah] (render.north) -- ++(0,0.45) -| (input.north);
+  \node[font=\scriptsize\itshape, ubMuted, above=0.42cm of update]
+    {satu bingkai, diulang terus};
+\end{tikzpicture}

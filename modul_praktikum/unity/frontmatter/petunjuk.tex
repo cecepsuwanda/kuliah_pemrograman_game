@@ -1,0 +1,83 @@
+% =========================================================
+%  frontmatter/petunjuk.tex
+%  Petunjuk pemakaian modul Unity.
+% =========================================================
+
+\section*{Petunjuk Pemakaian}
+\addcontentsline{toc}{section}{Petunjuk Pemakaian}
+
+\subsection*{Untuk siapa modul ini}
+
+Modul ini dipakai mahasiswa Program Studi \NamaProdi\ yang telah menempuh
+Blok I dan Blok II: \istilah{game loop}, vektor, fisika sederhana,
+\istilah{collision}, dan AI dasar untuk NPC. Modul ini dimulai \textbf{sesudah
+Ujian Tengah Semester}. Minggu 10 pada RPS adalah UTS; tidak ada sesi modul
+pada minggu itu.
+
+Anda tidak perlu pernah membuka Unity sebelumnya. Yang dibutuhkan adalah
+kemampuan membaca skrip C\# sederhana dan kemauan mencoba menu editor satu
+per satu.
+
+\subsection*{Urutan sesi dan perkiraan waktu}
+
+Setiap sesi dirancang untuk satu pertemuan praktikum, sekitar 100--150 menit
+termasuk mencoba dan mengisi lembar kerja. Sesi mengikuti minggu RPS 11--15.
+
+{\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{@{}C{1.1cm} L{6.4cm} Y C{1.9cm}@{}}
+\toprule
+\textbf{Sesi} & \textbf{Judul} & \textbf{Yang ditambahkan} & \textbf{Waktu} \\
+\midrule
+01 & Pengenalan Unity dan Scene Pertama &
+     Unity Hub, project 2D, \istilah{scene}, kamera, objek primitif & 100 menit \\
+02 & Level Rak: Tilemap, Physics, dan Kontrol &
+     \istilah{Tilemap}, \istilah{Collider2D}, \istilah{Rigidbody2D},
+     skrip gerak, \istilah{trigger} & 140 menit \\
+03 & Aset, Animasi, dan HUD &
+     Impor \istilah{sprite}, \istilah{Animator}, \istilah{Canvas}, skor dan
+     nyawa & 140 menit \\
+04 & Audio dan Trigger Interaksi &
+     BGM, SFX, pemicu bunyi pada peristiwa permainan & 130 menit \\
+05 & Evaluasi, Playtest, dan Presentasi &
+     Checklist fungsional, \istilah{playtest}, log \istilah{bug}, GDD,
+     demo, refleksi & 150 menit \\
+\bottomrule
+\end{tabularx}
+}
+
+\subsection*{Cara membuka project}
+
+Checkpoint Unity tidak berupa berkas \file{.unity}, karena scene yang disusun
+secara manual lebih baik Anda lakukan sendiri di editor. Setiap checkpoint
+berisi:
+
+\begin{itemize}[leftmargin=1.4em, itemsep=0.25em]
+  \item berkas skrip C\# yang dipakai pada sesi itu;
+  \item \file{scene.md}, yaitu daftar objek \istilah{scene}: nama
+        \istilah{GameObject}, komponen pada tiap objek, dan nilai
+        \istilah{inspector} yang penting.
+\end{itemize}
+
+Buka Unity Hub, pilih \menu{Add project from disk}, lalu arahkan ke folder
+project \NamaProject\ yang Anda buat pada sesi 1. Bila Anda memulai dari
+checkpoint, salin berkas \file{.cs} ke folder \file{Assets/Scripts} project
+Anda, lalu susun scene mengikuti \file{scene.md}.
+
+\subsection*{Bila sesi sebelumnya gagal}
+
+Buka checkpoint sesi terakhir yang berhasil, salin skripnya ke project Anda,
+lalu susun ulang scene mengikuti tabel objek pada sesi itu. Cara ini sah.
+Yang dinilai adalah kemampuan Anda menjelaskan dan mengubah project, bukan
+menyusun ulang dari nol.
+
+\subsection*{Hubungan dengan buku ajar dan RPS}
+
+Buku ajar Bab XII--XVI menjelaskan alasan di balik setiap komponen: mengapa
+\istilah{Rigidbody2D} diperlukan, mengapa skrip gerak diletakkan di
+\code{FixedUpdate}, dan mengapa bunyi dipicu oleh peristiwa. Modul ini
+menuntun langkah di editor dan skrip yang Anda tulis. Setiap sesi menyebut
+nomor bab sumbernya.
+
+Lima sesi modul ini menuntaskan \ModulSubCPMK. Proyek akhir yang dinilai pada
+UAS adalah project yang dihasilkan modul ini.
